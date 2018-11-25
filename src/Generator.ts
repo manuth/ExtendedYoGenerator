@@ -1,5 +1,6 @@
 import { ChoiceType, Question, Separator } from "inquirer";
 import Path = require("path");
+import PkgUp = require("pkg-up");
 import { isNullOrUndefined } from "util";
 import YeomanGenerator = require("yeoman-generator");
 import { Question as YoQuestion, Questions } from "yeoman-generator";
@@ -13,6 +14,11 @@ import { IGeneratorSettings } from "./IGeneratorSettings";
  */
 export abstract class Generator<T extends IGeneratorSettings = IGeneratorSettings> extends YeomanGenerator
 {
+    /**
+     * The root of the module of the generator.
+     */
+    private moduleRoot: string;
+
     /**
      * The settings of the generator.
      */
@@ -30,6 +36,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     public constructor(args: string | string[], options: {})
     {
         super(args, options);
+        this.moduleRoot = Path.dirname(PkgUp.sync(this.resolved));
     }
 
     /**
@@ -80,7 +87,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
      */
     public modulePath(...path: string[])
     {
-        return Path.join(__dirname, "..", ...path);
+        return Path.join(this.moduleRoot, ...path);
     }
 
     /**
