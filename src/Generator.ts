@@ -69,17 +69,6 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     }
 
     /**
-     * Joins the arguments together and returns the resulting path relative to the template-directory.
-     *
-     * @param path
-     * The path that is to be joined.
-     */
-    public templatePath(...path: string[])
-    {
-        return this.modulePath("templates", this.TemplateRoot, ...path);
-    }
-
-    /**
      * Joins the arguments together and returns the resulting path relative to the module-directory.
      *
      * @param path
@@ -88,6 +77,17 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     public modulePath(...path: string[])
     {
         return Path.join(this.moduleRoot, ...path);
+    }
+
+    /**
+     * Joins the arguments together and returns the resulting path relative to the template-directory.
+     *
+     * @param path
+     * The path that is to be joined.
+     */
+    public templatePath(...path: string[])
+    {
+        return this.modulePath("templates", this.TemplateRoot, ...path);
     }
 
     /**
