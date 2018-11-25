@@ -1,0 +1,42 @@
+{
+  "name": "extended-yo-generator",
+  "version": "0.0.0",
+  "description": "An extended version of the Yeoman-Generator.",
+  "author": "Manuel Thalmann <m@nuth.ch>",
+  "license": "MIT",
+  "keywords": [
+    "yeoman-generator",
+    "yo",
+    "extended"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manuth/ExtendedYoGenerator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/manuth/ExtendedYoGenerator/issues"
+  },
+  "homepage": "https://github.com/manuth/ExtendedYoGenerator#readme",
+  "scripts": {
+    "compile": "tsc -p .",
+    "watch": "tsc -p . --watch",
+    "lint": "tslint -p ./ -t verbose",
+    "test": "mocha",
+    "prepare": "npm run compile"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^10.12.9",
+    "mocha": "^5.2.0",
+    "tslint": "^5.11.0",
+    "typescript": "^3.1.6",
+    "typescript-tslint-plugin": "^0.1.0"
+  }
+}
