@@ -42,7 +42,10 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     /**
      * Gets the name of the root of the template-folder.
      */
-    protected abstract get TemplateRoot(): string;
+    protected get TemplateRoot(): string
+    {
+        return "";
+    }
 
     /**
      * Gets the questions to ask before executing the generator.
