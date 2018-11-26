@@ -24,8 +24,8 @@
   },
   "homepage": "https://github.com/manuth/ExtendedYoGenerator#readme",
   "scripts": {
-    "compile": "tsc -p .",
-    "rebuild": "npm run clean && npm run compile",
+    "build": "tsc -p .",
+    "rebuild": "npm run clean && npm run build",
     "watch": "tsc -p . --watch",
     "clean": "rimraf ./lib",
     "lint": "tslint -p ./ -t verbose",
