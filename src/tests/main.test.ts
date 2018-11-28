@@ -22,7 +22,7 @@ suite(
                     async () =>
                     {
                         generatorDir = Path.join(__dirname, "TestGenerator");
-                        await FileSystem.writeJson(
+                        await FileSystem.writeJSON(
                             Path.join(generatorDir, "package.json"),
                             {
                                 name: "test"
