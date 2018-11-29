@@ -10,8 +10,8 @@
             "name": "Launch Tests",
             "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
             "preLaunchTask": "Build",
-            "cwd": "${workspaceFolder}",
-            "sourceMaps": true
+            "sourceMaps": true,
+            "internalConsoleOptions": "openOnSessionStart"
         }
     ]
 }
