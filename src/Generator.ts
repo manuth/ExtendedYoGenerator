@@ -167,7 +167,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
 
                     for (let fileMapping of fileMappings)
                     {
-                        this.ProcessFile(fileMapping);
+                        await this.ProcessFile(fileMapping);
                     }
                 }
             }
