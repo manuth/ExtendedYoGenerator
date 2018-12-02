@@ -66,7 +66,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     /**
      * Gets the settings of the generator.
      */
-    protected get Settings()
+    public get Settings()
     {
         return this.settings;
     }
