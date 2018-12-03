@@ -127,10 +127,33 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
                     {
                         for (let question of component.Questions)
                         {
-                            if (isNullOrUndefined(question.when))
+                            let when = question.when;
+
+                            question.when = async (settings: T) =>
                             {
-                                question.when = (settings: T) => settings[GeneratorSetting.Components].includes(component.ID);
-                            }
+                                if (settings[GeneratorSetting.Components].includes(component.ID))
+                                {
+                                    if (!isNullOrUndefined(when))
+                                    {
+                                        if (typeof when === "function")
+                                        {
+                                            return when(settings);
+                                        }
+                                        else
+                                        {
+                                            return when;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        return true;
+                                    }
+                                }
+                                else
+                                {
+                                    return false;
+                                }
+                            };
 
                             questions.push(question as Question);
                         }
