@@ -35,6 +35,7 @@
   "dependencies": {
     "@types/inquirer": "0.0.43",
     "@types/yeoman-generator": "^3.0.1",
+    "chalk": "^2.4.1",
     "inquirer": "^6.2.0",
     "pkg-up": "^2.0.0",
     "yeoman-generator": "^3.1.1"

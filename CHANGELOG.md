@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator v1.0.3
   - Made the file-processing part sequential
+  - Improved the user-interface
+    - Made component-questions more distinguishable
 
 [Show differences][v1.0.3]
 

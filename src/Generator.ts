@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import { ChoiceType, Question, Separator } from "inquirer";
 import Path = require("path");
 import PkgUp = require("pkg-up");
@@ -125,14 +126,21 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
 
                     if (!isNullOrUndefined(component.Questions))
                     {
-                        for (let question of component.Questions)
+                        for (let i = 0; i < component.Questions.length; i++)
                         {
+                            let question = component.Questions[i];
                             let when = question.when;
 
                             question.when = async (settings: T) =>
                             {
                                 if (settings[GeneratorSetting.Components].includes(component.ID))
                                 {
+                                    if (i === 0)
+                                    {
+                                        this.log();
+                                        this.log(`${chalk.red(">>")} ${chalk.whiteBright(component.DisplayName)} ${chalk.red("<<")}`);
+                                    }
+
                                     if (!isNullOrUndefined(when))
                                     {
                                         if (typeof when === "function")
