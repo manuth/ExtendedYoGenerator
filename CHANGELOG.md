@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Made the file-processing part sequential
   - Improved the user-interface
     - Made component-questions more distinguishable
+  - Code improvements
+    - Ensured that all component-filemappings are processed sequentially
 
 [Show differences][v1.0.3]
 
