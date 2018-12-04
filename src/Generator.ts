@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import { ChoiceType, Question, Separator } from "inquirer";
 import Path = require("path");
 import PkgUp = require("pkg-up");
@@ -66,7 +67,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     /**
      * Gets the settings of the generator.
      */
-    protected get Settings()
+    public get Settings()
     {
         return this.settings;
     }
@@ -125,12 +126,42 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
 
                     if (!isNullOrUndefined(component.Questions))
                     {
-                        for (let question of component.Questions)
+                        for (let i = 0; i < component.Questions.length; i++)
                         {
-                            if (isNullOrUndefined(question.when))
+                            let question = component.Questions[i];
+                            let when = question.when;
+
+                            question.when = async (settings: T) =>
                             {
-                                question.when = (settings: T) => settings[GeneratorSetting.Components].includes(component.ID);
-                            }
+                                if (settings[GeneratorSetting.Components].includes(component.ID))
+                                {
+                                    if (i === 0)
+                                    {
+                                        this.log();
+                                        this.log(`${chalk.red(">>")} ${chalk.whiteBright(component.DisplayName)} ${chalk.red("<<")}`);
+                                    }
+
+                                    if (!isNullOrUndefined(when))
+                                    {
+                                        if (typeof when === "function")
+                                        {
+                                            return when(settings);
+                                        }
+                                        else
+                                        {
+                                            return when;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        return true;
+                                    }
+                                }
+                                else
+                                {
+                                    return false;
+                                }
+                            };
 
                             questions.push(question as Question);
                         }
@@ -167,7 +198,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
 
                     for (let fileMapping of fileMappings)
                     {
-                        this.ProcessFile(fileMapping);
+                        await this.ProcessFile(fileMapping);
                     }
                 }
             }
