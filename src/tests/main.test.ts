@@ -3,8 +3,7 @@ import FileSystem = require("fs-extra");
 import Path = require("path");
 import { isNullOrUndefined } from "util";
 import { run, RunContext } from "yeoman-test";
-import { Generator } from "..";
-import { GeneratorSetting } from "../GeneratorSetting";
+import { Generator, GeneratorSetting } from "..";
 
 suite(
     "ExtendedYoGenerator",
@@ -23,7 +22,7 @@ suite(
                     async () =>
                     {
                         generatorDir = Path.join(__dirname, "TestGenerator");
-                        await FileSystem.writeJson(
+                        await FileSystem.writeJSON(
                             Path.join(generatorDir, "package.json"),
                             {
                                 name: "test"
