@@ -1,6 +1,6 @@
 {
   "name": "extended-yo-generator",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "An extended version of the Yeoman-Generator.",
   "author": "Manuel Thalmann <m@nuth.ch>",
   "license": "MIT",
@@ -36,23 +36,23 @@
     "@types/inquirer": "0.0.43",
     "@types/yeoman-generator": "^3.0.1",
     "chalk": "^2.4.1",
-    "inquirer": "^6.2.0",
+    "inquirer": "^6.2.1",
     "pkg-up": "^2.0.0",
     "yeoman-generator": "^3.1.1"
   },
   "devDependencies": {
     "@types/fs-extra": "^5.0.4",
     "@types/mocha": "^5.2.5",
-    "@types/node": "^10.12.9",
+    "@types/node": "^10.12.12",
     "@types/pkg-up": "^2.0.0",
-    "@types/yeoman-test": "^1.7.4",
+    "@types/yeoman-test": "^2.0.0",
     "fs-extra": "^7.0.1",
     "mocha": "^5.2.0",
     "rimraf": "^2.6.2",
     "temp-filesystem": "^1.1.0",
     "tslint": "^5.11.0",
-    "typescript": "^3.1.6",
-    "typescript-tslint-plugin": "^0.1.0",
+    "typescript": "^3.2.1",
+    "typescript-tslint-plugin": "^0.1.2",
     "yeoman-test": "^1.9.1"
   }
 }
