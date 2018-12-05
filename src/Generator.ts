@@ -181,6 +181,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
 
         questions.unshift(...this.Questions as YoQuestion[]);
         Object.assign(this.Settings, await this.prompt(questions));
+        this.log();
     }
 
     /**
