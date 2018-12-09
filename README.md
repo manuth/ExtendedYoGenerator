@@ -1,5 +1,5 @@
 # ExtendedYoGenerator
-An extended version of the Yeoman-Generator.
+An extended version of the Yeoman-Generator
 
 ## Installing ExtendedYoGenerator
 `ExtendedYoGenerator` can be installed using the `npm`-cli:
