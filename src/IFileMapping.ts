@@ -23,5 +23,5 @@ export interface IFileMapping<T extends Answers>
     /**
      * Gets or sets the method to execute for processing the file-mapping.
      */
-    Process?(source: string, destination: string, context?: any, defaultProcessor?: (source: string, destination: string, context?: any) => void, settings?: T): void | Promise<void>;
+    Process?(source: string, destination: string, context?: any, defaultProcess?: (source: string, destination: string, context?: any) => void, settings?: T): void | Promise<void>;
 }
