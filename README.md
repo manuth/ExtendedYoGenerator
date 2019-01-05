@@ -17,7 +17,7 @@ All class members are documented using js-doc in order to provide the best possi
 ```ts
 import { Generator, IGeneratorSettings, Question } from "extended-yo-generator";
 
-export = class MyGenerator<T extends IGeneratorSettings> extends Generator<T>
+export = class MyGenerator<IGeneratorSettings> extends Generator<T>
 {
     protected get TemplateRoot()
     {
