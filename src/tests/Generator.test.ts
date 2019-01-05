@@ -12,7 +12,6 @@ suite(
         let runContext: RunContext;
         let generatorDir: string;
         let generator: Generator;
-        let generatedDir: string;
 
         suiteSetup(
             async () =>
