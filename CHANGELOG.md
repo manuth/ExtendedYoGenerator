@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator v1.0.7
   - Reworked the mocha-integration
+  - Improve the user-interface
 
 [Show differences][v1.0.7]
 
