@@ -187,10 +187,6 @@ import { Generator, IComponentProvider, IGeneratorSettings } from "extended-yo-g
 The generator asks what components to install.  
 If there are any questions declared for the component the generator will automatically ask them if the component has been checked.
 
-Example:
-
-![ComponentQuestions]
-
 The IDs of the components the user has chosen are then written to the `Generator.Settings[GeneratorSetting.Components]` member.
 
 ### Settings
@@ -228,6 +224,3 @@ The `Generator.writing()`-method copies all `FileMapping`s of the components.
         this.destinationPath("package.json"));
     }
 ```
-
-<!-- Figures -->
-[ComponentQuestions]: ./assets/ComponentQuestions.png "Questions about Components in the CLI"
