@@ -37,7 +37,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     public constructor(args: string | string[], options: {})
     {
         super(args, options);
-        this.moduleRoot = Path.dirname(PkgUp.sync(this.resolved));
+        this.moduleRoot = Path.dirname(PkgUp.sync({ cwd: this.resolved }));
     }
 
     /**
@@ -100,7 +100,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     public async prompting()
     {
         let questions: Questions = [];
-        let components: ChoiceType[] = [];
+        let components: ChoiceType<T>[] = [];
         let defaults: string[] = [];
 
         if (this.ProvidedComponents !== null)
