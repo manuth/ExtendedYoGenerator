@@ -1,6 +1,6 @@
 {
   "name": "extended-yo-generator",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "An extended version of the Yeoman-Generator",
   "author": "Manuel Thalmann <m@nuth.ch>",
   "license": "MIT",
