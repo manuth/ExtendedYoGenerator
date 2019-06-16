@@ -24,10 +24,10 @@ export interface IComponent<T extends Answers>
     /**
      * Gets or sets the file-mappings of the component.
      */
-    FileMappings: IFileMapping<T>[] | Promise<IFileMapping<T>[]> | ((settings: T) => IFileMapping<T>[] | Promise<IFileMapping<T>[]>);
+    FileMappings: Array<IFileMapping<T>> | Promise<Array<IFileMapping<T>>> | ((settings: T) => Array<IFileMapping<T>> | Promise<Array<IFileMapping<T>>>);
 
     /**
      * Gets or sets additional quetions related to the component.
      */
-    Questions?: Question<T>[];
+    Questions?: Array<Question<T>>;
 }

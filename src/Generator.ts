@@ -51,7 +51,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     /**
      * Gets the questions to ask before executing the generator.
      */
-    protected get Questions(): Question<T>[]
+    protected get Questions(): Array<Question<T>>
     {
         return [];
     }
@@ -100,7 +100,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     public async prompting()
     {
         let questions: Questions = [];
-        let components: ChoiceType<T>[] = [];
+        let components: Array<ChoiceType<T>> = [];
         let defaults: string[] = [];
 
         if (this.ProvidedComponents !== null)

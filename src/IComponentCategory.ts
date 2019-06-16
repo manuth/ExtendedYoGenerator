@@ -14,5 +14,5 @@ export interface IComponentCategory<T extends Answers>
     /**
      * Gets or sets the components of the category.
      */
-    Components: IComponent<T>[];
+    Components: Array<IComponent<T>>;
 }

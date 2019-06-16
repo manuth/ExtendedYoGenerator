@@ -14,5 +14,5 @@ export interface IComponentProvider<T extends Answers>
     /**
      * Gets or sets the provided categories.
      */
-    Categories: IComponentCategory<T>[];
+    Categories: Array<IComponentCategory<T>>;
 }
