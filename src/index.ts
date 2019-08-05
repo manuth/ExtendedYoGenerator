@@ -1,4 +1,4 @@
-export { Answers } from "inquirer";
+export { Answers, ChoiceCollection, Transformer, Validator } from "inquirer";
 export { Question } from "yeoman-generator";
 export { Generator } from "./Generator";
 export { GeneratorSetting } from "./GeneratorSetting";
