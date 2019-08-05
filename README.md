@@ -17,14 +17,14 @@ All class members are documented using js-doc in order to provide the best possi
 ```ts
 import { Generator, IGeneratorSettings, Question } from "extended-yo-generator";
 
-export = class MyGenerator<IGeneratorSettings> extends Generator<T>
+export = class MyGenerator extends Generator<IGeneratorSettings>
 {
     protected get TemplateRoot()
     {
         return "app";
     }
 
-    protected get Questions(): Question<T>[]
+    protected get Questions(): Array<Question<IGeneratorSettings>>
     {
         return [
             {
@@ -96,7 +96,9 @@ All answers are stored in the `Generator.Settings`-property.
 ```ts
 import { Question } from "extended-yo-generator";
 
-// [...]
+export = class MyGenerator extends Generator<IGeneratorSettings>
+{
+    // [...]
     protected get Questions(): Question<T>[]
     {
         return [
@@ -111,6 +113,7 @@ import { Question } from "extended-yo-generator";
             }
         ];
     }
+}
 ```
 
 ### Components
@@ -121,8 +124,9 @@ Each component can provide any number of file-mappings and additional questions.
 ```ts
 import { Generator, IComponentProvider, IGeneratorSettings } from "extended-yo-generator";
 
-// [...]
-
+export = class MyGenerator extends Generator<IGeneratorSettings>
+{
+    // [...]
     protected get ProvidedComponents(): IComponentProvider<IGeneratorSettings>
     {
         return {
@@ -182,6 +186,7 @@ import { Generator, IComponentProvider, IGeneratorSettings } from "extended-yo-g
             ]
         };
     }
+}
 ```
 
 The generator asks what components to install.  
@@ -205,11 +210,14 @@ The `Generator.prompting()`-method asks all questions specified using `Generator
 
 #### Example
 ```ts
+export = class MyGenerator extends Generator<IGeneratorSettings>
+{
     public async prompting()
     {
         this.log("Welcome to my generator!");
         return super.prompting();
     }
+}
 ```
 
 ### Writing
@@ -217,10 +225,13 @@ The `Generator.writing()`-method copies all `FileMapping`s of the components.
 
 #### Example
 ```ts
+export = class MyGenerator extends Generator<IGeneratorSettings>
+{
     public async writing()
     {
         await super.writing();
         this.fs.copy(this.templatePath("package.json"),
         this.destinationPath("package.json"));
     }
+}
 ```
