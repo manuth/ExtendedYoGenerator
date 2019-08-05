@@ -1,4 +1,5 @@
-import { Answers, Question } from "inquirer";
+import { Answers } from "inquirer";
+import { Question } from "yeoman-generator";
 import { IFileMapping } from "./IFileMapping";
 
 /**
