@@ -7,11 +7,6 @@ import { GeneratorSetting } from "./GeneratorSetting";
 export interface IGeneratorSettings extends Answers
 {
     /**
-     * Gets or sets a specific setting.
-     */
-    [key: string]: any;
-
-    /**
      * Gets or sets the components to install.
      */
     [GeneratorSetting.Components]: string[];
