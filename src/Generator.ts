@@ -1,10 +1,10 @@
 import chalk from "chalk";
-import { ChoiceType, Question, Separator } from "inquirer";
+import { ChoiceCollection, Separator } from "inquirer";
 import Path = require("path");
 import PkgUp = require("pkg-up");
 import { isNullOrUndefined } from "util";
 import YeomanGenerator = require("yeoman-generator");
-import { Question as YoQuestion, Questions } from "yeoman-generator";
+import { Question } from "yeoman-generator";
 import { GeneratorSetting } from "./GeneratorSetting";
 import { IComponentProvider } from "./IComponentProvider";
 import { IFileMapping } from "./IFileMapping";
@@ -99,8 +99,8 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
      */
     public async prompting()
     {
-        let questions: Questions = [];
-        let components: Array<ChoiceType<T>> = [];
+        let questions: Array<Question<T>> = [];
+        let components: ChoiceCollection<T> = [];
         let defaults: string[] = [];
 
         if (this.ProvidedComponents !== null)
@@ -163,7 +163,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
                                 }
                             };
 
-                            questions.push(question as Question);
+                            questions.push(question);
                         }
                     }
                 }
@@ -179,7 +179,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
                 });
         }
 
-        questions.unshift(...this.Questions as YoQuestion[]);
+        questions.unshift(...this.Questions);
         Object.assign(this.Settings, await this.prompt(questions));
         this.log();
     }
