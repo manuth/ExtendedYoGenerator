@@ -1,5 +1,4 @@
-import { Answers } from "inquirer";
-import { GeneratorSetting } from "./GeneratorSetting";
+import { GeneratorSettingKey } from "./GeneratorSettingKey";
 
 /**
  * Represents settings of a generator.
@@ -9,5 +8,5 @@ export interface IGeneratorSettings
     /**
      * Gets or sets the components to install.
      */
-    [GeneratorSetting.Components]: string[];
+    [GeneratorSettingKey.Components]: string[];
 }

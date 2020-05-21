@@ -1,4 +1,4 @@
-import { Generator, IComponentProvider, Question } from "../..";
+import { Generator, IComponentCollection, Question } from "../..";
 import { IGeneratorSettings } from "../../IGeneratorSettings";
 
 /**
@@ -31,7 +31,7 @@ class TestGenerator extends Generator
     /**
      * Gets the components provided by the generator.
      */
-    public get ProvidedComponents(): IComponentProvider<IGeneratorSettings>
+    public get Components(): IComponentCollection<IGeneratorSettings>
     {
         return {
             Question: "test",
@@ -43,7 +43,7 @@ class TestGenerator extends Generator
                             ID: "test1",
                             DisplayName: "Test 1",
                             FileMappings: [],
-                            Default: true,
+                            DefaultEnabled: true,
                             Questions: [
                                 {
                                     name: "additional1",
@@ -55,7 +55,7 @@ class TestGenerator extends Generator
                             ID: "test2",
                             DisplayName: "Test 2",
                             FileMappings: [],
-                            Default: false,
+                            DefaultEnabled: false,
                             Questions: [
                                 {
                                     name: "additional2",

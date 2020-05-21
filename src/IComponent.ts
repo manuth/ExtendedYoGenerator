@@ -20,7 +20,7 @@ export interface IComponent<T extends Answers>
     /**
      * Gets or sets a value indicating whether the component is enabled by default.
      */
-    Default?: boolean;
+    DefaultEnabled?: boolean;
 
     /**
      * Gets or sets the file-mappings of the component.

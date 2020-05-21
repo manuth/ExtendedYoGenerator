@@ -5,8 +5,8 @@ import PkgUp = require("pkg-up");
 import { isNullOrUndefined } from "util";
 import YeomanGenerator = require("yeoman-generator");
 import { Question } from "yeoman-generator";
-import { GeneratorSetting } from "./GeneratorSetting";
-import { IComponentProvider } from "./IComponentProvider";
+import { GeneratorSettingKey } from "./GeneratorSettingKey";
+import { IComponentCollection } from "./IComponentCollection";
 import { IFileMapping } from "./IFileMapping";
 import { IGeneratorSettings } from "./IGeneratorSettings";
 
@@ -57,9 +57,9 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     }
 
     /**
-     * Gets the components provided by the generator.
+     * Gets the components the user can select.
      */
-    protected get ProvidedComponents(): IComponentProvider<T>
+    protected get Components(): IComponentCollection<T>
     {
         return null;
     }
@@ -103,15 +103,15 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
         let components: ChoiceCollection<T> = [];
         let defaults: string[] = [];
 
-        if (this.ProvidedComponents !== null)
+        if (this.Components !== null)
         {
-            for (let category of this.ProvidedComponents.Categories)
+            for (let category of this.Components.Categories)
             {
                 components.push(new Separator(category.DisplayName));
 
                 for (let component of category.Components)
                 {
-                    let isDefault = !isNullOrUndefined(component.Default) && component.Default;
+                    let isDefault = !isNullOrUndefined(component.DefaultEnabled) && component.DefaultEnabled;
 
                     components.push({
                         value: component.ID,
@@ -133,7 +133,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
 
                             question.when = async (settings: T) =>
                             {
-                                if (settings[GeneratorSetting.Components].includes(component.ID))
+                                if (settings[GeneratorSettingKey.Components].includes(component.ID))
                                 {
                                     if (i === 0)
                                     {
@@ -172,8 +172,8 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
             questions.unshift(
                 {
                     type: "checkbox",
-                    name: GeneratorSetting.Components,
-                    message: this.ProvidedComponents.Question,
+                    name: GeneratorSettingKey.Components,
+                    message: this.Components.Question,
                     choices: components,
                     default: defaults
                 });
@@ -189,11 +189,11 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
      */
     public async writing()
     {
-        for (let category of this.ProvidedComponents.Categories)
+        for (let category of this.Components.Categories)
         {
             for (let component of category.Components)
             {
-                if (this.Settings[GeneratorSetting.Components].includes(component.ID))
+                if (this.Settings[GeneratorSettingKey.Components].includes(component.ID))
                 {
                     let fileMappings = await this.ResolveValue(component.FileMappings, this.Settings);
 

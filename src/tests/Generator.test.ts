@@ -75,20 +75,20 @@ suite(
             });
 
         suite(
-            "ProvidedComponents",
+            "Components",
             () =>
             {
                 test(
                     "Checking whether the default components are selected by default…",
                     () =>
                     {
-                        if (!isNullOrUndefined(generator["ProvidedComponents"]))
+                        if (!isNullOrUndefined(generator["Components"]))
                         {
-                            for (let category of generator["ProvidedComponents"].Categories)
+                            for (let category of generator["Components"].Categories)
                             {
                                 for (let component of category.Components)
                                 {
-                                    if (component.Default)
+                                    if (component.DefaultEnabled)
                                     {
                                         Assert.strictEqual(generator["Settings"][GeneratorSetting.Components].includes(component.ID), true);
                                     }
@@ -101,9 +101,9 @@ suite(
                     "Checking whether additional questions are asked, if components are selected…",
                     () =>
                     {
-                        if (!isNullOrUndefined(generator["ProvidedComponents"]))
+                        if (!isNullOrUndefined(generator["Components"]))
                         {
-                            for (let category of generator["ProvidedComponents"].Categories)
+                            for (let category of generator["Components"].Categories)
                             {
                                 for (let component of category.Components)
                                 {
