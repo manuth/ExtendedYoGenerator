@@ -6,14 +6,15 @@ import { isNullOrUndefined } from "util";
 import YeomanGenerator = require("yeoman-generator");
 import { Question } from "yeoman-generator";
 import { GeneratorSettingKey } from "./GeneratorSettingKey";
-import { IComponentCollection } from "./IComponentCollection";
-import { IFileMapping } from "./IFileMapping";
 import { IGeneratorSettings } from "./IGeneratorSettings";
+import { IGenerator } from "./IGenerator";
+import { ComponentCollection } from "./Components/ComponentCollection";
+import { FileMapping } from "./Components/FileMapping";
 
 /**
  * Represents a yeoman-generator.
  */
-export abstract class Generator<T extends IGeneratorSettings = IGeneratorSettings> extends YeomanGenerator
+export abstract class Generator<T extends IGeneratorSettings = IGeneratorSettings> extends YeomanGenerator implements IGenerator<T>
 {
     /**
      * The root of the module of the generator.
@@ -59,13 +60,13 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     /**
      * Gets the components the user can select.
      */
-    protected get Components(): IComponentCollection<T>
+    protected get Components(): ComponentCollection<T>
     {
         return null;
     }
 
     /**
-     * Gets the settings of the generator.
+     * @inheritdoc
      */
     public get Settings()
     {
@@ -73,7 +74,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     }
 
     /**
-     * Joins the arguments together and returns the resulting path relative to the module-directory.
+     * @inheritdoc
      *
      * @param path
      * The path that is to be joined.
@@ -84,7 +85,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     }
 
     /**
-     * Joins the arguments together and returns the resulting path relative to the template-directory.
+     * @inheritdoc
      *
      * @param path
      * The path that is to be joined.
@@ -195,9 +196,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
             {
                 if (this.Settings[GeneratorSettingKey.Components].includes(component.ID))
                 {
-                    let fileMappings = await this.ResolveValue(component.FileMappings, this.Settings);
-
-                    for (let fileMapping of fileMappings)
+                    for (let fileMapping of await component.FileMappings)
                     {
                         await this.ProcessFile(fileMapping);
                     }
@@ -221,79 +220,18 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     }
 
     /**
-     * Resolves a value no matter whether it is wrapped in a function or not.
-     *
-     * @param settings
-     * The settings to use for resolving the value.
-     *
-     * @param value
-     * The value to resolve.
-     */
-    protected async ResolveValue<TSource extends any[], TValue>(value: (TValue | ((...settings: TSource) => TValue) | ((...settings: TSource) => Promise<TValue>)), ...source: TSource)
-    {
-        if (value instanceof Function)
-        {
-            let result = value(...source);
-
-            if (result instanceof Promise)
-            {
-                return result;
-            }
-            else
-            {
-                return result;
-            }
-        }
-        else
-        {
-            return value;
-        }
-    }
-
-    /**
      * Processes a file-mapping.
      *
      * @param fileMapping
      * The file-mapping to process.
      */
-    protected async ProcessFile(fileMapping: IFileMapping<T>)
+    protected async ProcessFile(fileMapping: FileMapping<T>)
     {
-        let sourcePath: string = await this.ResolveValue(fileMapping.Source, this.Settings);
-        let destinationPath = await this.ResolveValue(fileMapping.Destination, this.Settings);
+        let result = fileMapping.Processor(fileMapping, this);
 
-        sourcePath = (isNullOrUndefined(sourcePath) || Path.isAbsolute(sourcePath)) ? sourcePath : this.templatePath(sourcePath);
-        destinationPath = (isNullOrUndefined(destinationPath) || Path.isAbsolute(destinationPath)) ? destinationPath : this.destinationPath(destinationPath);
-
-        let context = await this.ResolveValue(fileMapping.Context, this.Settings, sourcePath, destinationPath);
-        let defaultProcessor = (sourcePath: string, destinationPath: string, context: any) =>
+        if (result instanceof Promise)
         {
-            if (
-                !isNullOrUndefined(sourcePath) &&
-                !isNullOrUndefined(destinationPath))
-            {
-                if (isNullOrUndefined(context))
-                {
-                    this.fs.copy(sourcePath, destinationPath);
-                }
-                else
-                {
-                    this.fs.copyTpl(sourcePath, destinationPath, context);
-                }
-            }
-        };
-
-        if (isNullOrUndefined(fileMapping.Process))
-        {
-            defaultProcessor(sourcePath, destinationPath, context);
-        }
-        else
-        {
-            let result = fileMapping.Process(sourcePath, destinationPath, context, defaultProcessor, this.Settings);
-
-            if (result instanceof Promise)
-            {
-                await result;
-            }
+            return result;
         }
     }
 }

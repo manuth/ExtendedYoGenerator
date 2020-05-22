@@ -1,5 +1,6 @@
 import { Generator, IComponentCollection, Question } from "../..";
 import { IGeneratorSettings } from "../../IGeneratorSettings";
+import { ComponentCollection } from "../../Components/ComponentCollection";
 
 /**
  * Represents a test-generator.
@@ -31,42 +32,44 @@ class TestGenerator extends Generator
     /**
      * Gets the components provided by the generator.
      */
-    public get Components(): IComponentCollection<IGeneratorSettings>
+    public get Components(): ComponentCollection<IGeneratorSettings>
     {
-        return {
-            Question: "test",
-            Categories: [
-                {
-                    DisplayName: "test",
-                    Components: [
-                        {
-                            ID: "test1",
-                            DisplayName: "Test 1",
-                            FileMappings: [],
-                            DefaultEnabled: true,
-                            Questions: [
-                                {
-                                    name: "additional1",
-                                    default: "test"
-                                }
-                            ]
-                        },
-                        {
-                            ID: "test2",
-                            DisplayName: "Test 2",
-                            FileMappings: [],
-                            DefaultEnabled: false,
-                            Questions: [
-                                {
-                                    name: "additional2",
-                                    default: "test"
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        };
+        return new ComponentCollection<IGeneratorSettings>(
+            this,
+            {
+                Question: "test",
+                Categories: [
+                    {
+                        DisplayName: "test",
+                        Components: [
+                            {
+                                ID: "test1",
+                                DisplayName: "Test 1",
+                                FileMappings: [],
+                                DefaultEnabled: true,
+                                Questions: [
+                                    {
+                                        name: "additional1",
+                                        default: "test"
+                                    }
+                                ]
+                            },
+                            {
+                                ID: "test2",
+                                DisplayName: "Test 2",
+                                FileMappings: [],
+                                DefaultEnabled: false,
+                                Questions: [
+                                    {
+                                        name: "additional2",
+                                        default: "test"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            });
     }
 
     /**
