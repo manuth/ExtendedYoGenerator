@@ -74,11 +74,13 @@ export class FileMapping<TSettings> extends PropertyResolver<IFileMapping<TSetti
     }
 
     /**
-     * 
+     * Resolves the path from the options with the specified `resolver`.
+     *
      * @param path
      * The path to resolve.
      *
      * @param resolver
+     * The path-resolver to use.
      */
     protected ResolvePath(path: Resolvable<FileMapping<TSettings>, TSettings, string>, resolver: (...path: string[]) => string): Promise<string>
     {
