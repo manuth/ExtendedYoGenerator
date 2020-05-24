@@ -60,6 +60,6 @@ export class PropertyResolver<TObject, TTarget, TSettings> extends Resolver<TTar
      */
     public async ResolveProperty<T>(target: TTarget, value: Resolvable<TTarget, TSettings, T>): Promise<T>
     {
-        return this.Resolve(target, this.Generator, value);
+        return this.Resolve<T>(target, this.Generator, value);
     }
 }
