@@ -22,14 +22,13 @@ export class Resolver<TTarget, TSettings>
      */
     public async Resolve<T>(target: TTarget, generator: IGenerator<TSettings>, value: Resolvable<TTarget, TSettings, T>): Promise<T>
     {
-        let result = value;
-
-        if (result instanceof Function)
+        if (value instanceof Function)
         {
-            return result(target, generator);
+            return value(target, generator);
         }
         else
         {
+            let result: Promise<T> | T = value;
             return result;
         }
     }
