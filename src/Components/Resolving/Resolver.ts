@@ -20,7 +20,7 @@ export class Resolver<TTarget, TSettings>
      * @param value
      * The value to resolve.
      */
-    public async Resolve<T>(target: TTarget, generator: IGenerator<TSettings>, value: Resolvable<TTarget, TSettings, T>): Promise<T>
+    protected async Resolve<T>(target: TTarget, generator: IGenerator<TSettings>, value: Resolvable<TTarget, TSettings, T>): Promise<T>
     {
         if (value instanceof Function)
         {

@@ -58,7 +58,7 @@ export class PropertyResolver<TObject, TTarget, TSettings> extends Resolver<TTar
      * @param value
      * The value to resolve.
      */
-    public async ResolveProperty<T>(target: TTarget, value: Resolvable<TTarget, TSettings, T>): Promise<T>
+    protected async ResolveProperty<T>(target: TTarget, value: Resolvable<TTarget, TSettings, T>): Promise<T>
     {
         return this.Resolve<T>(target, this.Generator, value);
     }
