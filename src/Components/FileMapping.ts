@@ -63,11 +63,11 @@ export class FileMapping<TSettings> extends PropertyResolver<IFileMapping<TSetti
             {
                 if (await target.Context)
                 {
-                    generator.fs.copy(await target.Source, await target.Destination);
+                    generator.fs.copyTpl(await target.Source, await target.Destination, await target.Context);
                 }
                 else
                 {
-                    generator.fs.copyTpl(await target.Source, await target.Destination, await target.Context);
+                    generator.fs.copy(await target.Source, await target.Destination);
                 }
             };
         }
