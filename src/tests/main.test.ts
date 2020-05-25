@@ -1,6 +1,23 @@
+import { TestContext } from "./TestContext";
+import { GeneratorTests } from "./Generator.test";
+
 suite(
     "ExtendedYoGenerator",
     () =>
     {
-        require("./Generator.test");
+        let context = new TestContext();
+
+        suiteSetup(
+            async () =>
+            {
+                await context.Initialize();
+            });
+
+        suiteTeardown(
+            async () =>
+            {
+                await context.Dispose();
+            });
+
+        GeneratorTests(context);
     });

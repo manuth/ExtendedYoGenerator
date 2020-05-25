@@ -1,0 +1,120 @@
+import Path = require("path");
+import { writeJSON, remove } from "fs-extra";
+import { run, RunContext, RunContextSettings } from "yeoman-test";
+import { IGenerator } from "../IGenerator";
+import TestGenerator = require("./TestGenerator");
+
+/**
+ * Represents a context for testing.
+ */
+export class TestContext
+{
+    /**
+     * The directory of the generator.
+     */
+    private generatorDirectory = Path.join(__dirname, "TestGenerator");
+
+    /**
+     * An instance of the `RunContext` class that already has finished.
+     */
+    private finishedContext: RunContext = null;
+
+    /**
+     * Initializes a new instance of the `TestContext` class.
+     */
+    public constructor()
+    { }
+
+    /**
+     * Gets the directory of the generator.
+     */
+    public get GeneratorDirectory()
+    {
+        return this.generatorDirectory;
+    }
+
+    /**
+     * Gets the generator.
+     */
+    public get Generator(): Promise<TestGenerator>
+    {
+        return (async () =>
+        {
+            if (this.finishedContext === null)
+            {
+                this.finishedContext = run(this.GeneratorDirectory);
+                await this.finishedContext.toPromise();
+            }
+
+            return (this.finishedContext as any).generator;
+        })();
+    }
+
+    /**
+     * Initializes the context.
+     */
+    public async Initialize(): Promise<void>
+    {
+        await writeJSON(
+            Path.join(this.GeneratorDirectory, "package.json"),
+            {
+                name: "test"
+            });
+    }
+
+    /**
+     * Disposes the context.
+     */
+    public async Dispose(): Promise<void>
+    {
+        await remove(Path.join(this.GeneratorDirectory, "package.json"));
+    }
+
+    /**
+     * Creates a promise resolving the specified `value`.
+     *
+     * @param value
+     * The value to promisify.
+     */
+    public CreatePromise<T>(value: T): Promise<T>
+    {
+        return new Promise(
+            (resolve) =>
+            {
+                resolve(value);
+            });
+    }
+
+    /**
+     * Nests the specified `value` into a function.
+     *
+     * @param value
+     * The value to nest into a function.
+     */
+    public CreateFunction<T>(value: T): () => T
+    {
+        return () =>
+        {
+            return value;
+        }
+    }
+
+    /**
+     * Nests the promisified `value` into a function.
+     *
+     * @param value
+     * The value to nest.
+     */
+    public CreatePromiseFunction<T>(value: T): () => Promise<T>
+    {
+        return this.CreateFunction(this.CreatePromise(value));
+    }
+
+    /**
+     * Executes the generator.
+     */
+    public ExecuteGenerator(settings?: RunContextSettings)
+    {
+        return run(this.GeneratorDirectory, settings);
+    }
+}
