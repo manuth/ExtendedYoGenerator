@@ -59,7 +59,7 @@ export class TestContext
     public async Initialize(): Promise<void>
     {
         spawnSync(
-            "npm",
+            npmWhich(this.GeneratorDirectory).sync("npm"),
             [
                 "install"
             ],
