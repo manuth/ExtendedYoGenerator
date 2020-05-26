@@ -50,19 +50,19 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     }
 
     /**
-     * Gets the questions to ask before executing the generator.
-     */
-    protected get Questions(): Array<Question<T>>
-    {
-        return [];
-    }
-
-    /**
      * Gets the components the user can select.
      */
     protected get Components(): ComponentCollection<T>
     {
         return null;
+    }
+
+    /**
+     * Gets the questions to ask before executing the generator.
+     */
+    protected get Questions(): Array<Question<T>>
+    {
+        return [];
     }
 
     /**
