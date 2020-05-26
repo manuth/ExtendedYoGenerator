@@ -73,7 +73,7 @@ export function GeneratorTests(context: TestContext)
                                 "Checking whether the template-path ends with the name of the `TemplateRoot`…",
                                 () =>
                                 {
-                                    Assert.strictEqual(Path.basename(generator.templatePath()), generator["TemplateRoot"]);
+                                    Assert.strictEqual(Path.basename(generator.templatePath()), generator.TemplateRoot);
                                 });
                         });
                 });
@@ -86,15 +86,15 @@ export function GeneratorTests(context: TestContext)
                         "Checking whether the default components are selected by default…",
                         () =>
                         {
-                            if (!isNullOrUndefined(generator["Components"]))
+                            if (!isNullOrUndefined(generator.Components))
                             {
-                                for (let category of generator["Components"].Categories)
+                                for (let category of generator.Components.Categories)
                                 {
                                     for (let component of category.Components)
                                     {
                                         if (component.DefaultEnabled)
                                         {
-                                            Assert.strictEqual(generator["Settings"][GeneratorSetting.Components].includes(component.ID), true);
+                                            Assert.strictEqual(generator.Settings[GeneratorSetting.Components].includes(component.ID), true);
                                         }
                                     }
                                 }
@@ -105,9 +105,9 @@ export function GeneratorTests(context: TestContext)
                         "Checking whether additional questions are asked, if components are selected…",
                         () =>
                         {
-                            if (!isNullOrUndefined(generator["Components"]))
+                            if (!isNullOrUndefined(generator.Components))
                             {
-                                for (let category of generator["Components"].Categories)
+                                for (let category of generator.Components.Categories)
                                 {
                                     for (let component of category.Components)
                                     {
@@ -116,8 +116,8 @@ export function GeneratorTests(context: TestContext)
                                             for (let question of component.Questions)
                                             {
                                                 Assert.strictEqual(
-                                                    question.name in generator["Settings"],
-                                                    generator["Settings"][GeneratorSetting.Components].includes(component.ID));
+                                                    question.name in generator.Settings,
+                                                    generator.Settings[GeneratorSetting.Components].includes(component.ID));
                                             }
                                         }
                                     }
@@ -134,11 +134,11 @@ export function GeneratorTests(context: TestContext)
                         "Checking whether the `Questions` are asked…",
                         () =>
                         {
-                            for (let question of generator["Questions"])
+                            for (let question of generator.Questions)
                             {
                                 if (!isNullOrUndefined(question.default))
                                 {
-                                    Assert.strictEqual(question.name in generator["Settings"], true);
+                                    Assert.strictEqual(question.name in generator.Settings, true);
                                 }
                             }
                         });

@@ -24,7 +24,7 @@ class TestGenerator extends Generator
     /**
      * Gets the name of the root of the template-folder.
      */
-    protected get TemplateRoot()
+    public get TemplateRoot()
     {
         return "test";
     }
