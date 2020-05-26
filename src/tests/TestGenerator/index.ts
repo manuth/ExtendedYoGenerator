@@ -8,6 +8,62 @@ import { ComponentCollection } from "../../Components/ComponentCollection";
 class TestGenerator extends Generator
 {
     /**
+     * The name of the root of the template-folder.
+     */
+    private templateRoot = "test";
+
+    /**
+     * The questions to ask.
+     */
+    private questions: Question[] = [
+        {
+            name: "test",
+            message: "test",
+            default: "test"
+        }
+    ];
+
+    /**
+     * The components of the generator.
+     */
+    private components = new ComponentCollection<IGeneratorSettings>(
+        this,
+        {
+            Question: "test",
+            Categories: [
+                {
+                    DisplayName: "test",
+                    Components: [
+                        {
+                            ID: "test1",
+                            DisplayName: "Test 1",
+                            FileMappings: [],
+                            DefaultEnabled: true,
+                            Questions: [
+                                {
+                                    name: "additional1",
+                                    default: "test"
+                                }
+                            ]
+                        },
+                        {
+                            ID: "test2",
+                            DisplayName: "Test 2",
+                            FileMappings: [],
+                            DefaultEnabled: false,
+                            Questions: [
+                                {
+                                    name: "additional2",
+                                    default: "test"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        });
+
+    /**
      * Initializes a new instance of the `TestGenerator` class.
      *
      * @param args
@@ -22,54 +78,35 @@ class TestGenerator extends Generator
     }
 
     /**
-     * Gets the name of the root of the template-folder.
+     * Gets or sets the name of the root of the template-folder.
      */
     public get TemplateRoot()
     {
-        return "test";
+        return this.templateRoot;
     }
 
     /**
-     * Gets the components provided by the generator.
+     * @inheritdoc
+     */
+    public set TemplateRoot(value)
+    {
+        this.templateRoot = value;
+    }
+
+    /**
+     * Gets or sets the components provided by the generator.
      */
     public get Components(): ComponentCollection<IGeneratorSettings>
     {
-        return new ComponentCollection<IGeneratorSettings>(
-            this,
-            {
-                Question: "test",
-                Categories: [
-                    {
-                        DisplayName: "test",
-                        Components: [
-                            {
-                                ID: "test1",
-                                DisplayName: "Test 1",
-                                FileMappings: [],
-                                DefaultEnabled: true,
-                                Questions: [
-                                    {
-                                        name: "additional1",
-                                        default: "test"
-                                    }
-                                ]
-                            },
-                            {
-                                ID: "test2",
-                                DisplayName: "Test 2",
-                                FileMappings: [],
-                                DefaultEnabled: false,
-                                Questions: [
-                                    {
-                                        name: "additional2",
-                                        default: "test"
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            });
+        return this.components;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public set Components(value)
+    {
+        this.components = value;
     }
 
     /**
@@ -77,13 +114,15 @@ class TestGenerator extends Generator
      */
     public get Questions(): Question[]
     {
-        return [
-            {
-                name: "test",
-                message: "test",
-                default: "test"
-            }
-        ];
+        return this.questions;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public set Questions(value)
+    {
+        this.questions = value;
     }
 
     /**
