@@ -3,6 +3,8 @@ import { writeJSON, remove } from "fs-extra";
 import { run, RunContext, RunContextSettings } from "yeoman-test";
 import { IGenerator } from "../IGenerator";
 import TestGenerator = require("./TestGenerator");
+import { spawnSync } from "child_process";
+import npmWhich = require("npm-which");
 
 /**
  * Represents a context for testing.
@@ -12,7 +14,7 @@ export class TestContext
     /**
      * The directory of the generator.
      */
-    private generatorDirectory = Path.join(__dirname, "TestGenerator");
+    private generatorDirectory = Path.join(__dirname, "..", "..", "test", "TestGenerator");
 
     /**
      * An instance of the `RunContext` class that already has finished.
@@ -55,20 +57,23 @@ export class TestContext
      */
     public async Initialize(): Promise<void>
     {
-        await writeJSON(
-            Path.join(this.GeneratorDirectory, "package.json"),
+        spawnSync(
+            "npm",
+            [
+                "install"
+            ],
             {
-                name: "test"
+                cwd: this.GeneratorDirectory
             });
+
+        spawnSync(npmWhich(this.GeneratorDirectory).sync("tsc"));
     }
 
     /**
      * Disposes the context.
      */
     public async Dispose(): Promise<void>
-    {
-        await remove(Path.join(this.GeneratorDirectory, "package.json"));
-    }
+    { }
 
     /**
      * Creates a promise resolving the specified `value`.
