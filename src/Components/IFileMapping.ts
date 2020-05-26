@@ -13,7 +13,7 @@ export interface IFileMapping<TSettings>
     /**
      * Gets or sets the path to the template of the component.
      */
-    Source: Resolvable<FileMapping<TSettings>, TSettings, string>;
+    Source?: Resolvable<FileMapping<TSettings>, TSettings, string>;
 
     /**
      * Gets or sets the destination to save the component to.
@@ -23,10 +23,10 @@ export interface IFileMapping<TSettings>
     /**
      * Gets or sets the context to use for copying the file-entry.
      */
-    Context: ResolveFunction<FileMapping<TSettings>, TSettings, any>;
+    Context?: ResolveFunction<FileMapping<TSettings>, TSettings, any>;
 
     /**
      * Gets or sets the method to execute for processing the file-mapping.
      */
-    Processor: (target: FileMapping<TSettings>, generator: IGenerator<TSettings>, context?: any) => void | Promise<void>;
+    Processor?: (target: FileMapping<TSettings>, generator: IGenerator<TSettings>, context?: any) => void | Promise<void>;
 }
