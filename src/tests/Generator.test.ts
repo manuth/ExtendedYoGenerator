@@ -34,8 +34,9 @@ export function GeneratorTests(context: TestContext)
                 {
                     test(
                         "Checking whether the generator can be executed…",
-                        async () =>
+                        async function()
                         {
+                            this.enableTimeouts(false);
                             await runContext.toPromise();
                             generator = await context.Generator;
                         });

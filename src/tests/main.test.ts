@@ -8,14 +8,16 @@ suite(
         let context = new TestContext();
 
         suiteSetup(
-            async () =>
+            async function()
             {
+                this.enableTimeouts(false);
                 await context.Initialize();
             });
 
         suiteTeardown(
-            async () =>
+            async function()
             {
+                this.enableTimeouts(false);
                 await context.Dispose();
             });
 
