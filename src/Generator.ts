@@ -10,6 +10,7 @@ import { IGeneratorSettings } from "./IGeneratorSettings";
 import { IGenerator } from "./IGenerator";
 import { ComponentCollection } from "./Components/ComponentCollection";
 import { FileMapping } from "./Components/FileMapping";
+import { IComponentCollection } from "./Components/IComponentCollection";
 
 /**
  * Represents a yeoman-generator.
@@ -44,17 +45,32 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     /**
      * Gets the name of the root of the template-folder.
      */
-    protected get TemplateRoot()
+    protected get TemplateRoot(): string
     {
         return "";
     }
 
     /**
-     * Gets the components the user can select.
+     * Gets the options for the components the user can select.
      */
-    protected get Components(): ComponentCollection<T>
+    protected get Components(): IComponentCollection<T>
     {
         return null;
+    }
+
+    /**
+     * Gets the components the user can select.
+     */
+    protected get ComponentCollection(): ComponentCollection<T>
+    {
+        if (this.Components)
+        {
+            return new ComponentCollection(this, this.Components);
+        }
+        else
+        {
+            return null;
+        }
     }
 
     /**
@@ -63,6 +79,90 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     protected get Questions(): Array<Question<T>>
     {
         return [];
+    }
+
+    /**
+     * Gets all questions including questions for the components.
+     */
+    protected get QuestionCollection(): Array<Question<T>>
+    {
+        let result: Array<Question<T>> = [];
+        let components: ChoiceCollection<T> = [];
+        let defaults: string[] = [];
+
+        for (let category of this.Components?.Categories ?? [])
+        {
+            components.push(new Separator(category.DisplayName));
+
+            for (let component of category.Components)
+            {
+                let isDefault = component.DefaultEnabled ?? false;
+
+                components.push(
+                    {
+                        value: component.ID,
+                        name: component.DisplayName,
+                        checked: isDefault
+                    });
+
+                if (isDefault)
+                {
+                    defaults.push(component.ID);
+                }
+
+                for (let i = 0; i < component.Questions?.length ?? 0; i++)
+                {
+                    let question = component.Questions[i];
+                    let when = question.when;
+
+                    question.when = async (settings: T) =>
+                    {
+                        if (settings[GeneratorSettingKey.Components].includes(component.ID))
+                        {
+                            if (i === 0)
+                            {
+                                console.log();
+                                console.log(`${chalk.red(">>")} ${chalk.bold(component.DisplayName)} ${chalk.red("<<")}`);
+                            }
+
+                            if (!isNullOrUndefined(when))
+                            {
+                                if (typeof when === "function")
+                                {
+                                    return when(settings);
+                                }
+                                else
+                                {
+                                    return when;
+                                }
+                            }
+                            else
+                            {
+                                return true;
+                            }
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    
+                    result.push(question);
+                }
+            }
+        }
+
+        result.unshift(
+            {
+                type: "checkbox",
+                name: GeneratorSettingKey.Components,
+                message: this.Components.Question,
+                choices: components,
+                default: defaults
+            });
+
+        result.unshift(...this.Questions);
+        return result;
     }
 
     /**
@@ -100,88 +200,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
      */
     public async prompting()
     {
-        let questions: Array<Question<T>> = [];
-        let components: ChoiceCollection<T> = [];
-        let defaults: string[] = [];
-
-        if (this.Components !== null)
-        {
-            for (let category of this.Components.Categories)
-            {
-                components.push(new Separator(category.DisplayName));
-
-                for (let component of category.Components)
-                {
-                    let isDefault = !isNullOrUndefined(component.DefaultEnabled) && component.DefaultEnabled;
-
-                    components.push({
-                        value: component.ID,
-                        name: component.DisplayName,
-                        checked: isDefault
-                    });
-
-                    if (isDefault)
-                    {
-                        defaults.push(component.ID);
-                    }
-
-                    if (!isNullOrUndefined(component.Questions))
-                    {
-                        for (let i = 0; i < component.Questions.length; i++)
-                        {
-                            let question = component.Questions[i];
-                            let when = question.when;
-
-                            question.when = async (settings: T) =>
-                            {
-                                if (settings[GeneratorSettingKey.Components].includes(component.ID))
-                                {
-                                    if (i === 0)
-                                    {
-                                        this.log();
-                                        this.log(`${chalk.red(">>")} ${chalk.bold(component.DisplayName)} ${chalk.red("<<")}`);
-                                    }
-
-                                    if (!isNullOrUndefined(when))
-                                    {
-                                        if (typeof when === "function")
-                                        {
-                                            return when(settings);
-                                        }
-                                        else
-                                        {
-                                            return when;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        return true;
-                                    }
-                                }
-                                else
-                                {
-                                    return false;
-                                }
-                            };
-
-                            questions.push(question);
-                        }
-                    }
-                }
-            }
-
-            questions.unshift(
-                {
-                    type: "checkbox",
-                    name: GeneratorSettingKey.Components,
-                    message: this.Components.Question,
-                    choices: components,
-                    default: defaults
-                });
-        }
-
-        questions.unshift(...this.Questions);
-        Object.assign(this.Settings, await this.prompt(questions));
+        Object.assign(this.Settings, await this.prompt(this.QuestionCollection));
         this.log();
     }
 
@@ -190,7 +209,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
      */
     public async writing()
     {
-        for (let category of this.Components.Categories)
+        for (let category of this.ComponentCollection?.Categories ?? [])
         {
             for (let component of category.Components)
             {

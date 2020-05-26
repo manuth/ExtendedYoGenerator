@@ -26,9 +26,7 @@ export class TestGenerator extends Generator
     /**
      * The components of the generator.
      */
-    private components = new ComponentCollection<IGeneratorSettings>(
-        this,
-        {
+    private components: IComponentCollection<IGeneratorSettings> = {
             Question: "test",
             Categories: [
                 {
@@ -61,7 +59,7 @@ export class TestGenerator extends Generator
                     ]
                 }
             ]
-        });
+        };
 
     /**
      * Initializes a new instance of the `TestGenerator` class.
@@ -96,7 +94,7 @@ export class TestGenerator extends Generator
     /**
      * Gets or sets the components provided by the generator.
      */
-    public get Components(): ComponentCollection<IGeneratorSettings>
+    public get Components(): IComponentCollection<IGeneratorSettings>
     {
         return this.components;
     }
