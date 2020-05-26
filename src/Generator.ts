@@ -90,78 +90,82 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
         let components: ChoiceCollection<T> = [];
         let defaults: string[] = [];
 
-        for (let category of this.Components?.Categories ?? [])
+        if (this.ComponentCollection)
         {
-            components.push(new Separator(category.DisplayName));
-
-            for (let component of category.Components)
+            for (let category of this.ComponentCollection.Categories ?? [])
             {
-                let isDefault = component.DefaultEnabled ?? false;
-
-                components.push(
-                    {
-                        value: component.ID,
-                        name: component.DisplayName,
-                        checked: isDefault
-                    });
-
-                if (isDefault)
+                components.push(new Separator(category.DisplayName));
+    
+                for (let component of category.Components)
                 {
-                    defaults.push(component.ID);
-                }
-
-                for (let i = 0; i < component.Questions?.length ?? 0; i++)
-                {
-                    let question = component.Questions[i];
-                    let when = question.when;
-
-                    question.when = async (settings: T) =>
-                    {
-                        if (settings[GeneratorSettingKey.Components].includes(component.ID))
+                    let isDefault = component.DefaultEnabled ?? false;
+    
+                    components.push(
                         {
-                            if (i === 0)
+                            value: component.ID,
+                            name: component.DisplayName,
+                            checked: isDefault
+                        });
+    
+                    if (isDefault)
+                    {
+                        defaults.push(component.ID);
+                    }
+    
+                    for (let i = 0; i < component.Questions?.length ?? 0; i++)
+                    {
+                        let question = component.Questions[i];
+                        let when = question.when;
+    
+                        question.when = async (settings: T) =>
+                        {
+                            if (settings[GeneratorSettingKey.Components].includes(component.ID))
                             {
-                                this.log();
-                                this.log(`${chalk.red(">>")} ${chalk.bold(component.DisplayName)} ${chalk.red("<<")}`);
-                            }
-
-                            if (!isNullOrUndefined(when))
-                            {
-                                if (typeof when === "function")
+                                if (i === 0)
                                 {
-                                    return when(settings);
+                                    this.log();
+                                    this.log(`${chalk.red(">>")} ${chalk.bold(component.DisplayName)} ${chalk.red("<<")}`);
+                                }
+    
+                                if (!isNullOrUndefined(when))
+                                {
+                                    if (typeof when === "function")
+                                    {
+                                        return when(settings);
+                                    }
+                                    else
+                                    {
+                                        return when;
+                                    }
                                 }
                                 else
                                 {
-                                    return when;
+                                    return true;
                                 }
                             }
                             else
                             {
-                                return true;
+                                return false;
                             }
                         }
-                        else
-                        {
-                            return false;
-                        }
+                        
+                        result.push(question);
                     }
-                    
-                    result.push(question);
                 }
             }
+    
+            result.unshift(
+                {
+                    type: "checkbox",
+                    name: GeneratorSettingKey.Components,
+                    message: this.Components.Question,
+                    choices: components,
+                    default: defaults
+                });
+    
+            result.unshift(...this.Questions);
         }
 
-        result.unshift(
-            {
-                type: "checkbox",
-                name: GeneratorSettingKey.Components,
-                message: this.Components.Question,
-                choices: components,
-                default: defaults
-            });
-
-        result.unshift(...this.Questions);
         return result;
     }
 
