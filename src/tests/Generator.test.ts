@@ -4,7 +4,7 @@ import Path = require("path");
 import { isNullOrUndefined } from "util";
 import { run, RunContext } from "yeoman-test";
 import { GeneratorSetting } from "..";
-import TestGenerator = require("./TestGenerator");
+import { TestGenerator } from "./TestGenerator";
 import { TestContext } from "./TestContext";
 
 /**
@@ -21,27 +21,27 @@ export function GeneratorTests(context: TestContext)
         {
             let runContext: RunContext;
             let generator: TestGenerator;
-    
+
             suiteSetup(
                 async () =>
                 {
                     runContext = context.ExecuteGenerator();
                 });
-    
+
             suite(
                 "General",
                 () =>
                 {
                     test(
                         "Checking whether the generator can be executed…",
-                        async function()
+                        async function ()
                         {
                             this.enableTimeouts(false);
                             await runContext.toPromise();
                             generator = await context.Generator;
                         });
                 });
-    
+
             suite(
                 "modulePath(...path)",
                 () =>
@@ -53,7 +53,7 @@ export function GeneratorTests(context: TestContext)
                             Assert.strictEqual(Path.resolve(generator.modulePath()), Path.resolve(context.GeneratorDirectory));
                         });
                 });
-    
+
             suite(
                 "templatePath(...path)",
                 () =>
@@ -68,7 +68,7 @@ export function GeneratorTests(context: TestContext)
                                 {
                                     Assert.strictEqual(generator.templatePath().startsWith(generator.modulePath()), true);
                                 });
-    
+
                             test(
                                 "Checking whether the template-path ends with the name of the `TemplateRoot`…",
                                 () =>
@@ -77,7 +77,7 @@ export function GeneratorTests(context: TestContext)
                                 });
                         });
                 });
-    
+
             suite(
                 "Components",
                 () =>
@@ -100,7 +100,7 @@ export function GeneratorTests(context: TestContext)
                                 }
                             }
                         });
-    
+
                     test(
                         "Checking whether additional questions are asked, if components are selected…",
                         () =>
@@ -125,7 +125,7 @@ export function GeneratorTests(context: TestContext)
                             }
                         });
                 });
-    
+
             suite(
                 "Questions",
                 () =>

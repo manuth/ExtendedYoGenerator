@@ -2,7 +2,7 @@ import Path = require("path");
 import { writeJSON, remove } from "fs-extra";
 import { run, RunContext, RunContextSettings } from "yeoman-test";
 import { IGenerator } from "../IGenerator";
-import TestGenerator = require("./TestGenerator");
+import { TestGenerator } from "./TestGenerator";
 import { spawnSync } from "child_process";
 import npmWhich = require("npm-which");
 

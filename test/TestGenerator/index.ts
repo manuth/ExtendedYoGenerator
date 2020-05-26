@@ -1,4 +1,4 @@
-import TestGenerator = require("extended-generator/lib/tests/TestGenerator");
+import { TestGenerator } from "extended-generator/lib/tests/TestGenerator";
 
 /**
  * The test-generator.

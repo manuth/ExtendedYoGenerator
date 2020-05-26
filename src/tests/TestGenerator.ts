@@ -1,11 +1,11 @@
-import { Generator, IComponentCollection, Question } from "../..";
-import { IGeneratorSettings } from "../../IGeneratorSettings";
-import { ComponentCollection } from "../../Components/ComponentCollection";
+import { Generator, IComponentCollection, Question } from "..";
+import { IGeneratorSettings } from "../IGeneratorSettings";
+import { ComponentCollection } from "../Components/ComponentCollection";
 
 /**
  * Represents a test-generator.
  */
-class TestGenerator extends Generator
+export class TestGenerator extends Generator
 {
     /**
      * The name of the root of the template-folder.
@@ -149,5 +149,3 @@ class TestGenerator extends Generator
         this.log("The end");
     }
 }
-
-export = TestGenerator;
