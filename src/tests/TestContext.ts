@@ -5,6 +5,7 @@ import { IGenerator } from "../IGenerator";
 import { TestGenerator } from "./TestGenerator";
 import { spawnSync } from "child_process";
 import npmWhich = require("npm-which");
+import { IRunContext } from "./IRunContext";
 
 /**
  * Represents a context for testing.
@@ -19,7 +20,7 @@ export class TestContext
     /**
      * An instance of the `RunContext` class that already has finished.
      */
-    private finishedContext: RunContext = null;
+    private finishedContext: IRunContext<TestGenerator> = null;
 
     /**
      * Initializes a new instance of the `TestContext` class.
@@ -44,11 +45,11 @@ export class TestContext
         {
             if (this.finishedContext === null)
             {
-                this.finishedContext = run(this.GeneratorDirectory);
+                this.finishedContext = this.ExecuteGenerator();
                 await this.finishedContext.toPromise();
             }
 
-            return (this.finishedContext as any).generator;
+            return this.finishedContext.generator;
         })();
     }
 
@@ -122,8 +123,8 @@ export class TestContext
     /**
      * Executes the generator.
      */
-    public ExecuteGenerator(settings?: RunContextSettings)
+    public ExecuteGenerator(settings?: RunContextSettings): IRunContext<TestGenerator>
     {
-        return run(this.GeneratorDirectory, settings);
+        return run(this.GeneratorDirectory, settings) as IRunContext<TestGenerator>;
     }
 }
