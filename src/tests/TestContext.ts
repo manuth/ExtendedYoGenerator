@@ -66,7 +66,11 @@ export class TestContext
                 cwd: this.GeneratorDirectory
             });
 
-        spawnSync(npmWhich(this.GeneratorDirectory).sync("tsc"));
+        spawnSync(
+            npmWhich(this.GeneratorDirectory).sync("tsc"),
+            {
+                cwd: this.GeneratorDirectory
+            });
     }
 
     /**
