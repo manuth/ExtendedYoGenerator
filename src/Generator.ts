@@ -121,8 +121,8 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
                         {
                             if (i === 0)
                             {
-                                console.log();
-                                console.log(`${chalk.red(">>")} ${chalk.bold(component.DisplayName)} ${chalk.red("<<")}`);
+                                this.log();
+                                this.log(`${chalk.red(">>")} ${chalk.bold(component.DisplayName)} ${chalk.red("<<")}`);
                             }
 
                             if (!isNullOrUndefined(when))
