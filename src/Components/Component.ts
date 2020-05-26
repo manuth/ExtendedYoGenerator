@@ -62,15 +62,11 @@ export class Component<TSettings> extends PropertyResolver<IComponent<TSettings>
     {
         return (async () =>
         {
-            let result: Array<FileMapping<TSettings>>;
-            let fileMappings = await this.ResolveProperty(this, this.Object.FileMappings);
-
-            for (let fileMapping of fileMappings)
-            {
-                result.push(new FileMapping(this.Generator, fileMapping));
-            }
-
-            return result;
+            return (await this.ResolveProperty(this, this.Object.FileMappings)).map(
+                (fileMapping) =>
+                {
+                    return new FileMapping(this.Generator, fileMapping); 
+                });
         })();
     }
 }
