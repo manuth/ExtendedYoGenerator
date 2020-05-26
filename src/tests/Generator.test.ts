@@ -6,6 +6,7 @@ import { run, RunContext } from "yeoman-test";
 import { GeneratorSetting } from "..";
 import { TestGenerator } from "./TestGenerator";
 import { TestContext } from "./TestContext";
+import { IRunContext } from "./IRunContext";
 
 /**
  * Registers the generator-tests.
@@ -19,13 +20,26 @@ export function GeneratorTests(context: TestContext)
         "Generator",
         () =>
         {
-            let runContext: RunContext;
             let generator: TestGenerator;
 
             suiteSetup(
                 async () =>
                 {
-                    runContext = context.ExecuteGenerator();
+                    generator = await context.Generator;
+                });
+
+            setup(
+                () =>
+                {
+                    generator.TemplateRoot = "test";
+
+                    generator.Questions = [
+                        {
+                            name: "test",
+                            message: "test",
+                            default: "test"
+                        }
+                    ]
                 });
 
             suite(
@@ -37,8 +51,6 @@ export function GeneratorTests(context: TestContext)
                         async function ()
                         {
                             this.enableTimeouts(false);
-                            await runContext.toPromise();
-                            generator = await context.Generator;
                         });
                 });
 

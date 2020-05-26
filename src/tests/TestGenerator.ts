@@ -1,6 +1,7 @@
 import { Generator, IComponentCollection, Question } from "..";
 import { IGeneratorSettings } from "../IGeneratorSettings";
 import { ComponentCollection } from "../Components/ComponentCollection";
+import { ITestGeneratorOptions } from "./ITestGeneratorOptions";
 
 /**
  * Represents a test-generator.
@@ -70,9 +71,24 @@ export class TestGenerator extends Generator
      * @param options
      * A set of options for the generator.
      */
-    public constructor(args: string | string[], options: {})
+    public constructor(args: string | string[], options: ITestGeneratorOptions)
     {
         super(args, options);
+
+        if (options.TemplateRoot)
+        {
+            this.TemplateRoot = options.TemplateRoot;
+        }
+
+        if (options.Components)
+        {
+            this.Components = options.Components;
+        }
+
+        if (options.Questions)
+        {
+            this.Questions = options.Questions;
+        }
     }
 
     /**
