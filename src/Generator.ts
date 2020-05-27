@@ -162,10 +162,9 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
                     choices: components,
                     default: defaults
                 });
-    
-            result.unshift(...(this.Questions ?? []));
         }
 
+        result.unshift(...(this.Questions ?? []));
         return result;
     }
 
