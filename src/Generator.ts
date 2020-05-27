@@ -196,7 +196,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
      */
     public templatePath(...path: string[])
     {
-        return this.modulePath("templates", this.TemplateRoot, ...path);
+        return this.modulePath("templates", ...(this.TemplateRoot ? [this.TemplateRoot] : []), ...path);
     }
 
     /**
