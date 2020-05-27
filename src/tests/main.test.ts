@@ -1,5 +1,6 @@
 import { TestContext } from "./TestContext";
 import { GeneratorTests } from "./Generator.test";
+import { ComponentsTests } from "./Components";
 
 suite(
     "ExtendedYoGenerator",
@@ -21,5 +22,6 @@ suite(
                 await context.Dispose();
             });
 
+        ComponentsTests(context);
         GeneratorTests(context);
     });
