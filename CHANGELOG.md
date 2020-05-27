@@ -5,8 +5,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## ExtendedYoGenerator [Unreleased]
+### Added
+  - Continuous integration for automated publishing
+  - Tests for all classes
+
 ### Updated
   - The CHANGELOG-file to match with the proposed format
+  - All dependencies
+  - Object-naming for better understanding
+  - The generator-code to only allow methods to be executed after initialization
+  - Object-structure for more simple usage of lazy-loaded component-properties
+  - Mocha-configuration for improving the testing-experience
+  - Refactor classes for enhanced testing
 
 [Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v1.0.13...dev)
 
