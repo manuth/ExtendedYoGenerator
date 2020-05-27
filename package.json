@@ -57,6 +57,7 @@
     "tslint": "^6.1.2",
     "typescript": "^3.9.3",
     "typescript-tslint-plugin": "^0.5.5",
+    "upath": "^1.2.0",
     "yeoman-test": "^2.6.0"
   }
 }

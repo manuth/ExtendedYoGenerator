@@ -1,6 +1,6 @@
 import Assert = require("assert");
 import FileSystem = require("fs-extra");
-import Path = require("path");
+import Path = require("upath");
 import { isNullOrUndefined } from "util";
 import { run, RunContext } from "yeoman-test";
 import { GeneratorSetting } from "..";
@@ -68,6 +68,31 @@ export function GeneratorTests(context: TestContext)
                 }
             };
 
+            /**
+             * Asserts a file-path.
+             *
+             * @param actual
+             * The actual path.
+             *
+             * @param expected
+             * The expected path.
+             */
+            function AssertPath(actual: string, expected: string)
+            {
+                Assert.strictEqual(ProcessPath(actual), ProcessPath(expected));
+            }
+
+            /**
+             * Resolves and normalizes a path for better comparsion.
+             *
+             * @param path
+             * The path to process.
+             */
+            function ProcessPath(path: string)
+            {
+                return Path.normalize(Path.resolve(path));
+            }
+
             suiteSetup(
                 async () =>
                 {
@@ -96,7 +121,7 @@ export function GeneratorTests(context: TestContext)
                         "Checking whether `modulePath(...path)` resolves to the root of the generator's module…",
                         () =>
                         {
-                            Assert.strictEqual(Path.resolve(generator.modulePath()), Path.resolve(context.GeneratorDirectory));
+                            AssertPath(generator.modulePath(testPath), Path.join(context.GeneratorDirectory, testPath));
                         });
                 });
 
@@ -112,7 +137,10 @@ export function GeneratorTests(context: TestContext)
                                 "Checking whether the template-path is a sub-directory of the module…",
                                 () =>
                                 {
-                                    Assert.strictEqual(generator.templatePath().startsWith(generator.modulePath()), true);
+                                    let relativePath = Path.relative(ProcessPath(Path.join(context.GeneratorDirectory)), ProcessPath(generator.templatePath(testPath)));
+                                    console.log(generator, generatorOptions);
+                                    Assert.ok(!Path.isAbsolute(relativePath));
+                                    Assert.ok(!relativePath.startsWith(".."));
                                 });
 
                             test(
