@@ -1,4 +1,5 @@
 import { TestGenerator } from "extended-generator/lib/tests/TestGenerator";
+import { ITestOptions } from "extended-generator/lib/tests/ITestOptions";
 
 /**
  * The test-generator.
@@ -14,7 +15,7 @@ class Generator extends TestGenerator
      * @param options
      * A set of options for the generator.
      */
-    public constructor(args: string | string[], options: {})
+    public constructor(args: string | string[], options: ITestOptions)
     {
         super(args, options);
     }
