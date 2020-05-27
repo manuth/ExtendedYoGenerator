@@ -163,7 +163,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
                     default: defaults
                 });
     
-            result.unshift(...this.Questions);
+            result.unshift(...(this.Questions ?? []));
         }
 
         return result;
