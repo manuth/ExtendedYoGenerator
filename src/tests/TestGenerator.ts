@@ -7,55 +7,12 @@ import { ITestOptions } from "./ITestOptions";
 /**
  * Represents a test-generator.
  */
-export class TestGenerator extends Generator
+export class TestGenerator extends Generator<IGeneratorSettings & Record<string, any>>
 {
     /**
      * The options of the generator.
      */
-    private generatorOptions: ITestGeneratorOptions = {
-        TemplateRoot: "test",
-        Questions: [
-            {
-                name: "test",
-                message: "test",
-                default: "test"
-            }
-        ],
-        Components: {
-            Question: "test",
-            Categories: [
-                {
-                    DisplayName: "test",
-                    Components: [
-                        {
-                            ID: "test1",
-                            DisplayName: "Test 1",
-                            FileMappings: [],
-                            DefaultEnabled: true,
-                            Questions: [
-                                {
-                                    name: "additional1",
-                                    default: "test"
-                                }
-                            ]
-                        },
-                        {
-                            ID: "test2",
-                            DisplayName: "Test 2",
-                            FileMappings: [],
-                            DefaultEnabled: false,
-                            Questions: [
-                                {
-                                    name: "additional2",
-                                    default: "test"
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        }
-    };
+    private generatorOptions: ITestGeneratorOptions = {};
 
     /**
      * Initializes a new instance of the `TestGenerator` class.

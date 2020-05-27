@@ -22,51 +22,9 @@ export function GeneratorTests(context: TestContext)
         () =>
         {
             let generator: TestGenerator;
-
-            let generatorOptions: ITestGeneratorOptions = {
-                TemplateRoot: "test",
-                Questions: [
-                    {
-                        name: "test",
-                        message: "test",
-                        default: "test"
-                    }
-                ],
-                Components: {
-                    Question: "test",
-                    Categories: [
-                        {
-                            DisplayName: "test",
-                            Components: [
-                                {
-                                    ID: "test1",
-                                    DisplayName: "Test 1",
-                                    FileMappings: [],
-                                    DefaultEnabled: true,
-                                    Questions: [
-                                        {
-                                            name: "additional1",
-                                            default: "test"
-                                        }
-                                    ]
-                                },
-                                {
-                                    ID: "test2",
-                                    DisplayName: "Test 2",
-                                    FileMappings: [],
-                                    DefaultEnabled: false,
-                                    Questions: [
-                                        {
-                                            name: "additional2",
-                                            default: "test"
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                }
-            };
+            let generatorOptions: ITestGeneratorOptions = {};
+            let testPath = "this-is-a-test.txt";
+            let runContext: IRunContext<TestGenerator>;
 
             /**
              * Asserts a file-path.
@@ -101,15 +59,75 @@ export function GeneratorTests(context: TestContext)
                     generator = runContext.generator;
                 });
 
+            setup(
+                () =>
+                {
+                    generatorOptions.TemplateRoot = null;
+                    generatorOptions.Components = null;
+                    generatorOptions.Questions = null;
+                });
+
             suite(
                 "General",
                 () =>
                 {
+                    let generatorOptions: ITestGeneratorOptions;
+
+                    setup(
+                        () =>
+                        {
+                            generatorOptions = {
+                                TemplateRoot: "test",
+                                Questions: [
+                                    {
+                                        name: "test",
+                                        message: "test",
+                                        default: "test"
+                                    }
+                                ],
+                                Components: {
+                                    Question: "test",
+                                    Categories: [
+                                        {
+                                            DisplayName: "test",
+                                            Components: [
+                                                {
+                                                    ID: "test1",
+                                                    DisplayName: "Test 1",
+                                                    FileMappings: [],
+                                                    DefaultEnabled: true,
+                                                    Questions: [
+                                                        {
+                                                            name: "additional1",
+                                                            default: "test"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    ID: "test2",
+                                                    DisplayName: "Test 2",
+                                                    FileMappings: [],
+                                                    DefaultEnabled: false,
+                                                    Questions: [
+                                                        {
+                                                            name: "additional2",
+                                                            default: "test"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            };
+                        });
+
                     test(
                         "Checking whether the generator can be executed…",
                         async function ()
                         {
                             this.enableTimeouts(false);
+                            await context.ExecuteGenerator({ testGeneratorOptions: generatorOptions }).toPromise();
                         });
                 });
 
@@ -129,26 +147,36 @@ export function GeneratorTests(context: TestContext)
                 "templatePath(...path)",
                 () =>
                 {
-                    suite(
-                        "Checking whether `templatePath(...path)` resolves correctly…",
+                    let relativePath: string;
+
+                    suiteSetup(
                         () =>
                         {
-                            test(
-                                "Checking whether the template-path is a sub-directory of the module…",
-                                () =>
-                                {
-                                    let relativePath = Path.relative(ProcessPath(Path.join(context.GeneratorDirectory)), ProcessPath(generator.templatePath(testPath)));
-                                    console.log(generator, generatorOptions);
-                                    Assert.ok(!Path.isAbsolute(relativePath));
-                                    Assert.ok(!relativePath.startsWith(".."));
-                                });
+                            relativePath = Path.relative(ProcessPath(Path.join(context.GeneratorDirectory)), ProcessPath(generator.templatePath()));
+                        });
 
-                            test(
-                                "Checking whether the template-path ends with the name of the `TemplateRoot`…",
-                                () =>
-                                {
-                                    Assert.strictEqual(Path.basename(generator.templatePath()), generator.TemplateRoot);
-                                });
+                    test(
+                        "Checking whether the template-path is a sub-directory of the module…",
+                        () =>
+                        {
+                            Assert.ok(!Path.isAbsolute(relativePath));
+                            Assert.ok(!relativePath.startsWith(".."));
+                        });
+
+                    test(
+                        "Checking whether `TemplateRoot` is optional…",
+                        () =>
+                        {
+                            generatorOptions.TemplateRoot = null;
+                            Assert.doesNotThrow(() => generator.templatePath());
+                        });
+
+                    test(
+                        "Checking whether the template-path resolves to the specified `TemplateRoot`…",
+                        () =>
+                        {
+                            generatorOptions.TemplateRoot = "Test";
+                            AssertPath(generator.templatePath(testPath), Path.join(context.GeneratorDirectory, relativePath, generatorOptions.TemplateRoot, testPath));
                         });
                 });
 
@@ -156,47 +184,119 @@ export function GeneratorTests(context: TestContext)
                 "Components",
                 () =>
                 {
-                    test(
-                        "Checking whether the default components are selected by default…",
-                        () =>
+                    let generator: TestGenerator;
+                    let generatorOptions: ITestGeneratorOptions = {};
+                    let defaultID: string;
+                    let hiddenID: string;
+                    let defaultQuestionID: string;
+                    let hiddenQuestionID: string;
+                    let defaultValue: string;
+                    let fileMappingExecuted: boolean;
+
+                    suiteSetup(
+                        async () =>
                         {
-                            if (!isNullOrUndefined(generator.Components))
-                            {
-                                for (let category of generator.Components.Categories)
-                                {
-                                    for (let component of category.Components)
+                            defaultID = "default-component";
+                            hiddenID = "non-default-component";
+                            defaultQuestionID = "this-question-has-a-default-value";
+                            hiddenQuestionID = "this-question-does-not-appear-in-the-results";
+                            defaultValue = "This is the default value";
+                            fileMappingExecuted = false;
+
+                            generatorOptions.Components = {
+                                Question: "Is this just a test?",
+                                Categories: [
                                     {
-                                        if (component.DefaultEnabled)
-                                        {
-                                            Assert.strictEqual(generator.Settings[GeneratorSetting.Components].includes(component.ID), true);
-                                        }
+                                        DisplayName: "Yes, it is!",
+                                        Components: [
+                                            {
+                                                ID: defaultID,
+                                                DisplayName: "Awesome stuff, dude",
+                                                DefaultEnabled: true,
+                                                FileMappings: [
+                                                    {
+                                                        Destination: null,
+                                                        Processor: () =>
+                                                        {
+                                                            fileMappingExecuted = true;
+                                                        }
+                                                    }
+                                                ],
+                                                Questions: [
+                                                    {
+                                                        type: "input",
+                                                        name: defaultQuestionID,
+                                                        message: "Some more info, pls",
+                                                        default: defaultValue
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                ID: hiddenID,
+                                                DisplayName: "Shhh - wanna have some of this, too?",
+                                                DefaultEnabled: false,
+                                                FileMappings: [],
+                                                Questions: [
+                                                    {
+                                                        type: "input",
+                                                        name: hiddenQuestionID,
+                                                        message: "Anwer me!",
+                                                        default: "default value"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                ID: hiddenID,
+                                                DisplayName: "This component doesn't have `DefaultEnabled` set.",
+                                                FileMappings: [],
+                                                Questions: [
+                                                    {
+                                                        type: "input",
+                                                        name: hiddenQuestionID,
+                                                        message: "Test",
+                                                        default: "default"
+                                                    }
+                                                ]
+                                            }
+                                        ]
                                     }
-                                }
+                                ]
                             }
+
+                            let runContext = context.ExecuteGenerator({ testGeneratorOptions: generatorOptions });
+                            await runContext.toPromise();
+                            generator = runContext.generator;
                         });
 
                     test(
-                        "Checking whether additional questions are asked, if components are selected…",
+                        "Checking whether only default components are selected by default…",
                         () =>
                         {
-                            if (!isNullOrUndefined(generator.Components))
-                            {
-                                for (let category of generator.Components.Categories)
-                                {
-                                    for (let component of category.Components)
-                                    {
-                                        if (!isNullOrUndefined(component.Questions))
-                                        {
-                                            for (let question of component.Questions)
-                                            {
-                                                Assert.strictEqual(
-                                                    question.name in generator.Settings,
-                                                    generator.Settings[GeneratorSetting.Components].includes(component.ID));
-                                            }
-                                        }
-                                    }
-                                }
-                            }
+                            Assert.strictEqual(generator.Settings[GeneratorSetting.Components].length, 1);
+                            Assert.ok(generator.Settings[GeneratorSetting.Components].includes(defaultID));
+                            Assert.ok(!generator.Settings[GeneratorSetting.Components].includes(hiddenID));
+                        });
+
+                    test(
+                        "Checking whether additional questions are asked, only if components are selected…",
+                        () =>
+                        {
+                            Assert.ok(defaultQuestionID in generator.Settings);
+                            Assert.ok(!(hiddenQuestionID in generator.Settings));
+                        });
+
+                    test(
+                        "Checking whether default values are applied…",
+                        () =>
+                        {
+                            Assert.strictEqual(generator.Settings[defaultQuestionID], defaultValue);
+                        });
+
+                    test(
+                        "Checking whether file-mappings are executed…",
+                        () =>
+                        {
+                            Assert.ok(fileMappingExecuted);
                         });
                 });
 
@@ -204,17 +304,61 @@ export function GeneratorTests(context: TestContext)
                 "Questions",
                 () =>
                 {
+                    let generator: TestGenerator;
+                    let generatorOptions: ITestGeneratorOptions = {};
+                    let defaultID: string;
+                    let hiddenID: string;
+                    let defaultValue: string[];
+
+                    suiteSetup(
+                        async () =>
+                        {
+                            defaultID = "this-is-a-default-question";
+                            hiddenID = "this-is-a-hidden-question";
+                            defaultValue = ["a"];
+
+                            generatorOptions.Questions = [
+                                {
+                                    type: "list",
+                                    name: defaultID,
+                                    choices: [
+                                        {
+                                            value: "a",
+                                            checked: true
+                                        },
+                                        {
+                                            value: "b",
+                                            checked: true
+                                        }
+                                    ],
+                                    default: defaultValue
+                                },
+                                {
+                                    type: "checkbox",
+                                    name: hiddenID,
+                                    default: defaultValue,
+                                    when: false
+                                }
+                            ];
+
+                            let runContext = context.ExecuteGenerator({ testGeneratorOptions: generatorOptions });
+                            await runContext.toPromise();
+                            generator = runContext.generator;
+                        });
+
                     test(
-                        "Checking whether the `Questions` are asked…",
+                        "Checking whether only settings for enabled questions are present…",
                         () =>
                         {
-                            for (let question of generator.Questions)
-                            {
-                                if (!isNullOrUndefined(question.default))
-                                {
-                                    Assert.strictEqual(question.name in generator.Settings, true);
-                                }
-                            }
+                            Assert.ok(defaultID in generator.Settings);
+                            Assert.ok(!(hiddenID in generator.Settings));
+                        });
+
+                    test(
+                        "Checking whether default values are applied…",
+                        () =>
+                        {
+                            Assert.strictEqual(generator.Settings[defaultID], defaultValue);
                         });
                 });
         });
