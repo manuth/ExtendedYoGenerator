@@ -7,6 +7,7 @@ import { GeneratorSetting } from "..";
 import { TestGenerator } from "./TestGenerator";
 import { TestContext } from "./TestContext";
 import { IRunContext } from "./IRunContext";
+import { ITestGeneratorOptions } from "./ITestGeneratorOptions";
 
 /**
  * Registers the generator-tests.
@@ -22,24 +23,57 @@ export function GeneratorTests(context: TestContext)
         {
             let generator: TestGenerator;
 
+            let generatorOptions: ITestGeneratorOptions = {
+                TemplateRoot: "test",
+                Questions: [
+                    {
+                        name: "test",
+                        message: "test",
+                        default: "test"
+                    }
+                ],
+                Components: {
+                    Question: "test",
+                    Categories: [
+                        {
+                            DisplayName: "test",
+                            Components: [
+                                {
+                                    ID: "test1",
+                                    DisplayName: "Test 1",
+                                    FileMappings: [],
+                                    DefaultEnabled: true,
+                                    Questions: [
+                                        {
+                                            name: "additional1",
+                                            default: "test"
+                                        }
+                                    ]
+                                },
+                                {
+                                    ID: "test2",
+                                    DisplayName: "Test 2",
+                                    FileMappings: [],
+                                    DefaultEnabled: false,
+                                    Questions: [
+                                        {
+                                            name: "additional2",
+                                            default: "test"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            };
+
             suiteSetup(
                 async () =>
                 {
-                    generator = await context.Generator;
-                });
-
-            setup(
-                () =>
-                {
-                    generator.TemplateRoot = "test";
-
-                    generator.Questions = [
-                        {
-                            name: "test",
-                            message: "test",
-                            default: "test"
-                        }
-                    ]
+                    runContext = context.ExecuteGenerator({ testGeneratorOptions: generatorOptions });
+                    await runContext.toPromise();
+                    generator = runContext.generator;
                 });
 
             suite(

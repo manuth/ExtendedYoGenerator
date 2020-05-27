@@ -2,6 +2,7 @@ import { Generator, IComponentCollection, Question } from "..";
 import { IGeneratorSettings } from "../IGeneratorSettings";
 import { ComponentCollection } from "../Components/ComponentCollection";
 import { ITestGeneratorOptions } from "./ITestGeneratorOptions";
+import { ITestOptions } from "./ITestOptions";
 
 /**
  * Represents a test-generator.
@@ -9,25 +10,18 @@ import { ITestGeneratorOptions } from "./ITestGeneratorOptions";
 export class TestGenerator extends Generator
 {
     /**
-     * The name of the root of the template-folder.
+     * The options of the generator.
      */
-    private templateRoot = "test";
-
-    /**
-     * The questions to ask.
-     */
-    private questions: Question[] = [
-        {
-            name: "test",
-            message: "test",
-            default: "test"
-        }
-    ];
-
-    /**
-     * The components of the generator.
-     */
-    private components: IComponentCollection<IGeneratorSettings> = {
+    private generatorOptions: ITestGeneratorOptions = {
+        TemplateRoot: "test",
+        Questions: [
+            {
+                name: "test",
+                message: "test",
+                default: "test"
+            }
+        ],
+        Components: {
             Question: "test",
             Categories: [
                 {
@@ -60,7 +54,8 @@ export class TestGenerator extends Generator
                     ]
                 }
             ]
-        };
+        }
+    };
 
     /**
      * Initializes a new instance of the `TestGenerator` class.
@@ -71,23 +66,13 @@ export class TestGenerator extends Generator
      * @param options
      * A set of options for the generator.
      */
-    public constructor(args: string | string[], options: ITestGeneratorOptions)
+    public constructor(args: string | string[], options: ITestOptions)
     {
         super(args, options);
 
-        if (options.TemplateRoot)
+        if (options.testGeneratorOptions)
         {
-            this.TemplateRoot = options.TemplateRoot;
-        }
-
-        if (options.Components)
-        {
-            this.Components = options.Components;
-        }
-
-        if (options.Questions)
-        {
-            this.Questions = options.Questions;
+            this.generatorOptions = options.testGeneratorOptions;
         }
     }
 
@@ -96,7 +81,7 @@ export class TestGenerator extends Generator
      */
     public get TemplateRoot()
     {
-        return this.templateRoot;
+        return this.generatorOptions.TemplateRoot;
     }
 
     /**
@@ -104,7 +89,7 @@ export class TestGenerator extends Generator
      */
     public set TemplateRoot(value)
     {
-        this.templateRoot = value;
+        this.generatorOptions.TemplateRoot = value;
     }
 
     /**
@@ -112,7 +97,7 @@ export class TestGenerator extends Generator
      */
     public get Components(): IComponentCollection<IGeneratorSettings>
     {
-        return this.components;
+        return this.generatorOptions.Components;
     }
 
     /**
@@ -120,7 +105,7 @@ export class TestGenerator extends Generator
      */
     public set Components(value)
     {
-        this.components = value;
+        this.generatorOptions.Components = value;
     }
 
     /**
@@ -128,7 +113,7 @@ export class TestGenerator extends Generator
      */
     public get Questions(): Question[]
     {
-        return this.questions;
+        return this.generatorOptions.Questions;
     }
 
     /**
@@ -136,7 +121,7 @@ export class TestGenerator extends Generator
      */
     public set Questions(value)
     {
-        this.questions = value;
+        this.generatorOptions.Questions = value;
     }
 
     /**
@@ -152,8 +137,7 @@ export class TestGenerator extends Generator
      * Writes all files for the components.
      */
     public async writing()
-    {
-    }
+    { }
 
     /**
      * Finalizes the generation-process.

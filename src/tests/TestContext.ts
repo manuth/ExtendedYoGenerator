@@ -6,7 +6,7 @@ import { TestGenerator } from "./TestGenerator";
 import { spawnSync } from "child_process";
 import npmWhich = require("npm-which");
 import { IRunContext } from "./IRunContext";
-import { ITestGeneratorOptions } from "./ITestGeneratorOptions";
+import { ITestOptions } from "./ITestOptions";
 
 /**
  * Represents a context for testing.
@@ -124,7 +124,7 @@ export class TestContext
     /**
      * Executes the generator.
      */
-    public ExecuteGenerator(options?: ITestGeneratorOptions, runSettings?: RunContextSettings): IRunContext<TestGenerator>
+    public ExecuteGenerator(options?: ITestOptions, runSettings?: RunContextSettings): IRunContext<TestGenerator>
     {
         let result = run(this.GeneratorDirectory, runSettings) as IRunContext<TestGenerator>;
 
