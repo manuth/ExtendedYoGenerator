@@ -137,7 +137,9 @@ export class TestGenerator extends Generator
      * Writes all files for the components.
      */
     public async writing()
-    { }
+    {
+        super.writing();
+    }
 
     /**
      * Finalizes the generation-process.

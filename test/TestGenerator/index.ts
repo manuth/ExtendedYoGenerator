@@ -32,6 +32,7 @@ class Generator extends TestGenerator
      */
     public async writing()
     {
+        super.writing();
     }
 
     /**
