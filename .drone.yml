@@ -19,13 +19,6 @@ steps:
     image: node
     commands:
       - npm run test
-  - name: build package
-    image: node
-    commands:
-      - npm pack
-    when:
-      event:
-        - tag
   - name: publish node-module
     image: node
     environment:
@@ -40,9 +33,10 @@ steps:
         - tag
       ref:
         - refs/tags/v[0-9].[0-9].[0-9]
-  - name: release preparation
+  - name: prepare release
     image: node
     commands:
+      - npm pack
       - npm install escape-string-regexp
       - node -e "console.log(require('escape-string-regexp')('${DRONE_TAG}'))" > TagName.txt
     when:
