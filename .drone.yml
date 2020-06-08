@@ -42,7 +42,7 @@ steps:
     when:
       event:
         - tag
-  - name: release notes
+  - name: prepare release notes
     image: ubuntu
     commands:
       - export TagName=$$(cat TagName.txt)
@@ -57,6 +57,7 @@ steps:
         - tag
   - name: publish
     image: plugins/github-release
+    commands: []
     settings:
       api_key:
         from_secret: github_token
