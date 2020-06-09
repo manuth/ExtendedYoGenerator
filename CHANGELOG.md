@@ -5,9 +5,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## ExtendedYoGenerator [Unreleased]
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v2.0.0...dev)
+
+## ExtendedYoGenerator v2.0.0
+### Breaking
+  - The `ProvidedComponents`-property has been replaced by `Components`
+
 ### Added
   - Continuous integration for automated publishing
   - Tests for all classes
+  - A property called `QuestionCollection` for manipulating all questions
 
 ### Updated
   - The CHANGELOG-file to match with the proposed format
@@ -18,7 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Mocha-configuration for improving the testing-experience
   - Refactor classes for enhanced testing
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v1.0.13...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v1.0.13...v2.0.0)
 
 ## ExtendedYoGenerator v1.0.13
 ### Updated
