@@ -4,6 +4,15 @@ import { Resolver } from "./Resolver";
 
 /**
  * Provides the functionality to resolve properties.
+ *
+ * @template TObject
+ * The type of the actual object.
+ *
+ * @template TTarget
+ * The type of the resolve-target.
+ *
+ * @template TSettings
+ * The type of the settings of the object.
  */
 export class PropertyResolver<TObject, TTarget, TSettings> extends Resolver<TTarget, TSettings>
 {

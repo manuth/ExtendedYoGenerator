@@ -5,6 +5,9 @@ import { PropertyResolver } from "./Resolving/PropertyResolver";
 
 /**
  * Represents a component-category.
+ *
+ * @template TSettings
+ * The type of the settings of the category.
  */
 export class ComponentCategory<TSettings> extends PropertyResolver<IComponentCategory<TSettings>, ComponentCategory<TSettings>, TSettings>
 {

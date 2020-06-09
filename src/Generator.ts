@@ -14,6 +14,9 @@ import { IGeneratorSettings } from "./IGeneratorSettings";
 
 /**
  * Represents a yeoman-generator.
+ *
+ * @template T
+ * The type of the settings of the generator.
  */
 export abstract class Generator<T extends IGeneratorSettings = IGeneratorSettings> extends YeomanGenerator implements IGenerator<T>
 {

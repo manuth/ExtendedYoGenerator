@@ -3,6 +3,12 @@ import { Resolvable } from "./Resolvable";
 
 /**
  * Provides the functionality to resolve values.
+ *
+ * @template TTarget
+ * The target of the resolve.
+ *
+ * @template TSettings
+ * The type of the settings of the object.
  */
 export class Resolver<TTarget, TSettings>
 {

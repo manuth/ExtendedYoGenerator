@@ -6,6 +6,9 @@ import { PropertyResolver } from "./Resolving/PropertyResolver";
 
 /**
  * Represents a component.
+ *
+ * @template TSettings
+ * The type of the settings of the component.
  */
 export class Component<TSettings> extends PropertyResolver<IComponent<TSettings>, Component<TSettings>, TSettings>
 {

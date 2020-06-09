@@ -9,6 +9,9 @@ import { Resolvable } from "./Resolving/Resolvable";
 
 /**
  * Represents a file-mapping.
+ *
+ * @template TSettings
+ * The type of the settings of the file-mapping.
  */
 export class FileMapping<TSettings> extends PropertyResolver<IFileMapping<TSettings>, FileMapping<TSettings>, TSettings>
 {
