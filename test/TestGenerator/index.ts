@@ -1,5 +1,5 @@
-import { TestGenerator } from "extended-generator/lib/tests/TestGenerator";
 import { ITestOptions } from "extended-generator/lib/tests/ITestOptions";
+import { TestGenerator } from "extended-generator/lib/tests/TestGenerator";
 
 /**
  * The test-generator.
@@ -23,7 +23,7 @@ class Generator extends TestGenerator
     /**
      * @inheritdoc
      */
-    public async prompting()
+    public async prompting(): Promise<void>
     {
         return super.prompting();
     }
@@ -31,7 +31,7 @@ class Generator extends TestGenerator
     /**
      * @inheritdoc
      */
-    public async writing()
+    public async writing(): Promise<void>
     {
         super.writing();
     }
@@ -39,7 +39,7 @@ class Generator extends TestGenerator
     /**
      * @inheritdoc
      */
-    public async end()
+    public async end(): Promise<void>
     {
         this.log("The end");
     }
