@@ -1,0 +1,9 @@
+{
+    "name": "test-generator",
+    "dependencies": {
+        "extended-generator": "file:./../.."
+    },
+    "devDependencies": {
+        "typescript": "^3.9.3"
+    }
+}

@@ -13,18 +13,44 @@ You can use the extended yo-generator by inheriting the `Generator`-class provid
 All class members are documented using js-doc in order to provide the best possible user-experience.
 
 ### Example
-***src/generators/index.ts***
+First you might want to create an interface describing the settings of your generator where the prompting-answers are stored.
+
+***./src/IMySettings.ts***
+```ts
+export interface IMySettings extends IGeneratorSettings
+{
+    /**
+     * The name of the project to generate.
+     */
+    name: string;
+
+    /**
+     * The license-type of the project to generate.
+     */
+    licenseType: "apache" | "gpl";
+
+    /**
+     * The path to write the project to.
+     */
+    destination: string;
+}
+```
+
+Now you're ready to create the actual generator-class:
+
+***./src/index.ts***
 ```ts
 import { Generator, IGeneratorSettings, Question } from "extended-yo-generator";
+import { IMySettings } from "./IMySettings";
 
-export = class MyGenerator extends Generator<IGeneratorSettings>
+export = class MyGenerator extends Generator<IMySettings>
 {
-    protected get TemplateRoot()
+    protected get TemplateRoot(): string
     {
         return "app";
     }
 
-    protected get Questions(): Array<Question<IGeneratorSettings>>
+    protected get Questions(): Array<Question<IMySettings>>
     {
         return [
             {
@@ -35,30 +61,30 @@ export = class MyGenerator extends Generator<IGeneratorSettings>
         ];
     }
 
-    public async prompting()
+    public async prompting(): Promise<void>
     {
         this.log("Welcome to my generator!");
         return super.prompting();
     }
 
-    public async writing()
+    public async writing(): Promise<void>
     {
         this.fs.copyTpl(
             this.templatePath("README.md"),
             this.destinationPath("README.md"),
             {
-                Name: this.Settings["name"]
+                Name: this.Settings.name
             });
         return super.writing();
     }
 
-    public async install()
+    public async install(): Promise<void>
     {
         await super.install();
         this.npmInstall();
     }
 
-    public async end()
+    public async end(): Promise<void>
     {
         await super.end();
         this.log("Finished!");
@@ -68,53 +94,29 @@ export = class MyGenerator extends Generator<IGeneratorSettings>
 
 ## Features
   - [Separate Template-Folders](#separate-template-folders)
-  - [Questions](#questions)
   - [Components](#components)
+  - [Questions](#questions)
   - [Settings](#settings)
   - [ModulePath](#modulepath)
   - [Prompting](#prompting)
   - [Writing](#writing)
+  - [Yo-Generator Methods](#yo-generator-methods)
 
 ### Separate Template-Folders
-Generally all templates are loaded from `./templates`. The `TemplateRoot`-member of the `Generator`-class allows you to load template-files from a separate folder.
+Generally all templates are loaded from `./templates`. The `TemplateRoot`-member of the `Generator`-class allows you to load template-files from separate sub-folders of `./templates`.
 
 #### Example
 ```ts
-    protected get TemplateRoot()
+export = class MyGenerator extends Generator
+{
+    protected get TemplateRoot(): string
     {
         return "app";
     }
+}
 ```
 
 This causes `this.templatePath(...path)` to create paths relative to `./templates/app` rather than `./templates`.
-
-### Questions
-Specify questions which are asked when invoking `Generator.prompting()`.  
-All answers are stored in the `Generator.Settings`-property.
-
-#### Example
-```ts
-import { Question } from "extended-yo-generator";
-
-export = class MyGenerator extends Generator<IGeneratorSettings>
-{
-    // [...]
-    protected get Questions(): Question<T>[]
-    {
-        return [
-            {
-                name: "destination",
-                message: "Where do you want to store the project?",
-                default: "./"
-            },
-            {
-                name: "name",
-                message: "What's the name of your project?"
-            }
-        ];
-    }
-}
-```
 
 ### Components
 You can provide components the user can choose to install.  
@@ -122,12 +124,9 @@ Each component can provide any number of file-mappings and additional questions.
 
 #### Example
 ```ts
-import { Generator, IComponentProvider, IGeneratorSettings } from "extended-yo-generator";
-
-export = class MyGenerator extends Generator<IGeneratorSettings>
+export = class MyGenerator extends Generator<IMySettings>
 {
-    // [...]
-    protected get ProvidedComponents(): IComponentProvider<IGeneratorSettings>
+    protected get Components(): IComponentCollection<IMySettings>
     {
         return {
             Question: "What should be included in your project?",
@@ -141,9 +140,10 @@ export = class MyGenerator extends Generator<IGeneratorSettings>
                             FileMappings: [
                                 {
                                     Source: () => this.templatePath("README.md"),
-                                    Context: (settings) => {
+                                    Context: (fileMapping, generator) =>
+                                    {
                                         return {
-                                            Name: settings["name"]
+                                            Name: generator.Settings.name
                                         };
                                     },
                                     Destination: "README.md"
@@ -153,15 +153,6 @@ export = class MyGenerator extends Generator<IGeneratorSettings>
                         {
                             ID: "License",
                             DisplayName: "License-File",
-                            FileMappings: [
-                                {
-                                    Source: (settings) =>
-                                    {
-                                        return this.templatePath(settings["licenseType"] === "gpl" ? "GPL.txt" : "Apache.txt");
-                                    },
-                                    Destination: "LICENSE"
-                                }
-                            ],
                             Questions: [
                                 {
                                     type: "list",
@@ -179,6 +170,15 @@ export = class MyGenerator extends Generator<IGeneratorSettings>
                                         }
                                     ]
                                 }
+                            ],
+                            FileMappings: [
+                                {
+                                    Source: (fileMapping, generator) =>
+                                    {
+                                        return this.templatePath(generator.Settings.licenseType === "gpl" ? "GPL.txt" : "Apache.txt");
+                                    },
+                                    Destination: "LICENSE"
+                                }
                             ]
                         }
                     ]
@@ -194,6 +194,51 @@ If there are any questions declared for the component the generator will automat
 
 The IDs of the components the user has chosen are then written to the `Generator.Settings[GeneratorSetting.Components]` member.
 
+### Questions
+Specify questions which are asked when invoking `Generator.prompting()`.  
+All answers are stored in the `Generator.Settings`-property.
+
+#### Example
+```ts
+export = class MyGenerator extends Generator<IMySettings>
+{
+    protected get Questions(): Array<Question<IMySettings>>
+    {
+        return [
+            {
+                name: "destination",
+                message: "Where do you want to store the project?",
+                default: "./"
+            },
+            {
+                name: "name",
+                message: "What's the name of your project?"
+            }
+        ];
+    }
+}
+```
+
+#### Manipulating Questions
+You might want to ask questions after the user has chosen components.
+You can reach this goal by manipulating the `QuestionCollection`-property like this:
+
+```ts
+export = class MyGenerator extends Generator<IMySettings>
+{
+    protected get QuestionCollection(): Array<Question<IMySettings>>
+    {
+        let result = super.QuestionCollection;
+        result.push(
+            {
+                name: "destination",
+                message: "Where do you want to store the project?",
+                default: "./"
+            });
+    }
+}
+```
+
 ### Settings
 The `Generator.Settings`-property contains all answers to the prompts.
 
@@ -202,7 +247,14 @@ Using the `Generator.modulePath(...path)`-method you can create paths relative t
 
 This may be useful for instance if you want to copy your `tslint`-rules to the generated workspace:
 ```ts
-this.fs.copy(this.modulePath("tslint.json"), this.destinationPath("tslint.json"));
+export class = MyGenerator extends Generator
+{
+    public async writing(): Promise<void>
+    {
+        super.writing();
+        this.fs.copy(this.modulePath("tslint.json"), this.destinationPath("tslint.json"));
+    }
+}
 ```
 
 ### Prompting
@@ -210,9 +262,9 @@ The `Generator.prompting()`-method asks all questions specified using `Generator
 
 #### Example
 ```ts
-export = class MyGenerator extends Generator<IGeneratorSettings>
+export = class MyGenerator extends Generator
 {
-    public async prompting()
+    public async prompting(): Promise<void>
     {
         this.log("Welcome to my generator!");
         return super.prompting();
@@ -225,13 +277,23 @@ The `Generator.writing()`-method copies all `FileMapping`s of the components.
 
 #### Example
 ```ts
-export = class MyGenerator extends Generator<IGeneratorSettings>
+export = class MyGenerator extends Generator
 {
-    public async writing()
+    public async writing(): Promise<void>
     {
         await super.writing();
-        this.fs.copy(this.templatePath("package.json"),
-        this.destinationPath("package.json"));
+        this.fs.copy(this.templatePath("package.json"), this.destinationPath("package.json"));
     }
 }
 ```
+
+### Yo-Generator Methods
+Naturally the default yo-generator methods remain which are…
+  * `prompting()`:  
+    Asks all `Questions` and additionally all questions related to the `Components`
+  * `writing()`:  
+    Generates the project, automatically creating all specified file-mappings of the `Components`
+  * `install()`:  
+    This method can be used for installing the generated project
+  * `end()`:  
+    This method is invoked after the generator finished running

@@ -1,0 +1,10 @@
+{
+    "extends": "@manuth/tsconfig/recommended",
+    "compilerOptions": {
+        "module": "CommonJS",
+        "lib": [
+            "ES7"
+        ],
+        "target": "ES6"
+    }
+}

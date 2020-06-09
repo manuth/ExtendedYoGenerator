@@ -1,19 +1,24 @@
-import chalk from "chalk";
-import { ChoiceCollection, Separator } from "inquirer";
 import Path = require("path");
-import PkgUp = require("pkg-up");
 import { isNullOrUndefined } from "util";
+import chalk = require("chalk");
+import { ChoiceCollection, Separator } from "inquirer";
+import PkgUp = require("pkg-up");
 import YeomanGenerator = require("yeoman-generator");
 import { Question } from "yeoman-generator";
-import { GeneratorSetting } from "./GeneratorSetting";
-import { IComponentProvider } from "./IComponentProvider";
-import { IFileMapping } from "./IFileMapping";
+import { ComponentCollection } from "./Components/ComponentCollection";
+import { FileMapping } from "./Components/FileMapping";
+import { IComponentCollection } from "./Components/IComponentCollection";
+import { GeneratorSettingKey } from "./GeneratorSettingKey";
+import { IGenerator } from "./IGenerator";
 import { IGeneratorSettings } from "./IGeneratorSettings";
 
 /**
  * Represents a yeoman-generator.
+ *
+ * @template T
+ * The type of the settings of the generator.
  */
-export abstract class Generator<T extends IGeneratorSettings = IGeneratorSettings> extends YeomanGenerator
+export abstract class Generator<T extends IGeneratorSettings = IGeneratorSettings> extends YeomanGenerator implements IGenerator<T>
 {
     /**
      * The root of the module of the generator.
@@ -34,7 +39,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
      * @param options
      * A set of options for the generator.
      */
-    public constructor(args: string | string[], options: {})
+    public constructor(args: string | string[], options: Record<string, unknown>)
     {
         super(args, options);
         this.moduleRoot = Path.dirname(PkgUp.sync({ cwd: this.resolved }));
@@ -43,9 +48,32 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     /**
      * Gets the name of the root of the template-folder.
      */
-    protected get TemplateRoot()
+    protected get TemplateRoot(): string
     {
         return "";
+    }
+
+    /**
+     * Gets the options for the components the user can select.
+     */
+    protected get Components(): IComponentCollection<T>
+    {
+        return null;
+    }
+
+    /**
+     * Gets the components the user can select.
+     */
+    protected get ComponentCollection(): ComponentCollection<T>
+    {
+        if (this.Components)
+        {
+            return new ComponentCollection(this, this.Components);
+        }
+        else
+        {
+            return null;
+        }
     }
 
     /**
@@ -57,147 +85,149 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     }
 
     /**
-     * Gets the components provided by the generator.
+     * Gets all questions including questions for the components.
      */
-    protected get ProvidedComponents(): IComponentProvider<T>
+    protected get QuestionCollection(): Array<Question<T>>
     {
-        return null;
-    }
-
-    /**
-     * Gets the settings of the generator.
-     */
-    public get Settings()
-    {
-        return this.settings;
-    }
-
-    /**
-     * Joins the arguments together and returns the resulting path relative to the module-directory.
-     *
-     * @param path
-     * The path that is to be joined.
-     */
-    public modulePath(...path: string[])
-    {
-        return Path.join(this.moduleRoot || "", ...path);
-    }
-
-    /**
-     * Joins the arguments together and returns the resulting path relative to the template-directory.
-     *
-     * @param path
-     * The path that is to be joined.
-     */
-    public templatePath(...path: string[])
-    {
-        return this.modulePath("templates", this.TemplateRoot || "", ...path);
-    }
-
-    /**
-     * Gathers all information for executing the generator and saves them to the `Settings`.
-     */
-    public async prompting()
-    {
-        let questions: Array<Question<T>> = [];
+        let result: Array<Question<T>> = [];
         let components: ChoiceCollection<T> = [];
         let defaults: string[] = [];
 
-        if (this.ProvidedComponents !== null)
+        if (this.ComponentCollection)
         {
-            for (let category of this.ProvidedComponents.Categories)
+            for (let category of this.ComponentCollection.Categories ?? [])
             {
                 components.push(new Separator(category.DisplayName));
 
                 for (let component of category.Components)
                 {
-                    let isDefault = !isNullOrUndefined(component.Default) && component.Default;
+                    let isDefault = component.DefaultEnabled ?? false;
 
-                    components.push({
-                        value: component.ID,
-                        name: component.DisplayName,
-                        checked: isDefault
-                    });
+                    components.push(
+                        {
+                            value: component.ID,
+                            name: component.DisplayName,
+                            checked: isDefault
+                        });
 
                     if (isDefault)
                     {
                         defaults.push(component.ID);
                     }
 
-                    if (!isNullOrUndefined(component.Questions))
+                    for (let i = 0; i < component.Questions?.length ?? 0; i++)
                     {
-                        for (let i = 0; i < component.Questions.length; i++)
+                        let question = component.Questions[i];
+                        let when = question.when;
+
+                        question.when = async (settings: T) =>
                         {
-                            let question = component.Questions[i];
-                            let when = question.when;
-
-                            question.when = async (settings: T) =>
+                            if (settings[GeneratorSettingKey.Components].includes(component.ID))
                             {
-                                if (settings[GeneratorSetting.Components].includes(component.ID))
+                                if (i === 0)
                                 {
-                                    if (i === 0)
-                                    {
-                                        this.log();
-                                        this.log(`${chalk.red(">>")} ${chalk.bold(component.DisplayName)} ${chalk.red("<<")}`);
-                                    }
+                                    this.log();
+                                    this.log(`${chalk.red(">>")} ${chalk.bold(component.DisplayName)} ${chalk.red("<<")}`);
+                                }
 
-                                    if (!isNullOrUndefined(when))
+                                if (!isNullOrUndefined(when))
+                                {
+                                    if (typeof when === "function")
                                     {
-                                        if (typeof when === "function")
-                                        {
-                                            return when(settings);
-                                        }
-                                        else
-                                        {
-                                            return when;
-                                        }
+                                        return when(settings);
                                     }
                                     else
                                     {
-                                        return true;
+                                        return when;
                                     }
                                 }
                                 else
                                 {
-                                    return false;
+                                    return true;
                                 }
-                            };
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        };
 
-                            questions.push(question);
-                        }
+                        result.push(question);
                     }
                 }
             }
 
-            questions.unshift(
+            result.unshift(
                 {
                     type: "checkbox",
-                    name: GeneratorSetting.Components,
-                    message: this.ProvidedComponents.Question,
+                    name: GeneratorSettingKey.Components,
+                    message: this.Components.Question,
                     choices: components,
                     default: defaults
                 });
         }
 
-        questions.unshift(...this.Questions);
-        Object.assign(this.Settings, await this.prompt(questions));
+        result.unshift(...(this.Questions ?? []));
+        return result;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public get Settings(): T
+    {
+        return this.settings;
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @param path
+     * The path that is to be joined.
+     *
+     * @returns
+     * The joined path.
+     */
+    public modulePath(...path: string[]): string
+    {
+        return Path.join(this.moduleRoot, ...path);
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @param path
+     * The path that is to be joined.
+     *
+     * @returns
+     * The joined path.
+     */
+    public templatePath(...path: string[]): string
+    {
+        return this.modulePath("templates", ...(this.TemplateRoot ? [this.TemplateRoot] : []), ...path);
+    }
+
+    /**
+     * Gathers all information for executing the generator and saves them to the `Settings`.
+     */
+    public async prompting(): Promise<void>
+    {
+        Object.assign(this.Settings, await this.prompt(this.QuestionCollection));
         this.log();
     }
 
     /**
      * Writes all files for the components.
      */
-    public async writing()
+    public async writing(): Promise<void>
     {
-        for (let category of this.ProvidedComponents.Categories)
+        for (let category of this.ComponentCollection?.Categories ?? [])
         {
             for (let component of category.Components)
             {
-                if (this.Settings[GeneratorSetting.Components].includes(component.ID))
+                if (this.Settings[GeneratorSettingKey.Components].includes(component.ID))
                 {
-                    let fileMappings = await this.ResolveValue(component.FileMappings, this.Settings);
-
-                    for (let fileMapping of fileMappings)
+                    for (let fileMapping of await component.FileMappings)
                     {
                         await this.ProcessFile(fileMapping);
                     }
@@ -209,45 +239,15 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     /**
      * Installs all required dependencies.
      */
-    public async install()
+    public async install(): Promise<void>
     {
     }
 
     /**
      * Finalizes the generation-process.
      */
-    public async end()
+    public async end(): Promise<void>
     {
-    }
-
-    /**
-     * Resolves a value no matter whether it is wrapped in a function or not.
-     *
-     * @param settings
-     * The settings to use for resolving the value.
-     *
-     * @param value
-     * The value to resolve.
-     */
-    protected async ResolveValue<TSource extends any[], TValue>(value: (TValue | ((...settings: TSource) => TValue) | ((...settings: TSource) => Promise<TValue>)), ...source: TSource)
-    {
-        if (value instanceof Function)
-        {
-            let result = value(...source);
-
-            if (result instanceof Promise)
-            {
-                return result;
-            }
-            else
-            {
-                return result;
-            }
-        }
-        else
-        {
-            return value;
-        }
     }
 
     /**
@@ -256,44 +256,13 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
      * @param fileMapping
      * The file-mapping to process.
      */
-    protected async ProcessFile(fileMapping: IFileMapping<T>)
+    protected async ProcessFile(fileMapping: FileMapping<T>): Promise<void>
     {
-        let sourcePath: string = await this.ResolveValue(fileMapping.Source, this.Settings);
-        let destinationPath = await this.ResolveValue(fileMapping.Destination, this.Settings);
+        let result = fileMapping.Processor(fileMapping, this);
 
-        sourcePath = (isNullOrUndefined(sourcePath) || Path.isAbsolute(sourcePath)) ? sourcePath : this.templatePath(sourcePath);
-        destinationPath = (isNullOrUndefined(destinationPath) || Path.isAbsolute(destinationPath)) ? destinationPath : this.destinationPath(destinationPath);
-
-        let context = await this.ResolveValue(fileMapping.Context, this.Settings, sourcePath, destinationPath);
-        let defaultProcessor = (sourcePath: string, destinationPath: string, context: any) =>
+        if (result instanceof Promise)
         {
-            if (
-                !isNullOrUndefined(sourcePath) &&
-                !isNullOrUndefined(destinationPath))
-            {
-                if (isNullOrUndefined(context))
-                {
-                    this.fs.copy(sourcePath, destinationPath);
-                }
-                else
-                {
-                    this.fs.copyTpl(sourcePath, destinationPath, context);
-                }
-            }
-        };
-
-        if (isNullOrUndefined(fileMapping.Process))
-        {
-            defaultProcessor(sourcePath, destinationPath, context);
-        }
-        else
-        {
-            let result = fileMapping.Process(sourcePath, destinationPath, context, defaultProcessor, this.Settings);
-
-            if (result instanceof Promise)
-            {
-                await result;
-            }
+            return result;
         }
     }
 }

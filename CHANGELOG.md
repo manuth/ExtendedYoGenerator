@@ -4,18 +4,46 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## ExtendedYoGenerator [Unreleased]
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v2.0.0...dev)
+
+## ExtendedYoGenerator v2.0.0
+### Breaking
+  - The `ProvidedComponents`-property has been replaced by `Components`
+
+### Added
+  - Continuous integration for automated publishing
+  - Tests for all classes
+  - A property called `QuestionCollection` for manipulating all questions
+
+### Updated
+  - The CHANGELOG-file to match with the proposed format
+  - All dependencies
+  - Object-naming for better understanding
+  - The generator-code to only allow methods to be executed after initialization
+  - Object-structure for more simple usage of lazy-loaded component-properties
+  - Mocha-configuration for improving the testing-experience
+  - Refactor classes for enhanced testing
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v1.0.13...v2.0.0)
+
 ## ExtendedYoGenerator v1.0.13
-  - Remove unused indexers
+### Updated
+  - Type-declarations for better auto-completion
 
 [Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v1.0.12...v1.0.13)
 
 ## ExtendedYoGenerator v1.0.12
-  - Remove unused properties
+### Updated
+  - Type-declarations for better auto-completion
 
 [Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v1.0.11...v1.0.12)
 
 ## ExtendedYoGenerator v1.0.11
-  - Update all dependencies
+### Updated
+  - The README-file for better understanding
+  - All dependencies
 
 [Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v1.0.10...v1.0.11)
 
@@ -25,58 +53,74 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v1.0.9...v1.0.10)
 
 ## ExtendedYoGenerator v1.0.9
-  - Update all dependencies
+### Added
+  - Exports for important classes and type-declarations
+
+### Security
+  - Updated vulnerable dependencies
 
 [Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v1.0.8...v1.0.9)
 
 ## ExtendedYoGenerator v1.0.8
-  - Improve the stability
+### Added
+  - Predefined `tslint` presets for better linting experience
 
 [Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v1.0.7...v1.0.8)
 
 ## ExtendedYoGenerator v1.0.7
-  - Reworked the mocha-integration
-  - Improve the user-interface
+### Updated
+  - The mocha-integration for better testing-experience
+  - The user-interface
 
 [Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v1.0.6...v1.0.7)
 
 ## ExtendedYoGenerator v1.0.6
-  - Removed unnecessary files
+### Updated
+  - The package to exclude `.map`-files, which are meant for debugging purposes only
+  - The description of the package
 
 [Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v1.0.5...v1.0.6)
 
 ## ExtendedYoGenerator v1.0.5
-  - Fixed the appearance of the picture in the readme
+### Fixed
+  - The README-file by replacing the `data://`-picture by an actual file
 
 [Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v1.0.4...v1.0.5)
 
 ## ExtendedYoGenerator v1.0.4
-  - Improve the user-experience
-  - Add further explanations to the readme
+### Updated
+  - Both the README and the CHANGELOG-file
 
 [Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v1.0.3...v1.0.4)
 
 ## ExtendedYoGenerator v1.0.3
-  - Made the file-processing part sequential
-  - Improved the user-interface
-    - Made component-questions more distinguishable
-  - Code improvements
-    - Ensured that all component-filemappings are processed sequentially
+### Updated
+  - The generator-code to process all component filemappings sequentially
+  - The UI for making component-questions more distinguishable
 
 [Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v1.0.2...v1.0.3)
 
 ## ExtendedYoGenerator v1.0.2
-  - Improved user-experience by reworking the type-definitions 
-  - Made the `templatePath()`-method working even if the `Generator` is not initialized
+### Updated
+  - The type-definitions for improving user-experience
+
+### Fixed
+  - Errors when invoking `templatePath()` before the `Generator` is initialized
 
 [Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v1.0.1...v1.0.2)
 
 ## ExtendedYoGenerator v1.0.1
-  - Made the `modulePath()`-method working even if the `Generator` is not initialized
+### Fixed
+  - Errors when invoking `modulePath()` before the `Generator` is initialized
 
 [Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v1.0.0...v1.0.1)
 
 ## ExtendedYoGenerator v1.0.0
   - First release of the module
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/858f05...v1.0.0)
+### Added
+  - An object-oriented implementation of the yeoman-generator
+  - A method for resolving paths relative to the generator-module
+  - Unit-tests for ensuring the functionality
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/858f05445c3614ec09956c24f5ef4fd10edb990a...v1.0.0)

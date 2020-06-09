@@ -1,11 +1,12 @@
-import { Answers } from "inquirer";
 import { Question } from "yeoman-generator";
+import { Component } from "./Component";
 import { IFileMapping } from "./IFileMapping";
+import { Resolvable } from "./Resolving/Resolvable";
 
 /**
  * Represents a component.
  */
-export interface IComponent<T extends Answers>
+export interface IComponent<TSettings>
 {
     /**
      * Gets or sets the id of the component.
@@ -20,15 +21,15 @@ export interface IComponent<T extends Answers>
     /**
      * Gets or sets a value indicating whether the component is enabled by default.
      */
-    Default?: boolean;
-
-    /**
-     * Gets or sets the file-mappings of the component.
-     */
-    FileMappings: Array<IFileMapping<T>> | Promise<Array<IFileMapping<T>>> | ((settings: T) => Array<IFileMapping<T>> | Promise<Array<IFileMapping<T>>>);
+    DefaultEnabled?: boolean;
 
     /**
      * Gets or sets additional quetions related to the component.
      */
-    Questions?: Array<Question<T>>;
+    Questions?: Array<Question<TSettings>>;
+
+    /**
+     * Gets or sets the file-mappings of the component.
+     */
+    FileMappings: Resolvable<Component<TSettings>, TSettings, Array<IFileMapping<TSettings>>>;
 }

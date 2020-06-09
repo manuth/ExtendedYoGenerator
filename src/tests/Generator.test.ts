@@ -1,142 +1,365 @@
 import Assert = require("assert");
-import FileSystem = require("fs-extra");
-import Path = require("path");
-import { isNullOrUndefined } from "util";
-import { run, RunContext } from "yeoman-test";
-import { Generator, GeneratorSetting } from "..";
+import Path = require("upath");
+import { GeneratorSetting } from "..";
+import { IRunContext } from "./IRunContext";
+import { ITestGeneratorOptions } from "./ITestGeneratorOptions";
+import { TestContext } from "./TestContext";
+import { TestGenerator } from "./TestGenerator";
 
-suite(
-    "Generator",
-    () =>
-    {
-        let runContext: RunContext;
-        let generatorDir: string;
-        let generator: Generator;
+/**
+ * Registers the generator-tests.
+ *
+ * @param context
+ * The context to use.
+ */
+export function GeneratorTests(context: TestContext): void
+{
+    suite(
+        "Generator",
+        () =>
+        {
+            let generator: TestGenerator;
+            let generatorOptions: ITestGeneratorOptions = {};
+            let testPath = "this-is-a-test.txt";
+            let runContext: IRunContext<TestGenerator>;
 
-        suiteSetup(
-            async () =>
+            /**
+             * Asserts a file-path.
+             *
+             * @param actual
+             * The actual path.
+             *
+             * @param expected
+             * The expected path.
+             */
+            function AssertPath(actual: string, expected: string): void
             {
-                generatorDir = Path.join(__dirname, "TestGenerator");
-                await FileSystem.writeJSON(
-                    Path.join(generatorDir, "package.json"),
-                    {
-                        name: "test"
-                    });
-                runContext = run(generatorDir);
-            });
+                Assert.strictEqual(ProcessPath(actual), ProcessPath(expected));
+            }
 
-        suite(
-            "General",
-            () =>
+            /**
+             * Resolves and normalizes a path for better comparsion.
+             *
+             * @param path
+             * The path to process.
+             *
+             * @returns
+             * The processed path.
+             */
+            function ProcessPath(path: string): string
             {
-                test(
-                    "Checking whether the generator can be executed…",
-                    async () =>
-                    {
-                        await runContext.toPromise();
-                        generator = (runContext as any).generator;
-                    });
-            });
+                return Path.normalize(Path.resolve(path));
+            }
 
-        suite(
-            "modulePath(...path)",
-            () =>
-            {
-                test(
-                    "Checking whether `modulePath(...path)` resolves to the root of the generator's module…",
-                    () =>
-                    {
-                        Assert.strictEqual(Path.resolve(generator.modulePath()), Path.resolve(generatorDir));
-                    });
-            });
+            suiteSetup(
+                async () =>
+                {
+                    runContext = context.ExecuteGenerator({ testGeneratorOptions: generatorOptions });
+                    await runContext.toPromise();
+                    generator = runContext.generator;
+                });
 
-        suite(
-            "templatePath(...path)",
-            () =>
-            {
-                suite(
-                    "Checking whether `templatePath(...path)` resolves correctly…",
-                    () =>
-                    {
-                        test(
-                            "Checking whether the template-path is a sub-directory of the module…",
-                            () =>
-                            {
-                                Assert.strictEqual(generator.templatePath().startsWith(generator.modulePath()), true);
-                            });
+            setup(
+                () =>
+                {
+                    generatorOptions.TemplateRoot = null;
+                    generatorOptions.Components = null;
+                    generatorOptions.Questions = null;
+                });
 
-                        test(
-                            "Checking whether the template-path ends with the name of the `TemplateRoot`…",
-                            () =>
-                            {
-                                Assert.strictEqual(Path.basename(generator.templatePath()), generator["TemplateRoot"]);
-                            });
-                    });
-            });
+            suite(
+                "General",
+                () =>
+                {
+                    let generatorOptions: ITestGeneratorOptions;
 
-        suite(
-            "ProvidedComponents",
-            () =>
-            {
-                test(
-                    "Checking whether the default components are selected by default…",
-                    () =>
-                    {
-                        if (!isNullOrUndefined(generator["ProvidedComponents"]))
+                    setup(
+                        () =>
                         {
-                            for (let category of generator["ProvidedComponents"].Categories)
-                            {
-                                for (let component of category.Components)
-                                {
-                                    if (component.Default)
+                            generatorOptions = {
+                                TemplateRoot: "test",
+                                Questions: [
                                     {
-                                        Assert.strictEqual(generator["Settings"][GeneratorSetting.Components].includes(component.ID), true);
+                                        name: "test",
+                                        message: "test",
+                                        default: "test"
                                     }
-                                }
-                            }
-                        }
-                    });
-
-                test(
-                    "Checking whether additional questions are asked, if components are selected…",
-                    () =>
-                    {
-                        if (!isNullOrUndefined(generator["ProvidedComponents"]))
-                        {
-                            for (let category of generator["ProvidedComponents"].Categories)
-                            {
-                                for (let component of category.Components)
-                                {
-                                    if (!isNullOrUndefined(component.Questions))
-                                    {
-                                        for (let question of component.Questions)
+                                ],
+                                Components: {
+                                    Question: "test",
+                                    Categories: [
                                         {
-                                            Assert.strictEqual(
-                                                question.name in generator["Settings"],
-                                                generator["Settings"][GeneratorSetting.Components].includes(component.ID));
+                                            DisplayName: "test",
+                                            Components: [
+                                                {
+                                                    ID: "test1",
+                                                    DisplayName: "Test 1",
+                                                    FileMappings: [],
+                                                    DefaultEnabled: true,
+                                                    Questions: [
+                                                        {
+                                                            name: "additional1",
+                                                            default: "test"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    ID: "test2",
+                                                    DisplayName: "Test 2",
+                                                    FileMappings: [],
+                                                    DefaultEnabled: false,
+                                                    Questions: [
+                                                        {
+                                                            name: "additional2",
+                                                            default: "test"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
                                         }
-                                    }
+                                    ]
                                 }
-                            }
-                        }
-                    });
-            });
+                            };
+                        });
 
-        suite(
-            "Questions",
-            () =>
-            {
-                test(
-                    "Checking whether the `Questions` are asked…",
-                    () =>
-                    {
-                        for (let question of generator["Questions"])
+                    test(
+                        "Checking whether the generator can be executed…",
+                        async function()
                         {
-                            if (!isNullOrUndefined(question.default))
-                            {
-                                Assert.strictEqual(question.name in generator["Settings"], true);
-                            }
-                        }
-                    });
-            });
-    });
+                            this.enableTimeouts(false);
+                            await context.ExecuteGenerator({ testGeneratorOptions: generatorOptions }).toPromise();
+                        });
+                });
+
+            suite(
+                "modulePath(...path)",
+                () =>
+                {
+                    test(
+                        "Checking whether `modulePath(...path)` resolves to the root of the generator's module…",
+                        () =>
+                        {
+                            AssertPath(generator.modulePath(testPath), Path.join(context.GeneratorDirectory, testPath));
+                        });
+                });
+
+            suite(
+                "templatePath(...path)",
+                () =>
+                {
+                    let relativePath: string;
+
+                    suiteSetup(
+                        () =>
+                        {
+                            relativePath = Path.relative(ProcessPath(Path.join(context.GeneratorDirectory)), ProcessPath(generator.templatePath()));
+                        });
+
+                    test(
+                        "Checking whether the template-path is a sub-directory of the module…",
+                        () =>
+                        {
+                            Assert.ok(!Path.isAbsolute(relativePath));
+                            Assert.ok(!relativePath.startsWith(".."));
+                        });
+
+                    test(
+                        "Checking whether `TemplateRoot` is optional…",
+                        () =>
+                        {
+                            generatorOptions.TemplateRoot = null;
+                            Assert.doesNotThrow(() => generator.templatePath());
+                        });
+
+                    test(
+                        "Checking whether the template-path resolves to the specified `TemplateRoot`…",
+                        () =>
+                        {
+                            generatorOptions.TemplateRoot = "Test";
+                            AssertPath(generator.templatePath(testPath), Path.join(context.GeneratorDirectory, relativePath, generatorOptions.TemplateRoot, testPath));
+                        });
+                });
+
+            suite(
+                "Components",
+                () =>
+                {
+                    let generator: TestGenerator;
+                    let generatorOptions: ITestGeneratorOptions = {};
+                    let defaultID: string;
+                    let hiddenID: string;
+                    let defaultQuestionID: string;
+                    let hiddenQuestionID: string;
+                    let defaultValue: string;
+                    let fileMappingExecuted: boolean;
+
+                    suiteSetup(
+                        async () =>
+                        {
+                            defaultID = "default-component";
+                            hiddenID = "non-default-component";
+                            defaultQuestionID = "this-question-has-a-default-value";
+                            hiddenQuestionID = "this-question-does-not-appear-in-the-results";
+                            defaultValue = "This is the default value";
+                            fileMappingExecuted = false;
+
+                            generatorOptions.Components = {
+                                Question: "Is this just a test?",
+                                Categories: [
+                                    {
+                                        DisplayName: "Yes, it is!",
+                                        Components: [
+                                            {
+                                                ID: defaultID,
+                                                DisplayName: "Awesome stuff, dude",
+                                                DefaultEnabled: true,
+                                                FileMappings: [
+                                                    {
+                                                        Destination: null,
+                                                        Processor: () =>
+                                                        {
+                                                            fileMappingExecuted = true;
+                                                        }
+                                                    }
+                                                ],
+                                                Questions: [
+                                                    {
+                                                        type: "input",
+                                                        name: defaultQuestionID,
+                                                        message: "Some more info, pls",
+                                                        default: defaultValue
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                ID: hiddenID,
+                                                DisplayName: "Shhh - wanna have some of this, too?",
+                                                DefaultEnabled: false,
+                                                FileMappings: [],
+                                                Questions: [
+                                                    {
+                                                        type: "input",
+                                                        name: hiddenQuestionID,
+                                                        message: "Anwer me!",
+                                                        default: "default value"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                ID: hiddenID,
+                                                DisplayName: "This component doesn't have `DefaultEnabled` set.",
+                                                FileMappings: [],
+                                                Questions: [
+                                                    {
+                                                        type: "input",
+                                                        name: hiddenQuestionID,
+                                                        message: "Test",
+                                                        default: "default"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            };
+
+                            let runContext = context.ExecuteGenerator({ testGeneratorOptions: generatorOptions });
+                            await runContext.toPromise();
+                            generator = runContext.generator;
+                        });
+
+                    test(
+                        "Checking whether only default components are selected by default…",
+                        () =>
+                        {
+                            Assert.strictEqual(generator.Settings[GeneratorSetting.Components].length, 1);
+                            Assert.ok(generator.Settings[GeneratorSetting.Components].includes(defaultID));
+                            Assert.ok(!generator.Settings[GeneratorSetting.Components].includes(hiddenID));
+                        });
+
+                    test(
+                        "Checking whether additional questions are asked, only if components are selected…",
+                        () =>
+                        {
+                            Assert.ok(defaultQuestionID in generator.Settings);
+                            Assert.ok(!(hiddenQuestionID in generator.Settings));
+                        });
+
+                    test(
+                        "Checking whether default values are applied…",
+                        () =>
+                        {
+                            Assert.strictEqual(generator.Settings[defaultQuestionID], defaultValue);
+                        });
+
+                    test(
+                        "Checking whether file-mappings are executed…",
+                        () =>
+                        {
+                            Assert.ok(fileMappingExecuted);
+                        });
+                });
+
+            suite(
+                "Questions",
+                () =>
+                {
+                    let generator: TestGenerator;
+                    let generatorOptions: ITestGeneratorOptions = {};
+                    let defaultID: string;
+                    let hiddenID: string;
+                    let defaultValue: string[];
+
+                    suiteSetup(
+                        async () =>
+                        {
+                            defaultID = "this-is-a-default-question";
+                            hiddenID = "this-is-a-hidden-question";
+                            defaultValue = ["a"];
+
+                            generatorOptions.Questions = [
+                                {
+                                    type: "list",
+                                    name: defaultID,
+                                    choices: [
+                                        {
+                                            value: "a",
+                                            checked: true
+                                        },
+                                        {
+                                            value: "b",
+                                            checked: true
+                                        }
+                                    ],
+                                    default: defaultValue
+                                },
+                                {
+                                    type: "checkbox",
+                                    name: hiddenID,
+                                    default: defaultValue,
+                                    when: false
+                                }
+                            ];
+
+                            let runContext = context.ExecuteGenerator({ testGeneratorOptions: generatorOptions });
+                            await runContext.toPromise();
+                            generator = runContext.generator;
+                        });
+
+                    test(
+                        "Checking whether only settings for enabled questions are present…",
+                        () =>
+                        {
+                            Assert.ok(defaultID in generator.Settings);
+                            Assert.ok(!(hiddenID in generator.Settings));
+                        });
+
+                    test(
+                        "Checking whether default values are applied…",
+                        () =>
+                        {
+                            Assert.strictEqual(generator.Settings[defaultID], defaultValue);
+                        });
+                });
+        });
+}
