@@ -36,13 +36,13 @@
   "dependencies": {
     "@types/inquirer": "6.5.0",
     "@types/yeoman-generator": "^3.1.4",
-    "chalk": "^4.0.0",
+    "chalk": "^4.1.0",
     "inquirer": "^7.1.0",
     "pkg-up": "^3.1.0",
     "yeoman-generator": "^4.10.1"
   },
   "devDependencies": {
-    "@manuth/eslint-plugin-typescript": "^2.1.1",
+    "@manuth/eslint-plugin-typescript": "^2.1.2",
     "@manuth/tsconfig": "^1.2.2",
     "@manuth/tslint-presets": "^1.0.4",
     "@types/ejs": "^3.0.4",
@@ -58,7 +58,7 @@
     "ejs": "^3.1.3",
     "eslint": "^7.2.0",
     "eslint-plugin-import": "^2.21.1",
-    "eslint-plugin-jsdoc": "^27.0.4",
+    "eslint-plugin-jsdoc": "^27.0.5",
     "fs-extra": "^9.0.1",
     "mocha": "^7.2.0",
     "npm-which": "^3.0.1",
