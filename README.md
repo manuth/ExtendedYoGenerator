@@ -13,15 +13,30 @@ You can use the extended yo-generator by inheriting the `Generator`-class provid
 All class members are documented using js-doc in order to provide the best possible user-experience.
 
 ### Example
+First you might want to create an interface describing the settings of your generator where the prompting-answers are stored.
+
 ***./src/IMySettings.ts***
 ```ts
 export interface IMySettings extends IGeneratorSettings
 {
+    /**
+     * The name of the project to generate.
+     */
     name: string;
+
+    /**
+     * The license-type of the project to generate.
+     */
     licenseType: "apache" | "gpl";
+
+    /**
+     * The path to write the project to.
+     */
     destination: string;
 }
 ```
+
+Now you're ready to create the actual generator-class:
 
 ***./src/index.ts***
 ```ts
@@ -58,7 +73,7 @@ export = class MyGenerator extends Generator<IMySettings>
             this.templatePath("README.md"),
             this.destinationPath("README.md"),
             {
-                Name: this.Settings["name"]
+                Name: this.Settings.name
             });
         return super.writing();
     }
@@ -85,6 +100,7 @@ export = class MyGenerator extends Generator<IMySettings>
   - [ModulePath](#modulepath)
   - [Prompting](#prompting)
   - [Writing](#writing)
+  - [Yo-Generator Methods](#yo-generator-methods)
 
 ### Separate Template-Folders
 Generally all templates are loaded from `./templates`. The `TemplateRoot`-member of the `Generator`-class allows you to load template-files from separate sub-folders of `./templates`.
@@ -203,6 +219,26 @@ export = class MyGenerator extends Generator<IMySettings>
 }
 ```
 
+#### Manipulating Questions
+You might want to ask questions after the user has chosen components.
+You can reach this goal by manipulating the `QuestionCollection`-property like this:
+
+```ts
+export = class MyGenerator extends Generator<IMySettings>
+{
+    protected get QuestionCollection(): Array<Question<IMySettings>>
+    {
+        let result = super.QuestionCollection;
+        result.push(
+            {
+                name: "destination",
+                message: "Where do you want to store the project?",
+                default: "./"
+            });
+    }
+}
+```
+
 ### Settings
 The `Generator.Settings`-property contains all answers to the prompts.
 
@@ -250,3 +286,14 @@ export = class MyGenerator extends Generator
     }
 }
 ```
+
+### Yo-Generator Methods
+Naturally the default yo-generator methods remain which are…
+  * `prompting()`:  
+    Asks all `Questions` and additionally all questions related to the `Components`
+  * `writing()`:  
+    Generates the project, automatically creating all specified file-mappings of the `Components`
+  * `install()`:  
+    This method can be used for installing the generated project
+  * `end()`:  
+    This method is invoked after the generator finished running
