@@ -13,18 +13,29 @@ You can use the extended yo-generator by inheriting the `Generator`-class provid
 All class members are documented using js-doc in order to provide the best possible user-experience.
 
 ### Example
-***src/generators/index.ts***
+***./src/IMySettings.ts***
+```ts
+export interface IMySettings extends IGeneratorSettings
+{
+    name: string;
+    licenseType: "apache" | "gpl";
+    destination: string;
+}
+```
+
+***./src/index.ts***
 ```ts
 import { Generator, IGeneratorSettings, Question } from "extended-yo-generator";
+import { IMySettings } from "./IMySettings";
 
-export = class MyGenerator extends Generator<IGeneratorSettings>
+export = class MyGenerator extends Generator<IMySettings>
 {
     protected get TemplateRoot(): string
     {
         return "app";
     }
 
-    protected get Questions(): Array<Question<IGeneratorSettings>>
+    protected get Questions(): Array<Question<IMySettings>>
     {
         return [
             {
@@ -80,7 +91,7 @@ Generally all templates are loaded from `./templates`. The `TemplateRoot`-member
 
 #### Example
 ```ts
-export = class MyGenerator extends Generator<IGeneratorSettings>
+export = class MyGenerator extends Generator
 {
     protected get TemplateRoot(): string
     {
@@ -97,11 +108,9 @@ Each component can provide any number of file-mappings and additional questions.
 
 #### Example
 ```ts
-import { Generator, IComponentProvider, IGeneratorSettings } from "extended-yo-generator";
-
-export = class MyGenerator extends Generator<MySettings>
+export = class MyGenerator extends Generator<IMySettings>
 {
-    protected get Components(): IComponentCollection<MySettings>
+    protected get Components(): IComponentCollection<IMySettings>
     {
         return {
             Question: "What should be included in your project?",
@@ -175,11 +184,9 @@ All answers are stored in the `Generator.Settings`-property.
 
 #### Example
 ```ts
-import { Question } from "extended-yo-generator";
-
-export = class MyGenerator extends Generator<IGeneratorSettings>
+export = class MyGenerator extends Generator<IMySettings>
 {
-    protected get Questions(): Question<IGeneratorSettings>[]
+    protected get Questions(): Question<IMySettings>[]
     {
         return [
             {
@@ -204,7 +211,7 @@ Using the `Generator.modulePath(...path)`-method you can create paths relative t
 
 This may be useful for instance if you want to copy your `tslint`-rules to the generated workspace:
 ```ts
-export class = MyGenerator extends Generator<IGeneratorSettings>
+export class = MyGenerator extends Generator
 {
     public async writing(): Promise<void>
     {
@@ -219,7 +226,7 @@ The `Generator.prompting()`-method asks all questions specified using `Generator
 
 #### Example
 ```ts
-export = class MyGenerator extends Generator<IGeneratorSettings>
+export = class MyGenerator extends Generator
 {
     public async prompting(): Promise<void>
     {
@@ -234,9 +241,9 @@ The `Generator.writing()`-method copies all `FileMapping`s of the components.
 
 #### Example
 ```ts
-export = class MyGenerator extends Generator<IGeneratorSettings>
+export = class MyGenerator extends Generator
 {
-    public async writing()
+    public async writing(): Promise<void>
     {
         await super.writing();
         this.fs.copy(this.templatePath("package.json"), this.destinationPath("package.json"));
