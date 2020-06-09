@@ -202,7 +202,7 @@ All answers are stored in the `Generator.Settings`-property.
 ```ts
 export = class MyGenerator extends Generator<IMySettings>
 {
-    protected get Questions(): Question<IMySettings>[]
+    protected get Questions(): Array<Question<IMySettings>>
     {
         return [
             {
