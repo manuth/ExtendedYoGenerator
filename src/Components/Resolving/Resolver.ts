@@ -1,7 +1,5 @@
-import { Resolvable } from "./Resolvable";
-import { IGeneratorSettings } from "../../IGeneratorSettings";
-import { Generator } from "../../Generator";
 import { IGenerator } from "../../IGenerator";
+import { Resolvable } from "./Resolvable";
 
 /**
  * Provides the functionality to resolve values.
@@ -19,6 +17,9 @@ export class Resolver<TTarget, TSettings>
      *
      * @param value
      * The value to resolve.
+     *
+     * @returns
+     * The resolved value.
      */
     protected async Resolve<T>(target: TTarget, generator: IGenerator<TSettings>, value: Resolvable<TTarget, TSettings, T>): Promise<T>
     {

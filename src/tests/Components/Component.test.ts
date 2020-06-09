@@ -1,10 +1,10 @@
 import Assert = require("assert");
-import { TestContext } from "../TestContext";
+import { TempFile } from "temp-filesystem";
+import { Component } from "../../Components/Component";
 import { IComponent } from "../../Components/IComponent";
 import { IFileMapping } from "../../Components/IFileMapping";
-import { Component } from "../../Components/Component";
+import { TestContext } from "../TestContext";
 import { TestGenerator } from "../TestGenerator";
-import { TempFile } from "temp-filesystem";
 
 /**
  * Provides tests for the `Component` class.
@@ -12,7 +12,7 @@ import { TempFile } from "temp-filesystem";
  * @param context
  * The context to use.
  */
-export function ComponentTests(context: TestContext)
+export function ComponentTests(context: TestContext): void
 {
     suite(
         "Component",
@@ -66,7 +66,7 @@ export function ComponentTests(context: TestContext)
                         "Checking whether changes to the `FileMappings` option immediately take affect…",
                         async () =>
                         {
-                            componentOptions.FileMappings = context.CreatePromiseFunction<IFileMapping<any>[]>(
+                            componentOptions.FileMappings = context.CreatePromiseFunction<Array<IFileMapping<any>>>(
                                 [
                                     {
                                         Destination: context.CreateFunction(testFile.FullName)

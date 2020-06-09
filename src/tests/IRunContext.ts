@@ -5,5 +5,8 @@ import { RunContext } from "yeoman-test";
  */
 export interface IRunContext<T> extends RunContext
 {
+    /**
+     * The generator that is being executed.
+     */
     generator: T;
 }

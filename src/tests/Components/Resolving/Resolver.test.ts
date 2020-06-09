@@ -1,9 +1,15 @@
 import Assert = require("assert");
+import { Resolvable } from "../../../Components/Resolving/Resolvable";
 import { Resolver } from "../../../Components/Resolving/Resolver";
 import { TestContext } from "../../TestContext";
-import { Resolvable } from "../../../Components/Resolving/Resolvable";
 
-export function ResolverTests(context: TestContext)
+/**
+ * Registers the resolver-tests.
+ *
+ * @param context
+ * The context of the test-execution.
+ */
+export function ResolverTests(context: TestContext): void
 {
     suite(
         "Resolver",
@@ -25,8 +31,11 @@ export function ResolverTests(context: TestContext)
                  *
                  * @param value
                  * The value to resolve.
+                 *
+                 * @returns
+                 * The resolved value.
                  */
-                public Resolve<T>(target: null, generator: null, value: Resolvable<null, null, T>)
+                public Resolve<T>(target: null, generator: null, value: Resolvable<null, null, T>): Promise<T>
                 {
                     return super.Resolve<T>(target, generator, value);
                 }
@@ -39,7 +48,11 @@ export function ResolverTests(context: TestContext)
                     let resolver: TestResolver;
                     let testValue = "test";
                     let testPromise = context.CreatePromise(testValue);
-                    let testFunction = () => {};
+
+                    /**
+                     * A test function.
+                     */
+                    let testFunction = (): void => {};
 
                     suiteSetup(
                         () =>

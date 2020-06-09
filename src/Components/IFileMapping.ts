@@ -1,9 +1,7 @@
-import { Generator } from "../Generator";
-import { IGeneratorSettings } from "../IGeneratorSettings";
+import { FileMapping } from "./FileMapping";
+import { FileProcessor } from "./FileProcessor";
 import { Resolvable } from "./Resolving/Resolvable";
 import { ResolveFunction } from "./Resolving/ResolveFunction";
-import { IGenerator } from "../IGenerator";
-import { FileMapping } from "./FileMapping";
 
 /**
  * Represents a file-mapping.
@@ -28,5 +26,5 @@ export interface IFileMapping<TSettings>
     /**
      * Gets or sets the method to execute for processing the file-mapping.
      */
-    Processor?: (target: FileMapping<TSettings>, generator: IGenerator<TSettings>, context?: any) => void | Promise<void>;
+    Processor?: FileProcessor<TSettings>;
 }

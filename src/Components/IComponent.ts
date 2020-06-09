@@ -1,7 +1,7 @@
-import { Resolvable } from "./Resolving/Resolvable";
-import { IFileMapping } from "./IFileMapping";
-import { Component } from "./Component";
 import { Question } from "yeoman-generator";
+import { Component } from "./Component";
+import { IFileMapping } from "./IFileMapping";
+import { Resolvable } from "./Resolving/Resolvable";
 
 /**
  * Represents a component.

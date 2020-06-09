@@ -1,7 +1,7 @@
 import { IGenerator } from "../IGenerator";
-import { PropertyResolver } from "./Resolving/PropertyResolver";
-import { IComponentCategory } from "./IComponentCategory";
 import { Component } from "./Component";
+import { IComponentCategory } from "./IComponentCategory";
+import { PropertyResolver } from "./Resolving/PropertyResolver";
 
 /**
  * Represents a component-category.

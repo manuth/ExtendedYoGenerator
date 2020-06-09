@@ -1,6 +1,5 @@
 import { Generator, IComponentCollection, Question } from "..";
 import { IGeneratorSettings } from "../IGeneratorSettings";
-import { ComponentCollection } from "../Components/ComponentCollection";
 import { ITestGeneratorOptions } from "./ITestGeneratorOptions";
 import { ITestOptions } from "./ITestOptions";
 
@@ -36,7 +35,7 @@ export class TestGenerator extends Generator<IGeneratorSettings & Record<string,
     /**
      * Gets or sets the name of the root of the template-folder.
      */
-    public get TemplateRoot()
+    public get TemplateRoot(): string
     {
         return this.generatorOptions.TemplateRoot;
     }
@@ -44,7 +43,7 @@ export class TestGenerator extends Generator<IGeneratorSettings & Record<string,
     /**
      * @inheritdoc
      */
-    public set TemplateRoot(value)
+    public set TemplateRoot(value: string)
     {
         this.generatorOptions.TemplateRoot = value;
     }
@@ -60,7 +59,7 @@ export class TestGenerator extends Generator<IGeneratorSettings & Record<string,
     /**
      * @inheritdoc
      */
-    public set Components(value)
+    public set Components(value: IComponentCollection<IGeneratorSettings>)
     {
         this.generatorOptions.Components = value;
     }
@@ -76,7 +75,7 @@ export class TestGenerator extends Generator<IGeneratorSettings & Record<string,
     /**
      * @inheritdoc
      */
-    public set Questions(value)
+    public set Questions(value: Question[])
     {
         this.generatorOptions.Questions = value;
     }
@@ -84,7 +83,7 @@ export class TestGenerator extends Generator<IGeneratorSettings & Record<string,
     /**
      * Gathers all information for executing the generator and saves them to the `Settings`.
      */
-    public async prompting()
+    public async prompting(): Promise<void>
     {
         this.log("Hi");
         return super.prompting();
@@ -93,7 +92,7 @@ export class TestGenerator extends Generator<IGeneratorSettings & Record<string,
     /**
      * Writes all files for the components.
      */
-    public async writing()
+    public async writing(): Promise<void>
     {
         super.writing();
     }
@@ -101,7 +100,7 @@ export class TestGenerator extends Generator<IGeneratorSettings & Record<string,
     /**
      * Finalizes the generation-process.
      */
-    public async end()
+    public async end(): Promise<void>
     {
         this.log("The end");
     }

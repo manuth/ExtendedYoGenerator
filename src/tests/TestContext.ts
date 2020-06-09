@@ -1,12 +1,10 @@
-import Path = require("path");
-import { writeJSON, remove } from "fs-extra";
-import { run, RunContext, RunContextSettings } from "yeoman-test";
-import { IGenerator } from "../IGenerator";
-import { TestGenerator } from "./TestGenerator";
 import { spawnSync } from "child_process";
+import Path = require("path");
 import npmWhich = require("npm-which");
+import { run, RunContextSettings } from "yeoman-test";
 import { IRunContext } from "./IRunContext";
 import { ITestOptions } from "./ITestOptions";
+import { TestGenerator } from "./TestGenerator";
 
 /**
  * Represents a context for testing.
@@ -32,7 +30,7 @@ export class TestContext
     /**
      * Gets the directory of the generator.
      */
-    public get GeneratorDirectory()
+    public get GeneratorDirectory(): string
     {
         return this.generatorDirectory;
     }
@@ -86,6 +84,9 @@ export class TestContext
      *
      * @param value
      * The value to promisify.
+     *
+     * @returns
+     * The promisified value.
      */
     public CreatePromise<T>(value: T): Promise<T>
     {
@@ -101,13 +102,16 @@ export class TestContext
      *
      * @param value
      * The value to nest into a function.
+     *
+     * @returns
+     * The value nested into a function.
      */
     public CreateFunction<T>(value: T): () => T
     {
         return () =>
         {
             return value;
-        }
+        };
     }
 
     /**
@@ -115,6 +119,9 @@ export class TestContext
      *
      * @param value
      * The value to nest.
+     *
+     * @returns
+     * The promisified value nested into a function.
      */
     public CreatePromiseFunction<T>(value: T): () => Promise<T>
     {
@@ -123,6 +130,15 @@ export class TestContext
 
     /**
      * Executes the generator.
+     *
+     * @param options
+     * The options for the generator.
+     *
+     * @param runSettings
+     * The settings for executing the generator.
+     *
+     * @returns
+     * The execution-context of the generator.
      */
     public ExecuteGenerator(options?: ITestOptions, runSettings?: RunContextSettings): IRunContext<TestGenerator>
     {

@@ -1,16 +1,16 @@
+import Path = require("path");
+import { isNullOrUndefined } from "util";
 import chalk = require("chalk");
 import { ChoiceCollection, Separator } from "inquirer";
-import Path = require("path");
 import PkgUp = require("pkg-up");
-import { isNullOrUndefined } from "util";
 import YeomanGenerator = require("yeoman-generator");
 import { Question } from "yeoman-generator";
-import { GeneratorSettingKey } from "./GeneratorSettingKey";
-import { IGeneratorSettings } from "./IGeneratorSettings";
-import { IGenerator } from "./IGenerator";
 import { ComponentCollection } from "./Components/ComponentCollection";
 import { FileMapping } from "./Components/FileMapping";
 import { IComponentCollection } from "./Components/IComponentCollection";
+import { GeneratorSettingKey } from "./GeneratorSettingKey";
+import { IGenerator } from "./IGenerator";
+import { IGeneratorSettings } from "./IGeneratorSettings";
 
 /**
  * Represents a yeoman-generator.
@@ -36,7 +36,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
      * @param options
      * A set of options for the generator.
      */
-    public constructor(args: string | string[], options: {})
+    public constructor(args: string | string[], options: Record<string, unknown>)
     {
         super(args, options);
         this.moduleRoot = Path.dirname(PkgUp.sync({ cwd: this.resolved }));
@@ -95,28 +95,28 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
             for (let category of this.ComponentCollection.Categories ?? [])
             {
                 components.push(new Separator(category.DisplayName));
-    
+
                 for (let component of category.Components)
                 {
                     let isDefault = component.DefaultEnabled ?? false;
-    
+
                     components.push(
                         {
                             value: component.ID,
                             name: component.DisplayName,
                             checked: isDefault
                         });
-    
+
                     if (isDefault)
                     {
                         defaults.push(component.ID);
                     }
-    
+
                     for (let i = 0; i < component.Questions?.length ?? 0; i++)
                     {
                         let question = component.Questions[i];
                         let when = question.when;
-    
+
                         question.when = async (settings: T) =>
                         {
                             if (settings[GeneratorSettingKey.Components].includes(component.ID))
@@ -126,7 +126,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
                                     this.log();
                                     this.log(`${chalk.red(">>")} ${chalk.bold(component.DisplayName)} ${chalk.red("<<")}`);
                                 }
-    
+
                                 if (!isNullOrUndefined(when))
                                 {
                                     if (typeof when === "function")
@@ -147,13 +147,13 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
                             {
                                 return false;
                             }
-                        }
-                        
+                        };
+
                         result.push(question);
                     }
                 }
             }
-    
+
             result.unshift(
                 {
                     type: "checkbox",
@@ -171,7 +171,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     /**
      * @inheritdoc
      */
-    public get Settings()
+    public get Settings(): T
     {
         return this.settings;
     }
@@ -181,8 +181,11 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
      *
      * @param path
      * The path that is to be joined.
+     *
+     * @returns
+     * The joined path.
      */
-    public modulePath(...path: string[])
+    public modulePath(...path: string[]): string
     {
         return Path.join(this.moduleRoot, ...path);
     }
@@ -192,8 +195,11 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
      *
      * @param path
      * The path that is to be joined.
+     *
+     * @returns
+     * The joined path.
      */
-    public templatePath(...path: string[])
+    public templatePath(...path: string[]): string
     {
         return this.modulePath("templates", ...(this.TemplateRoot ? [this.TemplateRoot] : []), ...path);
     }
@@ -201,7 +207,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     /**
      * Gathers all information for executing the generator and saves them to the `Settings`.
      */
-    public async prompting()
+    public async prompting(): Promise<void>
     {
         Object.assign(this.Settings, await this.prompt(this.QuestionCollection));
         this.log();
@@ -210,7 +216,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     /**
      * Writes all files for the components.
      */
-    public async writing()
+    public async writing(): Promise<void>
     {
         for (let category of this.ComponentCollection?.Categories ?? [])
         {
@@ -230,14 +236,14 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     /**
      * Installs all required dependencies.
      */
-    public async install()
+    public async install(): Promise<void>
     {
     }
 
     /**
      * Finalizes the generation-process.
      */
-    public async end()
+    public async end(): Promise<void>
     {
     }
 
@@ -247,7 +253,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
      * @param fileMapping
      * The file-mapping to process.
      */
-    protected async ProcessFile(fileMapping: FileMapping<T>)
+    protected async ProcessFile(fileMapping: FileMapping<T>): Promise<void>
     {
         let result = fileMapping.Processor(fileMapping, this);
 

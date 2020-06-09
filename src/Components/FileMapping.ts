@@ -1,7 +1,9 @@
 import Path = require("path");
 import { isNullOrUndefined } from "util";
-import { IFileMapping } from "./IFileMapping";
 import { IGenerator } from "../IGenerator";
+import { FileProcessor } from "./FileProcessor";
+import { IFileMapping } from "./IFileMapping";
+import { PathResolver } from "./Resolving/PathResolver";
 import { PropertyResolver } from "./Resolving/PropertyResolver";
 import { Resolvable } from "./Resolving/Resolvable";
 
@@ -51,7 +53,7 @@ export class FileMapping<TSettings> extends PropertyResolver<IFileMapping<TSetti
     /**
      * Gets the method to execute for processing the file-mapping.
      */
-    public get Processor(): (target: FileMapping<TSettings>, generator: IGenerator<TSettings>) => (void | Promise<void>)
+    public get Processor(): FileProcessor<TSettings>
     {
         if (this.Object.Processor)
         {
@@ -81,13 +83,16 @@ export class FileMapping<TSettings> extends PropertyResolver<IFileMapping<TSetti
      *
      * @param resolver
      * The path-resolver to use.
+     *
+     * @returns
+     * The resolved path.
      */
-    protected ResolvePath(path: Resolvable<FileMapping<TSettings>, TSettings, string>, resolver: (...path: string[]) => string): Promise<string>
+    protected ResolvePath(path: Resolvable<FileMapping<TSettings>, TSettings, string>, resolver: PathResolver): Promise<string>
     {
         return (async () =>
         {
             let result = await this.ResolveProperty(this, path);
-            
+
             if (
                 isNullOrUndefined(result) ||
                 Path.isAbsolute(result))

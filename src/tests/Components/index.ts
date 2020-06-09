@@ -1,9 +1,9 @@
 import { TestContext } from "../TestContext";
-import { ResolvingTests } from "./Resolving";
-import { FileMappingTests } from "./FileMapping.test";
 import { ComponentTests } from "./Component.test";
 import { ComponentCategoryTests } from "./ComponentCategory.test";
 import { ComponentCollectionTests } from "./ComponentCollection.test";
+import { FileMappingTests } from "./FileMapping.test";
+import { ResolvingTests } from "./Resolving";
 
 /**
  * Registers tests for components.
@@ -11,7 +11,7 @@ import { ComponentCollectionTests } from "./ComponentCollection.test";
  * @param context
  * The test-context to use.
  */
-export function ComponentsTests(context: TestContext)
+export function ComponentsTests(context: TestContext): void
 {
     suite(
         "Components",
@@ -22,5 +22,5 @@ export function ComponentsTests(context: TestContext)
             ComponentTests(context);
             ComponentCategoryTests(context);
             ComponentCollectionTests(context);
-        }); 
+        });
 }

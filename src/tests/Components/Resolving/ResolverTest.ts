@@ -1,6 +1,7 @@
 import { PropertyResolver } from "../../../Components/Resolving/PropertyResolver";
-import { IResolverTestOptions } from "./IResolverTestOptions";
 import { IGenerator } from "../../../IGenerator";
+import { IResolverTestOptions } from "./IResolverTestOptions";
+import { TestFunction } from "./TestFunction";
 
 /**
  * A resolver-object for testing.
@@ -37,7 +38,10 @@ export class ResolverTest extends PropertyResolver<IResolverTestOptions, Resolve
         return this.ResolveProperty(this, this.Object.TestPromise);
     }
 
-    public get TestFunction(): Promise<() => string>
+    /**
+     * Gets a test-function
+     */
+    public get TestFunction(): Promise<TestFunction>
     {
         return this.ResolveProperty(this, this.Object.TestFunction);
     }

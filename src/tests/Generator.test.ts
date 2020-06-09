@@ -1,13 +1,10 @@
 import Assert = require("assert");
-import FileSystem = require("fs-extra");
 import Path = require("upath");
-import { isNullOrUndefined } from "util";
-import { run, RunContext } from "yeoman-test";
 import { GeneratorSetting } from "..";
-import { TestGenerator } from "./TestGenerator";
-import { TestContext } from "./TestContext";
 import { IRunContext } from "./IRunContext";
 import { ITestGeneratorOptions } from "./ITestGeneratorOptions";
+import { TestContext } from "./TestContext";
+import { TestGenerator } from "./TestGenerator";
 
 /**
  * Registers the generator-tests.
@@ -15,7 +12,7 @@ import { ITestGeneratorOptions } from "./ITestGeneratorOptions";
  * @param context
  * The context to use.
  */
-export function GeneratorTests(context: TestContext)
+export function GeneratorTests(context: TestContext): void
 {
     suite(
         "Generator",
@@ -35,7 +32,7 @@ export function GeneratorTests(context: TestContext)
              * @param expected
              * The expected path.
              */
-            function AssertPath(actual: string, expected: string)
+            function AssertPath(actual: string, expected: string): void
             {
                 Assert.strictEqual(ProcessPath(actual), ProcessPath(expected));
             }
@@ -45,8 +42,11 @@ export function GeneratorTests(context: TestContext)
              *
              * @param path
              * The path to process.
+             *
+             * @returns
+             * The processed path.
              */
-            function ProcessPath(path: string)
+            function ProcessPath(path: string): string
             {
                 return Path.normalize(Path.resolve(path));
             }
@@ -124,7 +124,7 @@ export function GeneratorTests(context: TestContext)
 
                     test(
                         "Checking whether the generator can be executed…",
-                        async function ()
+                        async function()
                         {
                             this.enableTimeouts(false);
                             await context.ExecuteGenerator({ testGeneratorOptions: generatorOptions }).toPromise();
@@ -261,7 +261,7 @@ export function GeneratorTests(context: TestContext)
                                         ]
                                     }
                                 ]
-                            }
+                            };
 
                             let runContext = context.ExecuteGenerator({ testGeneratorOptions: generatorOptions });
                             await runContext.toPromise();

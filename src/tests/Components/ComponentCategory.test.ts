@@ -1,8 +1,8 @@
 import Assert = require("assert");
-import { TestContext } from "../TestContext";
-import { TestGenerator } from "../TestGenerator";
 import { ComponentCategory } from "../../Components/ComponentCategory";
 import { IComponentCategory } from "../../Components/IComponentCategory";
+import { TestContext } from "../TestContext";
+import { TestGenerator } from "../TestGenerator";
 
 /**
  * Provides tests for the `ComponentCategory` class.
@@ -10,7 +10,7 @@ import { IComponentCategory } from "../../Components/IComponentCategory";
  * @param context
  * The test-context.
  */
-export function ComponentCategoryTests(context: TestContext)
+export function ComponentCategoryTests(context: TestContext): void
 {
     suite(
         "ComponentCategory",

@@ -1,7 +1,5 @@
-import { IGeneratorSettings } from "../../IGeneratorSettings";
-import { Generator } from "../../Generator";
-import { ResolveValue } from "./ResolveValue";
 import { ResolveFunction } from "./ResolveFunction";
+import { ResolveValue } from "./ResolveValue";
 
 /**
  * Represents a resolveable value.

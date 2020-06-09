@@ -1,6 +1,6 @@
-import { TestContext } from "./TestContext";
-import { GeneratorTests } from "./Generator.test";
 import { ComponentsTests } from "./Components";
+import { GeneratorTests } from "./Generator.test";
+import { TestContext } from "./TestContext";
 
 suite(
     "ExtendedYoGenerator",

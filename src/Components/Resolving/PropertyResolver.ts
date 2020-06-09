@@ -1,6 +1,6 @@
-import { Resolver } from "./Resolver";
 import { IGenerator } from "../../IGenerator";
 import { Resolvable } from "./Resolvable";
+import { Resolver } from "./Resolver";
 
 /**
  * Provides the functionality to resolve properties.
@@ -57,6 +57,9 @@ export class PropertyResolver<TObject, TTarget, TSettings> extends Resolver<TTar
      *
      * @param value
      * The value to resolve.
+     *
+     * @returns
+     * The resolved value.
      */
     protected async ResolveProperty<T>(target: TTarget, value: Resolvable<TTarget, TSettings, T>): Promise<T>
     {

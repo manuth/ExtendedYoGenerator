@@ -7,7 +7,7 @@ import { PropertyResolverTests } from "./PropertyResolver.test";
  * @param context
  * The test-context to use.
  */
-export function ResolvingTests(context: TestContext)
+export function ResolvingTests(context: TestContext): void
 {
     suite(
         "Resolving",

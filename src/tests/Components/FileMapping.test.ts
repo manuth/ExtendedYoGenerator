@@ -1,11 +1,11 @@
 import Assert = require("assert");
-import { TempDirectory, TempFile } from "temp-filesystem";
-import { TestContext } from "../TestContext";
-import { IFileMapping } from "../../Components/IFileMapping";
-import { FileMapping } from "../../Components/FileMapping";
-import { TestGenerator } from "../TestGenerator";
-import { writeFile, readFile } from "fs-extra";
 import { render } from "ejs";
+import { writeFile, readFile } from "fs-extra";
+import { TempDirectory, TempFile } from "temp-filesystem";
+import { FileMapping } from "../../Components/FileMapping";
+import { IFileMapping } from "../../Components/IFileMapping";
+import { TestContext } from "../TestContext";
+import { TestGenerator } from "../TestGenerator";
 
 /**
  * Provides tests for the `FileMapping` class.
@@ -13,7 +13,7 @@ import { render } from "ejs";
  * @param context
  * The test-context.
  */
-export function FileMappingTests(context: TestContext)
+export function FileMappingTests(context: TestContext): void
 {
     suite(
         "FileMapping",
@@ -124,7 +124,11 @@ export function FileMappingTests(context: TestContext)
                                 "Checking whether processors are resolved, if defined…",
                                 () =>
                                 {
-                                    let processor = async () => { };
+                                    /**
+                                     * Processes a file-mapping.
+                                     */
+                                    let processor = async (): Promise<void> => { };
+
                                     fileMappingOptions.Processor = processor;
                                     Assert.strictEqual(fileMapping.Processor, processor);
                                     fileMappingOptions.Processor = null;
@@ -169,7 +173,7 @@ export function FileMappingTests(context: TestContext)
                              * @param content
                              * The asserted content of the destination-file.
                              */
-                            async function AssertDestinationContent(content: string)
+                            async function AssertDestinationContent(content: string): Promise<void>
                             {
                                 return new Promise(
                                     (resolve, reject) =>
@@ -186,7 +190,7 @@ export function FileMappingTests(context: TestContext)
                                                     Assert.strictEqual((await readFile(destinationFile.FullName)).toString(), content);
                                                     resolve();
                                                 }
-                                            })
+                                            });
                                     });
                             }
 

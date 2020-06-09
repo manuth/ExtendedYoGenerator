@@ -1,8 +1,8 @@
-import { PropertyResolver } from "./Resolving/PropertyResolver";
-import { IComponent } from "./IComponent";
-import { FileMapping } from "./FileMapping";
-import { IGenerator } from "../IGenerator";
 import { Question } from "yeoman-generator";
+import { IGenerator } from "../IGenerator";
+import { FileMapping } from "./FileMapping";
+import { IComponent } from "./IComponent";
+import { PropertyResolver } from "./Resolving/PropertyResolver";
 
 /**
  * Represents a component.
@@ -65,7 +65,7 @@ export class Component<TSettings> extends PropertyResolver<IComponent<TSettings>
             return (await this.ResolveProperty(this, this.Object.FileMappings)).map(
                 (fileMapping) =>
                 {
-                    return new FileMapping(this.Generator, fileMapping); 
+                    return new FileMapping(this.Generator, fileMapping);
                 });
         })();
     }

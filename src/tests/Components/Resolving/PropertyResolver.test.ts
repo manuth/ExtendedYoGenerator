@@ -1,7 +1,7 @@
 import Assert = require("assert");
 import { TestContext } from "../../TestContext";
-import { ResolverTest } from "./ResolverTest";
 import { IResolverTestOptions } from "./IResolverTestOptions";
+import { ResolverTest } from "./ResolverTest";
 
 /**
  * Registers tests for the `PropertyResolver` class.
@@ -9,7 +9,7 @@ import { IResolverTestOptions } from "./IResolverTestOptions";
  * @param context
  * The test-context to use.
  */
-export function PropertyResolverTests(context: TestContext)
+export function PropertyResolverTests(context: TestContext): void
 {
     suite(
         "PropertyResolver",
@@ -19,7 +19,7 @@ export function PropertyResolverTests(context: TestContext)
             let testValue = "this is a test";
             let testPromise = context.CreatePromise(testValue);
             let testFunction = context.CreateFunction(testValue);
-            
+
             let resolverOptions: IResolverTestOptions = {
                 TestValue: null,
                 TestPromise: null,
@@ -59,7 +59,7 @@ export function PropertyResolverTests(context: TestContext)
                         "Checking whether the target-object can be used within a resolve-method…",
                         async () =>
                         {
-                            resolverOptions.TestValue = async (target, generator) =>
+                            resolverOptions.TestValue = async (target) =>
                             {
                                 return `${await target.TestPromise}${await target.TestFunction}`;
                             };
