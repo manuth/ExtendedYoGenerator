@@ -16,5 +16,34 @@ module.exports = {
             path.join(__dirname, "tsconfig.eslint.json"),
             path.join(__dirname, "test", "TestGenerator", "tsconfig.json")
         ]
+    },
+    rules: {
+        "jsdoc/require-jsdoc": [
+            "warn",
+            {
+                require: {
+                    ClassDeclaration: true,
+                    ClassExpression: true,
+                    ArrowFunctionExpression: false,
+                    FunctionDeclaration: true,
+                    FunctionExpression: true,
+                    MethodDefinition: true
+                },
+                contexts: [
+                    "TSEnumDeclaration",
+                    "TSEnumMember",
+                    "TSInterfaceDeclaration",
+                    "ClassProperty",
+                    "TSTypeAliasDeclaration",
+                    "TSPropertySignature",
+                    "TSAbstractMethodDefinition",
+                    "TSCallSignatureDeclaration",
+                    "TSConstructSignatureDeclaration",
+                    "TSMethodSignature",
+                    "TSDeclareFunction",
+                    "VariableDeclaration > VariableDeclarator:not([id.typeAnnotation]) > ArrowFunctionExpression"
+                ]
+            }
+        ]
     }
 };
