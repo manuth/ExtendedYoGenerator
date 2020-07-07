@@ -32,6 +32,13 @@ steps:
         - tag
       ref:
         - refs/tags/v[0-9].[0-9].[0-9]
+  - name: deprecate old module
+    image: node
+    environment:
+      NPM_TOKEN:
+        from_secret: npm_token
+    commands:
+      - npm deprecate extended-yo-generator "This package has been renamed to \`@manuth/extended-yo-generator\`"
   - name: prepare release
     image: node
     commands:
