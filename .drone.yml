@@ -19,28 +19,13 @@ steps:
     image: node
     commands:
       - npm run test
-  - name: deprecate old module
-    image: node
-    environment:
-      NPM_TOKEN:
-        from_secret: npm_token
-    commands:
-      - echo "always_auth=true" > ~/.npmrc
-      - echo "//registry.npmjs.org/:_authToken=$${NPM_TOKEN}" >> ~/.npmrc
-      - npm deprecate extended-yo-generator "This package has been renamed to \`@manuth/extended-yo-generator\`"
-    when:
-      event:
-        - tag
-      ref:
-        - refs/tags/v[0-9].[0-9].[0-9]
   - name: publish module to npm
     image: node
     environment:
       NPM_TOKEN:
         from_secret: npm_token
     commands:
-      - echo "always_auth=true" > ~/.npmrc
-      - echo "//registry.npmjs.org/:_authToken=$${NPM_TOKEN}" >> ~/.npmrc
+      - echo "//registry.npmjs.org/:_authToken=$${NPM_TOKEN}" > ~/.npmrc
       - npm publish
     when:
       event:
