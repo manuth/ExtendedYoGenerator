@@ -15,6 +15,7 @@
     "lib": "lib",
     "test": "test"
   },
+  "homepage": "https://github.com/manuth/ExtendedYoGenerator#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/manuth/ExtendedYoGenerator.git"
@@ -22,7 +23,6 @@
   "bugs": {
     "url": "https://github.com/manuth/ExtendedYoGenerator/issues"
   },
-  "homepage": "https://github.com/manuth/ExtendedYoGenerator#readme",
   "publishConfig": {
     "access": "public"
   },
