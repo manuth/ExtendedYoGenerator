@@ -1,5 +1,5 @@
 {
-  "name": "extended-yo-generator",
+  "name": "@manuth/extended-yo-generator",
   "version": "3.0.0",
   "description": "An extended version of the Yeoman-Generator",
   "author": "Manuel Thalmann <m@nuth.ch>",
