@@ -1,21 +1,21 @@
 import Assert = require("assert");
 import Path = require("upath");
-import { GeneratorSetting } from "..";
-import { IRunContext } from "./IRunContext";
-import { ITestGeneratorOptions } from "./ITestGeneratorOptions";
-import { TestContext } from "./TestContext";
+import { GeneratorSetting } from "../..";
+import { IRunContext } from "../IRunContext";
+import { ITestGeneratorOptions } from "../ITestGeneratorOptions";
+import { TestContext } from "../TestContext";
 import { TestGenerator } from "./TestGenerator";
 
 /**
- * Registers the generator-tests.
+ * Registers tests for the TSGenerator-generator.
  *
  * @param context
  * The context to use.
  */
-export function GeneratorTests(context: TestContext): void
+export function TSGeneratorTests(context: TestContext): void
 {
     suite(
-        "Generator",
+        "TSGeneratorGenerator",
         () =>
         {
             let generator: TestGenerator;

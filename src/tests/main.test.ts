@@ -1,5 +1,5 @@
 import { ComponentsTests } from "./Components";
-import { GeneratorTests } from "./Generator.test";
+import { GeneratorTests } from "./Generator";
 import { TestContext } from "./TestContext";
 
 suite(
