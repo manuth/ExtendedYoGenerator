@@ -23,6 +23,9 @@
     "url": "https://github.com/manuth/ExtendedYoGenerator/issues"
   },
   "homepage": "https://github.com/manuth/ExtendedYoGenerator#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc -p .",
     "rebuild": "npm run clean && npm run build",

@@ -1,4 +1,4 @@
-name: ExtendedYoGenerator
+name: node-module
 kind: pipeline
 type: docker
 
@@ -19,15 +19,14 @@ steps:
     image: node
     commands:
       - npm run test
-  - name: publish node-module
+  - name: publish module to npm
     image: node
     environment:
       NPM_TOKEN:
         from_secret: npm_token
     commands:
-      - echo "always_auth=true" > ~/.npmrc
-      - echo "//registry.npmjs.org/:_authToken=$${NPM_TOKEN}" >> ~/.npmrc
-      - npm publish --access=public
+      - echo "//registry.npmjs.org/:_authToken=$${NPM_TOKEN}" > ~/.npmrc
+      - npm publish
     when:
       event:
         - tag
@@ -60,7 +59,7 @@ steps:
     commands: []
     settings:
       api_key:
-        from_secret: github_token
+        from_secret: github_publish_token
       files:
         - "*.tgz"
       title: ReleaseTitle.md
