@@ -3,11 +3,6 @@
     "compileOnSave": true,
     "compilerOptions": {
         "rootDir": "./src",
-        "plugins": [
-            {
-                "name": "typescript-eslint-plugin"
-            }
-        ],
         "outDir": "./lib"
     },
     "include": [

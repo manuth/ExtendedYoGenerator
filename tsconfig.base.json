@@ -5,6 +5,11 @@
         "lib": [
             "ES7"
         ],
+        "plugins": [
+            {
+                "name": "typescript-eslint-plugin"
+            }
+        ],
         "target": "ES6"
     }
 }
