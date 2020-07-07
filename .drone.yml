@@ -39,6 +39,11 @@ steps:
         from_secret: npm_token
     commands:
       - npm deprecate extended-yo-generator "This package has been renamed to \`@manuth/extended-yo-generator\`"
+    when:
+      event:
+        - tag
+      ref:
+        - refs/tags/v[0-9].[0-9].[0-9]
   - name: publish module to github
     image: node
     environment:
