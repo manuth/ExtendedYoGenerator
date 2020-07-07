@@ -1,7 +1,7 @@
 import Assert = require("assert");
 import pkgUp = require("pkg-up");
 import Path = require("upath");
-import { GeneratorSetting } from "../..";
+import { GeneratorSettingKey } from "../../GeneratorSettingKey";
 import { IRunContext } from "../IRunContext";
 import { ITestGeneratorOptions } from "../ITestGeneratorOptions";
 import { TestContext } from "../TestContext";
@@ -275,9 +275,9 @@ export function TSGeneratorTests(context: TestContext): void
                         "Checking whether only default components are selected by default…",
                         () =>
                         {
-                            Assert.strictEqual(generator.Settings[GeneratorSetting.Components].length, 1);
-                            Assert.ok(generator.Settings[GeneratorSetting.Components].includes(defaultID));
-                            Assert.ok(!generator.Settings[GeneratorSetting.Components].includes(hiddenID));
+                            Assert.strictEqual(generator.Settings[GeneratorSettingKey.Components].length, 1);
+                            Assert.ok(generator.Settings[GeneratorSettingKey.Components].includes(defaultID));
+                            Assert.ok(!generator.Settings[GeneratorSettingKey.Components].includes(hiddenID));
                         });
 
                     test(
