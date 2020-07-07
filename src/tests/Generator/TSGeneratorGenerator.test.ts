@@ -129,7 +129,7 @@ export function TSGeneratorTests(context: TestContext): void
                         "Checking whether the generator can be executed…",
                         async function()
                         {
-                            this.enableTimeouts(false);
+                            this.timeout(0);
                             await context.ExecuteGenerator({ testGeneratorOptions: generatorOptions }).toPromise();
                         });
                 });
