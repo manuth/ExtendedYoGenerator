@@ -1,5 +1,5 @@
-import { ITestOptions } from "extended-generator/lib/tests/ITestOptions";
-import { TestGenerator } from "extended-generator/lib/tests/TestGenerator";
+import { ITestOptions } from "extended-generator/tests/ITestOptions";
+import { TestGenerator } from "extended-generator/tests/TestGenerator";
 
 /**
  * The test-generator.

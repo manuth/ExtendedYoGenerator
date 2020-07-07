@@ -1,5 +1,8 @@
 import { spawnSync } from "child_process";
 import Path = require("path");
+import { parse } from "url";
+import { Package } from "@manuth/package-json-editor";
+import { writeJSON, remove, pathExists } from "fs-extra";
 import npmWhich = require("npm-which");
 import { run, RunContextSettings } from "yeoman-test";
 import { IRunContext } from "./IRunContext";
@@ -57,6 +60,26 @@ export class TestContext
      */
     public async Initialize(): Promise<void>
     {
+        let packageFileName = "package.json";
+        let generatedFiles: string[] = [];
+        let npmPackage = new Package(Path.join(this.GeneratorDirectory, packageFileName));
+
+        for (let dependency of npmPackage.AllDependencies.Entries)
+        {
+            let parsedURL = parse(dependency[1]);
+
+            if (parsedURL?.protocol === "file:")
+            {
+                let packagePath = Path.join(this.GeneratorDirectory, parsedURL.path, packageFileName);
+
+                if (!await pathExists(packagePath))
+                {
+                    await writeJSON(packagePath, {});
+                    generatedFiles.push(packagePath);
+                }
+            }
+        }
+
         spawnSync(
             npmWhich(this.GeneratorDirectory).sync("npm"),
             [
@@ -71,6 +94,11 @@ export class TestContext
             {
                 cwd: this.GeneratorDirectory
             });
+
+        for (let file of generatedFiles)
+        {
+            await remove(file);
+        }
     }
 
     /**

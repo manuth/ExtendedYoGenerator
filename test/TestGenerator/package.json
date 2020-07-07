@@ -1,7 +1,8 @@
 {
     "name": "test-generator",
+    "main": "./lib/test/TestGenerator/index.js",
     "dependencies": {
-        "extended-generator": "file:./../.."
+        "extended-generator": "file:./../../lib"
     },
     "devDependencies": {
         "typescript": "^3.9.3"
