@@ -1,13 +1,8 @@
-import { spawnSync } from "child_process";
 import Path = require("path");
-import { parse } from "url";
-import { Package } from "@manuth/package-json-editor";
-import { writeJSON, remove, pathExists } from "fs-extra";
-import npmWhich = require("npm-which");
 import { run, RunContextSettings } from "yeoman-test";
+import { TestGenerator } from "./Generator/TestGenerator";
 import { IRunContext } from "./IRunContext";
 import { ITestOptions } from "./ITestOptions";
-import { TestGenerator } from "./TestGenerator";
 
 /**
  * Represents a context for testing.
@@ -17,7 +12,7 @@ export class TestContext
     /**
      * The directory of the generator.
      */
-    private generatorDirectory = Path.join(__dirname, "..", "..", "test", "TestGenerator");
+    private generatorDirectory = Path.join(__dirname, "Generator", "TestYoGenerator");
 
     /**
      * An instance of the `RunContext` class that already has finished.
@@ -59,47 +54,7 @@ export class TestContext
      * Initializes the context.
      */
     public async Initialize(): Promise<void>
-    {
-        let packageFileName = "package.json";
-        let generatedFiles: string[] = [];
-        let npmPackage = new Package(Path.join(this.GeneratorDirectory, packageFileName));
-
-        for (let dependency of npmPackage.AllDependencies.Entries)
-        {
-            let parsedURL = parse(dependency[1]);
-
-            if (parsedURL?.protocol === "file:")
-            {
-                let packagePath = Path.join(this.GeneratorDirectory, parsedURL.path, packageFileName);
-
-                if (!await pathExists(packagePath))
-                {
-                    await writeJSON(packagePath, {});
-                    generatedFiles.push(packagePath);
-                }
-            }
-        }
-
-        spawnSync(
-            npmWhich(this.GeneratorDirectory).sync("npm"),
-            [
-                "install"
-            ],
-            {
-                cwd: this.GeneratorDirectory
-            });
-
-        spawnSync(
-            npmWhich(this.GeneratorDirectory).sync("tsc"),
-            {
-                cwd: this.GeneratorDirectory
-            });
-
-        for (let file of generatedFiles)
-        {
-            await remove(file);
-        }
-    }
+    { }
 
     /**
      * Disposes the context.

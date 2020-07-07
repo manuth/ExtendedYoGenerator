@@ -1,8 +1,8 @@
 import Assert = require("assert");
 import { ComponentCollection } from "../../Components/ComponentCollection";
 import { IComponentCollection } from "../../Components/IComponentCollection";
+import { TestGenerator } from "../Generator/TestGenerator";
 import { TestContext } from "../TestContext";
-import { TestGenerator } from "../TestGenerator";
 
 /**
  * Provides tests for the `ComponentCollection` class.

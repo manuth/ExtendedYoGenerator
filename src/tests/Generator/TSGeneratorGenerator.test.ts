@@ -1,4 +1,5 @@
 import Assert = require("assert");
+import pkgUp = require("pkg-up");
 import Path = require("upath");
 import { GeneratorSetting } from "../..";
 import { IRunContext } from "../IRunContext";
@@ -18,6 +19,7 @@ export function TSGeneratorTests(context: TestContext): void
         "TSGeneratorGenerator",
         () =>
         {
+            let moduleRoot: string;
             let generator: TestGenerator;
             let generatorOptions: ITestGeneratorOptions = {};
             let testPath = "this-is-a-test.txt";
@@ -54,6 +56,7 @@ export function TSGeneratorTests(context: TestContext): void
             suiteSetup(
                 async () =>
                 {
+                    moduleRoot = Path.dirname(pkgUp.sync({ cwd: context.GeneratorDirectory }));
                     runContext = context.ExecuteGenerator({ testGeneratorOptions: generatorOptions });
                     await runContext.toPromise();
                     generator = runContext.generator;
@@ -139,7 +142,7 @@ export function TSGeneratorTests(context: TestContext): void
                         "Checking whether `modulePath(...path)` resolves to the root of the generator's module…",
                         () =>
                         {
-                            AssertPath(generator.modulePath(testPath), Path.join(context.GeneratorDirectory, testPath));
+                            AssertPath(generator.modulePath(testPath), Path.join(moduleRoot, testPath));
                         });
                 });
 
@@ -152,7 +155,7 @@ export function TSGeneratorTests(context: TestContext): void
                     suiteSetup(
                         () =>
                         {
-                            relativePath = Path.relative(ProcessPath(Path.join(context.GeneratorDirectory)), ProcessPath(generator.templatePath()));
+                            relativePath = Path.relative(ProcessPath(moduleRoot), ProcessPath(generator.templatePath()));
                         });
 
                     test(
@@ -176,7 +179,7 @@ export function TSGeneratorTests(context: TestContext): void
                         () =>
                         {
                             generatorOptions.TemplateRoot = "Test";
-                            AssertPath(generator.templatePath(testPath), Path.join(context.GeneratorDirectory, relativePath, generatorOptions.TemplateRoot, testPath));
+                            AssertPath(generator.templatePath(testPath), Path.join(moduleRoot, relativePath, generatorOptions.TemplateRoot, testPath));
                         });
                 });
 

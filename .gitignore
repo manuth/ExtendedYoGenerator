@@ -62,7 +62,3 @@ typings/
 
 # next.js build output
 .next
-
-# Unit-Test files
-test/TestGenerator/**/*.js
-test/TestGenerator/package-lock.json

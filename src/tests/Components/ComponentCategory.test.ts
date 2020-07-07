@@ -1,8 +1,8 @@
 import Assert = require("assert");
 import { ComponentCategory } from "../../Components/ComponentCategory";
 import { IComponentCategory } from "../../Components/IComponentCategory";
+import { TestGenerator } from "../Generator/TestGenerator";
 import { TestContext } from "../TestContext";
-import { TestGenerator } from "../TestGenerator";
 
 /**
  * Provides tests for the `ComponentCategory` class.

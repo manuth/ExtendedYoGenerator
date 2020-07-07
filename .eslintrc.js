@@ -13,8 +13,7 @@ module.exports = {
         sourceType: "module",
         project: [
             path.join(__dirname, "tsconfig.json"),
-            path.join(__dirname, "tsconfig.eslint.json"),
-            path.join(__dirname, "test", "TestGenerator", "tsconfig.json")
+            path.join(__dirname, "tsconfig.eslint.json")
         ]
     },
     rules: {

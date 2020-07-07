@@ -1,8 +1,8 @@
-import { ITestOptions } from "extended-generator/tests/ITestOptions";
-import { TestGenerator } from "extended-generator/tests/TestGenerator";
+import { ITestOptions } from "../../ITestOptions";
+import { TestGenerator } from "../TestGenerator";
 
 /**
- * The test-generator.
+ * Provides a test-generator
  */
 class Generator extends TestGenerator
 {

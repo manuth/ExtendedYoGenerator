@@ -4,8 +4,8 @@ import { writeFile, readFile } from "fs-extra";
 import { TempDirectory, TempFile } from "temp-filesystem";
 import { FileMapping } from "../../Components/FileMapping";
 import { IFileMapping } from "../../Components/IFileMapping";
+import { TestGenerator } from "../Generator/TestGenerator";
 import { TestContext } from "../TestContext";
-import { TestGenerator } from "../TestGenerator";
 
 /**
  * Provides tests for the `FileMapping` class.
