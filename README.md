@@ -3,8 +3,9 @@ An extended version of the Yeoman-Generator
 
 ## Installing ExtendedYoGenerator
 `ExtendedYoGenerator` can be installed using the `npm`-cli:
+
 ```bash
-npm install --save extended-yo-generator
+npm install --save @manuth/extended-yo-generator
 ```
 
 ## Using ExtendedYoGenerator
@@ -40,7 +41,7 @@ Now you're ready to create the actual generator-class:
 
 ***./src/index.ts***
 ```ts
-import { Generator, IGeneratorSettings, Question } from "extended-yo-generator";
+import { Generator, IGeneratorSettings, Question } from "@manuth/extended-yo-generator";
 import { IMySettings } from "./IMySettings";
 
 export = class MyGenerator extends Generator<IMySettings>
