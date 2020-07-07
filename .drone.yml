@@ -1,4 +1,4 @@
-name: ExtendedYoGenerator
+name: node-module
 kind: pipeline
 type: docker
 
@@ -19,7 +19,7 @@ steps:
     image: node
     commands:
       - npm run test
-  - name: publish node-module
+  - name: deprecate old module
     image: node
     environment:
       NPM_TOKEN:
@@ -27,7 +27,35 @@ steps:
     commands:
       - echo "always_auth=true" > ~/.npmrc
       - echo "//registry.npmjs.org/:_authToken=$${NPM_TOKEN}" >> ~/.npmrc
-      - npm publish --access=public
+      - npm deprecate extended-yo-generator "This package has been renamed to \`@manuth/extended-yo-generator\`"
+    when:
+      event:
+        - tag
+      ref:
+        - refs/tags/v[0-9].[0-9].[0-9]
+  - name: publish module to npm
+    image: node
+    environment:
+      NPM_TOKEN:
+        from_secret: npm_token
+    commands:
+      - echo "always_auth=true" > ~/.npmrc
+      - echo "//registry.npmjs.org/:_authToken=$${NPM_TOKEN}" >> ~/.npmrc
+      - npm publish
+    when:
+      event:
+        - tag
+      ref:
+        - refs/tags/v[0-9].[0-9].[0-9]
+  - name: publish module to github
+    image: node
+    environment:
+      GITHUB_TOKEN:
+        from_secret: github_packages_token
+    commands:
+      - echo "//npm.pkg.github.com/:_authToken=$${GITHUB_TOKEN}" > ~/.npmrc
+      - echo "registry=https://npm.pkg.github.com" >> ~/.npmrc
+      - npm publish
     when:
       event:
         - tag
@@ -60,7 +88,7 @@ steps:
     commands: []
     settings:
       api_key:
-        from_secret: github_token
+        from_secret: github_publish_token
       files:
         - "*.tgz"
       title: ReleaseTitle.md

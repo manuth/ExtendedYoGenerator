@@ -3,8 +3,8 @@ import { TempFile } from "temp-filesystem";
 import { Component } from "../../Components/Component";
 import { IComponent } from "../../Components/IComponent";
 import { IFileMapping } from "../../Components/IFileMapping";
+import { TestGenerator } from "../Generator/TestGenerator";
 import { TestContext } from "../TestContext";
-import { TestGenerator } from "../TestGenerator";
 
 /**
  * Provides tests for the `Component` class.

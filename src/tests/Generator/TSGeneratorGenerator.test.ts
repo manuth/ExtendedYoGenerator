@@ -1,23 +1,25 @@
 import Assert = require("assert");
+import pkgUp = require("pkg-up");
 import Path = require("upath");
-import { GeneratorSetting } from "..";
-import { IRunContext } from "./IRunContext";
-import { ITestGeneratorOptions } from "./ITestGeneratorOptions";
-import { TestContext } from "./TestContext";
+import { GeneratorSettingKey } from "../../GeneratorSettingKey";
+import { IRunContext } from "../IRunContext";
+import { ITestGeneratorOptions } from "../ITestGeneratorOptions";
+import { TestContext } from "../TestContext";
 import { TestGenerator } from "./TestGenerator";
 
 /**
- * Registers the generator-tests.
+ * Registers tests for the TSGenerator-generator.
  *
  * @param context
  * The context to use.
  */
-export function GeneratorTests(context: TestContext): void
+export function TSGeneratorTests(context: TestContext): void
 {
     suite(
-        "Generator",
+        "TSGeneratorGenerator",
         () =>
         {
+            let moduleRoot: string;
             let generator: TestGenerator;
             let generatorOptions: ITestGeneratorOptions = {};
             let testPath = "this-is-a-test.txt";
@@ -54,6 +56,7 @@ export function GeneratorTests(context: TestContext): void
             suiteSetup(
                 async () =>
                 {
+                    moduleRoot = Path.dirname(pkgUp.sync({ cwd: context.GeneratorDirectory }));
                     runContext = context.ExecuteGenerator({ testGeneratorOptions: generatorOptions });
                     await runContext.toPromise();
                     generator = runContext.generator;
@@ -126,7 +129,7 @@ export function GeneratorTests(context: TestContext): void
                         "Checking whether the generator can be executed…",
                         async function()
                         {
-                            this.enableTimeouts(false);
+                            this.timeout(0);
                             await context.ExecuteGenerator({ testGeneratorOptions: generatorOptions }).toPromise();
                         });
                 });
@@ -139,7 +142,7 @@ export function GeneratorTests(context: TestContext): void
                         "Checking whether `modulePath(...path)` resolves to the root of the generator's module…",
                         () =>
                         {
-                            AssertPath(generator.modulePath(testPath), Path.join(context.GeneratorDirectory, testPath));
+                            AssertPath(generator.modulePath(testPath), Path.join(moduleRoot, testPath));
                         });
                 });
 
@@ -152,7 +155,7 @@ export function GeneratorTests(context: TestContext): void
                     suiteSetup(
                         () =>
                         {
-                            relativePath = Path.relative(ProcessPath(Path.join(context.GeneratorDirectory)), ProcessPath(generator.templatePath()));
+                            relativePath = Path.relative(ProcessPath(moduleRoot), ProcessPath(generator.templatePath()));
                         });
 
                     test(
@@ -176,7 +179,7 @@ export function GeneratorTests(context: TestContext): void
                         () =>
                         {
                             generatorOptions.TemplateRoot = "Test";
-                            AssertPath(generator.templatePath(testPath), Path.join(context.GeneratorDirectory, relativePath, generatorOptions.TemplateRoot, testPath));
+                            AssertPath(generator.templatePath(testPath), Path.join(moduleRoot, relativePath, generatorOptions.TemplateRoot, testPath));
                         });
                 });
 
@@ -272,9 +275,9 @@ export function GeneratorTests(context: TestContext): void
                         "Checking whether only default components are selected by default…",
                         () =>
                         {
-                            Assert.strictEqual(generator.Settings[GeneratorSetting.Components].length, 1);
-                            Assert.ok(generator.Settings[GeneratorSetting.Components].includes(defaultID));
-                            Assert.ok(!generator.Settings[GeneratorSetting.Components].includes(hiddenID));
+                            Assert.strictEqual(generator.Settings[GeneratorSettingKey.Components].length, 1);
+                            Assert.ok(generator.Settings[GeneratorSettingKey.Components].includes(defaultID));
+                            Assert.ok(!generator.Settings[GeneratorSettingKey.Components].includes(hiddenID));
                         });
 
                     test(

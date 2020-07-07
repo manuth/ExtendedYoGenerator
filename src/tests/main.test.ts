@@ -1,5 +1,5 @@
 import { ComponentsTests } from "./Components";
-import { GeneratorTests } from "./Generator.test";
+import { GeneratorTests } from "./Generator";
 import { TestContext } from "./TestContext";
 
 suite(
@@ -11,14 +11,14 @@ suite(
         suiteSetup(
             async function()
             {
-                this.enableTimeouts(false);
+                this.timeout(0);
                 await context.Initialize();
             });
 
         suiteTeardown(
             async function()
             {
-                this.enableTimeouts(false);
+                this.timeout(0);
                 await context.Dispose();
             });
 

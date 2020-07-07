@@ -71,7 +71,6 @@ tslint.json
 [Ll]ib/**/*.js.map
 
 # Unit-Tests
-test/
 [Ll]ib/tests/
 
 # Visual Studio Code-Environment

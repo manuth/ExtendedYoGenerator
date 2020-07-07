@@ -1,10 +1,8 @@
-import { spawnSync } from "child_process";
 import Path = require("path");
-import npmWhich = require("npm-which");
 import { run, RunContextSettings } from "yeoman-test";
+import { TestGenerator } from "./Generator/TestGenerator";
 import { IRunContext } from "./IRunContext";
 import { ITestOptions } from "./ITestOptions";
-import { TestGenerator } from "./TestGenerator";
 
 /**
  * Represents a context for testing.
@@ -14,7 +12,7 @@ export class TestContext
     /**
      * The directory of the generator.
      */
-    private generatorDirectory = Path.join(__dirname, "..", "..", "test", "TestGenerator");
+    private generatorDirectory = Path.join(__dirname, "Generator", "TestYoGenerator");
 
     /**
      * An instance of the `RunContext` class that already has finished.
@@ -56,22 +54,7 @@ export class TestContext
      * Initializes the context.
      */
     public async Initialize(): Promise<void>
-    {
-        spawnSync(
-            npmWhich(this.GeneratorDirectory).sync("npm"),
-            [
-                "install"
-            ],
-            {
-                cwd: this.GeneratorDirectory
-            });
-
-        spawnSync(
-            npmWhich(this.GeneratorDirectory).sync("tsc"),
-            {
-                cwd: this.GeneratorDirectory
-            });
-    }
+    { }
 
     /**
      * Disposes the context.
