@@ -11,14 +11,14 @@ suite(
         suiteSetup(
             async function()
             {
-                this.enableTimeouts(false);
+                this.timeout(0);
                 await context.Initialize();
             });
 
         suiteTeardown(
             async function()
             {
-                this.enableTimeouts(false);
+                this.timeout(0);
                 await context.Dispose();
             });
 

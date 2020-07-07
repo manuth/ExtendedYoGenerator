@@ -6,7 +6,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v2.0.0...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v3.0.0...dev)
+
+## ExtendedYoGenerator v3.0.0
+### Updated
+  - Test-code for more comfortable type-checking
+  - Directory structure of the unit-tests
+  - The typescript-library
+
+### Breaking
+  - Renamed the module to `@manuth/extended-yo-generator`
+  - Renamed the export-member `GeneratorSetting` to `GeneratorSettingKey`
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v2.0.0...v3.0.0)
 
 ## ExtendedYoGenerator v2.0.0
 ### Breaking
