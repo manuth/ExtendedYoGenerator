@@ -1,12 +1,11 @@
 {
   "name": "@manuth/extended-yo-generator-test",
-  "version": "1.0.0",
+  "version": "3.2.7",
   "description": "Provides tools for testing generators created using `@manuth/extended-yo-generator`",
-  "scripts": {
-  },
+  "scripts": {},
   "author": "Manuel Thalmann <m@nuth.ch>",
   "license": "MIT",
   "devDependencies": {
-    "@manuth/extended-yo-generator": "^3.1.2"
+    "@manuth/extended-yo-generator": "^3.2.7"
   }
 }
