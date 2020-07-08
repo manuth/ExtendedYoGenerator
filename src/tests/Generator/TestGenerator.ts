@@ -1,7 +1,7 @@
 import { Generator, IComponentCollection, Question } from "../..";
 import { IGeneratorSettings } from "../../IGeneratorSettings";
-import { ITestGeneratorOptions } from "../ITestGeneratorOptions";
-import { ITestOptions } from "../ITestOptions";
+import { ITestGeneratorOptions } from "./ITestGeneratorOptions";
+import { ITestOptions } from "./ITestOptions";
 
 /**
  * Represents a test-generator.

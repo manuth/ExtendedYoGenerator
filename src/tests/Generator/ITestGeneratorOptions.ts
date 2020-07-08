@@ -1,6 +1,6 @@
 import { Question } from "yeoman-generator";
-import { IComponentCollection } from "../Components/IComponentCollection";
-import { IGeneratorSettings } from "../IGeneratorSettings";
+import { IComponentCollection } from "../../Components/IComponentCollection";
+import { IGeneratorSettings } from "../../IGeneratorSettings";
 
 /**
  * Provides options for the test-generator.

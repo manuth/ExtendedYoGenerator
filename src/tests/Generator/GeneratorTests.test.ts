@@ -3,8 +3,8 @@ import pkgUp = require("pkg-up");
 import Path = require("upath");
 import { GeneratorSettingKey } from "../../GeneratorSettingKey";
 import { IRunContext } from "../IRunContext";
-import { ITestGeneratorOptions } from "../ITestGeneratorOptions";
 import { TestContext } from "../TestContext";
+import { ITestGeneratorOptions } from "./ITestGeneratorOptions";
 import { TestGenerator } from "./TestGenerator";
 
 /**
