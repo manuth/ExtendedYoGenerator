@@ -8,6 +8,7 @@ import { Question } from "yeoman-generator";
 import { ComponentCollection } from "./Components/ComponentCollection";
 import { FileMapping } from "./Components/FileMapping";
 import { IComponentCollection } from "./Components/IComponentCollection";
+import { IFileMapping } from "./Components/IFileMapping";
 import { GeneratorSettingKey } from "./GeneratorSettingKey";
 import { IGenerator } from "./IGenerator";
 import { IGeneratorSettings } from "./IGeneratorSettings";
@@ -180,6 +181,22 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     }
 
     /**
+     * Gets the options for the file-mappings of the generator.
+     */
+    public get FileMappings(): Array<IFileMapping<T>>
+    {
+        return [];
+    }
+
+    /**
+     * Gets the file-mappings of the generator.
+     */
+    public get FileMappingCollection(): Array<FileMapping<T>>
+    {
+        return (this.FileMappings ?? []).map((fileMapping) => new FileMapping(this, fileMapping));
+    }
+
+    /**
      * @inheritdoc
      *
      * @param path
@@ -221,6 +238,11 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
      */
     public async writing(): Promise<void>
     {
+        for (let fileMapping of this.FileMappingCollection)
+        {
+            await this.ProcessFile(fileMapping);
+        }
+
         for (let category of this.ComponentCollection?.Categories ?? [])
         {
             for (let component of category.Components)
@@ -240,15 +262,13 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
      * Installs all required dependencies.
      */
     public async install(): Promise<void>
-    {
-    }
+    { }
 
     /**
      * Finalizes the generation-process.
      */
     public async end(): Promise<void>
-    {
-    }
+    { }
 
     /**
      * Processes a file-mapping.

@@ -52,7 +52,7 @@ export function ResolverTests(context: TestContext): void
                     /**
                      * A test function.
                      */
-                    let testFunction = (): void => {};
+                    let testFunction = (): void => { };
 
                     suiteSetup(
                         () =>
