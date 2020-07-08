@@ -193,7 +193,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
      */
     public get FileMappingCollection(): Array<FileMapping<T>>
     {
-        return this.FileMappings.map((fileMapping) => new FileMapping(this, fileMapping));
+        return (this.FileMappings ?? []).map((fileMapping) => new FileMapping(this, fileMapping));
     }
 
     /**
