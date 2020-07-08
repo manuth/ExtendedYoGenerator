@@ -173,17 +173,9 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     }
 
     /**
-     * @inheritdoc
-     */
-    public get Settings(): T
-    {
-        return this.settings;
-    }
-
-    /**
      * Gets the options for the file-mappings of the generator.
      */
-    public get FileMappings(): Array<IFileMapping<T>>
+    protected get FileMappings(): Array<IFileMapping<T>>
     {
         return [];
     }
@@ -191,9 +183,17 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     /**
      * Gets the file-mappings of the generator.
      */
-    public get FileMappingCollection(): Array<FileMapping<T>>
+    protected get FileMappingCollection(): Array<FileMapping<T>>
     {
         return (this.FileMappings ?? []).map((fileMapping) => new FileMapping(this, fileMapping));
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public get Settings(): T
+    {
+        return this.settings;
     }
 
     /**
