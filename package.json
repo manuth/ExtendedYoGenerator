@@ -1,5 +1,6 @@
 {
     "private": true,
+    "name": "extended-yo-generator",
     "devDependencies": {
         "lerna": "^3.22.1"
     }
