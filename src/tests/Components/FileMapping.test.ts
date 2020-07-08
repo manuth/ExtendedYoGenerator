@@ -4,7 +4,7 @@ import { writeFile, readFile } from "fs-extra";
 import { TempDirectory, TempFile } from "temp-filesystem";
 import { FileMapping } from "../../Components/FileMapping";
 import { IFileMapping } from "../../Components/IFileMapping";
-import { TestGenerator } from "../Generator/TestGenerator";
+import { TestGenerator } from "../Generator/TestGenerator/TestGenerator";
 import { TestContext } from "../TestContext";
 
 /**

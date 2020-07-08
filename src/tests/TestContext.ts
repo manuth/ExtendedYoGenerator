@@ -1,7 +1,7 @@
 import Path = require("path");
 import { run, RunContextSettings } from "yeoman-test";
 import { ITestOptions } from "./Generator/ITestOptions";
-import { TestGenerator } from "./Generator/TestGenerator";
+import { TestGenerator } from "./Generator/TestGenerator/TestGenerator";
 import { IRunContext } from "./IRunContext";
 
 /**

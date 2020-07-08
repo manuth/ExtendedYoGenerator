@@ -1,8 +1,8 @@
-import { Generator, IComponentCollection, Question } from "../..";
-import { IFileMapping } from "../../Components/IFileMapping";
-import { IGeneratorSettings } from "../../IGeneratorSettings";
-import { ITestGeneratorOptions } from "./ITestGeneratorOptions";
-import { ITestOptions } from "./ITestOptions";
+import { Generator, IComponentCollection, Question } from "../../..";
+import { IFileMapping } from "../../../Components/IFileMapping";
+import { IGeneratorSettings } from "../../../IGeneratorSettings";
+import { ITestGeneratorOptions } from "../ITestGeneratorOptions";
+import { ITestOptions } from "../ITestOptions";
 
 /**
  * Represents a test-generator.

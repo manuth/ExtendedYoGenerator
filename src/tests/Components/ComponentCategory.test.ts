@@ -1,7 +1,7 @@
 import Assert = require("assert");
 import { ComponentCategory } from "../../Components/ComponentCategory";
 import { IComponentCategory } from "../../Components/IComponentCategory";
-import { TestGenerator } from "../Generator/TestGenerator";
+import { TestGenerator } from "../Generator/TestGenerator/TestGenerator";
 import { TestContext } from "../TestContext";
 
 /**

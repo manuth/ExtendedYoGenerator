@@ -3,7 +3,7 @@ import { TempFile } from "temp-filesystem";
 import { Component } from "../../Components/Component";
 import { IComponent } from "../../Components/IComponent";
 import { IFileMapping } from "../../Components/IFileMapping";
-import { TestGenerator } from "../Generator/TestGenerator";
+import { TestGenerator } from "../Generator/TestGenerator/TestGenerator";
 import { TestContext } from "../TestContext";
 
 /**

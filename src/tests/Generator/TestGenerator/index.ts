@@ -1,5 +1,5 @@
 import { ITestOptions } from "../ITestOptions";
-import { TestGenerator } from "../TestGenerator";
+import { TestGenerator } from "./TestGenerator";
 
 /**
  * Provides a test-generator

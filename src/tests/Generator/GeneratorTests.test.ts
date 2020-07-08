@@ -7,7 +7,7 @@ import { GeneratorSettingKey } from "../../GeneratorSettingKey";
 import { IRunContext } from "../IRunContext";
 import { TestContext } from "../TestContext";
 import { ITestGeneratorOptions } from "./ITestGeneratorOptions";
-import { TestGenerator } from "./TestGenerator";
+import { TestGenerator } from "./TestGenerator/TestGenerator";
 
 /**
  * Registers tests for the TSGenerator-generator.
