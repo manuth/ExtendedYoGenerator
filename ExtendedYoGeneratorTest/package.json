@@ -4,8 +4,5 @@
   "description": "Provides tools for testing generators created using `@manuth/extended-yo-generator`",
   "scripts": {},
   "author": "Manuel Thalmann <m@nuth.ch>",
-  "license": "MIT",
-  "devDependencies": {
-    "@manuth/extended-yo-generator": "^3.1.2"
-  }
+  "license": "MIT"
 }
