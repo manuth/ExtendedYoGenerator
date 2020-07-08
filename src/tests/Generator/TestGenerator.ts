@@ -1,7 +1,8 @@
 import { Generator, IComponentCollection, Question } from "../..";
+import { IFileMapping } from "../../Components/IFileMapping";
 import { IGeneratorSettings } from "../../IGeneratorSettings";
-import { ITestGeneratorOptions } from "../ITestGeneratorOptions";
-import { ITestOptions } from "../ITestOptions";
+import { ITestGeneratorOptions } from "./ITestGeneratorOptions";
+import { ITestOptions } from "./ITestOptions";
 
 /**
  * Represents a test-generator.
@@ -78,6 +79,22 @@ export class TestGenerator extends Generator<IGeneratorSettings & Record<string,
     public set Questions(value: Question[])
     {
         this.generatorOptions.Questions = value;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public get FileMappings(): Array<IFileMapping<IGeneratorSettings>>
+    {
+        return this.generatorOptions.FileMappings;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public set FileMappings(value: Array<IFileMapping<IGeneratorSettings>>)
+    {
+        this.generatorOptions.FileMappings = value;
     }
 
     /**

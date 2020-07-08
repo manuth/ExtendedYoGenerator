@@ -1,5 +1,5 @@
 import { TestContext } from "../TestContext";
-import { TSGeneratorTests } from "./TSGeneratorGenerator.test";
+import { ExtendedGeneratorTests } from "./GeneratorTests.test";
 
 /**
  * Registers the generator-tests.
@@ -9,5 +9,5 @@ import { TSGeneratorTests } from "./TSGeneratorGenerator.test";
  */
 export function GeneratorTests(context: TestContext): void
 {
-    TSGeneratorTests(context);
+    ExtendedGeneratorTests(context);
 }

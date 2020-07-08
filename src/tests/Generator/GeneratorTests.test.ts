@@ -1,10 +1,12 @@
 import Assert = require("assert");
+import { writeFile, readFile } from "fs-extra";
 import pkgUp = require("pkg-up");
+import { TempFile } from "temp-filesystem";
 import Path = require("upath");
 import { GeneratorSettingKey } from "../../GeneratorSettingKey";
 import { IRunContext } from "../IRunContext";
-import { ITestGeneratorOptions } from "../ITestGeneratorOptions";
 import { TestContext } from "../TestContext";
+import { ITestGeneratorOptions } from "./ITestGeneratorOptions";
 import { TestGenerator } from "./TestGenerator";
 
 /**
@@ -13,10 +15,10 @@ import { TestGenerator } from "./TestGenerator";
  * @param context
  * The context to use.
  */
-export function TSGeneratorTests(context: TestContext): void
+export function ExtendedGeneratorTests(context: TestContext): void
 {
     suite(
-        "TSGeneratorGenerator",
+        "Generator-Tests",
         () =>
         {
             let moduleRoot: string;
@@ -362,6 +364,46 @@ export function TSGeneratorTests(context: TestContext): void
                         () =>
                         {
                             Assert.strictEqual(generator.Settings[defaultID], defaultValue);
+                        });
+                });
+
+            suite(
+                "FileMappings",
+                () =>
+                {
+                    let tempFile: TempFile;
+                    let testFileName: string;
+                    let testContent: string;
+
+                    suiteSetup(
+                        async () =>
+                        {
+                            tempFile = new TempFile();
+                            testFileName = "test-filename";
+                            testContent = "this is a test";
+                            await writeFile(tempFile.FullName, testContent);
+
+                            generatorOptions.FileMappings = [
+                                {
+                                    Source: tempFile.FullName,
+                                    Destination: testFileName
+                                }
+                            ];
+                        });
+
+                    suiteTeardown(
+                        () =>
+                        {
+                            tempFile.Dispose();
+                        });
+
+                    test(
+                        "Checking whether file-mappings can be added which are executed in any case…",
+                        async () =>
+                        {
+                            let runContext = context.ExecuteGenerator({ testGeneratorOptions: generatorOptions });
+                            await runContext.toPromise();
+                            Assert.strictEqual((await readFile(runContext.generator.destinationPath(testFileName))).toString(), testContent);
                         });
                 });
         });
