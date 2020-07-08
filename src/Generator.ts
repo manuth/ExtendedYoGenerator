@@ -262,15 +262,13 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
      * Installs all required dependencies.
      */
     public async install(): Promise<void>
-    {
-    }
+    { }
 
     /**
      * Finalizes the generation-process.
      */
     public async end(): Promise<void>
-    {
-    }
+    { }
 
     /**
      * Processes a file-mapping.
