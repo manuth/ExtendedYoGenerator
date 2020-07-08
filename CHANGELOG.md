@@ -6,7 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v3.1.0...v3.1.1)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v3.1.2...dev)
+
+## ExtendedYoGenerator v3.1.2
+### Added
+  - Missing sections in the `README` file
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v3.1.1...v3.1.2)
 
 ## ExtendedYoGenerator v3.1.1
 ### Fixed
