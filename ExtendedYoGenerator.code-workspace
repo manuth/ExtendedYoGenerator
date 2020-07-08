@@ -1,0 +1,14 @@
+{
+    "folders": [
+        {
+            "path": "./ExtendedYoGenerator"
+        },
+        {
+            "path": "./ExtendedYoGeneratorTests"
+        },
+        {
+            "name": "Solution Items",
+            "path": "."
+        }
+    ]
+}
