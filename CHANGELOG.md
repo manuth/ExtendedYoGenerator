@@ -6,7 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v3.1.0...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v3.1.0...v3.1.1)
+
+## ExtendedYoGenerator v3.1.1
+### Fixed
+  - Incorrect member-visibility of `Generator.FileMappings`
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v3.1.0...v3.1.1)
 
 ## ExtendedYoGenerator v3.1.0
 ### Added
