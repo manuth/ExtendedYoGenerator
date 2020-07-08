@@ -62,6 +62,19 @@ export = class MyGenerator extends Generator<IMySettings>
         ];
     }
 
+    protected get FileMappings(): Array<IFileMapping<IMySettings>>
+    {
+        return [
+            {
+                Source: "README.md",
+                Destination: "README.md",
+                Context: () => ({
+                    Name: this.Settings.name
+                })
+            }
+        ];
+    }
+
     public async prompting(): Promise<void>
     {
         this.log("Welcome to my generator!");
@@ -70,12 +83,6 @@ export = class MyGenerator extends Generator<IMySettings>
 
     public async writing(): Promise<void>
     {
-        this.fs.copyTpl(
-            this.templatePath("README.md"),
-            this.destinationPath("README.md"),
-            {
-                Name: this.Settings.name
-            });
         return super.writing();
     }
 
@@ -97,6 +104,7 @@ export = class MyGenerator extends Generator<IMySettings>
   - [Separate Template-Folders](#separate-template-folders)
   - [Components](#components)
   - [Questions](#questions)
+  - [FileMappings](#filemappings)
   - [Settings](#settings)
   - [ModulePath](#modulepath)
   - [Prompting](#prompting)
@@ -118,6 +126,39 @@ export = class MyGenerator extends Generator
 ```
 
 This causes `this.templatePath(...path)` to create paths relative to `./templates/app` rather than `./templates`.
+
+### FileMappings
+The `Generator.FileMappings`-property allows you to provide a set of files which are being copied when invoking `Generator.writing()`.
+
+#### Example
+```ts
+export = class MyGenerator extends Generator<IMySettings>
+{
+    protected get FileMappings(): Array<IFileMapping<IMySettings>>
+    {
+        return [
+            {
+                Source: "README.md",
+                Destination: "README.md",
+                Context: () => ({
+                    ProjectName: "Example"
+                })
+            },
+            {
+                Source: ".gitignore",
+                Destination: ".gitignore"
+            }
+        ];
+    }
+
+    public async writing()
+    {
+        return super.writing();
+    }
+}
+```
+
+`this.templatePath("README.md")` will be copied to `this.destinationPath("README.md")` using `ejs`, because a function for creating a `Context`-object is provided. `this.templatePath(".gitignore")`, on the other hand, will be copied to `this.destinationPath(".gitignore")` without the use of `ejs`, because the `Context` property is not present.
 
 ### Components
 You can provide components the user can choose to install.  
