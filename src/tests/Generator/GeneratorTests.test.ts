@@ -13,10 +13,10 @@ import { TestGenerator } from "./TestGenerator";
  * @param context
  * The context to use.
  */
-export function TSGeneratorTests(context: TestContext): void
+export function ExtendedGeneratorTests(context: TestContext): void
 {
     suite(
-        "TSGeneratorGenerator",
+        "Generator-Tests",
         () =>
         {
             let moduleRoot: string;
