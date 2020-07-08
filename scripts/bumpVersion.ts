@@ -17,6 +17,14 @@ import npmWhich = require("npm-which");
                     releaseName,
                     "-y"
                 ]);
+
+            spawnSync(
+                npmWhich(__dirname).sync("git"),
+                [
+                    "commit",
+                    "-m",
+                    `Bump the version number to ${releaseName}`
+                ])
         }
         else
         {
