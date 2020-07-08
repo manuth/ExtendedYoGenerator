@@ -1,5 +1,6 @@
 import { Question } from "yeoman-generator";
 import { IComponentCollection } from "../../Components/IComponentCollection";
+import { IFileMapping } from "../../Components/IFileMapping";
 import { IGeneratorSettings } from "../../IGeneratorSettings";
 
 /**
@@ -21,4 +22,9 @@ export interface ITestGeneratorOptions
      * The components of the generator.
      */
     Components?: IComponentCollection<IGeneratorSettings>;
+
+    /**
+     * The file-mappings of the generator.
+     */
+    FileMappings?: Array<IFileMapping<IGeneratorSettings>>;
 }
