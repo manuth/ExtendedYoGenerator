@@ -1,4 +1,3 @@
-import Path = require("path");
 import { Generator } from "@manuth/extended-yo-generator";
 import { run, RunContextSettings } from "yeoman-test";
 import { IRunContext } from "./IRunContext";
@@ -11,7 +10,7 @@ export class TestContext<TGenerator extends Generator<any> = Generator<any>, TOp
     /**
      * The directory of the generator.
      */
-    private generatorDirectory = Path.join(__dirname, "Generator", "TestGenerator");
+    private generatorDirectory: string;
 
     /**
      * An instance of the `RunContext` class that already has finished.
@@ -20,9 +19,14 @@ export class TestContext<TGenerator extends Generator<any> = Generator<any>, TOp
 
     /**
      * Initializes a new instance of the `TestContext` class.
+     *
+     * @param generatorDirectory
+     * The directory of the generator.
      */
-    public constructor()
-    { }
+    public constructor(generatorDirectory: string)
+    {
+        this.generatorDirectory = generatorDirectory;
+    }
 
     /**
      * Gets the directory of the generator.

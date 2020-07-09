@@ -1,3 +1,4 @@
+import Path = require("path");
 import { TestContext } from "@manuth/extended-yo-generator-test";
 import { ComponentsTests } from "./Components";
 import { GeneratorTests } from "./Generator";
@@ -8,7 +9,7 @@ suite(
     "ExtendedYoGenerator",
     () =>
     {
-        let context = new TestContext<TestGenerator, ITestOptions>();
+        let context = new TestContext<TestGenerator, ITestOptions>(Path.join(__dirname, "Generator", "TestGenerator"));
 
         suiteSetup(
             async function()
