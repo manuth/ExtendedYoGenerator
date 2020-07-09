@@ -26,7 +26,7 @@
         "@typescript-eslint/parser": "^3.6.0",
         "eslint": "^7.4.0",
         "eslint-plugin-import": "^2.22.0",
-        "eslint-plugin-jsdoc": "^29.1.2",
+        "eslint-plugin-jsdoc": "^29.1.3",
         "git-branch": "^2.0.1",
         "lerna": "^3.22.1",
         "npm-which": "^3.0.1",
