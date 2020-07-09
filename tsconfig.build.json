@@ -2,6 +2,15 @@
     "extends": "@manuth/tsconfig/recommended",
     "compileOnSave": true,
     "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@manuth/extended-yo-generator": [
+                "ExtendedYoGenerator/src"
+            ],
+            "@manuth/extended-yo-generator-test": [
+                "ExtendedYoGeneratorTest/src"
+            ]
+        },
         "module": "CommonJS",
         "lib": [
             "ES2020"

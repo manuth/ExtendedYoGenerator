@@ -1,7 +1,14 @@
 {
     "extends": "../tsconfig.build.json",
     "compilerOptions": {
+        "composite": true,
+        "tsBuildInfoFile": "./lib/.tsbuildinfo",
         "rootDir": "./src",
         "outDir": "./lib"
-    }
+    },
+    "references": [
+        {
+            "path": "../ExtendedYoGenerator"
+        }
+    ]
 }
