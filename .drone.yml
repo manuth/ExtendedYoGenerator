@@ -11,15 +11,15 @@ steps:
   - name: lint
     image: node
     commands:
-      - npx lerna --scope @manuth/extended-yo-generator run lint
+      - npx lerna run lint
   - name: build
     image: node
     commands:
-      - npx lerna --scope @manuth/extended-yo-generator run build
+      - npm run build
   - name: test
     image: node
     commands:
-      - npx lerna --scope @manuth/extended-yo-generator run test
+      - npx lerna run test
   - name: publish module to npm
     image: node
     environment:
