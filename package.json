@@ -2,7 +2,17 @@
     "private": true,
     "name": "extended-yo-generator",
     "scripts": {
-        "version": "ts-node ./scripts/bumpVersion.ts"
+        "build": "tsc -b tsconfig.build.json",
+        "rebuild": "npm run clean && npm run build",
+        "watch": "npm run build -- --watch",
+        "clean": "lerna run clean",
+        "lint-base": "eslint --max-warnings 0 --ignore-pattern \"!.eslintrc.js\"",
+        "lint": "npm run lint-base -- --ext .js,.jsx,.ts,.tsx .eslintrc.js",
+        "lint-compact": "npm run lint -- -f compact || exit 0",
+        "lint-all": "npm run lint && lerna run lint",
+        "lint-all-compact": "npm run lint-compact && lerna run lint-compact",
+        "version": "ts-node ./scripts/bumpVersion.ts",
+        "prepare": "lerna bootstrap && npm run rebuild"
     },
     "devDependencies": {
         "@manuth/eslint-plugin-typescript": "^2.1.2",

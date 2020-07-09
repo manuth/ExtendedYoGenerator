@@ -6,6 +6,11 @@
 			"label": "Bump Version",
 			"script": "version",
 			"problemMatcher": []
+		},
+		{
+			"label": "Build",
+			"type": "npm",
+			"script": "watch"
 		}
 	]
 }

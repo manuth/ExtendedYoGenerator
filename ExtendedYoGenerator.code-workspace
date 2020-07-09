@@ -32,7 +32,8 @@
                         "folder": "ExtendedYoGeneratorTest",
                         "name": "Launch Tests"
                     }
-                ]
+                ],
+                "preLaunchTask": "Build"
             }
         ]
     },
@@ -43,5 +44,27 @@
         "typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
         "typescript.format.placeOpenBraceOnNewLineForControlBlocks": true,
         "typescript.format.placeOpenBraceOnNewLineForFunctions": true
+    },
+    "tasks": {
+        "version": "2.0.0",
+        "tasks": [
+            {
+                "label": "Build",
+                "type": "shell",
+                "command": "npm run watch",
+                "options": {
+                    "cwd": "${workspaceFolder:Solution Items}"
+                },
+                "group": {
+                    "kind": "build",
+                    "isDefault": true
+                },
+                "problemMatcher": "$tsc-watch",
+                "isBackground": true,
+                "presentation": {
+                    "reveal": "never"
+                }
+            }
+        ]
     }
 }
