@@ -22,9 +22,10 @@ import npmWhich = require("npm-which");
                 npmWhich(__dirname).sync("git"),
                 [
                     "commit",
+                    "-a",
                     "-m",
                     `Bump the version number to ${releaseName}`
-                ])
+                ]);
         }
         else
         {
