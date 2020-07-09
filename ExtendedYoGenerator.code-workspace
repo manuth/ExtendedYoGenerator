@@ -93,7 +93,13 @@
                     "kind": "build",
                     "isDefault": true
                 },
-                "problemMatcher": "$tsc-watch",
+                "problemMatcher": {
+                    "base": "$tsc-watch",
+                    "fileLocation": [
+                        "relative",
+                        "${workspaceFolder:Solution Items}"
+                    ]
+                },
                 "isBackground": true,
                 "presentation": {
                     "reveal": "never"
