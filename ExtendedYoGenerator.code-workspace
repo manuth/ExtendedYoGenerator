@@ -147,7 +147,7 @@
                     "version"
                 ],
                 "options": {
-                    "cwd": "${workspaceFolder: Solution Items}"
+                    "cwd": "${workspaceFolder:Solution Items}"
                 },
                 "problemMatcher": []
             }
