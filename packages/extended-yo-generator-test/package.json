@@ -18,7 +18,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/manuth/ExtendedYoGenerator.git",
-    "directory": "ExtendedYoGeneratorTest"
+    "directory": "packages/extended-yo-generator-test"
   },
   "bugs": {
     "url": "https://github.com/manuth/ExtendedYoGenerator/issues"
