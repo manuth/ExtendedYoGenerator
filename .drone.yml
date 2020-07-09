@@ -1,4 +1,4 @@
-name: General
+name: ExtendedYoGenerator
 kind: pipeline
 type: docker
 
@@ -9,16 +9,6 @@ steps:
       - npm install
       - npx lerna bootstrap
       - npx lerna exec npm install
-
----
-name: ExtendedYoGenerator
-kind: pipeline
-type: docker
-
-depends_on:
-  - General
-
-steps:
   - name: lint
     image: node
     commands:
@@ -31,16 +21,6 @@ steps:
     image: node
     commands:
       - npx lerna --scope @manuth/extended-yo-generator run test
-
----
-name: Publication
-kind: pipeline
-type: docker
-
-depends_on:
-  - ExtendedYoGenerator
-
-steps:
   - name: publish module to npm
     image: node
     environment:
