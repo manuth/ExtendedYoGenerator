@@ -27,9 +27,9 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsc -p .",
+    "build": "tsc -p tsconfig.build.json",
     "rebuild": "npm run clean && npm run build",
-    "watch": "tsc -p . --watch",
+    "watch": "npm run build -- --watch",
     "clean": "rimraf ./lib",
     "lint": "eslint --max-warnings 0 --ext .js,.jsx,.ts,.tsx ./src",
     "lint-compact": "npm run lint -- -f compact || exit 0",
