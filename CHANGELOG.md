@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v4.0.1...dev)
 
 ## ExtendedYoGenerator v4.0.1
+### Fixed
+  - Task for bumping version-numbers
+
 ### Updated
   - The `homepage` links of the packages
 
