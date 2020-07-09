@@ -29,8 +29,10 @@ export function PropertyResolverTests(context: TestContext<TestGenerator, ITestO
             };
 
             suiteSetup(
-                async () =>
+                async function()
                 {
+                    this.timeout(0);
+
                     propertResolver = new ResolverTest(
                         await context.Generator,
                         resolverOptions);
