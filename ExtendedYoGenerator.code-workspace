@@ -51,7 +51,11 @@
             {
                 "label": "Build",
                 "type": "shell",
-                "command": "npm run watch",
+                "command": "npm",
+                "args": [
+                    "run",
+                    "watch"
+                ],
                 "options": {
                     "cwd": "${workspaceFolder:Solution Items}"
                 },
@@ -63,6 +67,39 @@
                 "isBackground": true,
                 "presentation": {
                     "reveal": "never"
+                }
+            },
+            {
+                "label": "Rebuild",
+                "type": "shell",
+                "command": "npm",
+                "args": [
+                    "run",
+                    "rebuild"
+                ],
+                "options": {
+                    "cwd": "${workspaceFolder:Solution Items}"
+                },
+                "problemMatcher": "$tsc",
+                "presentation": {
+                    "reveal": "never"
+                }
+            },
+            {
+                "label": "Lint",
+                "type": "shell",
+                "command": "npm",
+                "args": [
+                    "run",
+                    "lint-compact"
+                ],
+                "options": {
+                    "cwd": "${workspaceFolder:Solution Items}"
+                },
+                "problemMatcher": "$eslint-compact",
+                "presentation": {
+                    "reveal": "never",
+                    "clear": true
                 }
             }
         ]
