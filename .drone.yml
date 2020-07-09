@@ -27,7 +27,7 @@ steps:
         from_secret: npm_token
     commands:
       - echo "//registry.npmjs.org/:_authToken=$${NPM_TOKEN}" > ~/.npmrc
-      - npx lerna publish from-package
+      - npx lerna publish from-package -y
     when:
       event:
         - tag
@@ -41,7 +41,7 @@ steps:
     commands:
       - echo "//npm.pkg.github.com/:_authToken=$${GITHUB_TOKEN}" > ~/.npmrc
       - echo "registry=https://npm.pkg.github.com" >> ~/.npmrc
-      - npx lerna publish from-package
+      - npx lerna publish from-package -y
     when:
       event:
         - tag
