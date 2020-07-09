@@ -11,7 +11,7 @@ steps:
   - name: lint
     image: node
     commands:
-      - npx lerna run lint
+      - npm run lint
   - name: build
     image: node
     commands:
