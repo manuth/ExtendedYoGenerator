@@ -8,7 +8,7 @@
         "clean": "lerna run clean",
         "lint-base": "eslint --max-warnings 0 --ignore-pattern \"!.eslintrc.js\"",
         "lint-local": "npm run lint-base -- --ext .js,.jsx,.ts,.tsx .eslintrc.js",
-        "lint-local-compact": "npm run lint -- -f compact || exit 0",
+        "lint-local-compact": "npm run lint-local -- -f compact || exit 0",
         "lint": "npm run lint-local && lerna run lint",
         "lint-compact": "npm run lint-local-compact && lerna run lint-compact",
         "test": "lerna run test",
