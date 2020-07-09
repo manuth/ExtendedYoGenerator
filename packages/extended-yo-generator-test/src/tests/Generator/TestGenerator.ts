@@ -3,7 +3,7 @@ import { Generator, IGeneratorSettings } from "@manuth/extended-yo-generator";
 /**
  * Provides an implementation of the `Generator` class for testing.
  */
-export class TestGenerator<T> extends Generator<IGeneratorSettings & Record<string, any>>
+export class TestGenerator<T extends Record<string, unknown>> extends Generator<IGeneratorSettings & Record<string, any>>
 {
     /**
      * The options of the generator.

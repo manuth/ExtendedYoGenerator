@@ -40,7 +40,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
      * @param options
      * A set of options for the generator.
      */
-    public constructor(args: string | string[], options: unknown)
+    public constructor(args: string | string[], options: Record<string, unknown>)
     {
         super(args, options);
         this.moduleRoot = Path.dirname(PkgUp.sync({ cwd: this.resolved }));

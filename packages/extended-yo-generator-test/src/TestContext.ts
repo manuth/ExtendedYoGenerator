@@ -5,7 +5,7 @@ import { IRunContext } from "./IRunContext";
 /**
  * Represents a context for testing.
  */
-export class TestContext<TGenerator extends Generator<any> = Generator<any>, TOptions extends Record<string, unknown> = Record<string, unknown>>
+export class TestContext<TGenerator extends Generator<any> = Generator<any>, TOptions = Record<string, unknown>>
 {
     /**
      * The directory of the generator.
