@@ -12,13 +12,13 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "directories": {
-    "lib": "lib",
-    "test": "test"
+    "lib": "lib"
   },
-  "homepage": "https://github.com/manuth/ExtendedYoGenerator#readme",
+  "homepage": "https://github.com/manuth/ExtendedYoGenerator/tree/master/ExtendedYoGenerator#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/manuth/ExtendedYoGenerator.git"
+    "url": "git+https://github.com/manuth/ExtendedYoGenerator.git",
+    "directory": "ExtendedYoGenerator"
   },
   "bugs": {
     "url": "https://github.com/manuth/ExtendedYoGenerator/issues"
