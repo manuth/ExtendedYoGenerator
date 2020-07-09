@@ -8,7 +8,7 @@
     },
     "references": [
         {
-            "path": "../ExtendedYoGenerator"
+            "path": "../extended-yo-generator"
         }
     ]
 }

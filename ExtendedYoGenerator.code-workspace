@@ -1,10 +1,12 @@
 {
     "folders": [
         {
-            "path": "./ExtendedYoGenerator"
+            "name": "ExtendedYoGenerator",
+            "path": "./packages/extended-yo-generator"
         },
         {
-            "path": "./ExtendedYoGeneratorTest"
+            "name": "ExtendedYoGeneratorTest",
+            "path": "./packages/extended-yo-generator-test"
         },
         {
             "name": "Solution Items",

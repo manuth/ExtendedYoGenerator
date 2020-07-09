@@ -4,11 +4,8 @@
     "compilerOptions": {
         "baseUrl": ".",
         "paths": {
-            "@manuth/extended-yo-generator": [
-                "ExtendedYoGenerator/src"
-            ],
-            "@manuth/extended-yo-generator-test": [
-                "ExtendedYoGeneratorTest/src"
+            "@manuth/*": [
+                "./packages/*"
             ]
         },
         "module": "CommonJS",
