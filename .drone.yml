@@ -8,7 +8,6 @@ steps:
     commands:
       - npm install
       - npx lerna bootstrap
-      - npx lerna exec npm install
   - name: lint
     image: node
     commands:
