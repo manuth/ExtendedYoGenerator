@@ -18,6 +18,24 @@
             "manuth.eslint-language-service"
         ]
     },
+    "launch": {
+        "configurations": [],
+        "compounds": [
+            {
+                "name": "Launch All Tests",
+                "configurations": [
+                    {
+                        "folder": "ExtendedYoGenerator",
+                        "name": "Launch Tests"
+                    },
+                    {
+                        "folder": "ExtendedYoGeneratorTest",
+                        "name": "Launch Tests"
+                    }
+                ]
+            }
+        ]
+    },
     "settings": {
         "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
         "javascript.format.placeOpenBraceOnNewLineForControlBlocks": true,
