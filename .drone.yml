@@ -76,7 +76,7 @@ steps:
       api_key:
         from_secret: github_publish_token
       files:
-        - "./*/*.tgz"
+        - "./packages/*/*.tgz"
       title: ReleaseTitle.md
       note: ReleaseNotes.md
     when:
