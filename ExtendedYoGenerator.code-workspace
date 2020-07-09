@@ -11,6 +11,11 @@
             "path": "."
         }
     ],
+    "extensions": {
+        "recommendations": [
+            "manuth.eslint-language-service"
+        ]
+    },
     "settings": {
         "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
         "javascript.format.placeOpenBraceOnNewLineForControlBlocks": true,
