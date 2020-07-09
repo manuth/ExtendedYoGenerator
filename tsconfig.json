@@ -1,0 +1,14 @@
+{
+    "extends": "./tsconfig.base.json",
+    "compilerOptions": {
+        "noEmit": true
+    },
+    "include": [
+        "./scripts/**/*"
+    ],
+    "references": [
+        {
+            "path": "./tsconfig.eslint.json"
+        }
+    ]
+}
