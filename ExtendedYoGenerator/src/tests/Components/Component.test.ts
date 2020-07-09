@@ -1,10 +1,11 @@
 import Assert = require("assert");
+import { TestContext } from "@manuth/extended-yo-generator-test";
 import { TempFile } from "temp-filesystem";
 import { Component } from "../../Components/Component";
 import { IComponent } from "../../Components/IComponent";
 import { IFileMapping } from "../../Components/IFileMapping";
+import { ITestOptions } from "../Generator/ITestOptions";
 import { TestGenerator } from "../Generator/TestGenerator/TestGenerator";
-import { TestContext } from "../TestContext";
 
 /**
  * Provides tests for the `Component` class.
@@ -12,7 +13,7 @@ import { TestContext } from "../TestContext";
  * @param context
  * The context to use.
  */
-export function ComponentTests(context: TestContext): void
+export function ComponentTests(context: TestContext<TestGenerator, ITestOptions>): void
 {
     suite(
         "Component",

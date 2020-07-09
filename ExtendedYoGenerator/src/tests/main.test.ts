@@ -1,12 +1,14 @@
+import { TestContext } from "@manuth/extended-yo-generator-test";
 import { ComponentsTests } from "./Components";
 import { GeneratorTests } from "./Generator";
-import { TestContext } from "./TestContext";
+import { ITestOptions } from "./Generator/ITestOptions";
+import { TestGenerator } from "./Generator/TestGenerator/TestGenerator";
 
 suite(
     "ExtendedYoGenerator",
     () =>
     {
-        let context = new TestContext();
+        let context = new TestContext<TestGenerator, ITestOptions>();
 
         suiteSetup(
             async function()

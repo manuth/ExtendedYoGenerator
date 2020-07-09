@@ -1,7 +1,9 @@
 import Assert = require("assert");
+import { TestContext } from "@manuth/extended-yo-generator-test";
 import { Resolvable } from "../../../Components/Resolving/Resolvable";
 import { Resolver } from "../../../Components/Resolving/Resolver";
-import { TestContext } from "../../TestContext";
+import { ITestOptions } from "../../Generator/ITestOptions";
+import { TestGenerator } from "../../Generator/TestGenerator/TestGenerator";
 
 /**
  * Registers the resolver-tests.
@@ -9,7 +11,7 @@ import { TestContext } from "../../TestContext";
  * @param context
  * The context of the test-execution.
  */
-export function ResolverTests(context: TestContext): void
+export function ResolverTests(context: TestContext<TestGenerator, ITestOptions>): void
 {
     suite(
         "Resolver",

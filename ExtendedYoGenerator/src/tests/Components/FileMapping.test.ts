@@ -1,11 +1,12 @@
 import Assert = require("assert");
+import { TestContext } from "@manuth/extended-yo-generator-test";
 import { render } from "ejs";
 import { writeFile, readFile } from "fs-extra";
 import { TempDirectory, TempFile } from "temp-filesystem";
 import { FileMapping } from "../../Components/FileMapping";
 import { IFileMapping } from "../../Components/IFileMapping";
+import { ITestOptions } from "../Generator/ITestOptions";
 import { TestGenerator } from "../Generator/TestGenerator/TestGenerator";
-import { TestContext } from "../TestContext";
 
 /**
  * Provides tests for the `FileMapping` class.
@@ -13,7 +14,7 @@ import { TestContext } from "../TestContext";
  * @param context
  * The test-context.
  */
-export function FileMappingTests(context: TestContext): void
+export function FileMappingTests(context: TestContext<TestGenerator, ITestOptions>): void
 {
     suite(
         "FileMapping",

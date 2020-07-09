@@ -1,13 +1,12 @@
 import Path = require("path");
+import { Generator } from "@manuth/extended-yo-generator";
 import { run, RunContextSettings } from "yeoman-test";
-import { ITestOptions } from "./Generator/ITestOptions";
-import { TestGenerator } from "./Generator/TestGenerator/TestGenerator";
 import { IRunContext } from "./IRunContext";
 
 /**
  * Represents a context for testing.
  */
-export class TestContext
+export class TestContext<TGenerator extends Generator<any> = Generator<any>, TOptions extends Record<string, unknown> = Record<string, unknown>>
 {
     /**
      * The directory of the generator.
@@ -17,7 +16,7 @@ export class TestContext
     /**
      * An instance of the `RunContext` class that already has finished.
      */
-    private finishedContext: IRunContext<TestGenerator> = null;
+    private finishedContext: IRunContext<TGenerator> = null;
 
     /**
      * Initializes a new instance of the `TestContext` class.
@@ -36,7 +35,7 @@ export class TestContext
     /**
      * Gets the generator.
      */
-    public get Generator(): Promise<TestGenerator>
+    public get Generator(): Promise<TGenerator>
     {
         return (async () =>
         {
@@ -123,9 +122,9 @@ export class TestContext
      * @returns
      * The execution-context of the generator.
      */
-    public ExecuteGenerator(options?: ITestOptions, runSettings?: RunContextSettings): IRunContext<TestGenerator>
+    public ExecuteGenerator(options?: TOptions, runSettings?: RunContextSettings): IRunContext<TGenerator>
     {
-        let result = run(this.GeneratorDirectory, runSettings) as IRunContext<TestGenerator>;
+        let result = run(this.GeneratorDirectory, runSettings) as IRunContext<TGenerator>;
 
         if (options)
         {

@@ -1,8 +1,9 @@
 import Assert = require("assert");
+import { TestContext } from "@manuth/extended-yo-generator-test";
 import { ComponentCollection } from "../../Components/ComponentCollection";
 import { IComponentCollection } from "../../Components/IComponentCollection";
+import { ITestOptions } from "../Generator/ITestOptions";
 import { TestGenerator } from "../Generator/TestGenerator/TestGenerator";
-import { TestContext } from "../TestContext";
 
 /**
  * Provides tests for the `ComponentCollection` class.
@@ -10,7 +11,7 @@ import { TestContext } from "../TestContext";
  * @param context
  * The test-context.
  */
-export function ComponentCollectionTests(context: TestContext): void
+export function ComponentCollectionTests(context: TestContext<TestGenerator, ITestOptions>): void
 {
     suite(
         "ComponentCollection",

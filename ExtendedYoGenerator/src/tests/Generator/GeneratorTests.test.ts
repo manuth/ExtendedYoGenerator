@@ -1,12 +1,12 @@
 import Assert = require("assert");
+import { IRunContext, TestContext } from "@manuth/extended-yo-generator-test";
 import { writeFile, readFile } from "fs-extra";
 import pkgUp = require("pkg-up");
 import { TempFile } from "temp-filesystem";
 import Path = require("upath");
 import { GeneratorSettingKey } from "../../GeneratorSettingKey";
-import { IRunContext } from "../IRunContext";
-import { TestContext } from "../TestContext";
 import { ITestGeneratorOptions } from "./ITestGeneratorOptions";
+import { ITestOptions } from "./ITestOptions";
 import { TestGenerator } from "./TestGenerator/TestGenerator";
 
 /**
@@ -15,7 +15,7 @@ import { TestGenerator } from "./TestGenerator/TestGenerator";
  * @param context
  * The context to use.
  */
-export function ExtendedGeneratorTests(context: TestContext): void
+export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITestOptions>): void
 {
     suite(
         "Generator-Tests",
