@@ -2,6 +2,7 @@
     "extends": "@manuth/tsconfig/recommended",
     "compileOnSave": true,
     "compilerOptions": {
+        "declarationMap": true,
         "baseUrl": ".",
         "paths": {
             "@manuth/*": [
