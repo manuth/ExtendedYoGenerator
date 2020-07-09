@@ -19,19 +19,38 @@
         ]
     },
     "launch": {
-        "configurations": [],
+        "configurations": [
+            {
+                "type": "node",
+                "request": "launch",
+                "name": "Launch ExtendedYoGenerator Tests",
+                "cwd": "${workspaceFolder:ExtendedYoGenerator}",
+                "program": "${workspaceFolder:ExtendedYoGenerator}/node_modules/mocha/bin/_mocha",
+                "internalConsoleOptions": "openOnSessionStart",
+                "sourceMaps": true,
+                "presentation": {
+                    "hidden": true
+                }
+            },
+            {
+                "type": "node",
+                "request": "launch",
+                "name": "Launch ExtendedYoGeneratorTest Tests",
+                "cwd": "${workspaceFolder:ExtendedYoGeneratorTest}",
+                "program": "${workspaceFolder:ExtendedYoGeneratorTest}/node_modules/mocha/bin/_mocha",
+                "internalConsoleOptions": "openOnSessionStart",
+                "sourceMaps": true,
+                "presentation": {
+                    "hidden": true
+                }
+            }
+        ],
         "compounds": [
             {
-                "name": "Launch All Tests",
+                "name": "Launch Tests",
                 "configurations": [
-                    {
-                        "folder": "ExtendedYoGenerator",
-                        "name": "Launch Tests"
-                    },
-                    {
-                        "folder": "ExtendedYoGeneratorTest",
-                        "name": "Launch Tests"
-                    }
+                    "Launch ExtendedYoGenerator Tests",
+                    "Launch ExtendedYoGeneratorTest Tests"
                 ],
                 "preLaunchTask": "Build"
             }
