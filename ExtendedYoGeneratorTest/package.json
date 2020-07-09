@@ -27,7 +27,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "tsc -p .",
     "rebuild": "npm run clean && npm run build",
     "watch": "npm run build -- --watch",
     "clean": "rimraf ./lib",

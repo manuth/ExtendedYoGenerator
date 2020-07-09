@@ -1,5 +1,6 @@
 {
-    "extends": "./tsconfig.build.json",
+    "extends": "@manuth/tsconfig/recommended",
+    "compileOnSave": true,
     "compilerOptions": {
         "baseUrl": ".",
         "paths": {
@@ -9,6 +10,16 @@
             "@manuth/extended-yo-generator-test": [
                 "ExtendedYoGeneratorTest/src"
             ]
-        }
+        },
+        "module": "CommonJS",
+        "lib": [
+            "ES2020"
+        ],
+        "plugins": [
+            {
+                "name": "typescript-eslint-plugin"
+            }
+        ],
+        "target": "ES6"
     }
 }
