@@ -5,6 +5,7 @@
         "version": "ts-node ./scripts/bumpVersion.ts"
     },
     "devDependencies": {
+        "@manuth/tsconfig": "^1.2.2",
         "@types/git-branch": "^2.0.1",
         "@types/node": "^14.0.20",
         "@types/npm-which": "^3.0.0",
