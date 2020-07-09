@@ -1,5 +1,6 @@
 {
   "name": "@manuth/extended-yo-generator-test",
+  "private": true,
   "version": "3.1.2",
   "description": "Provides tools for testing generators created using `@manuth/extended-yo-generator`",
   "scripts": {},
