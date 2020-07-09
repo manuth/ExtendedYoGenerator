@@ -54,18 +54,6 @@ export class TestContext<TGenerator extends Generator<any> = Generator<any>, TOp
     }
 
     /**
-     * Initializes the context.
-     */
-    public async Initialize(): Promise<void>
-    { }
-
-    /**
-     * Disposes the context.
-     */
-    public async Dispose(): Promise<void>
-    { }
-
-    /**
      * Creates a promise resolving the specified `value`.
      *
      * @param value

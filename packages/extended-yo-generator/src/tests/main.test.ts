@@ -10,21 +10,6 @@ suite(
     () =>
     {
         let context = new TestContext<TestGenerator, ITestOptions>(Path.join(__dirname, "Generator", "TestGenerator"));
-
-        suiteSetup(
-            async function()
-            {
-                this.timeout(0);
-                await context.Initialize();
-            });
-
-        suiteTeardown(
-            async function()
-            {
-                this.timeout(0);
-                await context.Dispose();
-            });
-
         ComponentsTests(context);
         GeneratorTests(context);
     });
