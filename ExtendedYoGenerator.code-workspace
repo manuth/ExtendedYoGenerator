@@ -28,8 +28,9 @@
                 "program": "${workspaceFolder:ExtendedYoGenerator}/node_modules/mocha/bin/_mocha",
                 "internalConsoleOptions": "openOnSessionStart",
                 "sourceMaps": true,
+                "preLaunchTask": "Build",
                 "presentation": {
-                    "hidden": true
+                    "order": 2
                 }
             },
             {
@@ -40,8 +41,9 @@
                 "program": "${workspaceFolder:ExtendedYoGeneratorTest}/node_modules/mocha/bin/_mocha",
                 "internalConsoleOptions": "openOnSessionStart",
                 "sourceMaps": true,
+                "preLaunchTask": "Build",
                 "presentation": {
-                    "hidden": true
+                    "order": 3
                 }
             }
         ],
@@ -52,7 +54,10 @@
                     "Launch ExtendedYoGenerator Tests",
                     "Launch ExtendedYoGeneratorTest Tests"
                 ],
-                "preLaunchTask": "Build"
+                "preLaunchTask": "Build",
+                "presentation": {
+                    "order": 1
+                }
             }
         ]
     },
