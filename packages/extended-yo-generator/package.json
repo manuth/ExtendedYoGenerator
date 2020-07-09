@@ -34,7 +34,8 @@
     "lint-base": "eslint --max-warnings 0 --ignore-pattern \"!.eslintrc.js\"",
     "lint": "npm run lint-base -- --ext .js,.jsx,.ts,.tsx ./src .eslintrc.js",
     "lint-compact": "npm run lint -- -f compact || exit 0",
-    "test": "mocha"
+    "test": "mocha",
+    "prepare": "npm run rebuild"
   },
   "dependencies": {
     "@types/inquirer": "6.5.0",
