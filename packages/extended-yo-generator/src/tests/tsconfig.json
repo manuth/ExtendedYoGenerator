@@ -12,7 +12,7 @@
             "path": "../.."
         },
         {
-            "path": "../../../extended-yo-generator-test/tsconfig.build.json"
+            "path": "../../../extended-yo-generator-test/tsconfig.json"
         }
     ]
 }
