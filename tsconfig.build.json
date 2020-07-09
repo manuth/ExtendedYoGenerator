@@ -1,0 +1,12 @@
+{
+    "extends": "./tsconfig.base.json",
+    "files": [],
+    "references": [
+        {
+            "path": "./packages/extended-yo-generator/tsconfig.build.json"
+        },
+        {
+            "path": "./packages/extended-yo-generator-test/tsconfig.build.json"
+        }
+    ]
+}
