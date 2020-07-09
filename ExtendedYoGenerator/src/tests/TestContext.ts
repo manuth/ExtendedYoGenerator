@@ -12,7 +12,7 @@ export class TestContext
     /**
      * The directory of the generator.
      */
-    private generatorDirectory = Path.join(__dirname, "Generator", "TestYoGenerator");
+    private generatorDirectory = Path.join(__dirname, "Generator", "TestGenerator");
 
     /**
      * An instance of the `RunContext` class that already has finished.
