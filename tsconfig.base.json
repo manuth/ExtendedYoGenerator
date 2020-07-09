@@ -1,6 +1,14 @@
 {
     "extends": "@manuth/tsconfig/recommended",
+    "compileOnSave": true,
     "compilerOptions": {
+        "declarationMap": true,
+        "baseUrl": ".",
+        "paths": {
+            "@manuth/*": [
+                "./packages/*/src"
+            ]
+        },
         "module": "CommonJS",
         "lib": [
             "ES2020"

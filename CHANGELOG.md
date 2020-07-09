@@ -6,7 +6,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v3.1.2...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v4.0.0...dev)
+
+## ExtendedYoGenerator v4.0.0
+### Added
+  - A module for testing `ExtendedYoGenerator`s
+  - Tests for the `ExtendedYoGeneratorTest` package
+
+### Fixed
+  - Constructor of the `Generator` class to allow any type for the `option` argument
+
+### Updated
+  - All dependencies
+  - The lint-scripts for improving the linting-experience
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v3.1.2...v4.0.0)
 
 ## ExtendedYoGenerator v3.1.2
 ### Added

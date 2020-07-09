@@ -1,6 +1,7 @@
-const path = require("path");
+const Path = require("path");
 
 module.exports = {
+    root: true,
     parser: "@typescript-eslint/parser",
     extends: [
         "plugin:@manuth/typescript/recommended-requiring-type-checking"
@@ -12,8 +13,8 @@ module.exports = {
     parserOptions: {
         sourceType: "module",
         project: [
-            path.join(__dirname, "tsconfig.json"),
-            path.join(__dirname, "tsconfig.eslint.json")
+            Path.join(__dirname, "tsconfig.json"),
+            Path.join(__dirname, "tsconfig.eslint.json")
         ]
     },
     rules: {

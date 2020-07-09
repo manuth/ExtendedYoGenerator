@@ -1,0 +1,156 @@
+{
+    "folders": [
+        {
+            "name": "ExtendedYoGenerator",
+            "path": "./packages/extended-yo-generator"
+        },
+        {
+            "name": "ExtendedYoGeneratorTest",
+            "path": "./packages/extended-yo-generator-test"
+        },
+        {
+            "name": "Solution Items",
+            "path": "."
+        }
+    ],
+    "extensions": {
+        "recommendations": [
+            "manuth.eslint-language-service"
+        ]
+    },
+    "launch": {
+        "configurations": [
+            {
+                "type": "node",
+                "request": "launch",
+                "name": "Launch ExtendedYoGenerator Tests",
+                "cwd": "${workspaceFolder:ExtendedYoGenerator}",
+                "program": "${workspaceFolder:ExtendedYoGenerator}/node_modules/mocha/bin/_mocha",
+                "internalConsoleOptions": "openOnSessionStart",
+                "sourceMaps": true,
+                "preLaunchTask": "Build",
+                "presentation": {
+                    "order": 2
+                }
+            },
+            {
+                "type": "node",
+                "request": "launch",
+                "name": "Launch ExtendedYoGeneratorTest Tests",
+                "cwd": "${workspaceFolder:ExtendedYoGeneratorTest}",
+                "program": "${workspaceFolder:ExtendedYoGeneratorTest}/node_modules/mocha/bin/_mocha",
+                "internalConsoleOptions": "openOnSessionStart",
+                "sourceMaps": true,
+                "preLaunchTask": "Build",
+                "presentation": {
+                    "order": 3
+                }
+            }
+        ],
+        "compounds": [
+            {
+                "name": "Launch Tests",
+                "configurations": [
+                    "Launch ExtendedYoGenerator Tests",
+                    "Launch ExtendedYoGeneratorTest Tests"
+                ],
+                "preLaunchTask": "Build",
+                "presentation": {
+                    "order": 1
+                }
+            }
+        ]
+    },
+    "settings": {
+        "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
+        "javascript.format.placeOpenBraceOnNewLineForControlBlocks": true,
+        "javascript.format.placeOpenBraceOnNewLineForFunctions": true,
+        "typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
+        "typescript.format.placeOpenBraceOnNewLineForControlBlocks": true,
+        "typescript.format.placeOpenBraceOnNewLineForFunctions": true,
+        "search.exclude": {
+            "**/node_modules": true,
+            "**/bower_components": true,
+            "**/*.code-search": true,
+            "[Ll]ib/": true
+        }
+    },
+    "tasks": {
+        "version": "2.0.0",
+        "tasks": [
+            {
+                "label": "Build",
+                "type": "shell",
+                "command": "npm",
+                "args": [
+                    "run",
+                    "watch"
+                ],
+                "options": {
+                    "cwd": "${workspaceFolder:Solution Items}"
+                },
+                "group": {
+                    "kind": "build",
+                    "isDefault": true
+                },
+                "problemMatcher": {
+                    "base": "$tsc-watch",
+                    "fileLocation": [
+                        "relative",
+                        "${workspaceFolder:Solution Items}"
+                    ]
+                },
+                "isBackground": true,
+                "presentation": {
+                    "reveal": "never"
+                }
+            },
+            {
+                "label": "Rebuild",
+                "type": "shell",
+                "command": "npm",
+                "args": [
+                    "run",
+                    "rebuild"
+                ],
+                "options": {
+                    "cwd": "${workspaceFolder:Solution Items}"
+                },
+                "problemMatcher": "$tsc",
+                "presentation": {
+                    "reveal": "never"
+                }
+            },
+            {
+                "label": "Lint",
+                "type": "shell",
+                "command": "npm",
+                "args": [
+                    "run",
+                    "lint-compact"
+                ],
+                "options": {
+                    "cwd": "${workspaceFolder:Solution Items}"
+                },
+                "problemMatcher": "$eslint-compact",
+                "presentation": {
+                    "reveal": "never",
+                    "clear": true
+                }
+            },
+            {
+                "label": "Bump Version",
+                "type": "shell",
+                "command": "npm",
+                "args": [
+                    "run",
+                    "version"
+                ],
+                "options": {
+                    "cwd": "${workspaceFolder: Solution Items}"
+                },
+                "problemMatcher": []
+            }
+        ]
+    }
+}
