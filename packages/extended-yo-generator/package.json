@@ -27,6 +27,9 @@
     "access": "public"
   },
   "scripts": {
+    "build": "tsc -b tsconfig.build.json",
+    "rebuild": "npm run clean && npm run build",
+    "watch": "npm run build -- --watch",
     "clean": "rimraf ./lib",
     "lint-base": "eslint --max-warnings 0 --ignore-pattern \"!.eslintrc.js\"",
     "lint": "npm run lint-base -- --ext .js,.jsx,.ts,.tsx ./src .eslintrc.js",
