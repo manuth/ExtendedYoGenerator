@@ -1,4 +1,4 @@
-name: node-module
+name: General
 kind: pipeline
 type: docker
 
@@ -7,18 +7,40 @@ steps:
     image: node
     commands:
       - npm install
+      - npx lerna bootstrap
+      - npx lerna exec npm install
+
+---
+name: ExtendedYoGenerator
+kind: pipeline
+type: docker
+
+depends_on:
+  - General
+
+steps:
   - name: lint
     image: node
     commands:
-      - npm run lint
+      - npx lerna --scope @manuth/extended-yo-generator run lint
   - name: build
     image: node
     commands:
-      - npm run build
+      - npx lerna --scope @manuth/extended-yo-generator run build
   - name: test
     image: node
     commands:
-      - npm run test
+      - npx lerna --scope @manuth/extended-yo-generator run test
+
+---
+name: Publication
+kind: pipeline
+type: docker
+
+depends_on:
+  - ExtendedYoGenerator
+
+steps:
   - name: publish module to npm
     image: node
     environment:
@@ -26,7 +48,7 @@ steps:
         from_secret: npm_token
     commands:
       - echo "//registry.npmjs.org/:_authToken=$${NPM_TOKEN}" > ~/.npmrc
-      - npm publish
+      - npx lerna publish from-package
     when:
       event:
         - tag
@@ -40,7 +62,7 @@ steps:
     commands:
       - echo "//npm.pkg.github.com/:_authToken=$${GITHUB_TOKEN}" > ~/.npmrc
       - echo "registry=https://npm.pkg.github.com" >> ~/.npmrc
-      - npm publish
+      - npx lerna publish from-package
     when:
       event:
         - tag
@@ -49,7 +71,7 @@ steps:
   - name: prepare release
     image: node
     commands:
-      - npm pack
+      - npx lerna exec --no-private npm pack
       - npm install escape-string-regexp
       - node -e "console.log(require('escape-string-regexp')('${DRONE_TAG}'))" > TagName.txt
     when:
@@ -75,7 +97,7 @@ steps:
       api_key:
         from_secret: github_publish_token
       files:
-        - "*.tgz"
+        - "./*/*.tgz"
       title: ReleaseTitle.md
       note: ReleaseNotes.md
     when:
