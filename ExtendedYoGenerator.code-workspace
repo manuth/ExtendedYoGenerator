@@ -21,7 +21,7 @@
     "launch": {
         "configurations": [
             {
-                "type": "node",
+                "type": "pwa-node",
                 "request": "launch",
                 "name": "Launch ExtendedYoGenerator Tests",
                 "cwd": "${workspaceFolder:ExtendedYoGenerator}",
@@ -31,10 +31,14 @@
                 "preLaunchTask": "Build",
                 "presentation": {
                     "order": 2
-                }
+                },
+                "resolveSourceMapLocations": [
+                    "${workspaceFolder:ExtendedYoGenerator}/**",
+                    "!**/node_modules/**"
+                ]
             },
             {
-                "type": "node",
+                "type": "pwa-node",
                 "request": "launch",
                 "name": "Launch ExtendedYoGeneratorTest Tests",
                 "cwd": "${workspaceFolder:ExtendedYoGeneratorTest}",
@@ -44,7 +48,11 @@
                 "preLaunchTask": "Build",
                 "presentation": {
                     "order": 3
-                }
+                },
+                "resolveSourceMapLocations": [
+                    "${workspaceFolder:ExtendedYoGeneratorTest}/**",
+                    "!**/node_modules/**"
+                ]
             }
         ],
         "compounds": [
