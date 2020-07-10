@@ -219,9 +219,23 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
      * @returns
      * The joined path.
      */
+    public commonTemplatePath(...path: string[]): string
+    {
+        return this.modulePath("templates", ...path);
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @param path
+     * The path that is to be joined.
+     *
+     * @returns
+     * The joined path.
+     */
     public templatePath(...path: string[]): string
     {
-        return this.modulePath("templates", ...(this.TemplateRoot ? [this.TemplateRoot] : []), ...path);
+        return this.commonTemplatePath(...(this.TemplateRoot ? [this.TemplateRoot] : []), ...path);
     }
 
     /**
