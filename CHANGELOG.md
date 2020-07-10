@@ -6,7 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v4.0.1...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v4.1.0...dev)
+
+## ExtendedYoGenerator v4.1.0
+### Added
+  - A method `Generator.commonTemplatePath(...path)` for resolving paths relative to `./templates`
+
+### Updated
+  - All dependencies
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v4.0.1...v4.1.0)
 
 ## ExtendedYoGenerator v4.0.1
 ### Fixed
