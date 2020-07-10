@@ -63,14 +63,20 @@ typings/
 # Source-files
 [Ss]rc/
 
-# TypeScript config-files
+# TypeScript-files
 tsconfig.json
-tslint.json
+tsconfig.*.json
+*.tsbuildinfo
+
+# Linting-config
+.eslintrc.js
 
 # Source-maps
 [Ll]ib/**/*.js.map
+[Ll]ib/**/*.d.ts.map
 
 # Unit-Tests
+.mocharc.json
 [Ll]ib/tests/
 
 # Visual Studio Code-Environment

@@ -125,7 +125,8 @@ export = class MyGenerator extends Generator
 }
 ```
 
-This causes `this.templatePath(...path)` to create paths relative to `./templates/app` rather than `./templates`.
+This causes `this.templatePath(...path)` to create paths relative to `./templates/app` rather than `./templates`.  
+The `this.commonTemplatePath(...path)` method always creates paths relative to `./templates`.
 
 ### FileMappings
 The `Generator.FileMappings`-property allows you to provide a set of files which are being copied when invoking `Generator.writing()`.

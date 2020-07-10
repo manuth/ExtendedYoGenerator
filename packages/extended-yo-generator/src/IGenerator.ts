@@ -19,6 +19,14 @@ export interface IGenerator<TSettings> extends YeomanGenerator
     modulePath(...path: string[]): string;
 
     /**
+     * Joins the arguments together and returns the resulting path relative to the common template-directory.
+     *
+     * @param path
+     * The path that is to be joined.
+     */
+    commonTemplatePath(...path: string[]): string;
+
+    /**
      * Joins the arguments together and returns the resulting path relative to the template-directory.
      *
      * @param path
