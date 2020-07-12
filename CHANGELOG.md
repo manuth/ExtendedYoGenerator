@@ -6,7 +6,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v4.1.0...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v4.1.0...v4.2.0)
+
+## ExtendedYoGenerator v4.2.0
+### Added
+  - Essential components to the module-exports:
+    - `Component` which provides the functionality to resolve `IComponent` objects
+    - `ComponentCategory` which provides the functionality to resolve `IComponentCategory` objects
+    - `ComponentCollection` which provides the functionality to resolve `IComponentCollection` objects
+    - `FileMapping` which provides the functionality to resolve `IFileMapping` objects
+    - `PathResolver` which is used in the `FileMapping` class for resolving partial paths
+    - `IGenerator` which represents an object with the most popular public members of the `Generator` class
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v4.1.0...v4.2.0)
 
 ## ExtendedYoGenerator v4.1.0
 ### Added
