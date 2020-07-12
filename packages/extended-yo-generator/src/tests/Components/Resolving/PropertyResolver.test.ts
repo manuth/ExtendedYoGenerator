@@ -1,5 +1,6 @@
 import Assert = require("assert");
 import { TestContext } from "@manuth/extended-yo-generator-test";
+import { Random } from "random-js";
 import { ITestOptions } from "../../Generator/ITestOptions";
 import { TestGenerator } from "../../Generator/TestGenerator/TestGenerator";
 import { IResolverTestOptions } from "./IResolverTestOptions";
@@ -17,6 +18,7 @@ export function PropertyResolverTests(context: TestContext<TestGenerator, ITestO
         "PropertyResolver",
         () =>
         {
+            let random: Random;
             let propertResolver: ResolverTest;
             let testValue = "this is a test";
             let testPromise = context.CreatePromise(testValue);
@@ -32,6 +34,7 @@ export function PropertyResolverTests(context: TestContext<TestGenerator, ITestO
                 async function()
                 {
                     this.timeout(0);
+                    random = new Random();
 
                     propertResolver = new ResolverTest(
                         await context.Generator,
@@ -69,6 +72,46 @@ export function PropertyResolverTests(context: TestContext<TestGenerator, ITestO
                             };
 
                             Assert.strictEqual(await propertResolver.TestValue, `${await propertResolver.TestPromise}${await propertResolver.TestFunction}`);
+                        });
+
+                    test(
+                        "Checking whether the `thisArg` of functions is set properly…",
+                        async () =>
+                        {
+                            let testInstance = new
+                                /**
+                                 * Provides a class for testing the resolver.
+                                 */
+                                class TestClass implements IResolverTestOptions
+                                {
+                                    /**
+                                     * @inheritdoc
+                                     */
+                                    public TestValue = random.string(10);
+
+                                    /**
+                                     * @inheritdoc
+                                     */
+                                    public get TestPromise(): Promise<string>
+                                    {
+                                        let result = this.TestValue;
+
+                                        return (
+                                            async () =>
+                                            {
+                                                return result;
+                                            })();
+                                    }
+
+                                    /**
+                                     * @inheritdoc
+                                     */
+                                    public TestFunction: IResolverTestOptions["TestFunction"] = null;
+                                }();
+
+                            let testResolver = new ResolverTest(await context.Generator, testInstance);
+                            Assert.doesNotReject(() => testResolver.TestPromise);
+                            Assert.strictEqual(await testResolver.TestPromise, testInstance.TestValue);
                         });
                 });
         });
