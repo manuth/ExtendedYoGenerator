@@ -72,6 +72,11 @@ export class PropertyResolver<TObject, TTarget, TSettings> extends Resolver<TTar
      */
     protected async ResolveProperty<T>(target: TTarget, value: Resolvable<TTarget, TSettings, T>): Promise<T>
     {
+        if (typeof value === "function")
+        {
+            value = value.bind(this.Object);
+        }
+
         return this.Resolve<T>(target, this.Generator, value);
     }
 }
