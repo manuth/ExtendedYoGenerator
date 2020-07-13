@@ -182,7 +182,7 @@ export = class MyGenerator extends Generator<IMySettings>
                             DisplayName: "README-File",
                             FileMappings: [
                                 {
-                                    Source: () => this.templatePath("README.md"),
+                                    Source: this.templatePath("README.md"),
                                     Context: (fileMapping, generator) =>
                                     {
                                         return {

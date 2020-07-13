@@ -6,7 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v4.1.0...v4.2.0)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v4.2.1...dev)
+
+## ExtendedYoGenerator v4.2.1
+  - Fix incorrect `thisArg` when resolving `ResolveFunction`s
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v4.2.0...v4.2.1)
 
 ## ExtendedYoGenerator v4.2.0
 ### Added
