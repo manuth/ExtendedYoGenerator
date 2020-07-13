@@ -60,7 +60,7 @@ export class FileMapping<TSettings> extends PropertyResolver<IFileMapping<TSetti
     {
         if (this.Object.Processor)
         {
-            return this.Object.Processor;
+            return (...args) => this.Object.Processor(...args);
         }
         else
         {
