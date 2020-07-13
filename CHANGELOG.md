@@ -6,10 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v4.2.1...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v4.2.2...dev)
+
+## ExtendedYoGenerator v4.2.2
+### Fixed
+  - Incorrect `thisArg` when resolving `FileMapping.Promise`
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v4.2.1...v4.2.2)
 
 ## ExtendedYoGenerator v4.2.1
-  - Fix incorrect `thisArg` when resolving `ResolveFunction`s
+### Fixed
+  - Incorrect `thisArg` when resolving `ResolveFunction`s
 
 [Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v4.2.0...v4.2.1)
 

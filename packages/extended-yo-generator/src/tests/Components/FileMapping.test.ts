@@ -2,6 +2,7 @@ import Assert = require("assert");
 import { TestContext } from "@manuth/extended-yo-generator-test";
 import { render } from "ejs";
 import { writeFile, readFile } from "fs-extra";
+import { Random } from "random-js";
 import { TempDirectory, TempFile } from "temp-filesystem";
 import { FileMapping } from "../../Components/FileMapping";
 import { IFileMapping } from "../../Components/IFileMapping";
@@ -20,6 +21,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestOption
         "FileMapping",
         () =>
         {
+            let random: Random;
             let generator: TestGenerator;
             let fileMapping: FileMapping<any>;
             let testPath = "test.txt";
@@ -35,6 +37,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestOption
             suiteSetup(
                 async () =>
                 {
+                    random = new Random();
                     generator = await context.Generator;
                     fileMapping = new FileMapping(generator, fileMappingOptions);
                     testDirectory = new TempDirectory();
@@ -123,17 +126,65 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestOption
                         {
                             test(
                                 "Checking whether processors are resolved, if defined…",
-                                () =>
+                                async () =>
                                 {
+                                    let testValue: string;
+                                    let randomValue = random.string(10);
+
                                     /**
                                      * Processes a file-mapping.
                                      */
-                                    let processor = async (): Promise<void> => { };
+                                    let processor = async (): Promise<void> =>
+                                    {
+                                        testValue = randomValue;
+                                    };
 
                                     fileMappingOptions.Processor = processor;
-                                    Assert.strictEqual(fileMapping.Processor, processor);
+                                    await Assert.doesNotReject(async () => fileMapping.Processor(fileMapping, await context.Generator));
+                                    Assert.strictEqual(testValue, randomValue);
                                     fileMappingOptions.Processor = null;
                                     Assert.notStrictEqual(fileMapping.Processor, null);
+                                });
+
+                            test(
+                                "Checking whether processors preserve the `thisArg` correctly…",
+                                async () =>
+                                {
+                                    let testValue;
+
+                                    let fileMappingOptions = new
+                                        /**
+                                         * Provides a test-implementation of the `IFileMapping<T>` interface.
+                                         */
+                                        class FileMappingOptions implements IFileMapping<any>
+                                        {
+                                            /**
+                                             * @inheritdoc
+                                             */
+                                            public Source = random.string(10);
+
+                                            /**
+                                             * Gets a custom property-value.
+                                             */
+                                            public MyCustomProperty = random.string(20);
+
+                                            /**
+                                             * @inheritdoc
+                                             */
+                                            public Destination = random.string(10);
+
+                                            /**
+                                             * @inheritdoc
+                                             */
+                                            public async Processor(): Promise<void>
+                                            {
+                                                testValue = this.MyCustomProperty;
+                                            }
+                                        }();
+
+                                    let fileMapping = new FileMapping(await context.Generator, fileMappingOptions);
+                                    await Assert.doesNotReject(async () => fileMapping.Processor(fileMapping, await context.Generator));
+                                    Assert.strictEqual(testValue, fileMappingOptions.MyCustomProperty);
                                 });
                         });
 
@@ -197,16 +248,18 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestOption
 
                             test(
                                 "Checking whether files are copied by default if `Context` is not defined…",
-                                async () =>
+                                async function()
                                 {
+                                    this.timeout(0);
                                     await fileMapping.Processor(fileMapping, generator);
                                     return AssertDestinationContent(testContent);
                                 });
 
                             test(
                                 "Checking whether files are copied using `ejs` if `Context` is defined…",
-                                async () =>
+                                async function()
                                 {
+                                    this.timeout(0);
                                     fileMappingOptions.Context = () => testContext;
                                     await fileMapping.Processor(fileMapping, generator);
                                     return AssertDestinationContent(render(testContent, testContext));
