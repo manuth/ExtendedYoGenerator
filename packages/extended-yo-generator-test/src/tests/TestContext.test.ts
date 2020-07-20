@@ -2,6 +2,7 @@ import Assert = require("assert");
 import { Random } from "random-js";
 import { IRunContext } from "../IRunContext";
 import { ITestGeneratorOptions } from "../ITestGeneratorOptions";
+import { ITestGeneratorSettings } from "../ITestGeneratorSettings";
 import { TestContext } from "../TestContext";
 import { TestGenerator } from "../TestGenerator";
 import { IExampleOptions } from "./IExampleOptions";
@@ -16,7 +17,7 @@ export function TestContextTests(): void
         () =>
         {
             let random: Random;
-            let testContext: TestContext<TestGenerator<any, IExampleOptions>, ITestGeneratorOptions<IExampleOptions>>;
+            let testContext: TestContext<TestGenerator<ITestGeneratorSettings, IExampleOptions>, ITestGeneratorOptions<IExampleOptions>>;
             let options: IExampleOptions;
             let randomValue: string;
 
@@ -41,7 +42,7 @@ export function TestContextTests(): void
                 "Generator",
                 () =>
                 {
-                    let generator: TestGenerator<any, IExampleOptions>;
+                    let generator: TestGenerator<ITestGeneratorSettings, IExampleOptions>;
 
                     setup(
                         async () =>
@@ -104,7 +105,7 @@ export function TestContextTests(): void
                 "ExecuteGenerator(options, runSettings)",
                 () =>
                 {
-                    let runContext: IRunContext<TestGenerator<any, IExampleOptions>>;
+                    let runContext: IRunContext<TestGenerator<ITestGeneratorSettings, IExampleOptions>>;
 
                     setup(
                         () =>
