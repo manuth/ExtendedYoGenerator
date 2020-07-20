@@ -45,8 +45,9 @@ export function TestContextTests(): void
                     let generator: TestGenerator<ITestGeneratorSettings, IExampleOptions>;
 
                     setup(
-                        async () =>
+                        async function()
                         {
+                            this.timeout(0);
                             generator = await testContext.Generator;
                         });
 
