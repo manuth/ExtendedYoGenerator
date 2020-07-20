@@ -1,21 +1,20 @@
-import { TestContext } from "@manuth/extended-yo-generator-test";
-import { ITestOptions } from "../../Generator/ITestOptions";
-import { TestGenerator } from "../../Generator/TestGenerator/TestGenerator";
+import { TestContext, TestGenerator, ITestGeneratorOptions, ITestOptions } from "@manuth/extended-yo-generator-test";
 import { PropertyResolverTests } from "./PropertyResolver.test";
+import { ResolverTests } from "./Resolver.test";
 
 /**
- * Registers tests about resolving.
+ * Registers tests for components related to resolving.
  *
  * @param context
  * The test-context to use.
  */
-export function ResolvingTests(context: TestContext<TestGenerator, ITestOptions>): void
+export function ResolvingTests(context: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>>): void
 {
     suite(
         "Resolving",
         () =>
         {
-            require("./Resolver.test");
+            ResolverTests(context);
             PropertyResolverTests(context);
         });
 }

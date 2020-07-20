@@ -1,6 +1,10 @@
+import { TestContextTests } from "./TestContext.test";
+import { TestGeneratorTests } from "./TestGenerator.test";
+
 suite(
     "ExtendedYoGeneratorTest",
     () =>
     {
-        require("./TestContext.test");
+        TestContextTests();
+        TestGeneratorTests();
     });

@@ -1,12 +1,9 @@
-import { Question } from "yeoman-generator";
-import { IComponentCollection } from "../../Components/IComponentCollection";
-import { IFileMapping } from "../../Components/IFileMapping";
-import { IGeneratorSettings } from "../../IGeneratorSettings";
+import { Question, IComponentCollection, IGeneratorSettings, IFileMapping } from "@manuth/extended-yo-generator";
 
 /**
  * Provides options for the test-generator.
  */
-export interface ITestGeneratorOptions
+export interface ITestOptions
 {
     /**
      * The name of the root of the template-folder.

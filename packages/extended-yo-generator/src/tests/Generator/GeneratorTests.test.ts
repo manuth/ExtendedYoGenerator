@@ -1,13 +1,10 @@
 import Assert = require("assert");
-import { IRunContext, TestContext } from "@manuth/extended-yo-generator-test";
+import { IRunContext, TestContext, TestGenerator, ITestOptions, ITestGeneratorOptions } from "@manuth/extended-yo-generator-test";
 import { writeFile, readFile } from "fs-extra";
 import pkgUp = require("pkg-up");
 import { TempFile } from "temp-filesystem";
 import Path = require("upath");
 import { GeneratorSettingKey } from "../../GeneratorSettingKey";
-import { ITestGeneratorOptions } from "./ITestGeneratorOptions";
-import { ITestOptions } from "./ITestOptions";
-import { TestGenerator } from "./TestGenerator/TestGenerator";
 
 /**
  * Registers tests for the TSGenerator-generator.
@@ -15,7 +12,7 @@ import { TestGenerator } from "./TestGenerator/TestGenerator";
  * @param context
  * The context to use.
  */
-export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITestOptions>): void
+export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>>): void
 {
     suite(
         "Generator-Tests",
@@ -23,7 +20,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
         {
             let moduleRoot: string;
             let generator: TestGenerator;
-            let generatorOptions: ITestGeneratorOptions = {};
+            let options: ITestOptions = {};
             let testPath = "this-is-a-test.txt";
             let runContext: IRunContext<TestGenerator>;
 
@@ -59,7 +56,12 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                 async () =>
                 {
                     moduleRoot = Path.dirname(pkgUp.sync({ cwd: context.GeneratorDirectory }));
-                    runContext = context.ExecuteGenerator({ testGeneratorOptions: generatorOptions });
+
+                    runContext = context.ExecuteGenerator(
+                        {
+                            TestGeneratorOptions: options
+                        });
+
                     await runContext.toPromise();
                     generator = runContext.generator;
                 });
@@ -67,21 +69,21 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
             setup(
                 () =>
                 {
-                    generatorOptions.TemplateRoot = null;
-                    generatorOptions.Components = null;
-                    generatorOptions.Questions = null;
+                    options.TemplateRoot = null;
+                    options.Components = null;
+                    options.Questions = null;
                 });
 
             suite(
                 "General",
                 () =>
                 {
-                    let generatorOptions: ITestGeneratorOptions;
+                    let options: ITestOptions;
 
                     setup(
                         () =>
                         {
-                            generatorOptions = {
+                            options = {
                                 TemplateRoot: "test",
                                 Questions: [
                                     {
@@ -132,7 +134,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                         async function()
                         {
                             this.timeout(0);
-                            await context.ExecuteGenerator({ testGeneratorOptions: generatorOptions }).toPromise();
+                            await context.ExecuteGenerator({ TestGeneratorOptions: options }).toPromise();
                         });
                 });
 
@@ -172,7 +174,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                         "Checking whether `TemplateRoot` is optional…",
                         () =>
                         {
-                            generatorOptions.TemplateRoot = null;
+                            options.TemplateRoot = null;
                             Assert.doesNotThrow(() => generator.templatePath());
                         });
 
@@ -180,8 +182,8 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                         "Checking whether the template-path resolves to the specified `TemplateRoot`…",
                         () =>
                         {
-                            generatorOptions.TemplateRoot = "Test";
-                            AssertPath(generator.templatePath(testPath), Path.join(moduleRoot, relativePath, generatorOptions.TemplateRoot, testPath));
+                            options.TemplateRoot = "Test";
+                            AssertPath(generator.templatePath(testPath), Path.join(moduleRoot, relativePath, options.TemplateRoot, testPath));
                         });
                 });
 
@@ -190,7 +192,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                 () =>
                 {
                     let generator: TestGenerator;
-                    let generatorOptions: ITestGeneratorOptions = {};
+                    let options: ITestOptions = {};
                     let defaultID: string;
                     let hiddenID: string;
                     let defaultQuestionID: string;
@@ -208,7 +210,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                             defaultValue = "This is the default value";
                             fileMappingExecuted = false;
 
-                            generatorOptions.Components = {
+                            options.Components = {
                                 Question: "Is this just a test?",
                                 Categories: [
                                     {
@@ -268,7 +270,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                                 ]
                             };
 
-                            let runContext = context.ExecuteGenerator({ testGeneratorOptions: generatorOptions });
+                            let runContext = context.ExecuteGenerator({ TestGeneratorOptions: options });
                             await runContext.toPromise();
                             generator = runContext.generator;
                         });
@@ -310,7 +312,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                 () =>
                 {
                     let generator: TestGenerator;
-                    let generatorOptions: ITestGeneratorOptions = {};
+                    let options: ITestOptions = {};
                     let defaultID: string;
                     let hiddenID: string;
                     let defaultValue: string[];
@@ -322,7 +324,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                             hiddenID = "this-is-a-hidden-question";
                             defaultValue = ["a"];
 
-                            generatorOptions.Questions = [
+                            options.Questions = [
                                 {
                                     type: "list",
                                     name: defaultID,
@@ -346,7 +348,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                                 }
                             ];
 
-                            let runContext = context.ExecuteGenerator({ testGeneratorOptions: generatorOptions });
+                            let runContext = context.ExecuteGenerator({ TestGeneratorOptions: options });
                             await runContext.toPromise();
                             generator = runContext.generator;
                         });
@@ -383,7 +385,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                             testContent = "this is a test";
                             await writeFile(tempFile.FullName, testContent);
 
-                            generatorOptions.FileMappings = [
+                            options.FileMappings = [
                                 {
                                     Source: tempFile.FullName,
                                     Destination: testFileName
@@ -401,7 +403,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                         "Checking whether file-mappings can be added which are executed in any case…",
                         async () =>
                         {
-                            let runContext = context.ExecuteGenerator({ testGeneratorOptions: generatorOptions });
+                            let runContext = context.ExecuteGenerator({ TestGeneratorOptions: options });
                             await runContext.toPromise();
                             Assert.strictEqual((await readFile(runContext.generator.destinationPath(testFileName))).toString(), testContent);
                         });

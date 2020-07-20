@@ -1,11 +1,9 @@
 import Assert = require("assert");
-import { TestContext } from "@manuth/extended-yo-generator-test";
+import { TestContext, TestGenerator, ITestGeneratorOptions, ITestGeneratorSettings, ITestOptions } from "@manuth/extended-yo-generator-test";
 import { TempFile } from "temp-filesystem";
 import { Component } from "../../Components/Component";
 import { IComponent } from "../../Components/IComponent";
 import { IFileMapping } from "../../Components/IFileMapping";
-import { ITestOptions } from "../Generator/ITestOptions";
-import { TestGenerator } from "../Generator/TestGenerator/TestGenerator";
 
 /**
  * Provides tests for the `Component` class.
@@ -13,16 +11,16 @@ import { TestGenerator } from "../Generator/TestGenerator/TestGenerator";
  * @param context
  * The context to use.
  */
-export function ComponentTests(context: TestContext<TestGenerator, ITestOptions>): void
+export function ComponentTests(context: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>>): void
 {
     suite(
         "Component",
         () =>
         {
             let generator: TestGenerator;
-            let component: Component<any>;
+            let component: Component<ITestGeneratorSettings>;
 
-            let componentOptions: IComponent<any> = {
+            let componentOptions: IComponent<ITestGeneratorSettings> = {
                 ID: null,
                 DisplayName: null,
                 FileMappings: []
@@ -46,7 +44,7 @@ export function ComponentTests(context: TestContext<TestGenerator, ITestOptions>
                 });
 
             suite(
-                "Promise<Array<FileMapping<TSettings>>> FileMappings",
+                "FileMappings",
                 () =>
                 {
                     let testFile: TempFile;
@@ -67,7 +65,7 @@ export function ComponentTests(context: TestContext<TestGenerator, ITestOptions>
                         "Checking whether changes to the `FileMappings` option immediately take affect…",
                         async () =>
                         {
-                            componentOptions.FileMappings = context.CreatePromiseFunction<Array<IFileMapping<any>>>(
+                            componentOptions.FileMappings = context.CreatePromiseFunction<Array<IFileMapping<ITestGeneratorSettings>>>(
                                 [
                                     {
                                         Destination: context.CreateFunction(testFile.FullName)

@@ -239,6 +239,12 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     }
 
     /**
+     * Initializes the generator.
+     */
+    public async initializing(): Promise<void>
+    { }
+
+    /**
      * Gathers all information for executing the generator and saves them to the `Settings`.
      */
     public async prompting(): Promise<void>

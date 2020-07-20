@@ -1,12 +1,21 @@
+import { join } from "path";
 import { Generator } from "@manuth/extended-yo-generator";
 import { run, RunContextSettings } from "yeoman-test";
 import { IRunContext } from "./IRunContext";
+import { ITestGeneratorOptions } from "./ITestGeneratorOptions";
+import { ITestOptions } from "./ITestOptions";
+import { TestGenerator } from "./TestGenerator";
 
 /**
  * Represents a context for testing.
  */
-export class TestContext<TGenerator extends Generator<any> = Generator<any>, TOptions = Record<string, unknown>>
+export class TestContext<TGenerator extends Generator = Generator, TOptions = Record<string, unknown>>
 {
+    /**
+     * The default `TestContext<TGenerator, TOptions>` instance.
+     */
+    private static defaultInstance: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>> = null;
+
     /**
      * The directory of the generator.
      */
@@ -51,6 +60,19 @@ export class TestContext<TGenerator extends Generator<any> = Generator<any>, TOp
 
             return this.finishedContext.generator;
         })();
+    }
+
+    /**
+     * Gets the default instance of the `TestContext<TGenerator, TOptions>` class.
+     */
+    public static get Default(): TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>>
+    {
+        if (this.defaultInstance === null)
+        {
+            this.defaultInstance = new TestContext(join(__dirname, "generators", "app"));
+        }
+
+        return this.defaultInstance;
     }
 
     /**
