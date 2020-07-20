@@ -57,3 +57,20 @@ There's a method which allows you to execute a new instance of the generator.
 let runContext = testContext.ExecuteGenerator();
 await runContext.toPromise();
 ```
+
+### Testing Generator-Components
+If you want to test generator-components such as file-mappings or questions,
+you might want to use the `TestContext.Default`-context for injecting said components.
+
+```ts
+import { TestContext } from "@manuth/extended-yo-generator-test";
+
+let testContext = TestContext.Default;
+
+testContext.ExecuteGenerator(
+    {
+        FileMappings: [
+            new MyCustomFileMapping()
+        ]
+    });
+```
