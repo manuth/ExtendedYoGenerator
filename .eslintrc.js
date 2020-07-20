@@ -44,6 +44,13 @@ module.exports = {
                     "VariableDeclaration > VariableDeclarator:not([id.typeAnnotation]) > ArrowFunctionExpression"
                 ]
             }
+        ],
+        "generator-star-spacing": [
+            "error", {
+                before: false,
+                after: true,
+                anonymous: "neither"
+            }
         ]
     }
 };
