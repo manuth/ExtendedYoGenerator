@@ -4,7 +4,7 @@ import { Resolvable } from "../../../Components/Resolving/Resolvable";
 import { Resolver } from "../../../Components/Resolving/Resolver";
 
 /**
- * Registers the resolver-tests.
+ * Registers tests for the `Resolver` class.
  *
  * @param context
  * The context of the test-execution.
@@ -42,7 +42,7 @@ export function ResolverTests(context: TestContext<TestGenerator, ITestGenerator
             }
 
             suite(
-                "Promise<T> Resolve<T>(TTarget target, generator, IGenerator<TSettings> generator, Resolvable<TTarget, TSettings, T> value)",
+                "Resolve(target, generator, value)",
                 async () =>
                 {
                     let resolver: TestResolver;

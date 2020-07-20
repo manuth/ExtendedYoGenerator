@@ -48,7 +48,7 @@ export function PropertyResolverTests(context: TestContext<TestGenerator, ITestG
                 });
 
             suite(
-                "Promise<T> ResolveProperty<T>(TTarget target, Resolvable<TTarget, TSettings, T> value)",
+                "ResolveProperty(target, value)",
                 () =>
                 {
                     test(

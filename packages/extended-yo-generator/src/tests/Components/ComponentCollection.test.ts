@@ -38,7 +38,7 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                 });
 
             suite(
-                "Array<ComponentCategory<TSettings>>",
+                "Categories",
                 () =>
                 {
                     test(

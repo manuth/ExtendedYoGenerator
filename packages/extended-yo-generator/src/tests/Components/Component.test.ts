@@ -44,7 +44,7 @@ export function ComponentTests(context: TestContext<TestGenerator, ITestGenerato
                 });
 
             suite(
-                "Promise<Array<FileMapping<TSettings>>> FileMappings",
+                "FileMappings",
                 () =>
                 {
                     let testFile: TempFile;

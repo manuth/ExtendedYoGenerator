@@ -1,8 +1,9 @@
 import { TestContext, TestGenerator, ITestGeneratorOptions, ITestOptions } from "@manuth/extended-yo-generator-test";
 import { PropertyResolverTests } from "./PropertyResolver.test";
+import { ResolverTests } from "./Resolver.test";
 
 /**
- * Registers tests about resolving.
+ * Registers tests for components related to resolving.
  *
  * @param context
  * The test-context to use.
@@ -13,7 +14,7 @@ export function ResolvingTests(context: TestContext<TestGenerator, ITestGenerato
         "Resolving",
         () =>
         {
-            require("./Resolver.test");
+            ResolverTests(context);
             PropertyResolverTests(context);
         });
 }

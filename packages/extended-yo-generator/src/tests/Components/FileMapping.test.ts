@@ -57,7 +57,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                 });
 
             suite(
-                "Promise<string> Source",
+                "Source",
                 () =>
                 {
                     test(
@@ -86,7 +86,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                 });
 
             suite(
-                "Promise<string> Destination",
+                "Destination",
                 async () =>
                 {
                     test(
@@ -115,7 +115,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                 });
 
             suite(
-                "Function Processor",
+                "Processor",
                 async () =>
                 {
                     suite(
