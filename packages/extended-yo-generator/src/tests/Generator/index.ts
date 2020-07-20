@@ -1,7 +1,5 @@
-import { TestContext } from "@manuth/extended-yo-generator-test";
+import { TestContext, TestGenerator, ITestGeneratorOptions, ITestOptions } from "@manuth/extended-yo-generator-test";
 import { ExtendedGeneratorTests } from "./GeneratorTests.test";
-import { ITestOptions } from "./ITestOptions";
-import { TestGenerator } from "./TestGenerator/TestGenerator";
 
 /**
  * Registers the generator-tests.
@@ -9,7 +7,7 @@ import { TestGenerator } from "./TestGenerator/TestGenerator";
  * @param context
  * The context to use.
  */
-export function GeneratorTests(context: TestContext<TestGenerator, ITestOptions>): void
+export function GeneratorTests(context: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>>): void
 {
     ExtendedGeneratorTests(context);
 }

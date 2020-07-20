@@ -1,8 +1,6 @@
 import Assert = require("assert");
-import { TestContext } from "@manuth/extended-yo-generator-test";
+import { TestContext, TestGenerator, ITestGeneratorOptions, ITestOptions } from "@manuth/extended-yo-generator-test";
 import { Random } from "random-js";
-import { ITestOptions } from "../../Generator/ITestOptions";
-import { TestGenerator } from "../../Generator/TestGenerator/TestGenerator";
 import { IResolverTestOptions } from "./IResolverTestOptions";
 import { ResolverTest } from "./ResolverTest";
 
@@ -12,7 +10,7 @@ import { ResolverTest } from "./ResolverTest";
  * @param context
  * The test-context to use.
  */
-export function PropertyResolverTests(context: TestContext<TestGenerator, ITestOptions>): void
+export function PropertyResolverTests(context: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>>): void
 {
     suite(
         "PropertyResolver",

@@ -1,18 +1,17 @@
-import { Generator, IComponentCollection, Question } from "../../..";
-import { IFileMapping } from "../../../Components/IFileMapping";
-import { IGeneratorSettings } from "../../../IGeneratorSettings";
-import { ITestGeneratorOptions } from "../ITestGeneratorOptions";
-import { ITestOptions } from "../ITestOptions";
+import { Generator, IComponentCollection, Question, IFileMapping } from "@manuth/extended-yo-generator";
+import { ITestGeneratorOptions } from "./ITestGeneratorOptions";
+import { ITestGeneratorSettings } from "./ITestGeneratorSettings";
+import { ITestOptions } from "./ITestOptions";
 
 /**
  * Represents a test-generator.
  */
-export class TestGenerator extends Generator<IGeneratorSettings & Record<string, any>>
+export class TestGenerator<TSettings extends ITestGeneratorSettings = ITestGeneratorSettings, TOptions extends ITestOptions = ITestOptions> extends Generator<TSettings>
 {
     /**
      * The options of the generator.
      */
-    private generatorOptions: ITestGeneratorOptions = {};
+    private generatorOptions: Partial<TOptions> = {};
 
     /**
      * Initializes a new instance of the `TestGenerator` class.
@@ -23,14 +22,22 @@ export class TestGenerator extends Generator<IGeneratorSettings & Record<string,
      * @param options
      * A set of options for the generator.
      */
-    public constructor(args: string | string[], options: ITestOptions)
+    public constructor(args: string | string[], options: ITestGeneratorOptions<TOptions>)
     {
         super(args, options);
 
-        if (options.testGeneratorOptions)
+        if (options.TestGeneratorOptions)
         {
-            this.generatorOptions = options.testGeneratorOptions;
+            this.generatorOptions = options.TestGeneratorOptions;
         }
+    }
+
+    /**
+     * Gets the options of the generator.
+     */
+    public get GeneratorOptions(): Partial<TOptions>
+    {
+        return this.generatorOptions;
     }
 
     /**
@@ -52,7 +59,7 @@ export class TestGenerator extends Generator<IGeneratorSettings & Record<string,
     /**
      * Gets or sets the components provided by the generator.
      */
-    public get Components(): IComponentCollection<IGeneratorSettings>
+    public get Components(): IComponentCollection<TSettings>
     {
         return this.generatorOptions.Components;
     }
@@ -60,7 +67,7 @@ export class TestGenerator extends Generator<IGeneratorSettings & Record<string,
     /**
      * @inheritdoc
      */
-    public set Components(value: IComponentCollection<IGeneratorSettings>)
+    public set Components(value: IComponentCollection<TSettings>)
     {
         this.generatorOptions.Components = value;
     }
@@ -84,7 +91,7 @@ export class TestGenerator extends Generator<IGeneratorSettings & Record<string,
     /**
      * @inheritdoc
      */
-    public get FileMappings(): Array<IFileMapping<IGeneratorSettings>>
+    public get FileMappings(): Array<IFileMapping<TSettings>>
     {
         return this.generatorOptions.FileMappings;
     }
@@ -92,7 +99,7 @@ export class TestGenerator extends Generator<IGeneratorSettings & Record<string,
     /**
      * @inheritdoc
      */
-    public set FileMappings(value: Array<IFileMapping<IGeneratorSettings>>)
+    public set FileMappings(value: Array<IFileMapping<TSettings>>)
     {
         this.generatorOptions.FileMappings = value;
     }

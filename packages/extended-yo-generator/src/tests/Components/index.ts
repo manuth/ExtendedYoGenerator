@@ -1,6 +1,4 @@
-import { TestContext } from "@manuth/extended-yo-generator-test";
-import { ITestOptions } from "../Generator/ITestOptions";
-import { TestGenerator } from "../Generator/TestGenerator/TestGenerator";
+import { TestContext, TestGenerator, ITestGeneratorOptions, ITestOptions } from "@manuth/extended-yo-generator-test";
 import { ComponentTests } from "./Component.test";
 import { ComponentCategoryTests } from "./ComponentCategory.test";
 import { ComponentCollectionTests } from "./ComponentCollection.test";
@@ -13,7 +11,7 @@ import { ResolvingTests } from "./Resolving";
  * @param context
  * The test-context to use.
  */
-export function ComponentsTests(context: TestContext<TestGenerator, ITestOptions>): void
+export function ComponentsTests(context: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>>): void
 {
     suite(
         "Components",

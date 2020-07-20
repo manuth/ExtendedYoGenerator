@@ -1,6 +1,4 @@
-import { TestContext } from "@manuth/extended-yo-generator-test";
-import { ITestOptions } from "../../Generator/ITestOptions";
-import { TestGenerator } from "../../Generator/TestGenerator/TestGenerator";
+import { TestContext, TestGenerator, ITestGeneratorOptions, ITestOptions } from "@manuth/extended-yo-generator-test";
 import { PropertyResolverTests } from "./PropertyResolver.test";
 
 /**
@@ -9,7 +7,7 @@ import { PropertyResolverTests } from "./PropertyResolver.test";
  * @param context
  * The test-context to use.
  */
-export function ResolvingTests(context: TestContext<TestGenerator, ITestOptions>): void
+export function ResolvingTests(context: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>>): void
 {
     suite(
         "Resolving",

@@ -1,27 +1,25 @@
 import Assert = require("assert");
-import Path = require("path");
 import { Random } from "random-js";
 import { IRunContext } from "../IRunContext";
+import { ITestGeneratorOptions } from "../ITestGeneratorOptions";
 import { TestContext } from "../TestContext";
-import { ITestOptions } from "./Generator/ITestOptions";
-import { TestGenerator } from "./Generator/TestGenerator";
+import { TestGenerator } from "../TestGenerator";
+import { IExampleOptions } from "./IExampleOptions";
 
 suite(
     "TestContext",
     () =>
     {
         let random: Random;
-        let generatorDirectory: string;
-        let testContext: TestContext<TestGenerator<ITestOptions>, ITestOptions>;
-        let options: ITestOptions;
+        let testContext: TestContext<TestGenerator<any, IExampleOptions>, ITestGeneratorOptions<IExampleOptions>>;
+        let options: IExampleOptions;
         let randomValue: string;
 
         suiteSetup(
             () =>
             {
                 random = new Random();
-                generatorDirectory = Path.join(__dirname, "Generator");
-                testContext = new TestContext(generatorDirectory);
+                testContext = TestContext.Default;
             });
 
         setup(
@@ -35,22 +33,10 @@ suite(
             });
 
         suite(
-            "GeneratorDirectory",
-            () =>
-            {
-                test(
-                    "Checking whether the generator-directory is stored correctly…",
-                    () =>
-                    {
-                        Assert.strictEqual(testContext.GeneratorDirectory, generatorDirectory);
-                    });
-            });
-
-        suite(
             "Generator",
             () =>
             {
-                let generator: TestGenerator<ITestOptions>;
+                let generator: TestGenerator<any, IExampleOptions>;
 
                 setup(
                     async () =>
@@ -113,7 +99,7 @@ suite(
             "IRunContext<TGenerator> ExecuteGenerator(TOptions options, RunContextSettings runSettings)",
             () =>
             {
-                let runContext: IRunContext<TestGenerator<ITestOptions>>;
+                let runContext: IRunContext<TestGenerator<any, IExampleOptions>>;
 
                 setup(
                     () =>
@@ -134,9 +120,13 @@ suite(
                     "Checking whether options can be passed…",
                     async () =>
                     {
-                        runContext = testContext.ExecuteGenerator(options);
+                        runContext = testContext.ExecuteGenerator(
+                            {
+                                TestGeneratorOptions: options
+                            });
+
                         await runContext.toPromise();
-                        Assert.strictEqual(runContext.generator.TestOptions.testOption, options.testOption);
+                        Assert.strictEqual(runContext.generator.GeneratorOptions.testOption, options.testOption);
                     });
             });
     });
