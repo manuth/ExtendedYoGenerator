@@ -6,7 +6,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v4.2.2...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v4.3.0...dev)
+
+## ExtendedYoGenerator v4.3.0
+### Added
+  - Support for the `initializing()`-method
+  - `TestGenerator` class for testing generator-components
+  - A default `TestContext.Default` for said `TestGenerator`
+  - Mocha-tests for the new classes
+
+### Updated
+  - All packages
+  - Mocha-test layout
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v4.2.2...v4.3.0)
 
 ## ExtendedYoGenerator v4.2.2
 ### Fixed
