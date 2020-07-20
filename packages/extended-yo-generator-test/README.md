@@ -55,5 +55,5 @@ There's a method which allows you to execute a new instance of the generator.
 
 ```ts
 let runContext = testContext.ExecuteGenerator();
-await runContext.toPromis();
+await runContext.toPromise();
 ```
