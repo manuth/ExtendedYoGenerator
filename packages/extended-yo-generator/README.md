@@ -332,6 +332,8 @@ export = class MyGenerator extends Generator
 
 ### Yo-Generator Methods
 Naturally the default yo-generator methods remain which are…
+  * `initializing()`:  
+    Initializes the generator, allowing to inherit other generators using `Generator.composeWith`
   * `prompting()`:  
     Asks all `Questions` and additionally all questions related to the `Components`
   * `writing()`:  
