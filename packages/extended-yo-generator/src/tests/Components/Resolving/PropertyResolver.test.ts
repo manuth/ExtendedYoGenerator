@@ -48,7 +48,7 @@ export function PropertyResolverTests(context: TestContext<TestGenerator, ITestG
                 });
 
             suite(
-                "ResolveProperty(target, value)",
+                "ResolveProperty",
                 () =>
                 {
                     test(

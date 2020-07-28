@@ -179,11 +179,11 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                 });
 
             suite(
-                "modulePath(...path)",
+                "modulePath",
                 () =>
                 {
                     test(
-                        "Checking whether `modulePath(...path)` resolves to the root of the generator's module…",
+                        "Checking whether `modulePath` resolves to the root of the generator's module…",
                         () =>
                         {
                             AssertPath(generator.modulePath(testPath), Path.join(moduleRoot, testPath));
@@ -191,7 +191,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                 });
 
             suite(
-                "templatePath(...path)",
+                "templatePath",
                 () =>
                 {
                     let relativePath: string;

@@ -42,7 +42,7 @@ export function ResolverTests(context: TestContext<TestGenerator, ITestGenerator
             }
 
             suite(
-                "Resolve(target, generator, value)",
+                "Resolve",
                 async () =>
                 {
                     let resolver: TestResolver;
