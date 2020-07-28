@@ -123,3 +123,6 @@ tsconfig.*.json
 
 # Visual Studio Code-Environment
 .vscode/
+
+# Drone configuration
+.drone.yml
