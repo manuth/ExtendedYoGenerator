@@ -28,7 +28,7 @@
   },
   "scripts": {
     "build": "npm run copy-files && tsc -b tsconfig.build.json",
-    "copy-files": "cd ../.. && npm run copy-generator",
+    "copy-files": "cd ../.. && npm run copy-files",
     "rebuild": "npm run clean && npm run build",
     "watch": "concurrently --raw \"npm run copy-files -- -- --watch | dev-null\" \"npm run build -- --watch\"",
     "clean": "rimraf ./lib",
