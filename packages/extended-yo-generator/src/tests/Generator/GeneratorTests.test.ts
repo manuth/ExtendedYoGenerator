@@ -2,7 +2,7 @@ import Assert = require("assert");
 import { IRunContext, TestContext, TestGenerator, ITestOptions, ITestGeneratorOptions } from "@manuth/extended-yo-generator-test";
 import { writeFile, readFile } from "fs-extra";
 import pkgUp = require("pkg-up");
-import { TempFile } from "temp-filesystem";
+import { TempFile, TempDirectory } from "temp-filesystem";
 import Path = require("upath");
 import { GeneratorSettingKey } from "../../GeneratorSettingKey";
 
@@ -135,6 +135,46 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                         {
                             this.timeout(0);
                             await context.ExecuteGenerator({ TestGeneratorOptions: options }).toPromise();
+                        });
+                });
+
+            suite(
+                "destinationRoot",
+                () =>
+                {
+                    let tempDir: TempDirectory;
+                    let workingDirectory: string;
+
+                    suiteSetup(
+                        () =>
+                        {
+                            workingDirectory = process.cwd();
+                            tempDir = new TempDirectory();
+                        });
+
+                    suiteTeardown(
+                        () =>
+                        {
+                            process.chdir(workingDirectory);
+                            tempDir.Dispose();
+                        });
+
+                    test(
+                        "Checking whether the current working-directory is untouched when changing the `destinationRoot` by default…",
+                        () =>
+                        {
+                            generator.destinationRoot(tempDir.FullName);
+                            Assert.strictEqual(process.cwd(), workingDirectory);
+                            Assert.notStrictEqual(process.cwd(), tempDir.FullName);
+                        });
+
+                    test(
+                        "Checking whether the current working-directory optionally can be changed by passing `skipEnvironment=false`",
+                        () =>
+                        {
+                            generator.destinationRoot(tempDir.FullName, false);
+                            Assert.notStrictEqual(process.cwd(), workingDirectory);
+                            Assert.strictEqual(process.cwd(), tempDir.FullName);
                         });
                 });
 
