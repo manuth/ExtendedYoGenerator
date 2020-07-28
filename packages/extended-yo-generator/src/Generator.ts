@@ -127,7 +127,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
                             {
                                 if (i === 0)
                                 {
-                                    this.log();
+                                    this.log("");
                                     this.log(`${chalk.red(">>")} ${chalk.bold(component.DisplayName)} ${chalk.red("<<")}`);
                                 }
 
@@ -199,6 +199,28 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     /**
      * @inheritdoc
      *
+     * @param rootPath
+     * The new destination root path.
+     *
+     * @param skipEnvironment
+     * A value indicating whether `this.env.cwd` and the current working directory shouldn't be changed.
+     *
+     * @returns
+     * The `destinationRoot` of the generator.
+     */
+    public destinationRoot(rootPath?: string, skipEnvironment?: boolean): string
+    {
+        if (isNullOrUndefined(skipEnvironment))
+        {
+            skipEnvironment = true;
+        }
+
+        return super.destinationRoot(rootPath, skipEnvironment);
+    }
+
+    /**
+     * @inheritdoc
+     *
      * @param path
      * The path that is to be joined.
      *
@@ -250,7 +272,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     public async prompting(): Promise<void>
     {
         Object.assign(this.Settings, await this.prompt(this.QuestionCollection));
-        this.log();
+        this.log("");
     }
 
     /**

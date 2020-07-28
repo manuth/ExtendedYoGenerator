@@ -67,7 +67,7 @@ export function TestContextTests(): void
                 });
 
             suite(
-                "CreatePromise(value)",
+                "CreatePromise",
                 () =>
                 {
                     test(
@@ -79,7 +79,7 @@ export function TestContextTests(): void
                 });
 
             suite(
-                "CreateFunction(value)",
+                "CreateFunction",
                 () =>
                 {
                     test(
@@ -91,7 +91,7 @@ export function TestContextTests(): void
                 });
 
             suite(
-                "CreatePromiseFunction(value)",
+                "CreatePromiseFunction",
                 () =>
                 {
                     test(
@@ -103,7 +103,7 @@ export function TestContextTests(): void
                 });
 
             suite(
-                "ExecuteGenerator(options, runSettings)",
+                "ExecuteGenerator",
                 () =>
                 {
                     let runContext: IRunContext<TestGenerator<ITestGeneratorSettings, IExampleOptions>>;
