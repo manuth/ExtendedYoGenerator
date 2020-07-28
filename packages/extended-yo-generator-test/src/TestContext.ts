@@ -147,4 +147,15 @@ export class TestContext<TGenerator extends Generator = Generator, TOptions = Re
 
         return result;
     }
+
+    /**
+     * Releases all resources of this component.
+     */
+    public Dispose(): void
+    {
+        if ((this.finishedContext as any)?.settings?.tmpdir ?? false)
+        {
+            this.finishedContext.cleanTestDirectory();
+        }
+    }
 }
