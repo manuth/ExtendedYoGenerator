@@ -127,7 +127,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
                             {
                                 if (i === 0)
                                 {
-                                    this.log();
+                                    this.log("");
                                     this.log(`${chalk.red(">>")} ${chalk.bold(component.DisplayName)} ${chalk.red("<<")}`);
                                 }
 
@@ -250,7 +250,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     public async prompting(): Promise<void>
     {
         Object.assign(this.Settings, await this.prompt(this.QuestionCollection));
-        this.log();
+        this.log("");
     }
 
     /**
