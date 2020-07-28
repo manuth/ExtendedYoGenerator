@@ -1,6 +1,6 @@
 {
   "name": "@manuth/extended-yo-generator-test",
-  "version": "4.3.0",
+  "version": "5.0.0",
   "description": "Provides tools for testing generators created using `@manuth/extended-yo-generator`",
   "author": "Manuel Thalmann <m@nuth.ch>",
   "license": "MIT",
@@ -27,9 +27,10 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsc -b tsconfig.build.json",
+    "build": "npm run copy-files && tsc -b tsconfig.build.json",
+    "copy-files": "cd ../.. && npm run copy-files",
     "rebuild": "npm run clean && npm run build",
-    "watch": "npm run build -- --watch",
+    "watch": "concurrently --raw \"npm run copy-files -- -- --watch | dev-null\" \"npm run build -- --watch\"",
     "clean": "rimraf ./lib",
     "lint-base": "eslint --max-warnings 0 --ignore-pattern \"!.eslintrc.js\"",
     "lint": "npm run lint-base -- --ext .js,.jsx,.ts,.tsx ./src .eslintrc.js",
@@ -38,7 +39,7 @@
     "prepare": "npm run rebuild"
   },
   "dependencies": {
-    "@manuth/extended-yo-generator": "^4.3.0",
+    "@manuth/extended-yo-generator": "^5.0.0",
     "@types/yeoman-test": "^2.0.4",
     "yeoman-test": "^2.7.0"
   },
@@ -46,6 +47,8 @@
     "@types/mocha": "^8.0.0",
     "@types/node": "^14.0.26",
     "@types/random-js": "^2.0.0",
+    "concurrently": "^5.2.0",
+    "dev-null-cli": "^1.0.0",
     "mocha": "^8.0.1",
     "random-js": "^2.1.0",
     "rimraf": "^3.0.2",

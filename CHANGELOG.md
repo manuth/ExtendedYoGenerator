@@ -6,7 +6,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v4.3.0...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v5.0.0...dev)
+
+## ExtendedYoGenerator v5.0.0
+### Breaking
+  - `destinationRoot`s default behavior:
+    - Invoking `Generator.destinationRoot` doesn't cause the current working directory to change anymore but. Pass `false` as the second argument to get the original behavior.
+
+### Fixed
+  - `yeoman-generator`s behavior which caused the current working-directory to change
+
+### Added
+  - Automated updates of the `.npmignore` file
+
+### Updated
+  - All dependencies
+  - Unit-tests to look consistent
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v4.3.0...v5.0.0)
 
 ## ExtendedYoGenerator v4.3.0
 ### Added
