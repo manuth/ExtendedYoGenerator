@@ -73,7 +73,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     /**
      * Gets the options for the components the user can select.
      */
-    protected get Components(): IComponentCollection<TSettings>
+    protected get Components(): IComponentCollection<TSettings, TOptions>
     {
         return null;
     }
@@ -81,7 +81,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     /**
      * Gets the components the user can select.
      */
-    protected get ComponentCollection(): ComponentCollection<TSettings>
+    protected get ComponentCollection(): ComponentCollection<TSettings, TOptions>
     {
         if (this.Components)
         {
@@ -191,7 +191,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     /**
      * Gets the options for the file-mappings of the generator.
      */
-    protected get FileMappings(): Array<IFileMapping<TSettings>>
+    protected get FileMappings(): Array<IFileMapping<TSettings, TOptions>>
     {
         return [];
     }
@@ -199,7 +199,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     /**
      * Gets the file-mappings of the generator.
      */
-    protected get FileMappingCollection(): Array<FileMapping<TSettings>>
+    protected get FileMappingCollection(): Array<FileMapping<TSettings, TOptions>>
     {
         return (this.FileMappings ?? []).map((fileMapping) => new FileMapping(this, fileMapping));
     }
@@ -329,7 +329,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
      * @param fileMapping
      * The file-mapping to process.
      */
-    protected async ProcessFile(fileMapping: FileMapping<TSettings>): Promise<void>
+    protected async ProcessFile(fileMapping: FileMapping<TSettings, TOptions>): Promise<void>
     {
         let result = fileMapping.Processor(fileMapping, this);
 

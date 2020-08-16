@@ -1,4 +1,4 @@
-import { ITestGeneratorSettings } from "@manuth/extended-yo-generator-test";
+import { ITestGeneratorSettings, ITestGeneratorOptions, ITestOptions } from "@manuth/extended-yo-generator-test";
 import { PropertyResolver } from "../../../Components/Resolving/PropertyResolver";
 import { IGenerator } from "../../../IGenerator";
 import { IResolverTestOptions } from "./IResolverTestOptions";
@@ -6,7 +6,7 @@ import { IResolverTestOptions } from "./IResolverTestOptions";
 /**
  * A resolver-object for testing.
  */
-export class ResolverTest extends PropertyResolver<IResolverTestOptions, ResolverTest, ITestGeneratorSettings>
+export class ResolverTest extends PropertyResolver<IResolverTestOptions, ResolverTest, ITestGeneratorSettings, ITestGeneratorOptions<ITestOptions>>
 {
     /**
      * Initializes a new instance of the `ResolverTest` class.
@@ -17,7 +17,7 @@ export class ResolverTest extends PropertyResolver<IResolverTestOptions, Resolve
      * @param options
      * The options of the test-object.
      */
-    public constructor(generator: IGenerator<ITestGeneratorSettings>, options: IResolverTestOptions)
+    public constructor(generator: IGenerator<ITestGeneratorSettings, ITestGeneratorOptions<ITestOptions>>, options: IResolverTestOptions)
     {
         super(generator, options);
     }

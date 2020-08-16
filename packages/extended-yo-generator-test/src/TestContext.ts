@@ -1,5 +1,5 @@
 import { join } from "path";
-import { Generator } from "@manuth/extended-yo-generator";
+import { Generator, GeneratorOptions, IGeneratorSettings } from "@manuth/extended-yo-generator";
 import { run, RunContextSettings } from "yeoman-test";
 import { IRunContext } from "./IRunContext";
 import { ITestGeneratorOptions } from "./ITestGeneratorOptions";
@@ -9,7 +9,7 @@ import { TestGenerator } from "./TestGenerator";
 /**
  * Represents a context for testing.
  */
-export class TestContext<TGenerator extends Generator = Generator, TOptions = Record<string, unknown>>
+export class TestContext<TGenerator extends Generator<any, TOptions> = Generator<IGeneratorSettings, GeneratorOptions & any>, TOptions extends GeneratorOptions = GeneratorOptions>
 {
     /**
      * The default `TestContext<TGenerator, TOptions>` instance.

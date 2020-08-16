@@ -5,8 +5,14 @@ import { Resolvable } from "./Resolving/Resolvable";
 
 /**
  * Represents a component.
+ *
+ * @template TSettings
+ * The type of the settings of the generator.
+ *
+ * @template TOptions
+ * The type of the options of the generator.
  */
-export interface IComponent<TSettings>
+export interface IComponent<TSettings, TOptions>
 {
     /**
      * Gets or sets the id of the component.
@@ -31,5 +37,5 @@ export interface IComponent<TSettings>
     /**
      * Gets or sets the file-mappings of the component.
      */
-    FileMappings: Resolvable<Component<TSettings>, TSettings, Array<IFileMapping<TSettings>>>;
+    FileMappings: Resolvable<Component<TSettings, TOptions>, TSettings, TOptions, Array<IFileMapping<TSettings, TOptions>>>;
 }

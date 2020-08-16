@@ -59,7 +59,7 @@ export class TestGenerator<TSettings extends ITestGeneratorSettings = ITestGener
     /**
      * Gets or sets the components provided by the generator.
      */
-    public get Components(): IComponentCollection<TSettings>
+    public get Components(): IComponentCollection<TSettings, ITestGeneratorOptions<TOptions>>
     {
         return this.generatorOptions.Components;
     }
@@ -67,7 +67,7 @@ export class TestGenerator<TSettings extends ITestGeneratorSettings = ITestGener
     /**
      * @inheritdoc
      */
-    public set Components(value: IComponentCollection<TSettings>)
+    public set Components(value: IComponentCollection<TSettings, ITestGeneratorOptions<TOptions>>)
     {
         this.generatorOptions.Components = value;
     }
@@ -91,7 +91,7 @@ export class TestGenerator<TSettings extends ITestGeneratorSettings = ITestGener
     /**
      * @inheritdoc
      */
-    public get FileMappings(): Array<IFileMapping<TSettings>>
+    public get FileMappings(): Array<IFileMapping<TSettings, ITestGeneratorOptions<TOptions>>>
     {
         return this.generatorOptions.FileMappings;
     }
@@ -99,7 +99,7 @@ export class TestGenerator<TSettings extends ITestGeneratorSettings = ITestGener
     /**
      * @inheritdoc
      */
-    public set FileMappings(value: Array<IFileMapping<TSettings>>)
+    public set FileMappings(value: Array<IFileMapping<TSettings, ITestGeneratorOptions<TOptions>>>)
     {
         this.generatorOptions.FileMappings = value;
     }

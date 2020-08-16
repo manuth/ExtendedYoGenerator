@@ -3,7 +3,7 @@ import { IGenerator } from "../../IGenerator";
 /**
  * Represents a resolveable value.
  */
-export type ResolveFunction<TTarget, TSettings, TType> = (
+export type ResolveFunction<TTarget, TSettings, TOptions, TType> = (
     /**
      * Represents a function for resolving a value.
      *
@@ -13,4 +13,4 @@ export type ResolveFunction<TTarget, TSettings, TType> = (
      * @param generator
      * The generator of the target.
      */
-    (target: TTarget, generator: IGenerator<TSettings>) => TType | Promise<TType>);
+    (target: TTarget, generator: IGenerator<TSettings, TOptions>) => TType | Promise<TType>);

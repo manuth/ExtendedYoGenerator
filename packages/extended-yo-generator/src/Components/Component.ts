@@ -8,12 +8,15 @@ import { PropertyResolver } from "./Resolving/PropertyResolver";
  * Represents a component.
  *
  * @template TSettings
- * The type of the settings of the component.
+ * The type of the settings of the generator.
+ *
+ * @template TOptions
+ * The type of the options of the generator.
  */
-export class Component<TSettings> extends PropertyResolver<IComponent<TSettings>, Component<TSettings>, TSettings>
+export class Component<TSettings, TOptions> extends PropertyResolver<IComponent<TSettings, TOptions>, Component<TSettings, TOptions>, TSettings, TOptions>
 {
     /**
-     * Initializes a new instance of the `Component<TSettings>` class.
+     * Initializes a new instance of the `Component` class.
      *
      * @param generator
      * The generator of the component.
@@ -21,7 +24,7 @@ export class Component<TSettings> extends PropertyResolver<IComponent<TSettings>
      * @param component
      * The options of the component.
      */
-    public constructor(generator: IGenerator<TSettings>, component: IComponent<TSettings>)
+    public constructor(generator: IGenerator<TSettings, TOptions>, component: IComponent<TSettings, TOptions>)
     {
         super(generator, component);
     }
@@ -61,7 +64,7 @@ export class Component<TSettings> extends PropertyResolver<IComponent<TSettings>
     /**
      * Gets or sets the file-mappings of the component.
      */
-    public get FileMappings(): Promise<Array<FileMapping<TSettings>>>
+    public get FileMappings(): Promise<Array<FileMapping<TSettings, TOptions>>>
     {
         return (async () =>
         {

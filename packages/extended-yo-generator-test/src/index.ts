@@ -1,4 +1,3 @@
-export { RunContextSettings } from "yeoman-test";
 export { IRunContext } from "./IRunContext";
 export { ITestOptions } from "./ITestOptions";
 export { ITestGeneratorSettings } from "./ITestGeneratorSettings";

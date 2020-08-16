@@ -18,9 +18,9 @@ export function ComponentTests(context: TestContext<TestGenerator, ITestGenerato
         () =>
         {
             let generator: TestGenerator;
-            let component: Component<ITestGeneratorSettings>;
+            let component: Component<ITestGeneratorSettings, ITestGeneratorOptions<ITestOptions>>;
 
-            let componentOptions: IComponent<ITestGeneratorSettings> = {
+            let componentOptions: IComponent<ITestGeneratorSettings, ITestGeneratorOptions<ITestOptions>> = {
                 ID: null,
                 DisplayName: null,
                 FileMappings: []
@@ -65,7 +65,7 @@ export function ComponentTests(context: TestContext<TestGenerator, ITestGenerato
                         "Checking whether changes to the `FileMappings` option immediately take affect…",
                         async () =>
                         {
-                            componentOptions.FileMappings = context.CreatePromiseFunction<Array<IFileMapping<ITestGeneratorSettings>>>(
+                            componentOptions.FileMappings = context.CreatePromiseFunction<Array<IFileMapping<ITestGeneratorSettings, ITestGeneratorOptions<ITestOptions>>>>(
                                 [
                                     {
                                         Destination: context.CreateFunction(testFile.FullName)

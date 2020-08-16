@@ -16,9 +16,9 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
         () =>
         {
             let generator: TestGenerator;
-            let collection: ComponentCollection<ITestGeneratorSettings>;
+            let collection: ComponentCollection<ITestGeneratorSettings, ITestGeneratorOptions<ITestOptions>>;
 
-            let collectionOptions: IComponentCollection<ITestGeneratorSettings> = {
+            let collectionOptions: IComponentCollection<ITestGeneratorSettings, ITestGeneratorOptions<ITestOptions>> = {
                 Question: null,
                 Categories: []
             };
