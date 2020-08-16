@@ -6,7 +6,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v5.0.0...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v6.0.0...dev)
+
+## ExtendedYoGenerator v6.0.0
+### Breaking
+  - Reverted the `destinationRoot` behavior
+
+### Fixed
+  - Malworking TypeScript intellisense
+
+### Added
+  - Support for setting the `moduleRoot` of `TestGenerator`s
+  - Default `GeneratorOptions` for initializing generators
+  - A method for resetting generator-settings in a `TestContext`
+  - Public members to the `Generator` for improving the support for extending existing generators
+
+### Updated
+  - All packages
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v5.0.0...v6.0.0)
 
 ## ExtendedYoGenerator v5.0.0
 ### Breaking
