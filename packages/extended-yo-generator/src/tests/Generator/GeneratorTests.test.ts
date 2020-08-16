@@ -139,46 +139,6 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                 });
 
             suite(
-                "destinationRoot",
-                () =>
-                {
-                    let tempDir: TempDirectory;
-                    let workingDirectory: string;
-
-                    suiteSetup(
-                        () =>
-                        {
-                            workingDirectory = process.cwd();
-                            tempDir = new TempDirectory();
-                        });
-
-                    suiteTeardown(
-                        () =>
-                        {
-                            process.chdir(workingDirectory);
-                            tempDir.Dispose();
-                        });
-
-                    test(
-                        "Checking whether the current working-directory is untouched when changing the `destinationRoot` by default…",
-                        () =>
-                        {
-                            generator.destinationRoot(tempDir.FullName);
-                            Assert.strictEqual(process.cwd(), workingDirectory);
-                            Assert.notStrictEqual(process.cwd(), tempDir.FullName);
-                        });
-
-                    test(
-                        "Checking whether the current working-directory optionally can be changed by passing `skipEnvironment=false`",
-                        () =>
-                        {
-                            generator.destinationRoot(tempDir.FullName, false);
-                            Assert.notStrictEqual(process.cwd(), workingDirectory);
-                            Assert.strictEqual(process.cwd(), tempDir.FullName);
-                        });
-                });
-
-            suite(
                 "modulePath",
                 () =>
                 {
