@@ -22,9 +22,9 @@ import { IGeneratorSettings } from "./IGeneratorSettings";
 export abstract class Generator<T extends IGeneratorSettings = IGeneratorSettings> extends YeomanGenerator implements IGenerator<T>
 {
     /**
-     * The root of the module of the generator.
+     * The path to the root of the module of the generator.
      */
-    private moduleRoot: string;
+    private moduleRootPath: string;
 
     /**
      * The settings of the generator.
@@ -43,7 +43,23 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     public constructor(args: string | string[], options: Record<string, unknown>)
     {
         super(args, options);
-        this.moduleRoot = Path.dirname(PkgUp.sync({ cwd: this.resolved }));
+        this.ModuleRoot = Path.dirname(PkgUp.sync({ cwd: this.resolved }));
+    }
+
+    /**
+     * Gets or sets the root of the module containing this generator.
+     */
+    protected get ModuleRoot(): string
+    {
+        return this.moduleRootPath;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected set ModuleRoot(value: string)
+    {
+        this.moduleRootPath = value;
     }
 
     /**
@@ -229,7 +245,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
      */
     public modulePath(...path: string[]): string
     {
-        return Path.join(this.moduleRoot, ...path);
+        return Path.join(this.ModuleRoot, ...path);
     }
 
     /**

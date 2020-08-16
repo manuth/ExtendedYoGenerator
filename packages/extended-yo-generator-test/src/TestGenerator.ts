@@ -105,6 +105,25 @@ export class TestGenerator<TSettings extends ITestGeneratorSettings = ITestGener
     }
 
     /**
+     * Gets or sets the path to the root of the module.
+     *
+     * @param path
+     * The path to set as the module-root.
+     *
+     * @returns
+     * The path to the module-root.
+     */
+    public moduleRoot(path?: string): string
+    {
+        if (path)
+        {
+            this.ModuleRoot = path;
+        }
+
+        return this.ModuleRoot;
+    }
+
+    /**
      * Gathers all information for executing the generator and saves them to the `Settings`.
      */
     public async prompting(): Promise<void>
