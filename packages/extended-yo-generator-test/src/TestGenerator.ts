@@ -6,7 +6,7 @@ import { ITestOptions } from "./ITestOptions";
 /**
  * Represents a test-generator.
  */
-export class TestGenerator<TSettings extends ITestGeneratorSettings = ITestGeneratorSettings, TOptions extends ITestOptions = ITestOptions> extends Generator<TSettings>
+export class TestGenerator<TSettings extends ITestGeneratorSettings = ITestGeneratorSettings, TOptions extends ITestOptions = ITestOptions> extends Generator<TSettings, ITestGeneratorOptions<TOptions>>
 {
     /**
      * The options of the generator.
