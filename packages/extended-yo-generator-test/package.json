@@ -1,6 +1,6 @@
 {
   "name": "@manuth/extended-yo-generator-test",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "description": "Provides tools for testing generators created using `@manuth/extended-yo-generator`",
   "author": "Manuel Thalmann <m@nuth.ch>",
   "license": "MIT",
@@ -39,7 +39,7 @@
     "prepare": "npm run rebuild"
   },
   "dependencies": {
-    "@manuth/extended-yo-generator": "^5.0.0",
+    "@manuth/extended-yo-generator": "^6.0.0",
     "@types/yeoman-test": "^2.0.4",
     "yeoman-test": "^3.0.0"
   },
