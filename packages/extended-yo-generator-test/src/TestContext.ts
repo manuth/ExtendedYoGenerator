@@ -1,5 +1,6 @@
 import { join } from "path";
 import { Generator, GeneratorOptions, IGeneratorSettings } from "@manuth/extended-yo-generator";
+import cloneDeep = require("lodash.clonedeep");
 import { run, RunContextSettings } from "yeoman-test";
 import { IRunContext } from "./IRunContext";
 import { ITestGeneratorOptions } from "./ITestGeneratorOptions";
@@ -25,6 +26,11 @@ export class TestContext<TGenerator extends Generator<any, TOptions> = Generator
      * An instance of the `RunContext` class that already has finished.
      */
     private finishedContext: IRunContext<TGenerator> = null;
+
+    /**
+     * A backup of the settings of the generator.
+     */
+    private settingsBackup: any;
 
     /**
      * Initializes a new instance of the `TestContext` class.
@@ -56,6 +62,7 @@ export class TestContext<TGenerator extends Generator<any, TOptions> = Generator
             {
                 this.finishedContext = this.ExecuteGenerator();
                 await this.finishedContext.toPromise();
+                this.settingsBackup = cloneDeep(this.finishedContext.generator.Settings);
             }
 
             return this.finishedContext.generator;
@@ -73,6 +80,24 @@ export class TestContext<TGenerator extends Generator<any, TOptions> = Generator
         }
 
         return this.defaultInstance;
+    }
+
+    /**
+     * Resets the settings of the generator.
+     */
+    public async ResetSettings(): Promise<void>
+    {
+        if (this.finishedContext !== null)
+        {
+            let generator = await this.Generator;
+
+            for (let key of Object.keys(generator.Settings))
+            {
+                delete generator.Settings[key];
+            }
+
+            Object.assign(generator.Settings, cloneDeep(this.settingsBackup));
+        }
     }
 
     /**

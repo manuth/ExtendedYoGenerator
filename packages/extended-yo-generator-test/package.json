@@ -44,11 +44,13 @@
     "yeoman-test": "^3.0.0"
   },
   "devDependencies": {
+    "@types/lodash.clonedeep": "^4.5.6",
     "@types/mocha": "^8.0.2",
     "@types/node": "^14.0.27",
     "@types/random-js": "^2.0.0",
     "concurrently": "^5.3.0",
     "dev-null-cli": "^1.0.0",
+    "lodash.clonedeep": "^4.5.0",
     "mocha": "^8.1.1",
     "random-js": "^2.1.0",
     "rimraf": "^3.0.2",
