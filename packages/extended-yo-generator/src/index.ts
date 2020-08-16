@@ -1,5 +1,5 @@
 export { Answers, ChoiceCollection, Transformer, Validator } from "inquirer";
-export { Question } from "yeoman-generator";
+export { Question, ArgumentConfig, CompositionOptions, GeneratorConstructor, GeneratorOptions, InstallOptions, OptionConfig, Priority, QuestionRegistrationOptions, Questions, QueueOptions, Task, TaskOptions, TemplateRenderOptions } from "yeoman-generator";
 export { Component } from "./Components/Component";
 export { ComponentCategory } from "./Components/ComponentCategory";
 export { ComponentCollection } from "./Components/ComponentCollection";
