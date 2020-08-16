@@ -226,11 +226,6 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
      */
     public destinationRoot(rootPath?: string, skipEnvironment?: boolean): string
     {
-        if (isNullOrUndefined(skipEnvironment))
-        {
-            skipEnvironment = true;
-        }
-
         return super.destinationRoot(rootPath, skipEnvironment);
     }
 
