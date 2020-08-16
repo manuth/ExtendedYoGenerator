@@ -65,7 +65,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     /**
      * Gets the name of the root of the template-folder.
      */
-    protected get TemplateRoot(): string
+    public get TemplateRoot(): string
     {
         return "";
     }
@@ -73,7 +73,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     /**
      * Gets the options for the components the user can select.
      */
-    protected get Components(): IComponentCollection<TSettings, TOptions>
+    public get Components(): IComponentCollection<TSettings, TOptions>
     {
         return null;
     }
@@ -81,7 +81,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     /**
      * Gets the components the user can select.
      */
-    protected get ComponentCollection(): ComponentCollection<TSettings, TOptions>
+    public get ComponentCollection(): ComponentCollection<TSettings, TOptions>
     {
         if (this.Components)
         {
@@ -96,7 +96,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     /**
      * Gets the questions to ask before executing the generator.
      */
-    protected get Questions(): Array<Question<TSettings>>
+    public get Questions(): Array<Question<TSettings>>
     {
         return [];
     }
@@ -104,7 +104,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     /**
      * Gets all questions including questions for the components.
      */
-    protected get QuestionCollection(): Array<Question<TSettings>>
+    public get QuestionCollection(): Array<Question<TSettings>>
     {
         let result: Array<Question<TSettings>> = [];
         let components: ChoiceCollection<TSettings> = [];
@@ -191,7 +191,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     /**
      * Gets the options for the file-mappings of the generator.
      */
-    protected get FileMappings(): Array<IFileMapping<TSettings, TOptions>>
+    public get FileMappings(): Array<IFileMapping<TSettings, TOptions>>
     {
         return [];
     }
@@ -199,7 +199,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     /**
      * Gets the file-mappings of the generator.
      */
-    protected get FileMappingCollection(): Array<FileMapping<TSettings, TOptions>>
+    public get FileMappingCollection(): Array<FileMapping<TSettings, TOptions>>
     {
         return (this.FileMappings ?? []).map((fileMapping) => new FileMapping(this, fileMapping));
     }
