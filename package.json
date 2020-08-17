@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "build": "npm run copy-files && tsc -b tsconfig.build.json",
-    "copy-files": "glob-exec --foreach \"./packages/*\" --parallel -- copy-and-watch LICENSE .npmignore \"{{file}}\"",
+    "copy-files": "glob-exec --foreach \"./packages/*\" --parallel -- copy-and-watch ./{LICENSE,.npmignore} \"{{file}}\"",
     "rebuild": "npm run clean && npm run build",
     "watch": "concurrently --raw \"npm run copy-files -- --watch | dev-null\" \"npm run build -- --watch\"",
     "clean": "lerna run clean",
