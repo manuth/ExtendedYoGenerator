@@ -4,4 +4,4 @@ import { ResolveValue } from "./ResolveValue";
 /**
  * Represents a resolveable value.
  */
-export type Resolvable<TTarget, TSettings, TType> = ResolveValue<TType> | ResolveFunction<TTarget, TSettings, TType>;
+export type Resolvable<TTarget, TSettings, TOptions, TType> = ResolveValue<TType> | ResolveFunction<TTarget, TSettings, TOptions, TType>;

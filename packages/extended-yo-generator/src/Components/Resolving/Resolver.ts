@@ -10,7 +10,7 @@ import { Resolvable } from "./Resolvable";
  * @template TSettings
  * The type of the settings of the object.
  */
-export class Resolver<TTarget, TSettings>
+export class Resolver<TTarget, TSettings, TOptions>
 {
     /**
      * Resolves a value.
@@ -27,7 +27,7 @@ export class Resolver<TTarget, TSettings>
      * @returns
      * The resolved value.
      */
-    protected async Resolve<T>(target: TTarget, generator: IGenerator<TSettings>, value: Resolvable<TTarget, TSettings, T>): Promise<T>
+    protected async Resolve<T>(target: TTarget, generator: IGenerator<TSettings, TOptions>, value: Resolvable<TTarget, TSettings, TOptions, T>): Promise<T>
     {
         if (value instanceof Function)
         {

@@ -4,10 +4,13 @@ import { FileMapping } from "./FileMapping";
 /**
  * Represents a component for processing files.
  *
- * @template T
- * The settings.
+ * @template TSettings
+ * The type of the settings of the generator.
+ *
+ * @template TOptions
+ * The type of the options of the generator.
  */
-export type FileProcessor<T> =
+export type FileProcessor<TSettings, TOptions> =
     /**
      * Processes a file.
      *
@@ -20,4 +23,4 @@ export type FileProcessor<T> =
      * @returns
      * The file-processing task.
      */
-    (target: FileMapping<T>, generator: IGenerator<T>) => (void | Promise<void>);
+    (target: FileMapping<TSettings, TOptions>, generator: IGenerator<TSettings, TOptions>) => (void | Promise<void>);

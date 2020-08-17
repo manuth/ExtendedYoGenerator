@@ -19,17 +19,17 @@ import { IGeneratorSettings } from "./IGeneratorSettings";
  * @template T
  * The type of the settings of the generator.
  */
-export abstract class Generator<T extends IGeneratorSettings = IGeneratorSettings> extends YeomanGenerator implements IGenerator<T>
+export abstract class Generator<TSettings extends IGeneratorSettings = IGeneratorSettings, TOptions extends YeomanGenerator.GeneratorOptions = YeomanGenerator.GeneratorOptions> extends YeomanGenerator<TOptions> implements IGenerator<TSettings, TOptions>
 {
     /**
-     * The root of the module of the generator.
+     * The path to the root of the module of the generator.
      */
-    private moduleRoot: string;
+    private moduleRootPath: string;
 
     /**
      * The settings of the generator.
      */
-    private settings: T = {} as T;
+    private settings: TSettings = {} as TSettings;
 
     /**
      * Initializes a new instance of the `Generator` class.
@@ -40,16 +40,32 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
      * @param options
      * A set of options for the generator.
      */
-    public constructor(args: string | string[], options: Record<string, unknown>)
+    public constructor(args: string | string[], options: TOptions)
     {
         super(args, options);
-        this.moduleRoot = Path.dirname(PkgUp.sync({ cwd: this.resolved }));
+        this.ModuleRoot = Path.dirname(PkgUp.sync({ cwd: this.resolved }));
+    }
+
+    /**
+     * Gets or sets the root of the module containing this generator.
+     */
+    protected get ModuleRoot(): string
+    {
+        return this.moduleRootPath;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected set ModuleRoot(value: string)
+    {
+        this.moduleRootPath = value;
     }
 
     /**
      * Gets the name of the root of the template-folder.
      */
-    protected get TemplateRoot(): string
+    public get TemplateRoot(): string
     {
         return "";
     }
@@ -57,7 +73,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     /**
      * Gets the options for the components the user can select.
      */
-    protected get Components(): IComponentCollection<T>
+    public get Components(): IComponentCollection<TSettings, TOptions>
     {
         return null;
     }
@@ -65,7 +81,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     /**
      * Gets the components the user can select.
      */
-    protected get ComponentCollection(): ComponentCollection<T>
+    public get ComponentCollection(): ComponentCollection<TSettings, TOptions>
     {
         if (this.Components)
         {
@@ -80,7 +96,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     /**
      * Gets the questions to ask before executing the generator.
      */
-    protected get Questions(): Array<Question<T>>
+    public get Questions(): Array<Question<TSettings>>
     {
         return [];
     }
@@ -88,10 +104,10 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     /**
      * Gets all questions including questions for the components.
      */
-    protected get QuestionCollection(): Array<Question<T>>
+    public get QuestionCollection(): Array<Question<TSettings>>
     {
-        let result: Array<Question<T>> = [];
-        let components: ChoiceCollection<T> = [];
+        let result: Array<Question<TSettings>> = [];
+        let components: ChoiceCollection<TSettings> = [];
         let defaults: string[] = [];
 
         if (this.ComponentCollection)
@@ -121,7 +137,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
                         let question = component.Questions[i];
                         let when = question.when;
 
-                        question.when = async (settings: T) =>
+                        question.when = async (settings: TSettings) =>
                         {
                             if (settings[GeneratorSettingKey.Components].includes(component.ID))
                             {
@@ -175,7 +191,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     /**
      * Gets the options for the file-mappings of the generator.
      */
-    protected get FileMappings(): Array<IFileMapping<T>>
+    public get FileMappings(): Array<IFileMapping<TSettings, TOptions>>
     {
         return [];
     }
@@ -183,7 +199,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     /**
      * Gets the file-mappings of the generator.
      */
-    protected get FileMappingCollection(): Array<FileMapping<T>>
+    public get FileMappingCollection(): Array<FileMapping<TSettings, TOptions>>
     {
         return (this.FileMappings ?? []).map((fileMapping) => new FileMapping(this, fileMapping));
     }
@@ -191,7 +207,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
     /**
      * @inheritdoc
      */
-    public get Settings(): T
+    public get Settings(): TSettings
     {
         return this.settings;
     }
@@ -210,11 +226,6 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
      */
     public destinationRoot(rootPath?: string, skipEnvironment?: boolean): string
     {
-        if (isNullOrUndefined(skipEnvironment))
-        {
-            skipEnvironment = true;
-        }
-
         return super.destinationRoot(rootPath, skipEnvironment);
     }
 
@@ -229,7 +240,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
      */
     public modulePath(...path: string[]): string
     {
-        return Path.join(this.moduleRoot, ...path);
+        return Path.join(this.ModuleRoot, ...path);
     }
 
     /**
@@ -318,7 +329,7 @@ export abstract class Generator<T extends IGeneratorSettings = IGeneratorSetting
      * @param fileMapping
      * The file-mapping to process.
      */
-    protected async ProcessFile(fileMapping: FileMapping<T>): Promise<void>
+    protected async ProcessFile(fileMapping: FileMapping<TSettings, TOptions>): Promise<void>
     {
         let result = fileMapping.Processor(fileMapping, this);
 

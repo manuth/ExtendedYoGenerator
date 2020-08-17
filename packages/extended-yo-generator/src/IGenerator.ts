@@ -3,7 +3,7 @@ import YeomanGenerator = require("yeoman-generator");
 /**
  * Represents a yeoman-generator.
  */
-export interface IGenerator<TSettings> extends YeomanGenerator
+export interface IGenerator<TSettings, TOptions extends YeomanGenerator.GeneratorOptions> extends YeomanGenerator<TOptions>
 {
     /**
      * Gets the settings of the generator.

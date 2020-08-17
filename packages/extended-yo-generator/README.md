@@ -41,10 +41,10 @@ Now you're ready to create the actual generator-class:
 
 ***./src/index.ts***
 ```ts
-import { Generator, IGeneratorSettings, Question } from "@manuth/extended-yo-generator";
+import { Generator, GeneratorOptions, IGeneratorSettings, Question } from "@manuth/extended-yo-generator";
 import { IMySettings } from "./IMySettings";
 
-export = class MyGenerator extends Generator<IMySettings>
+export = class MyGenerator extends Generator<IMySettings, GeneratorOptions>
 {
     protected get TemplateRoot(): string
     {
@@ -62,7 +62,7 @@ export = class MyGenerator extends Generator<IMySettings>
         ];
     }
 
-    protected get FileMappings(): Array<IFileMapping<IMySettings>>
+    protected get FileMappings(): Array<IFileMapping<IMySettings, GeneratorOptions>>
     {
         return [
             {
@@ -169,7 +169,7 @@ Each component can provide any number of file-mappings and additional questions.
 ```ts
 export = class MyGenerator extends Generator<IMySettings>
 {
-    protected get Components(): IComponentCollection<IMySettings>
+    protected get Components(): IComponentCollection<IMySettings, GeneratorOptions>
     {
         return {
             Question: "What should be included in your project?",

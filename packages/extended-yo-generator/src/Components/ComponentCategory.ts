@@ -7,12 +7,15 @@ import { PropertyResolver } from "./Resolving/PropertyResolver";
  * Represents a component-category.
  *
  * @template TSettings
- * The type of the settings of the category.
+ * The type of the settings of the generator.
+ *
+ * @template TOptions
+ * The type of the options of the generator.
  */
-export class ComponentCategory<TSettings> extends PropertyResolver<IComponentCategory<TSettings>, ComponentCategory<TSettings>, TSettings>
+export class ComponentCategory<TSettings, TOptions> extends PropertyResolver<IComponentCategory<TSettings, TOptions>, ComponentCategory<TSettings, TOptions>, TSettings, TOptions>
 {
     /**
-     * Initializes a new instance of the `ComponentCategory<TSettings>` class.
+     * Initializes a new instance of the `ComponentCategory` class.
      *
      * @param generator
      * The generator of the category.
@@ -20,7 +23,7 @@ export class ComponentCategory<TSettings> extends PropertyResolver<IComponentCat
      * @param componentCategory
      * The options of the category.
      */
-    public constructor(generator: IGenerator<TSettings>, componentCategory: IComponentCategory<TSettings>)
+    public constructor(generator: IGenerator<TSettings, TOptions>, componentCategory: IComponentCategory<TSettings, TOptions>)
     {
         super(generator, componentCategory);
     }
@@ -36,7 +39,7 @@ export class ComponentCategory<TSettings> extends PropertyResolver<IComponentCat
     /**
      * Gets the components of the category.
      */
-    public get Components(): Array<Component<TSettings>>
+    public get Components(): Array<Component<TSettings, TOptions>>
     {
         return this.Object.Components.map(
             (component) =>

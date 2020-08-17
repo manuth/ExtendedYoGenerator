@@ -1,14 +1,14 @@
 export { Answers, ChoiceCollection, Transformer, Validator } from "inquirer";
-export { Question } from "yeoman-generator";
+export { Question, ArgumentConfig, CompositionOptions, GeneratorConstructor, GeneratorOptions, InstallOptions, OptionConfig, Priority, QuestionRegistrationOptions, Questions, QueueOptions, Task, TaskOptions, TemplateRenderOptions } from "yeoman-generator";
 export { Component } from "./Components/Component";
 export { ComponentCategory } from "./Components/ComponentCategory";
 export { ComponentCollection } from "./Components/ComponentCollection";
 export { FileMapping } from "./Components/FileMapping";
 export { FileProcessor } from "./Components/FileProcessor";
 export { IComponent } from "./Components/IComponent";
-export { IFileMapping } from "./Components/IFileMapping";
 export { IComponentCategory } from "./Components/IComponentCategory";
 export { IComponentCollection } from "./Components/IComponentCollection";
+export { IFileMapping } from "./Components/IFileMapping";
 export { PathResolver } from "./Components/Resolving/PathResolver";
 export { Resolvable } from "./Components/Resolving/Resolvable";
 export { ResolveFunction } from "./Components/Resolving/ResolveFunction";

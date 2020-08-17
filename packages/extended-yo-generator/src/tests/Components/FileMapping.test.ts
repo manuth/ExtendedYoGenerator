@@ -21,11 +21,11 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
         {
             let random: Random;
             let generator: TestGenerator;
-            let fileMapping: FileMapping<ITestGeneratorSettings>;
+            let fileMapping: FileMapping<ITestGeneratorSettings, ITestGeneratorOptions<ITestOptions>>;
             let testPath = "test.txt";
             let testDirectory: TempDirectory;
 
-            let fileMappingOptions: IFileMapping<ITestGeneratorSettings> = {
+            let fileMappingOptions: IFileMapping<ITestGeneratorSettings, ITestGeneratorOptions<ITestOptions>> = {
                 Source: null,
                 Destination: null,
                 Context: null,
@@ -154,7 +154,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                                         /**
                                          * Provides a test-implementation of the `IFileMapping<T>` interface.
                                          */
-                                        class FileMappingOptions implements IFileMapping<ITestGeneratorSettings>
+                                        class FileMappingOptions implements IFileMapping<ITestGeneratorSettings, ITestGeneratorOptions<ITestOptions>>
                                         {
                                             /**
                                              * @inheritdoc

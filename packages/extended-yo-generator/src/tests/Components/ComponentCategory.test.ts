@@ -16,9 +16,9 @@ export function ComponentCategoryTests(context: TestContext<TestGenerator, ITest
         () =>
         {
             let generator: TestGenerator;
-            let category: ComponentCategory<ITestGeneratorSettings>;
+            let category: ComponentCategory<ITestGeneratorSettings, ITestGeneratorOptions<ITestOptions>>;
 
-            let categoryOptions: IComponentCategory<ITestGeneratorSettings> = {
+            let categoryOptions: IComponentCategory<ITestGeneratorSettings, ITestGeneratorOptions<ITestOptions>> = {
                 DisplayName: null,
                 Components: []
             };

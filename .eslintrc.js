@@ -18,6 +18,7 @@ module.exports = {
         ]
     },
     rules: {
+        "@typescript-eslint/no-dynamic-delete": "off",
         "jsdoc/require-jsdoc": [
             "warn",
             {

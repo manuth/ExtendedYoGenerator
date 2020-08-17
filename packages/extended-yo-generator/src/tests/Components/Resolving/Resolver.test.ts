@@ -18,7 +18,7 @@ export function ResolverTests(context: TestContext<TestGenerator, ITestGenerator
             /**
              * Represents a test-implementation of the `Resolver` class.
              */
-            class TestResolver extends Resolver<null, null>
+            class TestResolver extends Resolver<null, null, null>
             {
                 /**
                  * @inheritdoc
@@ -35,7 +35,7 @@ export function ResolverTests(context: TestContext<TestGenerator, ITestGenerator
                  * @returns
                  * The resolved value.
                  */
-                public Resolve<T>(target: null, generator: null, value: Resolvable<null, null, T>): Promise<T>
+                public Resolve<T>(target: null, generator: null, value: Resolvable<null, null, null, T>): Promise<T>
                 {
                     return super.Resolve<T>(target, generator, value);
                 }

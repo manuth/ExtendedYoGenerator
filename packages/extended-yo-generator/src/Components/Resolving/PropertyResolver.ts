@@ -12,14 +12,17 @@ import { Resolver } from "./Resolver";
  * The type of the resolve-target.
  *
  * @template TSettings
- * The type of the settings of the object.
+ * The type of the settings of the generator.
+ *
+ * @template TOptions
+ * The type of the options of the generator.
  */
-export class PropertyResolver<TObject, TTarget, TSettings> extends Resolver<TTarget, TSettings>
+export class PropertyResolver<TObject, TTarget, TSettings, TOptions> extends Resolver<TTarget, TSettings, TOptions>
 {
     /**
      * The generator of the component.
      */
-    private generator: IGenerator<TSettings>;
+    private generator: IGenerator<TSettings, TOptions>;
 
     /**
      * The actual object.
@@ -35,7 +38,7 @@ export class PropertyResolver<TObject, TTarget, TSettings> extends Resolver<TTar
      * @param object
      * The options of the component.
      */
-    public constructor(generator: IGenerator<TSettings>, object: TObject)
+    public constructor(generator: IGenerator<TSettings, TOptions>, object: TObject)
     {
         super();
         this.generator = generator;
@@ -45,7 +48,7 @@ export class PropertyResolver<TObject, TTarget, TSettings> extends Resolver<TTar
     /**
      * Gets the generator of the component.
      */
-    protected get Generator(): IGenerator<TSettings>
+    protected get Generator(): IGenerator<TSettings, TOptions>
     {
         return this.generator;
     }
@@ -70,7 +73,7 @@ export class PropertyResolver<TObject, TTarget, TSettings> extends Resolver<TTar
      * @returns
      * The resolved value.
      */
-    protected async ResolveProperty<T>(target: TTarget, value: Resolvable<TTarget, TSettings, T>): Promise<T>
+    protected async ResolveProperty<T>(target: TTarget, value: Resolvable<TTarget, TSettings, TOptions, T>): Promise<T>
     {
         if (typeof value === "function")
         {

@@ -11,12 +11,15 @@ import { Resolvable } from "./Resolving/Resolvable";
  * Represents a file-mapping.
  *
  * @template TSettings
- * The type of the settings of the file-mapping.
+ * The type of the settings of the generator.
+ *
+ * @template TOptions
+ * The type of the options of the generator.
  */
-export class FileMapping<TSettings> extends PropertyResolver<IFileMapping<TSettings>, FileMapping<TSettings>, TSettings>
+export class FileMapping<TSettings, TOptions> extends PropertyResolver<IFileMapping<TSettings, TOptions>, FileMapping<TSettings, TOptions>, TSettings, TOptions>
 {
     /**
-     * Initializes a new instance of the `FileMapping<TSettings>` class.
+     * Initializes a new instance of the `FileMapping` class.
      *
      * @param generator
      * The generator of the file-mapping.
@@ -24,7 +27,7 @@ export class FileMapping<TSettings> extends PropertyResolver<IFileMapping<TSetti
      * @param fileMapping
      * The options of the file-mapping.
      */
-    public constructor(generator: IGenerator<TSettings>, fileMapping: IFileMapping<TSettings>)
+    public constructor(generator: IGenerator<TSettings, TOptions>, fileMapping: IFileMapping<TSettings, TOptions>)
     {
         super(generator, fileMapping);
     }
@@ -56,7 +59,7 @@ export class FileMapping<TSettings> extends PropertyResolver<IFileMapping<TSetti
     /**
      * Gets the method to execute for processing the file-mapping.
      */
-    public get Processor(): FileProcessor<TSettings>
+    public get Processor(): FileProcessor<TSettings, TOptions>
     {
         if (this.Object.Processor)
         {
@@ -90,7 +93,7 @@ export class FileMapping<TSettings> extends PropertyResolver<IFileMapping<TSetti
      * @returns
      * The resolved path.
      */
-    protected ResolvePath(path: Resolvable<FileMapping<TSettings>, TSettings, string>, resolver: PathResolver): Promise<string>
+    protected ResolvePath(path: Resolvable<FileMapping<TSettings, TOptions>, TSettings, TOptions, string>, resolver: PathResolver): Promise<string>
     {
         return (async () =>
         {

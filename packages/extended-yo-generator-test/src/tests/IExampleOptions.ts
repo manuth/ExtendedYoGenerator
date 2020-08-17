@@ -8,5 +8,5 @@ export interface IExampleOptions extends ITestOptions
     /**
      * An option for testing.
      */
-    testOption: string;
+    testOption?: string;
 }
