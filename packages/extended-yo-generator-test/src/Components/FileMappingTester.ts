@@ -91,15 +91,40 @@ export class FileMappingTester<TGenerator extends IGenerator<TSettings, TOptions
     }
 
     /**
-     * Writes content into the file-mapping goutput.
+     * Writes content into the specified file.
+     *
+     * @param fileName
+     * The name of the file to write the content to.
      *
      * @param content
      * The content to write.
      */
-    public async Write(content: string): Promise<void>
+    public async WriteFile(fileName: string, content: string): Promise<void>
     {
-        this.Generator.fs.write(await this.FileMapping.Destination, content);
+        this.Generator.fs.write(fileName, content);
         return this.Commit();
+    }
+
+    /**
+     * Writes content to the source-file.
+     *
+     * @param content
+     * The content to write.
+     */
+    public async WriteSource(content: string): Promise<void>
+    {
+        return this.WriteFile(await this.FileMapping.Source, content);
+    }
+
+    /**
+     * Writes content to the destination-file.
+     *
+     * @param content
+     * The content to write.
+     */
+    public async WriteDestination(content: string): Promise<void>
+    {
+        return this.WriteFile(await this.FileMapping.Destination, content);
     }
 
     /**
