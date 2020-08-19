@@ -56,6 +56,26 @@ export function TestGeneratorTests(): void
                 });
 
             suite(
+                "Path",
+                () =>
+                {
+                    test(
+                        "Checking whether a generator can be instantiated from the specified path…",
+                        async () =>
+                        {
+                            let generator: TestGenerator;
+
+                            await Assert.doesNotReject(
+                                async () =>
+                                {
+                                    generator = (await context.Generator).env.create(TestGenerator.Path) as any;
+                                });
+
+                            Assert.ok(generator instanceof TestGenerator);
+                        });
+                });
+
+            suite(
                 "GeneratorOptions",
                 () =>
                 {

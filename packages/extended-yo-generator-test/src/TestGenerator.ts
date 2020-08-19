@@ -1,4 +1,5 @@
 import { Generator, IComponentCollection, Question, IFileMapping } from "@manuth/extended-yo-generator";
+import { join } from "upath";
 import { ITestGeneratorOptions } from "./ITestGeneratorOptions";
 import { ITestGeneratorSettings } from "./ITestGeneratorSettings";
 import { ITestOptions } from "./ITestOptions";
@@ -30,6 +31,14 @@ export class TestGenerator<TSettings extends ITestGeneratorSettings = ITestGener
         {
             this.generatorOptions = options.TestGeneratorOptions;
         }
+    }
+
+    /**
+     * Gets the path pointing to this generator.
+     */
+    public static get Path(): string
+    {
+        return join(__dirname, "generators", "app");
     }
 
     /**
