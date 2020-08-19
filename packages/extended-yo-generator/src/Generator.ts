@@ -5,10 +5,13 @@ import { ChoiceCollection, Separator } from "inquirer";
 import PkgUp = require("pkg-up");
 import YeomanGenerator = require("yeoman-generator");
 import { Question } from "yeoman-generator";
+import { BaseConstructorCreator } from "./BaseConstructorCreator";
 import { ComponentCollection } from "./Components/ComponentCollection";
 import { FileMapping } from "./Components/FileMapping";
 import { IComponentCollection } from "./Components/IComponentCollection";
 import { IFileMapping } from "./Components/IFileMapping";
+import { CompositeConstructor } from "./CompositeConstructor";
+import { GeneratorConstructor } from "./GeneratorConstructor";
 import { GeneratorSettingKey } from "./GeneratorSettingKey";
 import { IGenerator } from "./IGenerator";
 import { IGeneratorSettings } from "./IGeneratorSettings";
@@ -210,6 +213,23 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     public get Settings(): TSettings
     {
         return this.settings;
+    }
+
+    /**
+     * Creates a constructor for extending a generator.
+     *
+     * @param base
+     * The constructor of the base-generator.
+     *
+     * @param namespaceOrPath
+     * The namespace or the path of the generator.
+     *
+     * @returns
+     * A constructor for extending the specified `base`-generator.
+     */
+    public static ComposeWith<T extends GeneratorConstructor>(base: T, namespaceOrPath: string): CompositeConstructor<T>
+    {
+        return BaseConstructorCreator.Create(base, namespaceOrPath);
     }
 
     /**
