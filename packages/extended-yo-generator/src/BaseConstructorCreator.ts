@@ -157,6 +157,14 @@ export abstract class BaseConstructorCreator
             /**
              * @inheritdoc
              */
+            public get Components(): IComponentCollection<any, any>
+            {
+                return instance.ComponentCollection;
+            }
+
+            /**
+             * @inheritdoc
+             */
             public get FileMappings(): Array<IFileMapping<any, any>>
             {
                 return instance.FileMappingCollection;
