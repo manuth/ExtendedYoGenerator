@@ -13,7 +13,7 @@ import { PropertyResolver } from "./Resolving/PropertyResolver";
  * @template TOptions
  * The type of the options of the generator.
  */
-export class Component<TSettings, TOptions> extends PropertyResolver<IComponent<TSettings, TOptions>, Component<TSettings, TOptions>, TSettings, TOptions>
+export class Component<TSettings, TOptions> extends PropertyResolver<IComponent<TSettings, TOptions>, Component<TSettings, TOptions>, TSettings, TOptions> implements IComponent<TSettings, TOptions>
 {
     /**
      * Initializes a new instance of the `Component` class.
