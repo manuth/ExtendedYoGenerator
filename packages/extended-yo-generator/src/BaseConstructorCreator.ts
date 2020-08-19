@@ -29,7 +29,7 @@ export abstract class BaseConstructorCreator
      * @returns
      * The generated constructor.
      */
-    public static Create<T extends GeneratorConstructor>(base: T, namespaceOrPath: string): CompositeConstructor<T>
+    public static Create<T extends GeneratorConstructor>(base: T, namespaceOrPath?: string): CompositeConstructor<T>
     {
         let instance: Generator<any, any>;
         let baseClass: GeneratorConstructor = base as any;
@@ -49,13 +49,16 @@ export abstract class BaseConstructorCreator
             {
                 super(...params);
                 let [args, options] = params as [string | string[], GeneratorOptions];
+                let instanceOptions = { arguments: args, options };
 
-                instance = this.env.create(
-                    namespaceOrPath,
-                    {
-                        arguments: args,
-                        options
-                    }) as any;
+                if (namespaceOrPath)
+                {
+                    instance = this.env.create(namespaceOrPath, instanceOptions) as any;
+                }
+                else
+                {
+                    instance = this.env.instantiate(base, instanceOptions) as any;
+                }
 
                 let settingsPropertyName = "Settings" as keyof Generator;
                 let fileMappingPropertyName = "FileMappings" as keyof Generator;

@@ -227,7 +227,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
      * @returns
      * A constructor for extending the specified `base`-generator.
      */
-    public static ComposeWith<T extends GeneratorConstructor>(base: T, namespaceOrPath: string): CompositeConstructor<T>
+    public static ComposeWith<T extends GeneratorConstructor>(base: T, namespaceOrPath?: string): CompositeConstructor<T>
     {
         return BaseConstructorCreator.Create(base, namespaceOrPath);
     }
