@@ -1,4 +1,4 @@
-import { GeneratorOptions } from "yeoman-generator";
+import YeomanGenerator = require("yeoman-generator");
 import { IComponentCollection } from "./Components/IComponentCollection";
 import { IFileMapping } from "./Components/IFileMapping";
 import { CompositeConstructor } from "./CompositeConstructor";
@@ -40,6 +40,16 @@ export abstract class BaseConstructorCreator
         class BaseGenerator extends baseClass implements IBaseGenerator<Generator<any, any>>
         {
             /**
+             * A component for resolving the components of the base.
+             */
+            private baseComponentResolver: () => IComponentCollection<any, any>;
+
+            /**
+             * A component for resolving the file-mappings of the base.
+             */
+            private baseFileMappingResolver: () => Array<IFileMapping<any, any>>;
+
+            /**
              * Initializes a new instance of the `BaseGenerator` class.
              *
              * @param params
@@ -48,7 +58,7 @@ export abstract class BaseConstructorCreator
             public constructor(...params: any[])
             {
                 super(...params);
-                let [args, options] = params as [string | string[], GeneratorOptions];
+                let [args, options] = params as [string | string[], YeomanGenerator.GeneratorOptions];
                 let instanceOptions = { arguments: args, options };
 
                 if (namespaceOrPath)
@@ -63,18 +73,23 @@ export abstract class BaseConstructorCreator
                 let settingsPropertyName = "Settings" as keyof Generator;
                 let fileMappingPropertyName = "FileMappings" as keyof Generator;
                 let componentPropertyName = "Components" as keyof Generator;
-                let settingsProperty = Object.getOwnPropertyDescriptor(base.prototype, settingsPropertyName);
-                let fileMappingProperty = Object.getOwnPropertyDescriptor(base.prototype, fileMappingPropertyName);
-                let componentProperty = Object.getOwnPropertyDescriptor(base.prototype, componentPropertyName);
-                let settingsResolver = (): any => this.Settings;
-                let fileMappingResolver = (): Array<IFileMapping<any, any>> => this.BaseFileMappings;
-                let componentResolver = (): IComponentCollection<any, any> => this.BaseComponents;
+                let destinationPathName = "destinationPath" as keyof Generator;
+                let destinationRootName = "destinationRoot" as keyof Generator;
+                let propertyDescriptors = BaseConstructorCreator.GetAllProperties(base);
+                let settingsProperty = propertyDescriptors[settingsPropertyName];
+                let fileMappingProperty = propertyDescriptors[fileMappingPropertyName];
+                let componentProperty = propertyDescriptors[componentPropertyName];
+                let destinationPath = propertyDescriptors[destinationPathName];
+                let destinationRoot = propertyDescriptors[destinationRootName];
+                let self = this;
+                this.baseComponentResolver = componentProperty.get.bind(this.Base);
+                this.baseFileMappingResolver = fileMappingProperty.get.bind(this.Base);
 
                 settingsProperty = {
                     ...settingsProperty,
                     get()
                     {
-                        return settingsResolver();
+                        return self.Settings;
                     }
                 };
 
@@ -82,7 +97,7 @@ export abstract class BaseConstructorCreator
                     ...fileMappingProperty,
                     get()
                     {
-                        return fileMappingResolver();
+                        return self.BaseFileMappings;
                     }
                 };
 
@@ -90,8 +105,18 @@ export abstract class BaseConstructorCreator
                     ...componentProperty,
                     get()
                     {
-                        return componentResolver();
+                        return self.BaseComponents;
                     }
+                };
+
+                destinationRoot = {
+                    ...destinationRoot,
+                    value: (...args: any[]) => this.destinationRoot(...args)
+                };
+
+                destinationPath = {
+                    ...destinationPath,
+                    value: (...args: any[]) => this.destinationPath(...args)
                 };
 
                 Object.defineProperties(
@@ -99,7 +124,9 @@ export abstract class BaseConstructorCreator
                     {
                         [settingsPropertyName]: settingsProperty,
                         [fileMappingPropertyName]: fileMappingProperty,
-                        [componentPropertyName]: componentProperty
+                        [componentPropertyName]: componentProperty,
+                        [destinationRootName]: destinationRoot,
+                        [destinationPathName]: destinationPath
                     });
             }
 
@@ -116,7 +143,7 @@ export abstract class BaseConstructorCreator
              */
             public get BaseComponents(): IComponentCollection<any, any>
             {
-                return instance.ComponentCollection;
+                return this.baseComponentResolver();
             }
 
             /**
@@ -124,7 +151,7 @@ export abstract class BaseConstructorCreator
              */
             public get BaseFileMappings(): Array<IFileMapping<any, any>>
             {
-                return instance.FileMappings;
+                return this.baseFileMappingResolver();
             }
 
             /**
@@ -137,5 +164,29 @@ export abstract class BaseConstructorCreator
         }
 
         return BaseGenerator as any;
+    }
+
+    /**
+     * Gets all properties of the specified generator-class.
+     *
+     * @param ctor
+     * The constructor whose properties to get.
+     *
+     * @returns
+     * The properties of the specified class.
+     */
+    protected static GetAllProperties<T extends GeneratorConstructor>(ctor: T): {[P in keyof T]: TypedPropertyDescriptor<T[P]>} & { [x: string]: PropertyDescriptor }
+    {
+        let result: {[P in keyof T]: TypedPropertyDescriptor<T[P]>} & { [x: string]: PropertyDescriptor } = {} as any;
+
+        for (let current = ctor.prototype; current !== YeomanGenerator.prototype && current !== Object.prototype; current = Object.getPrototypeOf(current))
+        {
+            result = {
+                ...Object.getOwnPropertyDescriptors(current),
+                ...result
+            };
+        }
+
+        return result;
     }
 }
