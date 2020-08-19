@@ -109,5 +109,39 @@ export function TestGeneratorTests(): void
                             Assert.deepStrictEqual(generator.FileMappings, options.FileMappings);
                         });
                 });
+
+            suite(
+                "moduleRoot",
+                () =>
+                {
+                    let moduleRoot: string;
+
+                    suiteSetup(
+                        () =>
+                        {
+                            moduleRoot = generator.modulePath();
+                        });
+
+                    suiteTeardown(
+                        () =>
+                        {
+                            generator.moduleRoot(moduleRoot);
+                        });
+
+                    test(
+                        "Checking whether the module-root of the generator can be changed…",
+                        () =>
+                        {
+                            generator.moduleRoot(context.RandomString);
+                            Assert.notStrictEqual(moduleRoot, generator.modulePath());
+                        });
+
+                    test(
+                        "Checking whether the module-root can be queried using this method…",
+                        () =>
+                        {
+                            Assert.strictEqual(generator.moduleRoot(), generator.modulePath());
+                        });
+                });
         });
 }
