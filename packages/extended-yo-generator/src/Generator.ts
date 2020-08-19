@@ -62,7 +62,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
      */
     protected set ModuleRoot(value: string)
     {
-        this.moduleRootPath = value;
+        this.moduleRootPath = Path.resolve(value);
     }
 
     /**
