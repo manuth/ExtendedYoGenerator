@@ -24,10 +24,10 @@ module.exports = {
             {
                 require: {
                     ClassDeclaration: true,
-                    ClassExpression: true,
+                    ClassExpression: false,
                     ArrowFunctionExpression: false,
                     FunctionDeclaration: true,
-                    FunctionExpression: true,
+                    FunctionExpression: false,
                     MethodDefinition: true
                 },
                 contexts: [
@@ -41,8 +41,7 @@ module.exports = {
                     "TSCallSignatureDeclaration",
                     "TSConstructSignatureDeclaration",
                     "TSMethodSignature",
-                    "TSDeclareFunction",
-                    "VariableDeclaration > VariableDeclarator:not([id.typeAnnotation]) > ArrowFunctionExpression"
+                    "TSDeclareFunction"
                 ]
             }
         ],
