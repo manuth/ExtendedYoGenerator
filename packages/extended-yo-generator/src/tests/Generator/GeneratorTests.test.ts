@@ -148,6 +148,18 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                         {
                             AssertPath(generator.modulePath(testPath), Path.join(moduleRoot, testPath));
                         });
+
+                    test(
+                        "Checking whether `modulePath` always is absolute…",
+                        () =>
+                        {
+                            let modulePath = generator.modulePath();
+                            Assert.ok(Path.isAbsolute(modulePath));
+                            generator.moduleRoot("this is a test");
+                            Assert.notStrictEqual(generator.modulePath(), modulePath);
+                            Assert.ok(Path.isAbsolute(generator.modulePath()));
+                            generator.moduleRoot(modulePath);
+                        });
                 });
 
             suite(
