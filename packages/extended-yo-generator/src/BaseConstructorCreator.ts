@@ -198,7 +198,7 @@ export abstract class BaseConstructorCreator
              */
             public get FileMappings(): Array<IFileMapping<any, any>>
             {
-                return instance.FileMappingCollection;
+                return instance.ResolvedFileMappings;
             }
         }
 

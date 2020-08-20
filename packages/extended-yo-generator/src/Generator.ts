@@ -202,9 +202,34 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     /**
      * Gets the file-mappings of the generator.
      */
-    public get FileMappingCollection(): Array<FileMapping<TSettings, TOptions>>
+    public get ResolvedFileMappings(): Array<FileMapping<TSettings, TOptions>>
     {
         return (this.FileMappings ?? []).map((fileMapping) => new FileMapping(this, fileMapping));
+    }
+
+    /**
+     * Gets the file-mappings to process.
+     */
+    public get FileMappingCollection(): Promise<Array<FileMapping<TSettings, TOptions>>>
+    {
+        return (
+            async () =>
+            {
+                let result = this.ResolvedFileMappings;
+
+                for (let category of this.ComponentCollection?.Categories ?? [])
+                {
+                    for (let component of category.Components)
+                    {
+                        if (this.Settings[GeneratorSettingKey.Components].includes(component.ID))
+                        {
+                            result.push(...await component.FileMappings);
+                        }
+                    }
+                }
+
+                return result;
+            })();
     }
 
     /**
@@ -311,23 +336,9 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
      */
     public async writing(): Promise<void>
     {
-        for (let fileMapping of this.FileMappingCollection)
+        for (let fileMapping of await this.FileMappingCollection)
         {
             await this.ProcessFile(fileMapping);
-        }
-
-        for (let category of this.ComponentCollection?.Categories ?? [])
-        {
-            for (let component of category.Components)
-            {
-                if (this.Settings[GeneratorSettingKey.Components].includes(component.ID))
-                {
-                    for (let fileMapping of await component.FileMappings)
-                    {
-                        await this.ProcessFile(fileMapping);
-                    }
-                }
-            }
         }
     }
 
