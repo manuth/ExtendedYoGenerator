@@ -1,4 +1,6 @@
 import YeomanGenerator = require("yeoman-generator");
+import { IComponent } from "./Components/IComponent";
+import { IComponentCategory } from "./Components/IComponentCategory";
 import { IComponentCollection } from "./Components/IComponentCollection";
 import { IFileMapping } from "./Components/IFileMapping";
 import { CompositeConstructor } from "./CompositeConstructor";
@@ -159,7 +161,36 @@ export abstract class BaseConstructorCreator
              */
             public get Components(): IComponentCollection<any, any>
             {
-                return instance.ComponentCollection;
+                let result: IComponentCollection<any, any> = instance.ComponentCollection;
+
+                return {
+                    ...result,
+                    Question: result.Question,
+                    Categories: [
+                        ...(result.Categories ?? []).map(
+                            (category): IComponentCategory<any, any> =>
+                            {
+                                return {
+                                    ...category,
+                                    DisplayName: category.DisplayName,
+                                    Components: [
+                                        ...(category.Components ?? []).map(
+                                            (component): IComponent<any, any> =>
+                                            {
+                                                return {
+                                                    ...component,
+                                                    ID: component.ID,
+                                                    DisplayName: component.DisplayName,
+                                                    DefaultEnabled: component.DefaultEnabled,
+                                                    Questions: [...(component.Questions ?? [])],
+                                                    FileMappings: component.FileMappings
+                                                };
+                                            })
+                                    ]
+                                };
+                            })
+                    ]
+                };
             }
 
             /**
@@ -183,9 +214,9 @@ export abstract class BaseConstructorCreator
      * @returns
      * The properties of the specified class.
      */
-    protected static GetAllProperties<T extends GeneratorConstructor>(ctor: T): {[P in keyof T]: TypedPropertyDescriptor<T[P]>} & { [x: string]: PropertyDescriptor }
+    protected static GetAllProperties<T extends GeneratorConstructor>(ctor: T): { [P in keyof T]: TypedPropertyDescriptor<T[P]> } & { [x: string]: PropertyDescriptor }
     {
-        let result: {[P in keyof T]: TypedPropertyDescriptor<T[P]>} & { [x: string]: PropertyDescriptor } = {} as any;
+        let result: { [P in keyof T]: TypedPropertyDescriptor<T[P]> } & { [x: string]: PropertyDescriptor } = {} as any;
 
         for (let current = ctor.prototype; current !== YeomanGenerator.prototype && current !== Object.prototype; current = Object.getPrototypeOf(current))
         {
