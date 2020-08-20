@@ -48,7 +48,7 @@ export class PropertyResolver<TObject, TTarget, TSettings, TOptions> extends Res
     /**
      * Gets the generator of the component.
      */
-    protected get Generator(): IGenerator<TSettings, TOptions>
+    public get Generator(): IGenerator<TSettings, TOptions>
     {
         return this.generator;
     }
@@ -56,7 +56,7 @@ export class PropertyResolver<TObject, TTarget, TSettings, TOptions> extends Res
     /**
      * Gets the actual object.
      */
-    protected get Object(): TObject
+    public get Object(): TObject
     {
         return this.object;
     }
