@@ -142,7 +142,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
 
                         question.when = async (settings: TSettings) =>
                         {
-                            if (settings[GeneratorSettingKey.Components].includes(component.ID))
+                            if ((settings[GeneratorSettingKey.Components] ?? []).includes(component.ID))
                             {
                                 if (i === 0)
                                 {
@@ -221,7 +221,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
                 {
                     for (let component of category.Components)
                     {
-                        if (this.Settings[GeneratorSettingKey.Components].includes(component.ID))
+                        if ((this.Settings[GeneratorSettingKey.Components] ?? []).includes(component.ID))
                         {
                             result.push(...await component.FileMappings);
                         }
