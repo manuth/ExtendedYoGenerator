@@ -8,6 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v6.0.0...dev)
 
+## ExtendedYoGenerator v7.0.0
+This release brings a handy new feature for making extending generators easier. Additionally a few classes have been added to the `extended-yo-generator-test` which allow you to test the integrity of file-mappings including file-mappings written in JSON and JavaScript.
+
+### `extended-yo-generator`
+#### Added
+
+### `extended-yo-generator-test`
+#### Added
+  - Classes for testing general file-mappings, file-mappings written in JavaScript and file-mappings written in JSON
+
+
 ## ExtendedYoGenerator v6.0.0
 ### Breaking
   - Reverted the `destinationRoot` behavior
