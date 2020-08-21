@@ -1,5 +1,8 @@
 import Assert = require("assert");
 import { TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
+import { ComponentCollection } from "../../Components/ComponentCollection";
+import { FileMapping } from "../../Components/FileMapping";
+import { IComponentCollection } from "../../Components/IComponentCollection";
 import { IFileMapping } from "../../Components/IFileMapping";
 import { Generator } from "../../Generator";
 
@@ -21,6 +24,10 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
             let subSourceFile: string;
             let injectedSourceFile: string;
             let destinationFile: string;
+            let categoryName: string;
+            let superComponentID: string;
+            let subComponentID: string;
+            let injectedComponentID: string;
 
             /**
              * A class for testing.
@@ -33,6 +40,33 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                 public get TemplateRoot(): string
                 {
                     return superTemplateDir;
+                }
+
+                /**
+                 * @inheritdoc
+                 */
+                public get Components(): IComponentCollection<any, any>
+                {
+                    return {
+                        Question: "Choose the components!",
+                        Categories: [
+                            {
+                                DisplayName: categoryName,
+                                Components: [
+                                    {
+                                        ID: superComponentID,
+                                        DisplayName: "",
+                                        FileMappings: [
+                                            {
+                                                Source: superSourceFile,
+                                                Destination: destinationFile
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    };
                 }
 
                 /**
@@ -81,6 +115,34 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                 /**
                  * @inheritdoc
                  */
+                public get Components(): IComponentCollection<any, any>
+                {
+                    let result = super.Components;
+
+                    for (let category of result.Categories)
+                    {
+                        if (category.DisplayName === categoryName)
+                        {
+                            category.Components.push(
+                                {
+                                    ID: subComponentID,
+                                    DisplayName: "",
+                                    FileMappings: [
+                                        {
+                                            Source: subSourceFile,
+                                            Destination: destinationFile
+                                        }
+                                    ]
+                                });
+                        }
+                    }
+
+                    return result;
+                }
+
+                /**
+                 * @inheritdoc
+                 */
                 public get BaseFileMappings(): Array<IFileMapping<any, any>>
                 {
                     let result = super.BaseFileMappings;
@@ -93,6 +155,89 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
 
                     return result;
                 }
+
+                /**
+                 * @inheritdoc
+                 */
+                public get BaseComponents(): IComponentCollection<any, any>
+                {
+                    let result = super.BaseComponents;
+
+                    for (let category of result.Categories)
+                    {
+                        if (category.DisplayName === categoryName)
+                        {
+                            category.Components.push(
+                                {
+                                    ID: injectedComponentID,
+                                    DisplayName: "",
+                                    FileMappings: [
+                                        {
+                                            Source: injectedSourceFile,
+                                            Destination: destinationFile
+                                        }
+                                    ]
+                                });
+                        }
+                    }
+
+                    return result;
+                }
+            }
+
+            /**
+             * A component for checking a file-mapping.
+             */
+            type FileMappingCondition = (fileMapping: FileMapping<any, any>) => Promise<boolean>;
+
+            /**
+             * Asserts the truthyness of the specified `condition`.
+             *
+             * @param fileMappings
+             * The file-mappings to check.
+             *
+             * @param condition
+             * The condition to check.
+             *
+             * @param all
+             * A value indicating whether all or only one file-mapping is expected to match the `condition`.
+             *
+             * @returns
+             * A value indicating whether the assertion is true.
+             */
+            async function AssertFileMappings(fileMappings: Array<FileMapping<any, any>>, condition: FileMappingCondition, all = false): Promise<boolean>
+            {
+                let values = (await Promise.all(
+                    fileMappings.map(
+                        async (fileMapping) => condition(fileMapping))));
+
+                return all ? values.every((value) => value) : values.some((value) => value);
+            }
+
+            /**
+             * Asserts the truthyness of the specified `condition`.
+             *
+             * @param collection
+             * The collection to check.
+             *
+             * @param condition
+             * The condition to check.
+             *
+             * @param all
+             * A value indicating whether all or only one file-mapping is expected to match the `condition`.
+             *
+             * @returns
+             * A value indicating whether the assertion is true.
+             */
+            async function AssertComponentFileMappings(collection: ComponentCollection<any, any>, condition: FileMappingCondition, all = false): Promise<boolean>
+            {
+                let values = await Promise.all(collection.Categories.flatMap(
+                    (category) =>
+                    {
+                        return category.Components.map(async (component) => AssertFileMappings(await component.FileMappings, condition, all));
+                    }));
+
+                return all ? values.every((value) => value) : values.some((value) => value);
             }
 
             suiteSetup(
@@ -116,6 +261,17 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                         async function()
                         {
                             generator = new SubGenerator([], {} as any);
+                            generator.Base.moduleRoot(generator.Base.moduleRoot(context.RandomString));
+                        });
+
+                    test(
+                        "Checking whether the settings-object is the same for both the base and the inheriting generator…",
+                        () =>
+                        {
+                            let key = context.RandomString;
+                            Assert.strictEqual(generator.Settings, generator.Base.Settings);
+                            generator.Settings[key] = context.RandomString;
+                            Assert.strictEqual(generator.Settings[key], generator.Base.Settings[key]);
                         });
 
                     test(
@@ -135,33 +291,96 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                         });
 
                     test(
-                        "Checking whether auto-generated file-mapping paths resolve to the propper package…",
+                        "Checking whether destination-paths are created the same way for file-mappings and components of the base and the inheriting generator…",
+                        async () =>
+                        {
+                            let condition: FileMappingCondition = async (fileMapping) =>
+                                await fileMapping.Destination === generator.destinationPath(destinationFile);
+
+                            Assert.ok(await AssertFileMappings(await generator.FileMappingCollection, condition, true));
+                            Assert.ok(await AssertComponentFileMappings(generator.ComponentCollection, condition, true));
+                        });
+
+                    test(
+                        "Checking whether file-mappings of the base-generator presist in the inheriting generator…",
                         async () =>
                         {
                             Assert.ok(
-                                (await Promise.all(
-                                    generator.FileMappingCollection.map(
-                                        async (fileMapping) => await fileMapping.Destination === generator.destinationPath(destinationFile)))).every(
-                                            (value) => value));
+                                await AssertFileMappings(
+                                    await generator.FileMappingCollection,
+                                    async (fileMapping) => await fileMapping.Source === generator.Base.templatePath(superSourceFile)));
+                        });
+
+                    test(
+                        "Checking whether components of the base-generator presist in the inheriting generator…",
+                        async () =>
+                        {
+                            Assert.ok(
+                                generator.ComponentCollection.Categories.some(
+                                    (category) => category.Components.some(
+                                        (component) => component.ID === superComponentID)));
 
                             Assert.ok(
-                                (await Promise.all(
-                                    generator.FileMappingCollection.map(
-                                        async (fileMapping) => await fileMapping.Source === generator.templatePath(subSourceFile)))).some(
-                                            (value) => value));
+                                await AssertComponentFileMappings(
+                                    generator.ComponentCollection,
+                                    async (fileMapping) =>
+                                    {
+                                        return await fileMapping.Source === generator.Base.templatePath(superSourceFile);
+                                    }));
+                        });
+
+                    test(
+                        "Checking whether components can be added to existing categories as expected…",
+                        async () =>
+                        {
+                            Assert.strictEqual(
+                                generator.ComponentCollection.Categories.filter(
+                                    (category) => category.DisplayName === categoryName).length, 1);
+                        });
+
+                    test(
+                        "Checking whether file-mappings of the inheriting generator are present…",
+                        async () =>
+                        {
+                            Assert.ok(
+                                await AssertFileMappings(
+                                    await generator.FileMappingCollection,
+                                    async (fileMapping) => await fileMapping.Source === generator.Base.templatePath(superSourceFile)));
+                        });
+
+                    test(
+                        "Checking whether components of the inheriting generator are present…",
+                        async () =>
+                        {
+                            Assert.ok(
+                                generator.ComponentCollection.Categories.some(
+                                    (category) => category.Components.some(
+                                        (component) => component.ID === subComponentID)));
 
                             Assert.ok(
-                                (await Promise.all(
-                                    generator.FileMappingCollection.map(
-                                        async (fileMapping) => await fileMapping.Source === generator.Base.templatePath(superSourceFile)))).some(
-                                            (value) => value));
+                                await AssertComponentFileMappings(
+                                    generator.ComponentCollection,
+                                    async (fileMapping) => await fileMapping.Source === generator.templatePath(subSourceFile)));
                         });
 
                     test(
                         "Checking whether the file-mappings of the base can be injected…",
-                        () =>
+                        async () =>
                         {
-                            Assert.ok(generator.Base.FileMappings.some((fileMapping) => fileMapping.Source === injectedSourceFile));
+                            Assert.ok(
+                                await AssertFileMappings(
+                                    await generator.FileMappingCollection,
+                                    async (fileMapping) => await fileMapping.Source === generator.Base.templatePath(injectedSourceFile)));
+                        });
+
+                    test(
+                        "Checking whether the components of the base can be injected…",
+                        async () =>
+                        {
+                            Assert.ok(
+                                await AssertComponentFileMappings(
+                                    generator.ComponentCollection,
+                                    async (fileMapping) => await fileMapping.Source === generator.Base.templatePath(injectedSourceFile)));
                         });
                 });
 
