@@ -420,5 +420,126 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                             Assert.strictEqual((await readFile(runContext.generator.destinationPath(testFileName))).toString(), testContent);
                         });
                 });
+
+            suite(
+                "ResolvedFileMappings",
+                () =>
+                {
+                    suiteSetup(
+                        () =>
+                        {
+                            options.FileMappings = [];
+
+                            for (let i = context.Random.integer(0, 10); i >= 0; i--)
+                            {
+                                options.FileMappings.push(
+                                    {
+                                        Source: context.RandomString,
+                                        Destination: context.RandomString
+                                    });
+                            }
+                        });
+
+                    test(
+                        "Checking whether a resolved file-mapping is created for each file-mapping…",
+                        () =>
+                        {
+                            Assert.strictEqual(generator.ResolvedFileMappings.length, generator.FileMappings.length);
+
+                            Assert.ok(
+                                generator.FileMappings.every(
+                                    (fileMappingOptions) =>
+                                    {
+                                        return generator.ResolvedFileMappings.some(
+                                            (fileMapping) =>
+                                            {
+                                                return fileMapping.Object === fileMappingOptions;
+                                            });
+                                    }));
+                        });
+                });
+
+            suite(
+                "FileMappingCollection",
+                () =>
+                {
+                    let enabledComponentDestination: string;
+                    let disabledComponentDestination: string;
+                    let fileMappingDestination: string;
+
+                    setup(
+                        () =>
+                        {
+                            enabledComponentDestination = context.RandomString + "1";
+                            disabledComponentDestination = context.RandomString + "2";
+                            fileMappingDestination = context.RandomString + "3";
+
+                            options.FileMappings = [
+                                {
+                                    Destination: fileMappingDestination
+                                }
+                            ];
+
+                            options.Components = {
+                                Question: "",
+                                Categories: [
+                                    {
+                                        DisplayName: "",
+                                        Components: [
+                                            {
+                                                ID: enabledComponentDestination,
+                                                DisplayName: "",
+                                                FileMappings: [
+                                                    {
+                                                        Destination: enabledComponentDestination
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                ID: disabledComponentDestination,
+                                                DisplayName: "",
+                                                FileMappings: [
+                                                    {
+                                                        Destination: disabledComponentDestination
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            };
+
+                            generator.Settings[GeneratorSettingKey.Components] = [enabledComponentDestination];
+                        });
+
+                    test(
+                        "Checking whether default file-mappings are present…",
+                        async () =>
+                        {
+                            Assert.strictEqual(
+                                (await generator.FileMappingCollection).filter(
+                                    (fileMapping) => fileMapping.Object.Destination === fileMappingDestination).length,
+                                1);
+                        });
+
+                    test(
+                        "Checking whether file-mappings of enabled components are present…",
+                        async () =>
+                        {
+                            Assert.strictEqual(
+                                (await generator.FileMappingCollection).filter(
+                                    (fileMapping) => fileMapping.Object.Destination === enabledComponentDestination).length,
+                                1);
+                        });
+
+                    test(
+                        "Checking whether file-mappings of disabled components are not present…",
+                        async () =>
+                        {
+                            Assert.ok(
+                                !(await generator.FileMappingCollection).some(
+                                    (fileMapping) => fileMapping.Object.Destination === disabledComponentDestination));
+                        });
+                });
         });
 }
