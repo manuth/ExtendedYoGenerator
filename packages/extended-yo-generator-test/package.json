@@ -40,7 +40,6 @@
   },
   "dependencies": {
     "@manuth/extended-yo-generator": "^6.0.0",
-    "@types/random-js": "^2.0.0",
     "@types/yeoman-test": "^2.0.4",
     "comment-json": "^3.0.3",
     "fs-extra": "^9.0.1",
@@ -53,8 +52,8 @@
     "@types/comment-json": "^1.1.1",
     "@types/fs-extra": "^9.0.1",
     "@types/lodash.clonedeep": "^4.5.6",
-    "@types/mocha": "^8.0.2",
-    "@types/node": "^14.0.27",
+    "@types/mocha": "^8.0.3",
+    "@types/node": "^14.6.0",
     "concurrently": "^5.3.0",
     "dev-null-cli": "^1.0.0",
     "lodash.clonedeep": "^4.5.0",
