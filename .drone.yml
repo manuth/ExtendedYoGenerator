@@ -8,14 +8,14 @@ steps:
     commands:
       - npm install
       - npx lerna bootstrap
-  - name: lint
-    image: node
-    commands:
-      - npm run lint
   - name: build
     image: node
     commands:
       - npm run build
+  - name: lint
+    image: node
+    commands:
+      - npm run lint
   - name: test
     image: node
     commands:
