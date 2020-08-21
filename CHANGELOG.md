@@ -17,6 +17,7 @@ This release brings a handy new feature for making extending generators easier. 
 ### `extended-yo-generator-test`
 #### Added
   - Classes for testing general file-mappings, file-mappings written in JavaScript and file-mappings written in JSON
+  - An instance of `random-js`' `Random` class to the `TestContext` for generating random values
 
 
 ## ExtendedYoGenerator v6.0.0
