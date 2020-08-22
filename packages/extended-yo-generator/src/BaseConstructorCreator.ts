@@ -33,7 +33,7 @@ export abstract class BaseConstructorCreator
      */
     public static Create<T extends GeneratorConstructor>(base: T, namespaceOrPath?: string): CompositeConstructor<T>
     {
-        let instance: Generator<any, any>;
+        let resolvedKey: keyof YeomanGenerator = "resolved";
         let baseClass: GeneratorConstructor = base as any;
 
         /**
@@ -41,6 +41,11 @@ export abstract class BaseConstructorCreator
          */
         class BaseGenerator extends baseClass implements IBaseGenerator<Generator<any, any>>
         {
+            /**
+             * The base-generator.
+             */
+            private base: Generator<any, any>;
+
             /**
              * A component for resolving the components of the base.
              */
@@ -61,16 +66,26 @@ export abstract class BaseConstructorCreator
             {
                 super(...params);
                 let [args, options] = params as [string | string[], YeomanGenerator.GeneratorOptions];
+                let classProcessor: (base: T) => void = () => { };
                 let instanceOptions = { arguments: args, options };
 
                 if (namespaceOrPath)
                 {
-                    instance = this.env.create(namespaceOrPath, instanceOptions) as any;
+                    if (resolvedKey in baseClass)
+                    {
+                        let resolvedPath: string = (baseClass as any)[resolvedKey];
+                        classProcessor = (base) => (base as any)[resolvedKey] = resolvedPath;
+                    }
+                    else
+                    {
+                        classProcessor = (base) => delete (base as any)[resolvedKey];
+                    }
+
+                    (baseClass as any)[resolvedKey] = (this.env.get(namespaceOrPath) as any)[resolvedKey];
                 }
-                else
-                {
-                    instance = this.env.instantiate(base, instanceOptions) as any;
-                }
+
+                this.base = this.env.instantiate(baseClass, instanceOptions) as Generator<any, any>;
+                classProcessor(base);
 
                 let settingsPropertyName = "Settings" as keyof Generator;
                 let fileMappingPropertyName = "FileMappings" as keyof Generator;
@@ -122,7 +137,7 @@ export abstract class BaseConstructorCreator
                 };
 
                 Object.defineProperties(
-                    instance,
+                    this.Base,
                     {
                         [settingsPropertyName]: settingsProperty,
                         [fileMappingPropertyName]: fileMappingProperty,
@@ -137,7 +152,7 @@ export abstract class BaseConstructorCreator
              */
             public get Base(): Generator<any, any>
             {
-                return instance as any;
+                return this.base;
             }
 
             /**
@@ -161,7 +176,7 @@ export abstract class BaseConstructorCreator
              */
             public get Components(): IComponentCollection<any, any>
             {
-                let result: IComponentCollection<any, any> = instance.ComponentCollection;
+                let result: IComponentCollection<any, any> = this.Base.ComponentCollection;
 
                 return {
                     ...result,
@@ -198,7 +213,7 @@ export abstract class BaseConstructorCreator
              */
             public get FileMappings(): Array<IFileMapping<any, any>>
             {
-                return instance.ResolvedFileMappings;
+                return this.Base.ResolvedFileMappings;
             }
         }
 
