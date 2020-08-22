@@ -241,6 +241,25 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     }
 
     /**
+     * Creates a base-generator class to extend.
+     *
+     * @param base
+     * The class to extend and to instanciate a base-generator.
+     */
+    public static ComposeWith<T extends GeneratorConstructor>(base: T): CompositeConstructor<T>;
+
+    /**
+     * Creates a base-generator class to extend from.
+     *
+     * @param base
+     * The class to extend and to instanciate a base-generator.
+     *
+     * @param namespaceOrPath
+     * The namespace or path of a generator for resolving the module-root of the base-generator.
+     */
+    public static ComposeWith<T extends GeneratorConstructor>(base: T, namespaceOrPath: string): CompositeConstructor<T>;
+
+    /**
      * Creates a constructor for extending a generator.
      *
      * @param base
