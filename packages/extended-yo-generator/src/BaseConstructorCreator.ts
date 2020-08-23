@@ -81,7 +81,7 @@ export abstract class BaseConstructorCreator
                         classProcessor = (base) => delete (base as any)[resolvedKey];
                     }
 
-                    (baseClass as any)[resolvedKey] = (this.env.get(namespaceOrPath) as any)[resolvedKey];
+                    (baseClass as any)[resolvedKey] = (this.env.get(namespaceOrPath) as any)?.[resolvedKey] ?? namespaceOrPath;
                 }
 
                 this.base = this.env.instantiate(baseClass, instanceOptions) as Generator<any, any>;
