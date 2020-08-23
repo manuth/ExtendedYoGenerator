@@ -16,7 +16,7 @@ import { Resolvable } from "./Resolving/Resolvable";
  * @template TOptions
  * The type of the options of the generator.
  */
-export class FileMapping<TSettings, TOptions> extends PropertyResolver<IFileMapping<TSettings, TOptions>, FileMapping<TSettings, TOptions>, TSettings, TOptions>
+export class FileMapping<TSettings, TOptions> extends PropertyResolver<IFileMapping<TSettings, TOptions>, FileMapping<TSettings, TOptions>, TSettings, TOptions> implements IFileMapping<TSettings, TOptions>
 {
     /**
      * Initializes a new instance of the `FileMapping` class.
@@ -51,9 +51,9 @@ export class FileMapping<TSettings, TOptions> extends PropertyResolver<IFileMapp
     /**
      * Gets the context to use for copying the file-entry.
      */
-    public get Context(): Promise<any>
+    public get Context(): () => Promise<any>
     {
-        return this.ResolveProperty(this, this.Object.Context);
+        return () => this.ResolveProperty(this, this.Object.Context);
     }
 
     /**
@@ -69,9 +69,9 @@ export class FileMapping<TSettings, TOptions> extends PropertyResolver<IFileMapp
         {
             return async (target, generator) =>
             {
-                if (await target.Context)
+                if (await target.Context())
                 {
-                    generator.fs.copyTpl(await target.Source, await target.Destination, await target.Context);
+                    generator.fs.copyTpl(await target.Source, await target.Destination, await target.Context());
                 }
                 else
                 {

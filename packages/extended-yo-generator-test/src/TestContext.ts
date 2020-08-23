@@ -1,6 +1,7 @@
 import { join } from "path";
 import { Generator, GeneratorOptions, IGeneratorSettings } from "@manuth/extended-yo-generator";
 import cloneDeep = require("lodash.clonedeep");
+import { Random } from "random-js";
 import { run, RunContextSettings } from "yeoman-test";
 import { IRunContext } from "./IRunContext";
 import { ITestGeneratorOptions } from "./ITestGeneratorOptions";
@@ -21,6 +22,11 @@ export class TestContext<TGenerator extends Generator<any, TOptions> = Generator
      * The directory of the generator.
      */
     private generatorDirectory: string;
+
+    /**
+     * A component for creating random literals.
+     */
+    private random: Random = new Random();
 
     /**
      * An instance of the `RunContext` class that already has finished.
@@ -67,6 +73,32 @@ export class TestContext<TGenerator extends Generator<any, TOptions> = Generator
 
             return this.finishedContext.generator;
         })();
+    }
+
+    /**
+     * Gets a component for creating random literals.
+     */
+    public get Random(): Random
+    {
+        return this.random;
+    }
+
+    /**
+     * Gets a random string.
+     */
+    public get RandomString(): string
+    {
+        return this.Random.string(10);
+    }
+
+    /**
+     * Gets a random object.
+     */
+    public get RandomObject(): any
+    {
+        return {
+            randomValue: this.RandomString
+        };
     }
 
     /**

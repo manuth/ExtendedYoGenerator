@@ -56,6 +56,26 @@ export function TestGeneratorTests(): void
                 });
 
             suite(
+                "Path",
+                () =>
+                {
+                    test(
+                        "Checking whether a generator can be instantiated from the specified path…",
+                        async () =>
+                        {
+                            let generator: TestGenerator;
+
+                            await Assert.doesNotReject(
+                                async () =>
+                                {
+                                    generator = (await context.Generator).env.create(TestGenerator.Path) as any;
+                                });
+
+                            Assert.ok(generator instanceof TestGenerator);
+                        });
+                });
+
+            suite(
                 "GeneratorOptions",
                 () =>
                 {
@@ -87,6 +107,40 @@ export function TestGeneratorTests(): void
                             Assert.deepStrictEqual(generator.Questions, options.Questions);
                             Assert.deepStrictEqual(generator.Components, options.Components);
                             Assert.deepStrictEqual(generator.FileMappings, options.FileMappings);
+                        });
+                });
+
+            suite(
+                "moduleRoot",
+                () =>
+                {
+                    let moduleRoot: string;
+
+                    suiteSetup(
+                        () =>
+                        {
+                            moduleRoot = generator.modulePath();
+                        });
+
+                    suiteTeardown(
+                        () =>
+                        {
+                            generator.moduleRoot(moduleRoot);
+                        });
+
+                    test(
+                        "Checking whether the module-root of the generator can be changed…",
+                        () =>
+                        {
+                            generator.moduleRoot(context.RandomString);
+                            Assert.notStrictEqual(moduleRoot, generator.modulePath());
+                        });
+
+                    test(
+                        "Checking whether the module-root can be queried using this method…",
+                        () =>
+                        {
+                            Assert.strictEqual(generator.moduleRoot(), generator.modulePath());
                         });
                 });
         });

@@ -31,11 +31,7 @@
                 "preLaunchTask": "Build",
                 "presentation": {
                     "order": 2
-                },
-                "resolveSourceMapLocations": [
-                    "${workspaceFolder:ExtendedYoGenerator}/**",
-                    "!**/node_modules/**"
-                ]
+                }
             },
             {
                 "type": "pwa-node",
@@ -48,11 +44,7 @@
                 "preLaunchTask": "Build",
                 "presentation": {
                     "order": 3
-                },
-                "resolveSourceMapLocations": [
-                    "${workspaceFolder:ExtendedYoGeneratorTest}/**",
-                    "!**/node_modules/**"
-                ]
+                }
             }
         ],
         "compounds": [

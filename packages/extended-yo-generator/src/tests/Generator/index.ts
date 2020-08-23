@@ -1,4 +1,5 @@
 import { TestContext, TestGenerator, ITestGeneratorOptions, ITestOptions } from "@manuth/extended-yo-generator-test";
+import { BaseConstructorCreatorTests } from "./BaseConstructorCreator.test";
 import { ExtendedGeneratorTests } from "./GeneratorTests.test";
 
 /**
@@ -10,4 +11,5 @@ import { ExtendedGeneratorTests } from "./GeneratorTests.test";
 export function GeneratorTests(context: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>>): void
 {
     ExtendedGeneratorTests(context);
+    BaseConstructorCreatorTests(context);
 }

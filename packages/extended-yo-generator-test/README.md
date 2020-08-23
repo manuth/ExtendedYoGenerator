@@ -74,3 +74,47 @@ testContext.ExecuteGenerator(
         ]
     });
 ```
+
+### Testing File-Mappings
+You might want to make assertions about the content of file-mappings or check the integrity of resulting `.json` or `.js`-files.
+
+The new classes `FileMappingTester`, `JavaScriptFileMappingTester` and `JSONFileMappingTester` might fit your needs perfectly.
+
+```ts
+import Assert = require("assert");
+import { TestContext, FileMappingTester } from "@manuth/extended-yo-generator-test";
+
+let tester = new FileMappingTester(await TestContext.Default.Generator, new MyCustomFileMapping());
+
+await tester.Run(); // Execute the file-mapping and commit the result to the file-system
+await tester.AssertContent("expected content"); // or
+Assert.strictEqual(await tester.Content, "expected content");
+```
+
+#### JSONFileMappingTester
+The `JSONFileMappingTester` parses the content of the destination-file and allows you to make assertions about the metadata.
+
+```ts
+import Assert = require("assert");
+import { TestContext, JSONFileMappingTester } from "@manuth/extended-yo-generator-test";
+
+let tester = new JSONFileMappingTester(await TestContext.Default.Generator, new MyCustomFileMapping());
+
+await tester.Run();
+Assert.strictEqual((await tester.Metadata).name, "my-awesome-module");
+```
+
+#### JavaScriptFilemappingTester
+Using thie file-mapping tester you can check whether the destination-file exports the expected members. This is especially useful because the file is automatically deleted from the require-cache in order to hot-reload changes made to the destination-file.
+
+```ts
+import Assert = require("assert");
+import { TestContext, JavaScriptFileMappingTester } from "@manuth/extended-yo-generator-test";
+
+let tester = new JavaScriptFileMappingTester(await TestContext.Default.Generator, new MyCustomFileMapping());
+
+await tester.WriteDestination("module.exports = 1;");
+console.log(await tester.Require()); // logs `1`
+await tester.WriteDestination("module.exports = 2;");
+console.log(await tester.Require()); // logs `2` as the content of the destination-file has been hot-reloaded
+```

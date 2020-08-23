@@ -1,3 +1,5 @@
+import { TestContext } from "../TestContext";
+import { ComponentTests } from "./Components";
 import { TestContextTests } from "./TestContext.test";
 import { TestGeneratorTests } from "./TestGenerator.test";
 
@@ -7,4 +9,5 @@ suite(
     {
         TestContextTests();
         TestGeneratorTests();
+        ComponentTests(TestContext.Default);
     });
