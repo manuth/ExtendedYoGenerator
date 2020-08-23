@@ -13,6 +13,7 @@ This release brings a handy new feature for making extending generators easier. 
 
 ### `extended-yo-generator`
 #### Added
+  - A `Generator.ComposeWith`-method for inheriting generators
 
 ### `extended-yo-generator-test`
 #### Added
