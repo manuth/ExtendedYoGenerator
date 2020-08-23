@@ -6,7 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v6.0.0...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v7.0.1...dev)
+
+## ExtendedYoGenerator v7.0.1
+### Fixed
+  - A bug which prevented some paths from working with `Generator.ComposeWith`
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v7.0.0...v7.0.1)
 
 ## ExtendedYoGenerator v7.0.0
 This release brings a handy new feature for making extending generators easier. Additionally a few classes have been added to the `extended-yo-generator-test` which allow you to test the integrity of file-mappings including file-mappings written in JSON and JavaScript.
