@@ -110,6 +110,7 @@ export = class MyGenerator extends Generator<IMySettings, GeneratorOptions>
   - [Prompting](#prompting)
   - [Writing](#writing)
   - [Yo-Generator Methods](#yo-generator-methods)
+  - [Extending Generators](#extending-generators)
 
 ### Separate Template-Folders
 Generally all templates are loaded from `./templates`. The `TemplateRoot`-member of the `Generator`-class allows you to load template-files from separate sub-folders of `./templates`.
@@ -342,3 +343,29 @@ Naturally the default yo-generator methods remain which are…
     This method can be used for installing the generated project
   * `end()`:  
     This method is invoked after the generator finished running
+
+### Extending Generators
+You might want to not only inherit some methods from a generator but also its file-mappings and components.  
+As file-mappings usually make use of the `Generator.modulePath`, `Generator.commonTemplatePath` or `Generator.templatePath` method. When inheriting a generator-class normally, its `Generator.modulePath` along with the other named methods will create paths relative to your module rather than the module of the generator you're inheriting.
+
+The static `Generator.ComposeWith` is designed to solve this problem.
+`Generator.ComposeWith` takes two parameters: The class you want to extend and a path to a file inside the module its `Generator.modulePath` should resolve to.
+
+You can use `Generator.ComposeWith` like this:
+
+```ts
+import { Generator } from "@manuth/extended-yo-generator";
+import TSPluginGenerator from "@my/generator-ts-plugin";
+
+export = class MyOwnGenerator extends Generator.ComposeWith(TSPluginGenerator, require.resolve("@my/generator-ts-plugin"))
+{ }
+```
+
+An instance of the extending class will have a `Base`-property returning an independent instance of the `TSPluginGenerator` class and `BaseFileMappings` and `BaseComponent` properties for manipulating its file-mappings and components.
+
+This way your `MyOwnGenerator` will safely inherit the `FileMappings` and `Components` correctly bound to the module-path of your base-generator.
+
+```ts
+console.log(this.modulePath()); // Logs the path to your module
+console.log(this.Base.modulePath()); // Logs "./node_modules/@my/generator-ts-plugin"
+```
