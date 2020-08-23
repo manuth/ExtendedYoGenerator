@@ -417,6 +417,17 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                         {
                             Assert.notStrictEqual(generator.modulePath(), generator.Base.modulePath());
                         });
+
+                    test(
+                        "Checking whether the base-generator is created using the constructor rather than the namespace (or path)…",
+                        () =>
+                        {
+                            let testGenerator = new class extends Generator.ComposeWith(class extends Generator { }, TestGenerator.Path)
+                            { }([], {} as any);
+
+                            Assert.ok(!(testGenerator instanceof TestGenerator));
+                            Assert.ok(testGenerator instanceof Generator);
+                        });
                 });
         });
 }
