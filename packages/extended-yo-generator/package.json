@@ -1,6 +1,6 @@
 {
   "name": "@manuth/extended-yo-generator",
-  "version": "7.0.1",
+  "version": "7.0.2",
   "description": "An extended version of the Yeoman-Generator",
   "author": "Manuel Thalmann <m@nuth.ch>",
   "license": "MIT",
@@ -30,7 +30,7 @@
     "build": "npm run copy-files && tsc -b tsconfig.build.json",
     "copy-files": "cd ../.. && npm run copy-files",
     "rebuild": "npm run clean && npm run build",
-    "watch": "concurrently --raw \"npm run copy-files -- -- --watch > nay\" \"npm run build -- --watch\"",
+    "watch": "concurrently --raw \"npm run copy-files -- -- --watch | nay\" \"npm run build -- --watch\"",
     "clean": "rimraf ./lib",
     "lint-base": "eslint --max-warnings 0 --ignore-pattern \"!.eslintrc.js\"",
     "lint": "npm run lint-base -- --ext .js,.jsx,.ts,.tsx ./src .eslintrc.js",
@@ -47,7 +47,7 @@
     "yeoman-generator": "^4.11.0"
   },
   "devDependencies": {
-    "@manuth/extended-yo-generator-test": "^7.0.1",
+    "@manuth/extended-yo-generator-test": "^7.0.2",
     "@types/ejs": "^3.0.4",
     "@types/fs-extra": "^9.0.1",
     "@types/mocha": "^8.0.3",

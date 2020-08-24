@@ -1,6 +1,6 @@
 {
   "name": "@manuth/extended-yo-generator-test",
-  "version": "7.0.1",
+  "version": "7.0.2",
   "description": "Provides tools for testing generators created using `@manuth/extended-yo-generator`",
   "author": "Manuel Thalmann <m@nuth.ch>",
   "license": "MIT",
@@ -30,7 +30,7 @@
     "build": "npm run copy-files && tsc -b tsconfig.build.json",
     "copy-files": "cd ../.. && npm run copy-files",
     "rebuild": "npm run clean && npm run build",
-    "watch": "concurrently --raw \"npm run copy-files -- -- --watch > nay\" \"npm run build -- --watch\"",
+    "watch": "concurrently --raw \"npm run copy-files -- -- --watch | nay\" \"npm run build -- --watch\"",
     "clean": "rimraf ./lib",
     "lint-base": "eslint --max-warnings 0 --ignore-pattern \"!.eslintrc.js\"",
     "lint": "npm run lint-base -- --ext .js,.jsx,.ts,.tsx ./src .eslintrc.js",
@@ -39,7 +39,7 @@
     "prepare": "npm run rebuild"
   },
   "dependencies": {
-    "@manuth/extended-yo-generator": "^7.0.1",
+    "@manuth/extended-yo-generator": "^7.0.2",
     "@types/yeoman-test": "^2.0.4",
     "comment-json": "^3.0.3",
     "fs-extra": "^9.0.1",
