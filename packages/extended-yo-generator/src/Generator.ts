@@ -381,7 +381,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
      */
     protected async ProcessFile(fileMapping: FileMapping<TSettings, TOptions>): Promise<void>
     {
-        let result = fileMapping.Processor(fileMapping, this);
+        let result = fileMapping.Processor();
 
         if (result instanceof Promise)
         {

@@ -86,7 +86,7 @@ export class FileMappingTester<TGenerator extends IGenerator<TSettings, TOptions
     public async Run(): Promise<void>
     {
         let fileMapping = this.FileMapping;
-        await fileMapping.Processor(fileMapping, this.Generator);
+        await fileMapping.Processor();
         await this.Commit();
     }
 
