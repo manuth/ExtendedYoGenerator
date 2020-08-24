@@ -30,7 +30,7 @@
     "build": "npm run copy-files && tsc -b tsconfig.build.json",
     "copy-files": "cd ../.. && npm run copy-files",
     "rebuild": "npm run clean && npm run build",
-    "watch": "concurrently --raw \"npm run copy-files -- -- --watch > nay\" \"npm run build -- --watch\"",
+    "watch": "concurrently --raw \"npm run copy-files -- -- --watch | nay\" \"npm run build -- --watch\"",
     "clean": "rimraf ./lib",
     "lint-base": "eslint --max-warnings 0 --ignore-pattern \"!.eslintrc.js\"",
     "lint": "npm run lint-base -- --ext .js,.jsx,.ts,.tsx ./src .eslintrc.js",
