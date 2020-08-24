@@ -6,7 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v7.0.2...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v7.0.3...dev)
+
+## ExtendedYoGenerator v7.0.3
+### Fixed
+  - A bug which prevented `FileMapping.Processor`s from working correctly
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v7.0.2...v7.0.3)
 
 ## ExtendedYoGenerator v7.0.2
 ### Fixed
