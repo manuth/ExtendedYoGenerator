@@ -1,7 +1,6 @@
 import Path = require("path");
 import { isNullOrUndefined } from "util";
 import { IGenerator } from "../IGenerator";
-import { FileProcessor } from "./FileProcessor";
 import { IFileMapping } from "./IFileMapping";
 import { PathResolver } from "./Resolving/PathResolver";
 import { PropertyResolver } from "./Resolving/PropertyResolver";
@@ -59,23 +58,23 @@ export class FileMapping<TSettings, TOptions> extends PropertyResolver<IFileMapp
     /**
      * Gets the method to execute for processing the file-mapping.
      */
-    public get Processor(): FileProcessor<TSettings, TOptions>
+    public get Processor(): () => void | Promise<void>
     {
         if (this.Object.Processor)
         {
-            return (...args) => this.Object.Processor(...args);
+            return () => this.Object.Processor(this, this.Generator);
         }
         else
         {
-            return async (target, generator) =>
+            return async () =>
             {
-                if (await target.Context())
+                if (await this.Context())
                 {
-                    generator.fs.copyTpl(await target.Source, await target.Destination, await target.Context());
+                    this.Generator.fs.copyTpl(await this.Source, await this.Destination, await this.Context());
                 }
                 else
                 {
-                    generator.fs.copy(await target.Source, await target.Destination);
+                    this.Generator.fs.copy(await this.Source, await this.Destination);
                 }
             };
         }
