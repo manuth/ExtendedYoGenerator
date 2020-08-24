@@ -34,6 +34,7 @@
     "git-branch": "^2.0.1",
     "glob-exec": "^0.1.1",
     "lerna": "^3.22.1",
+    "nay": "^1.0.2",
     "npm-which": "^3.0.1",
     "random-js": "^2.1.0",
     "ts-node": "^9.0.0",
