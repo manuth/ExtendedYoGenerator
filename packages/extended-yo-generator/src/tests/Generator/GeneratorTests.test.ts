@@ -442,20 +442,20 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
 
                     test(
                         "Checking whether a resolved file-mapping is created for each file-mapping…",
-                        () =>
+                        async () =>
                         {
-                            Assert.strictEqual(generator.ResolvedFileMappings.length, generator.FileMappings.length);
+                            Assert.strictEqual((await generator.ResolvedFileMappings).length, (await generator.FileMappings).length);
 
                             Assert.ok(
-                                generator.FileMappings.every(
-                                    (fileMappingOptions) =>
+                                (await Promise.all((await generator.FileMappings).map(
+                                    async (fileMappingOptions) =>
                                     {
-                                        return generator.ResolvedFileMappings.some(
+                                        return (await generator.ResolvedFileMappings).some(
                                             (fileMapping) =>
                                             {
                                                 return fileMapping.Object === fileMappingOptions;
                                             });
-                                    }));
+                                    }))).every((value) => value));
                         });
                 });
 
