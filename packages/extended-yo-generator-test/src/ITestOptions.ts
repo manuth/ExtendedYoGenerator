@@ -1,4 +1,4 @@
-import { Question, GeneratorOptions, IComponentCollection, IGeneratorSettings, IFileMapping } from "@manuth/extended-yo-generator";
+import { Question, GeneratorOptions, IComponentCollection, IGeneratorSettings, IFileMapping, ResolveValue } from "@manuth/extended-yo-generator";
 
 /**
  * Provides options for the test-generator.
@@ -23,5 +23,5 @@ export interface ITestOptions
     /**
      * The file-mappings of the generator.
      */
-    FileMappings?: Array<IFileMapping<IGeneratorSettings, GeneratorOptions>>;
+    FileMappings?: ResolveValue<Array<IFileMapping<IGeneratorSettings, GeneratorOptions>>>;
 }

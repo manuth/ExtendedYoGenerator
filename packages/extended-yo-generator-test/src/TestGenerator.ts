@@ -1,4 +1,4 @@
-import { Generator, IComponentCollection, Question, IFileMapping } from "@manuth/extended-yo-generator";
+import { Generator, IComponentCollection, Question, IFileMapping, ResolveValue } from "@manuth/extended-yo-generator";
 import { join } from "upath";
 import { ITestGeneratorOptions } from "./ITestGeneratorOptions";
 import { ITestGeneratorSettings } from "./ITestGeneratorSettings";
@@ -100,7 +100,7 @@ export class TestGenerator<TSettings extends ITestGeneratorSettings = ITestGener
     /**
      * @inheritdoc
      */
-    public get FileMappings(): Array<IFileMapping<TSettings, ITestGeneratorOptions<TOptions>>>
+    public get FileMappings(): ResolveValue<Array<IFileMapping<TSettings, ITestGeneratorOptions<TOptions>>>>
     {
         return this.generatorOptions.FileMappings;
     }
@@ -108,7 +108,7 @@ export class TestGenerator<TSettings extends ITestGeneratorSettings = ITestGener
     /**
      * @inheritdoc
      */
-    public set FileMappings(value: Array<IFileMapping<TSettings, ITestGeneratorOptions<TOptions>>>)
+    public set FileMappings(value: ResolveValue<Array<IFileMapping<TSettings, ITestGeneratorOptions<TOptions>>>>)
     {
         this.generatorOptions.FileMappings = value;
     }

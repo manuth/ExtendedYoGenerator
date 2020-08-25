@@ -10,6 +10,7 @@ import { ComponentCollection } from "./Components/ComponentCollection";
 import { FileMapping } from "./Components/FileMapping";
 import { IComponentCollection } from "./Components/IComponentCollection";
 import { IFileMapping } from "./Components/IFileMapping";
+import { ResolveValue } from "./Components/Resolving/ResolveValue";
 import { CompositeConstructor } from "./CompositeConstructor";
 import { GeneratorConstructor } from "./GeneratorConstructor";
 import { GeneratorSettingKey } from "./GeneratorSettingKey";
@@ -194,7 +195,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     /**
      * Gets the options for the file-mappings of the generator.
      */
-    public get FileMappings(): Array<IFileMapping<TSettings, TOptions>>
+    public get FileMappings(): ResolveValue<Array<IFileMapping<TSettings, TOptions>>>
     {
         return [];
     }
@@ -202,9 +203,13 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     /**
      * Gets the file-mappings of the generator.
      */
-    public get ResolvedFileMappings(): Array<FileMapping<TSettings, TOptions>>
+    public get ResolvedFileMappings(): ResolveValue<Array<FileMapping<TSettings, TOptions>>>
     {
-        return (this.FileMappings ?? []).map((fileMapping) => new FileMapping(this, fileMapping));
+        return (
+            async () =>
+            {
+                return (await this.FileMappings ?? []).map((fileMapping) => new FileMapping(this, fileMapping));
+            })();
     }
 
     /**
@@ -215,7 +220,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
         return (
             async () =>
             {
-                let result = this.ResolvedFileMappings;
+                let result = await this.ResolvedFileMappings;
 
                 for (let category of this.ComponentCollection?.Categories ?? [])
                 {
@@ -372,6 +377,24 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
      */
     public async end(): Promise<void>
     { }
+
+    /**
+     * Converts the specified `value` to a promise.
+     *
+     * @param value
+     * THe value to convert.
+     *
+     * @returns
+     * A promise which resolves to the specified `value`.
+     */
+    protected CreatePromise<T>(value: T): Promise<T>
+    {
+        return (
+            async () =>
+            {
+                return value;
+            })();
+    }
 
     /**
      * Processes a file-mapping.

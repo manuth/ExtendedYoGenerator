@@ -4,6 +4,7 @@ import { ComponentCollection } from "../../Components/ComponentCollection";
 import { FileMapping } from "../../Components/FileMapping";
 import { IComponentCollection } from "../../Components/IComponentCollection";
 import { IFileMapping } from "../../Components/IFileMapping";
+import { ResolveValue } from "../../Components/Resolving/ResolveValue";
 import { Generator } from "../../Generator";
 
 /**
@@ -72,7 +73,7 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                 /**
                  * @inheritdoc
                  */
-                public get FileMappings(): Array<IFileMapping<any, any>>
+                public get FileMappings(): ResolveValue<Array<IFileMapping<any, any>>>
                 {
                     return [
                         {
@@ -99,17 +100,23 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                 /**
                  * @inheritdoc
                  */
-                public get FileMappings(): Array<IFileMapping<any, any>>
+                public get FileMappings(): ResolveValue<Array<IFileMapping<any, any>>>
                 {
-                    let result = super.FileMappings;
+                    let fileMappingTask = super.FileMappings;
 
-                    result.push(
+                    return (
+                        async () =>
                         {
-                            Source: subSourceFile,
-                            Destination: destinationFile
-                        });
+                            let result = await fileMappingTask;
 
-                    return result;
+                            result.push(
+                                {
+                                    Source: subSourceFile,
+                                    Destination: destinationFile
+                                });
+
+                            return result;
+                        })();
                 }
 
                 /**
@@ -143,17 +150,23 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                 /**
                  * @inheritdoc
                  */
-                public get BaseFileMappings(): Array<IFileMapping<any, any>>
+                public get BaseFileMappings(): ResolveValue<Array<IFileMapping<any, any>>>
                 {
-                    let result = super.BaseFileMappings;
+                    let fileMappingTask = super.BaseFileMappings;
 
-                    result.push(
+                    return (
+                        async () =>
                         {
-                            Source: injectedSourceFile,
-                            Destination: destinationFile
-                        });
+                            let result = await fileMappingTask;
 
-                    return result;
+                            result.push(
+                                {
+                                    Source: injectedSourceFile,
+                                    Destination: destinationFile
+                                });
+
+                            return result;
+                        })();
                 }
 
                 /**
