@@ -374,6 +374,24 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     { }
 
     /**
+     * Converts the specified `value` to a promise.
+     *
+     * @param value
+     * THe value to convert.
+     *
+     * @returns
+     * A promise which resolves to the specified `value`.
+     */
+    protected CreatePromise<T>(value: T): Promise<T>
+    {
+        return (
+            async () =>
+            {
+                return value;
+            })();
+    }
+
+    /**
      * Processes a file-mapping.
      *
      * @param fileMapping
