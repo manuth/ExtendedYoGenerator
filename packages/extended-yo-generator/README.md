@@ -41,7 +41,7 @@ Now you're ready to create the actual generator-class:
 
 ***./src/index.ts***
 ```ts
-import { Generator, GeneratorOptions, IGeneratorSettings, Question } from "@manuth/extended-yo-generator";
+import { Generator, GeneratorOptions, IGeneratorSettings, Question, ResolveValue } from "@manuth/extended-yo-generator";
 import { IMySettings } from "./IMySettings";
 
 export = class MyGenerator extends Generator<IMySettings, GeneratorOptions>
@@ -62,7 +62,7 @@ export = class MyGenerator extends Generator<IMySettings, GeneratorOptions>
         ];
     }
 
-    protected get FileMappings(): Array<IFileMapping<IMySettings, GeneratorOptions>>
+    protected get FileMappings(): ResolveValue<Array<IFileMapping<IMySettings, GeneratorOptions>>>
     {
         return [
             {
@@ -136,7 +136,7 @@ The `Generator.FileMappings`-property allows you to provide a set of files which
 ```ts
 export = class MyGenerator extends Generator<IMySettings>
 {
-    protected get FileMappings(): Array<IFileMapping<IMySettings>>
+    protected get FileMappings(): ResolveValue<Array<IFileMapping<IMySettings>>>
     {
         return [
             {
