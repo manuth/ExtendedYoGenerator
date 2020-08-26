@@ -10,7 +10,6 @@ import { ComponentCollection } from "./Components/ComponentCollection";
 import { FileMapping } from "./Components/FileMapping";
 import { IComponentCollection } from "./Components/IComponentCollection";
 import { IFileMapping } from "./Components/IFileMapping";
-import { ResolveValue } from "./Components/Resolving/ResolveValue";
 import { CompositeConstructor } from "./CompositeConstructor";
 import { GeneratorConstructor } from "./GeneratorConstructor";
 import { GeneratorSettingKey } from "./GeneratorSettingKey";
@@ -195,7 +194,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     /**
      * Gets the options for the file-mappings of the generator.
      */
-    public get FileMappings(): ResolveValue<Array<IFileMapping<TSettings, TOptions>>>
+    public get FileMappings(): Array<IFileMapping<TSettings, TOptions>>
     {
         return [];
     }
@@ -203,38 +202,30 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     /**
      * Gets the file-mappings of the generator.
      */
-    public get ResolvedFileMappings(): ResolveValue<Array<FileMapping<TSettings, TOptions>>>
+    public get ResolvedFileMappings(): Array<FileMapping<TSettings, TOptions>>
     {
-        return (
-            async () =>
-            {
-                return (await this.FileMappings ?? []).map((fileMapping) => new FileMapping(this, fileMapping));
-            })();
+        return (this.FileMappings ?? []).map((fileMapping) => new FileMapping(this, fileMapping));
     }
 
     /**
      * Gets the file-mappings to process.
      */
-    public get FileMappingCollection(): Promise<Array<FileMapping<TSettings, TOptions>>>
+    public get FileMappingCollection(): Array<FileMapping<TSettings, TOptions>>
     {
-        return (
-            async () =>
+        let result = this.ResolvedFileMappings;
+
+        for (let category of this.ComponentCollection?.Categories ?? [])
+        {
+            for (let component of category.Components)
             {
-                let result = await this.ResolvedFileMappings;
-
-                for (let category of this.ComponentCollection?.Categories ?? [])
+                if ((this.Settings[GeneratorSettingKey.Components] ?? []).includes(component.ID))
                 {
-                    for (let component of category.Components)
-                    {
-                        if ((this.Settings[GeneratorSettingKey.Components] ?? []).includes(component.ID))
-                        {
-                            result.push(...await component.FileMappings);
-                        }
-                    }
+                    result.push(...component.FileMappings);
                 }
+            }
+        }
 
-                return result;
-            })();
+        return result;
     }
 
     /**
@@ -360,7 +351,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
      */
     public async writing(): Promise<void>
     {
-        for (let fileMapping of await this.FileMappingCollection)
+        for (let fileMapping of this.FileMappingCollection)
         {
             await this.ProcessFile(fileMapping);
         }

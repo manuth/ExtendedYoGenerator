@@ -3,7 +3,6 @@ import { TestContext, TestGenerator, ITestGeneratorOptions, ITestGeneratorSettin
 import { TempFile } from "temp-filesystem";
 import { Component } from "../../Components/Component";
 import { IComponent } from "../../Components/IComponent";
-import { IFileMapping } from "../../Components/IFileMapping";
 
 /**
  * Provides tests for the `Component` class.
@@ -65,14 +64,13 @@ export function ComponentTests(context: TestContext<TestGenerator, ITestGenerato
                         "Checking whether changes to the `FileMappings` option immediately take affect…",
                         async () =>
                         {
-                            componentOptions.FileMappings = context.CreatePromiseFunction<Array<IFileMapping<ITestGeneratorSettings, ITestGeneratorOptions<ITestOptions>>>>(
-                                [
+                            componentOptions.FileMappings = [
                                     {
-                                        Destination: context.CreateFunction(testFile.FullName)
+                                        Destination: testFile.FullName
                                     }
-                                ]);
+                                ];
 
-                            Assert.strictEqual(await (await component.FileMappings)[0].Destination, testFile.FullName);
+                            Assert.strictEqual(component.FileMappings[0].Destination, testFile.FullName);
                         });
                 });
         });

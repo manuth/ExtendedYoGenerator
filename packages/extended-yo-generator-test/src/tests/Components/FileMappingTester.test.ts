@@ -102,10 +102,10 @@ export function FileMappingTesterTests(context: TestContext<TestGenerator>): voi
                         "Checking whether contents are written to both the file-system and mem-fs…",
                         async () =>
                         {
-                            Assert.ok(!await tester.Exists);
-                            await tester.WriteFile(await tester.FileMapping.Destination, content);
-                            Assert.strictEqual(tester.Generator.fs.read(await tester.FileMapping.Destination), content);
-                            Assert.strictEqual((await readFile(await tester.FileMapping.Destination)).toString(), content);
+                            Assert.ok(!tester.Exists);
+                            await tester.WriteFile(tester.FileMapping.Destination, content);
+                            Assert.strictEqual(tester.Generator.fs.read(tester.FileMapping.Destination), content);
+                            Assert.strictEqual((await readFile(tester.FileMapping.Destination)).toString(), content);
                         });
                 });
 
@@ -118,7 +118,7 @@ export function FileMappingTesterTests(context: TestContext<TestGenerator>): voi
                         async () =>
                         {
                             await tester.WriteSource(randomValue);
-                            Assert.strictEqual((await readFile(await tester.FileMapping.Source)).toString(), randomValue);
+                            Assert.strictEqual((await readFile(tester.FileMapping.Source)).toString(), randomValue);
                         });
                 });
 
@@ -131,7 +131,7 @@ export function FileMappingTesterTests(context: TestContext<TestGenerator>): voi
                         async () =>
                         {
                             await tester.WriteDestination(randomValue);
-                            Assert.strictEqual((await readFile(await tester.FileMapping.Destination)).toString(), randomValue);
+                            Assert.strictEqual((await readFile(tester.FileMapping.Destination)).toString(), randomValue);
                         });
                 });
 
@@ -143,11 +143,11 @@ export function FileMappingTesterTests(context: TestContext<TestGenerator>): voi
                         "Checking whether changes made to the mem-fs can be committed…",
                         async () =>
                         {
-                            tester.Generator.fs.write(await tester.FileMapping.Destination, randomValue);
+                            tester.Generator.fs.write(tester.FileMapping.Destination, randomValue);
                             Assert.ok(!await tester.Exists);
                             await tester.Commit();
                             Assert.ok(await tester.Exists);
-                            Assert.strictEqual((await readFile(await tester.FileMapping.Destination)).toString(), randomValue);
+                            Assert.strictEqual((await readFile(tester.FileMapping.Destination)).toString(), randomValue);
                         });
                 });
 
@@ -174,11 +174,11 @@ export function FileMappingTesterTests(context: TestContext<TestGenerator>): voi
                         async () =>
                         {
                             await tester.Run();
-                            Assert.ok(tester.Generator.fs.exists(await tester.FileMapping.Destination));
-                            Assert.ok(await pathExists(await tester.FileMapping.Destination));
+                            Assert.ok(tester.Generator.fs.exists(tester.FileMapping.Destination));
+                            Assert.ok(await pathExists(tester.FileMapping.Destination));
                             await tester.Clean();
-                            Assert.ok(!tester.Generator.fs.exists(await tester.FileMapping.Destination));
-                            Assert.ok(!await pathExists(await tester.FileMapping.Destination));
+                            Assert.ok(!tester.Generator.fs.exists(tester.FileMapping.Destination));
+                            Assert.ok(!await pathExists(tester.FileMapping.Destination));
                         });
                 });
         });
