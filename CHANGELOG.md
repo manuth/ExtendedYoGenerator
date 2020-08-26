@@ -6,7 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v7.1.0...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v7.2.0...dev)
+
+## ExtendedYoGenerator v7.2.0
+In this release, handling file-mappings has been made easier by dropping support for resolvable properties which turned out to be quite useless for common use-cases.
+
+### Removed
+  - Support for resolvable values in file-mappings
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v7.1.0...v7.2.0)
 
 ## ExtendedYoGenerator v7.1.0
 ### Added
