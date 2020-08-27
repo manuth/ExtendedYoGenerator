@@ -1,6 +1,7 @@
 import { FileMapping } from "./FileMapping";
 import { FileProcessor } from "./FileProcessor";
-import { ResolveFunction } from "./Resolving/ResolveFunction";
+import { AsyncResolveFunction } from "./Resolving/AsyncResolveFunction";
+import { Resolvable } from "./Resolving/Resolvable";
 
 /**
  * Represents a file-mapping.
@@ -16,17 +17,17 @@ export interface IFileMapping<TSettings, TOptions>
     /**
      * Gets or sets the path to the template of the component.
      */
-    Source?: string;
+    Source?: Resolvable<FileMapping<TSettings, TOptions>, TSettings, TOptions, string>;
 
     /**
      * Gets or sets the destination to save the component to.
      */
-    Destination: string;
+    Destination: Resolvable<FileMapping<TSettings, TOptions>, TSettings, TOptions, string>;
 
     /**
      * Gets or sets the context to use for copying the file-entry.
      */
-    Context?: ResolveFunction<FileMapping<TSettings, TOptions>, TSettings, TOptions, any>;
+    Context?: AsyncResolveFunction<FileMapping<TSettings, TOptions>, TSettings, TOptions, any>;
 
     /**
      * Gets or sets the method to execute for processing the file-mapping.
