@@ -6,7 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v7.3.0...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v7.3.1...dev)
+
+## ExtendedYoGenerator v7.3.1
+### Updated
+  - The `README` file for better understanding
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v7.3.0...v7.3.1)
 
 ## ExtendedYoGenerator v7.3.0
 This release brings back support for resolvable properties, though all properties (except for `IFileMapping.Context`) must be synchronous.

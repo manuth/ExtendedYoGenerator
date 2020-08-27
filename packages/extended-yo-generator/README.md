@@ -134,9 +134,9 @@ The `Generator.FileMappings`-property allows you to provide a set of files which
 
 #### Example
 ```ts
-export = class MyGenerator extends Generator<IMySettings>
+export = class MyGenerator extends Generator<IMySettings, GeneratorOptions>
 {
-    protected get FileMappings(): Array<IFileMapping<IMySettings>>
+    protected get FileMappings(): Array<IFileMapping<IMySettings, GeneratorOptions>>
     {
         return [
             {
@@ -153,7 +153,7 @@ export = class MyGenerator extends Generator<IMySettings>
         ];
     }
 
-    public async writing()
+    public async writing(): Promise<void>
     {
         return super.writing();
     }
@@ -168,7 +168,7 @@ Each component can provide any number of file-mappings and additional questions.
 
 #### Example
 ```ts
-export = class MyGenerator extends Generator<IMySettings>
+export = class MyGenerator extends Generator<IMySettings, GeneratorOptions>
 {
     protected get Components(): IComponentCollection<IMySettings, GeneratorOptions>
     {
@@ -184,13 +184,13 @@ export = class MyGenerator extends Generator<IMySettings>
                             FileMappings: [
                                 {
                                     Source: this.templatePath("README.md"),
+                                    Destination: "README.md",
                                     Context: (fileMapping, generator) =>
                                     {
                                         return {
                                             Name: generator.Settings.name
                                         };
-                                    },
-                                    Destination: "README.md"
+                                    }
                                 }
                             ]
                         },
@@ -244,7 +244,7 @@ All answers are stored in the `Generator.Settings`-property.
 
 #### Example
 ```ts
-export = class MyGenerator extends Generator<IMySettings>
+export = class MyGenerator extends Generator<IMySettings, GeneratorOptions>
 {
     protected get Questions(): Array<Question<IMySettings>>
     {
@@ -268,7 +268,7 @@ You might want to ask questions after the user has chosen components.
 You can reach this goal by manipulating the `QuestionCollection`-property like this:
 
 ```ts
-export = class MyGenerator extends Generator<IMySettings>
+export = class MyGenerator extends Generator<IMySettings, GeneratorOptions>
 {
     protected get QuestionCollection(): Array<Question<IMySettings>>
     {
