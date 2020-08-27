@@ -66,7 +66,7 @@ export class Component<TSettings, TOptions> extends PropertyResolver<IComponent<
      */
     public get FileMappings(): Array<FileMapping<TSettings, TOptions>>
     {
-        return this.Object.FileMappings.map(
+        return this.ResolveProperty(this, this.Object.FileMappings).map(
             (fileMapping) =>
             {
                 return new FileMapping(this.Generator, fileMapping);

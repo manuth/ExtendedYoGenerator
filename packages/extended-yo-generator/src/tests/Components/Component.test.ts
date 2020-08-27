@@ -65,10 +65,10 @@ export function ComponentTests(context: TestContext<TestGenerator, ITestGenerato
                         async () =>
                         {
                             componentOptions.FileMappings = [
-                                    {
-                                        Destination: testFile.FullName
-                                    }
-                                ];
+                                {
+                                    Destination: testFile.FullName
+                                }
+                            ];
 
                             Assert.strictEqual(component.FileMappings[0].Destination, testFile.FullName);
                         });
