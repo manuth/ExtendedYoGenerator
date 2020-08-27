@@ -6,7 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v7.3.1...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v7.3.2...dev)
+
+## ExtendedYoGenerator v7.3.2
+### Added
+  - Support for making `IComponent.FileMappings` resolvable
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v7.3.1...v7.3.2)
 
 ## ExtendedYoGenerator v7.3.1
 ### Updated
