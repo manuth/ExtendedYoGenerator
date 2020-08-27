@@ -1,5 +1,7 @@
 import { Question } from "yeoman-generator";
+import { Component } from "./Component";
 import { IFileMapping } from "./IFileMapping";
+import { Resolvable } from "./Resolving/Resolvable";
 
 /**
  * Represents a component.
@@ -35,5 +37,5 @@ export interface IComponent<TSettings, TOptions>
     /**
      * Gets or sets the file-mappings of the component.
      */
-    FileMappings: Array<IFileMapping<TSettings, TOptions>>;
+    FileMappings: Resolvable<Component<TSettings, TOptions>, TSettings, TOptions, Array<IFileMapping<TSettings, TOptions>>>;
 }
