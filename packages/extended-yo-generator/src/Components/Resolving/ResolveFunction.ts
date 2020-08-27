@@ -13,4 +13,4 @@ export type ResolveFunction<TTarget, TSettings, TOptions, TType> = (
      * @param generator
      * The generator of the target.
      */
-    (target: TTarget, generator: IGenerator<TSettings, TOptions>) => TType | Promise<TType>);
+    (target: TTarget, generator: IGenerator<TSettings, TOptions>) => TType);

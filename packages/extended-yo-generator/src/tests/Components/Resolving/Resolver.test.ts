@@ -35,7 +35,7 @@ export function ResolverTests(context: TestContext<TestGenerator, ITestGenerator
                  * @returns
                  * The resolved value.
                  */
-                public Resolve<T>(target: null, generator: null, value: Resolvable<null, null, null, T>): Promise<T>
+                public Resolve<T>(target: null, generator: null, value: Resolvable<null, null, null, T>): T
                 {
                     return super.Resolve<T>(target, generator, value);
                 }
@@ -64,10 +64,10 @@ export function ResolverTests(context: TestContext<TestGenerator, ITestGenerator
                         "Checking whether values can be resolved no mather whether they are functions, promises or plain values…",
                         async () =>
                         {
-                            Assert.strictEqual(testValue, await resolver.Resolve<string>(null, null, testValue));
-                            Assert.strictEqual(testValue, await resolver.Resolve<string>(null, null, context.CreatePromise(testValue)));
-                            Assert.strictEqual(testValue, await resolver.Resolve<string>(null, null, context.CreateFunction(testValue)));
-                            Assert.strictEqual(testValue, await resolver.Resolve<string>(null, null, context.CreatePromiseFunction(testValue)));
+                            Assert.strictEqual(testValue, resolver.Resolve(null, null, testValue));
+                            Assert.strictEqual(testValue, await resolver.Resolve<Promise<string>>(null, null, context.CreatePromise(testValue)));
+                            Assert.strictEqual(testValue, resolver.Resolve(null, null, context.CreateFunction(testValue)));
+                            Assert.strictEqual(testValue, resolver.Resolve<Promise<string>>(null, null, context.CreatePromiseFunction(testValue)));
                         });
 
                     test(
@@ -75,9 +75,9 @@ export function ResolverTests(context: TestContext<TestGenerator, ITestGenerator
                         async () =>
                         {
                             Assert.strictEqual(await testPromise, await resolver.Resolve<Promise<string>>(null, null, testPromise));
-                            Assert.strictEqual(await testPromise, await resolver.Resolve<Promise<string>>(null, null, context.CreatePromise(testPromise)));
+                            Assert.strictEqual(await testPromise, await resolver.Resolve(null, null, context.CreatePromise(testPromise)));
                             Assert.strictEqual(await testPromise, await resolver.Resolve<Promise<string>>(null, null, context.CreateFunction(testPromise)));
-                            Assert.strictEqual(await testPromise, await resolver.Resolve<Promise<string>>(null, null, context.CreatePromiseFunction(testPromise)));
+                            Assert.strictEqual(await testPromise, await resolver.Resolve<Promise<Promise<string>>>(null, null, context.CreatePromiseFunction(testPromise)));
                         });
 
                     test(
@@ -92,9 +92,9 @@ export function ResolverTests(context: TestContext<TestGenerator, ITestGenerator
                         "Checking whether functions can be resolved otherwise…",
                         async () =>
                         {
-                            Assert.strictEqual(testFunction, await resolver.Resolve(null, null, context.CreatePromise(testFunction)));
-                            Assert.strictEqual(testFunction, await resolver.Resolve(null, null, context.CreateFunction(testFunction)));
-                            Assert.strictEqual(testFunction, await resolver.Resolve(null, null, context.CreatePromiseFunction(testFunction)));
+                            Assert.strictEqual(testFunction, await resolver.Resolve<Promise<() => void>>(null, null, context.CreatePromise(testFunction)));
+                            Assert.strictEqual(testFunction, resolver.Resolve<() => void>(null, null, context.CreateFunction(testFunction)));
+                            Assert.strictEqual(testFunction, await resolver.Resolve<Promise<() => void>>(null, null, context.CreatePromiseFunction(testFunction)));
                         });
 
                     test(

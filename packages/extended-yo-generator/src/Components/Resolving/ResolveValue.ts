@@ -1,4 +1,4 @@
 /**
- * Represents a resolve-value.
+ * Represents a synchronous resolve-value.
  */
-export type ResolveValue<T> = T extends (...args: any[]) => any ? Promise<T> : T | Promise<T>;
+export type ResolveValue<T> = T extends (...args: any[]) => any ? never : T;
