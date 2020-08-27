@@ -73,7 +73,7 @@ export class PropertyResolver<TObject, TTarget, TSettings, TOptions> extends Res
      * @returns
      * The resolved value.
      */
-    protected async ResolveProperty<T>(target: TTarget, value: Resolvable<TTarget, TSettings, TOptions, T>): Promise<T>
+    protected ResolveProperty<T>(target: TTarget, value: Resolvable<TTarget, TSettings, TOptions, T>): T
     {
         if (typeof value === "function")
         {

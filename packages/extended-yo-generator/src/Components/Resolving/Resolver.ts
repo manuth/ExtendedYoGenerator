@@ -27,7 +27,7 @@ export class Resolver<TTarget, TSettings, TOptions>
      * @returns
      * The resolved value.
      */
-    protected async Resolve<T>(target: TTarget, generator: IGenerator<TSettings, TOptions>, value: Resolvable<TTarget, TSettings, TOptions, T>): Promise<T>
+    protected Resolve<T>(target: TTarget, generator: IGenerator<TSettings, TOptions>, value: Resolvable<TTarget, TSettings, TOptions, T>): T
     {
         if (value instanceof Function)
         {
@@ -35,7 +35,7 @@ export class Resolver<TTarget, TSettings, TOptions>
         }
         else
         {
-            let result: Promise<T> | T = value;
+            let result: T = value;
             return result;
         }
     }

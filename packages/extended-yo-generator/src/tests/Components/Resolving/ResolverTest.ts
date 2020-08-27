@@ -27,7 +27,7 @@ export class ResolverTest extends PropertyResolver<IResolverTestOptions, Resolve
      */
     public get TestValue(): Promise<string>
     {
-        return this.ResolveProperty(this, this.Object.TestValue);
+        return this.ResolveProperty(this, this.Object.TestValue) as Promise<string>;
     }
 
     /**
@@ -35,7 +35,7 @@ export class ResolverTest extends PropertyResolver<IResolverTestOptions, Resolve
      */
     public get TestPromise(): Promise<Promise<string>>
     {
-        return this.ResolveProperty(this, this.Object.TestPromise);
+        return this.ResolveProperty(this, this.Object.TestPromise) as Promise<Promise<string>>;
     }
 
     /**
@@ -43,6 +43,6 @@ export class ResolverTest extends PropertyResolver<IResolverTestOptions, Resolve
      */
     public get TestFunction(): Promise<() => string>
     {
-        return this.ResolveProperty(this, this.Object.TestFunction);
+        return this.ResolveProperty(this, this.Object.TestFunction) as Promise<() => string>;
     }
 }

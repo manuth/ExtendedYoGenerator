@@ -4,6 +4,7 @@ import { IGenerator } from "../IGenerator";
 import { IFileMapping } from "./IFileMapping";
 import { PathResolver } from "./Resolving/PathResolver";
 import { PropertyResolver } from "./Resolving/PropertyResolver";
+import { Resolvable } from "./Resolving/Resolvable";
 
 /**
  * Represents a file-mapping.
@@ -91,17 +92,19 @@ export class FileMapping<TSettings, TOptions> extends PropertyResolver<IFileMapp
      * @returns
      * The resolved path.
      */
-    protected ResolvePath(path: string, resolver: PathResolver): string
+    protected ResolvePath(path: Resolvable<FileMapping<TSettings, TOptions>, TSettings, TOptions, string>, resolver: PathResolver): string
     {
+        let result = this.ResolveProperty(this, path);
+
         if (
-            isNullOrUndefined(path) ||
-            Path.isAbsolute(path))
+            isNullOrUndefined(result) ||
+            Path.isAbsolute(result))
         {
-            return path;
+            return result;
         }
         else
         {
-            return resolver(path);
+            return resolver(result);
         }
     }
 }

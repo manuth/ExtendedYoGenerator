@@ -1,4 +1,4 @@
-import { Resolvable } from "../../../Components/Resolving/Resolvable";
+import { ResolvableAsync } from "../../../Components/Resolving/ResolvableAsync";
 import { ResolverTest } from "./ResolverTest";
 
 /**
@@ -9,15 +9,15 @@ export interface IResolverTestOptions
     /**
      * A test-value.
      */
-    TestValue: Resolvable<ResolverTest, null, null, string>;
+    TestValue: ResolvableAsync<ResolverTest, null, null, string>;
 
     /**
      * A test-promise.
      */
-    TestPromise: Resolvable<ResolverTest, null, null, Promise<string>>;
+    TestPromise: ResolvableAsync<ResolverTest, null, null, Promise<string>>;
 
     /**
      * A test-method.
      */
-    TestFunction: Resolvable<ResolverTest, null, null, () => string>;
+    TestFunction: ResolvableAsync<ResolverTest, null, null, () => string>;
 }
