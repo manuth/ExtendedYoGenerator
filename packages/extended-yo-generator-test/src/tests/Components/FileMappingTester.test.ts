@@ -102,7 +102,7 @@ export function FileMappingTesterTests(context: TestContext<TestGenerator>): voi
                         "Checking whether contents are written to both the file-system and mem-fs…",
                         async () =>
                         {
-                            Assert.ok(!tester.Exists);
+                            Assert.ok(!await tester.Exists);
                             await tester.WriteFile(tester.FileMapping.Destination, content);
                             Assert.strictEqual(tester.Generator.fs.read(tester.FileMapping.Destination), content);
                             Assert.strictEqual((await readFile(tester.FileMapping.Destination)).toString(), content);

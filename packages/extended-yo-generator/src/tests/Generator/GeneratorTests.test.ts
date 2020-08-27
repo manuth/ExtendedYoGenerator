@@ -444,18 +444,18 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                         "Checking whether a resolved file-mapping is created for each file-mapping…",
                         async () =>
                         {
-                            Assert.strictEqual((await generator.ResolvedFileMappings).length, (await generator.FileMappings).length);
+                            Assert.strictEqual(generator.ResolvedFileMappings.length, generator.FileMappings.length);
 
                             Assert.ok(
-                                (await Promise.all((await generator.FileMappings).map(
-                                    async (fileMappingOptions) =>
+                                generator.FileMappings.every(
+                                    (fileMappingOptions) =>
                                     {
-                                        return (await generator.ResolvedFileMappings).some(
+                                        return generator.ResolvedFileMappings.some(
                                             (fileMapping) =>
                                             {
                                                 return fileMapping.Object === fileMappingOptions;
                                             });
-                                    }))).every((value) => value));
+                                    }));
                         });
                 });
 
@@ -517,7 +517,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                         async () =>
                         {
                             Assert.strictEqual(
-                                (await generator.FileMappingCollection).filter(
+                                generator.FileMappingCollection.filter(
                                     (fileMapping) => fileMapping.Object.Destination === fileMappingDestination).length,
                                 1);
                         });
@@ -527,7 +527,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                         async () =>
                         {
                             Assert.strictEqual(
-                                (await generator.FileMappingCollection).filter(
+                                generator.FileMappingCollection.filter(
                                     (fileMapping) => fileMapping.Object.Destination === enabledComponentDestination).length,
                                 1);
                         });
@@ -537,7 +537,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                         async () =>
                         {
                             Assert.ok(
-                                !(await generator.FileMappingCollection).some(
+                                !generator.FileMappingCollection.some(
                                     (fileMapping) => fileMapping.Object.Destination === disabledComponentDestination));
                         });
                 });
