@@ -217,7 +217,7 @@ export = class MyGenerator extends Generator<IMySettings>
                             ],
                             FileMappings: [
                                 {
-                                    get Source()
+                                    Source: () =>
                                     {
                                         return this.Settings.licenseType === "gpl" ? "GPL.txt" : "Apache.txt");
                                     },
