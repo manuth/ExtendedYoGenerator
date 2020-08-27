@@ -62,7 +62,7 @@ export = class MyGenerator extends Generator<IMySettings, GeneratorOptions>
         ];
     }
 
-    protected get FileMappings(): ResolveValue<Array<IFileMapping<IMySettings, GeneratorOptions>>>
+    protected get FileMappings(): Array<IFileMapping<IMySettings, GeneratorOptions>>
     {
         return [
             {
@@ -136,7 +136,7 @@ The `Generator.FileMappings`-property allows you to provide a set of files which
 ```ts
 export = class MyGenerator extends Generator<IMySettings>
 {
-    protected get FileMappings(): ResolveValue<Array<IFileMapping<IMySettings>>>
+    protected get FileMappings(): Array<IFileMapping<IMySettings>>
     {
         return [
             {
@@ -217,9 +217,9 @@ export = class MyGenerator extends Generator<IMySettings>
                             ],
                             FileMappings: [
                                 {
-                                    Source: (fileMapping, generator) =>
+                                    get Source()
                                     {
-                                        return this.templatePath(generator.Settings.licenseType === "gpl" ? "GPL.txt" : "Apache.txt");
+                                        return this.Settings.licenseType === "gpl" ? "GPL.txt" : "Apache.txt");
                                     },
                                     Destination: "LICENSE"
                                 }
