@@ -28,7 +28,7 @@ export class JavaScriptFileMappingTester<TGenerator extends IGenerator<TSettings
      */
     public async Require(): Promise<any>
     {
-        let fileName = require.resolve(await this.FileMapping.Destination);
+        let fileName = require.resolve(this.FileMapping.Destination);
 
         if (fileName in require.cache)
         {

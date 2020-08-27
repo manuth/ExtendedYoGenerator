@@ -4,7 +4,6 @@ import { IGenerator } from "../IGenerator";
 import { IFileMapping } from "./IFileMapping";
 import { PathResolver } from "./Resolving/PathResolver";
 import { PropertyResolver } from "./Resolving/PropertyResolver";
-import { Resolvable } from "./Resolving/Resolvable";
 
 /**
  * Represents a file-mapping.
@@ -34,7 +33,7 @@ export class FileMapping<TSettings, TOptions> extends PropertyResolver<IFileMapp
     /**
      * Gets the path to the template of the component.
      */
-    public get Source(): Promise<string>
+    public get Source(): string
     {
         return this.ResolvePath(this.Object.Source, (...path) => this.Generator.templatePath(...path));
     }
@@ -42,7 +41,7 @@ export class FileMapping<TSettings, TOptions> extends PropertyResolver<IFileMapp
     /**
      * Gets the destination to save the component to.
      */
-    public get Destination(): Promise<string>
+    public get Destination(): string
     {
         return this.ResolvePath(this.Object.Destination, (...path) => this.Generator.destinationPath(...path));
     }
@@ -70,11 +69,11 @@ export class FileMapping<TSettings, TOptions> extends PropertyResolver<IFileMapp
             {
                 if (await this.Context())
                 {
-                    this.Generator.fs.copyTpl(await this.Source, await this.Destination, await this.Context());
+                    this.Generator.fs.copyTpl(this.Source, this.Destination, await this.Context());
                 }
                 else
                 {
-                    this.Generator.fs.copy(await this.Source, await this.Destination);
+                    this.Generator.fs.copy(this.Source, this.Destination);
                 }
             };
         }
@@ -92,22 +91,17 @@ export class FileMapping<TSettings, TOptions> extends PropertyResolver<IFileMapp
      * @returns
      * The resolved path.
      */
-    protected ResolvePath(path: Resolvable<FileMapping<TSettings, TOptions>, TSettings, TOptions, string>, resolver: PathResolver): Promise<string>
+    protected ResolvePath(path: string, resolver: PathResolver): string
     {
-        return (async () =>
+        if (
+            isNullOrUndefined(path) ||
+            Path.isAbsolute(path))
         {
-            let result = await this.ResolveProperty(this, path);
-
-            if (
-                isNullOrUndefined(result) ||
-                Path.isAbsolute(result))
-            {
-                return result;
-            }
-            else
-            {
-                return resolver(result);
-            }
-        })();
+            return path;
+        }
+        else
+        {
+            return resolver(path);
+        }
     }
 }

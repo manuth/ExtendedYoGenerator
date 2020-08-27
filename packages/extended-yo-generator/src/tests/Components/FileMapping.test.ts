@@ -65,7 +65,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                         async () =>
                         {
                             fileMappingOptions.Source = testPath;
-                            Assert.strictEqual(await fileMapping.Source, generator.templatePath(testPath));
+                            Assert.strictEqual(fileMapping.Source, generator.templatePath(testPath));
                         });
 
                     test(
@@ -73,7 +73,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                         async () =>
                         {
                             fileMappingOptions.Source = testDirectory.MakePath(testPath);
-                            Assert.strictEqual(await fileMapping.Source, testDirectory.MakePath(testPath));
+                            Assert.strictEqual(fileMapping.Source, testDirectory.MakePath(testPath));
                         });
 
                     test(
@@ -81,7 +81,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                         async () =>
                         {
                             fileMappingOptions.Source = null;
-                            Assert.strictEqual(await fileMapping.Source, null);
+                            Assert.strictEqual(fileMapping.Source, null);
                         });
                 });
 
@@ -94,7 +94,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                         async () =>
                         {
                             fileMappingOptions.Destination = testPath;
-                            Assert.strictEqual(await fileMapping.Destination, generator.destinationPath(testPath));
+                            Assert.strictEqual(fileMapping.Destination, generator.destinationPath(testPath));
                         });
 
                     test(
@@ -102,7 +102,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                         async () =>
                         {
                             fileMappingOptions.Destination = testDirectory.MakePath(testPath);
-                            Assert.strictEqual(await fileMapping.Destination, testDirectory.MakePath(testPath));
+                            Assert.strictEqual(fileMapping.Destination, testDirectory.MakePath(testPath));
                         });
 
                     test(
@@ -110,7 +110,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                         async () =>
                         {
                             fileMappingOptions.Destination = null;
-                            Assert.strictEqual(await fileMapping.Destination, null);
+                            Assert.strictEqual(fileMapping.Destination, null);
                         });
                 });
 

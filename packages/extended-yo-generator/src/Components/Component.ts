@@ -64,15 +64,12 @@ export class Component<TSettings, TOptions> extends PropertyResolver<IComponent<
     /**
      * Gets or sets the file-mappings of the component.
      */
-    public get FileMappings(): Promise<Array<FileMapping<TSettings, TOptions>>>
+    public get FileMappings(): Array<FileMapping<TSettings, TOptions>>
     {
-        return (async () =>
-        {
-            return (await this.ResolveProperty(this, this.Object.FileMappings)).map(
-                (fileMapping) =>
-                {
-                    return new FileMapping(this.Generator, fileMapping);
-                });
-        })();
+        return this.Object.FileMappings.map(
+            (fileMapping) =>
+            {
+                return new FileMapping(this.Generator, fileMapping);
+            });
     }
 }

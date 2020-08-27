@@ -4,7 +4,6 @@ import { ComponentCollection } from "../../Components/ComponentCollection";
 import { FileMapping } from "../../Components/FileMapping";
 import { IComponentCollection } from "../../Components/IComponentCollection";
 import { IFileMapping } from "../../Components/IFileMapping";
-import { ResolveValue } from "../../Components/Resolving/ResolveValue";
 import { Generator } from "../../Generator";
 
 /**
@@ -73,7 +72,7 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                 /**
                  * @inheritdoc
                  */
-                public get FileMappings(): ResolveValue<Array<IFileMapping<any, any>>>
+                public get FileMappings(): Array<IFileMapping<any, any>>
                 {
                     return [
                         {
@@ -100,23 +99,17 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                 /**
                  * @inheritdoc
                  */
-                public get FileMappings(): ResolveValue<Array<IFileMapping<any, any>>>
+                public get FileMappings(): Array<IFileMapping<any, any>>
                 {
-                    let fileMappingTask = super.FileMappings;
+                    let result = super.FileMappings;
 
-                    return (
-                        async () =>
+                    result.push(
                         {
-                            let result = await fileMappingTask;
+                            Source: subSourceFile,
+                            Destination: destinationFile
+                        });
 
-                            result.push(
-                                {
-                                    Source: subSourceFile,
-                                    Destination: destinationFile
-                                });
-
-                            return result;
-                        })();
+                    return result;
                 }
 
                 /**
@@ -150,23 +143,17 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                 /**
                  * @inheritdoc
                  */
-                public get BaseFileMappings(): ResolveValue<Array<IFileMapping<any, any>>>
+                public get BaseFileMappings(): Array<IFileMapping<any, any>>
                 {
-                    let fileMappingTask = super.BaseFileMappings;
+                    let result = super.BaseFileMappings;
 
-                    return (
-                        async () =>
+                    result.push(
                         {
-                            let result = await fileMappingTask;
+                            Source: injectedSourceFile,
+                            Destination: destinationFile
+                        });
 
-                            result.push(
-                                {
-                                    Source: injectedSourceFile,
-                                    Destination: destinationFile
-                                });
-
-                            return result;
-                        })();
+                    return result;
                 }
 
                 /**
@@ -201,7 +188,7 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
             /**
              * A component for checking a file-mapping.
              */
-            type FileMappingCondition = (fileMapping: FileMapping<any, any>) => Promise<boolean>;
+            type FileMappingCondition = (fileMapping: FileMapping<any, any>) => boolean;
 
             /**
              * Asserts the truthyness of the specified `condition`.
@@ -218,11 +205,10 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
              * @returns
              * A value indicating whether the assertion is true.
              */
-            async function AssertFileMappings(fileMappings: Array<FileMapping<any, any>>, condition: FileMappingCondition, all = false): Promise<boolean>
+            function AssertFileMappings(fileMappings: Array<FileMapping<any, any>>, condition: FileMappingCondition, all = false): boolean
             {
-                let values = (await Promise.all(
-                    fileMappings.map(
-                        async (fileMapping) => condition(fileMapping))));
+                let values = fileMappings.map(
+                    (fileMapping) => condition(fileMapping));
 
                 return all ? values.every((value) => value) : values.some((value) => value);
             }
@@ -242,13 +228,13 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
              * @returns
              * A value indicating whether the assertion is true.
              */
-            async function AssertComponentFileMappings(collection: ComponentCollection<any, any>, condition: FileMappingCondition, all = false): Promise<boolean>
+            function AssertComponentFileMappings(collection: ComponentCollection<any, any>, condition: FileMappingCondition, all = false): boolean
             {
-                let values = await Promise.all(collection.Categories.flatMap(
+                let values = collection.Categories.flatMap(
                     (category) =>
                     {
-                        return category.Components.map(async (component) => AssertFileMappings(await component.FileMappings, condition, all));
-                    }));
+                        return category.Components.map((component) => AssertFileMappings(component.FileMappings, condition, all));
+                    });
 
                 return all ? values.every((value) => value) : values.some((value) => value);
             }
@@ -307,11 +293,11 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                         "Checking whether destination-paths are created the same way for file-mappings and components of the base and the inheriting generator…",
                         async () =>
                         {
-                            let condition: FileMappingCondition = async (fileMapping) =>
-                                await fileMapping.Destination === generator.destinationPath(destinationFile);
+                            let condition: FileMappingCondition = (fileMapping) =>
+                                fileMapping.Destination === generator.destinationPath(destinationFile);
 
-                            Assert.ok(await AssertFileMappings(await generator.FileMappingCollection, condition, true));
-                            Assert.ok(await AssertComponentFileMappings(generator.ComponentCollection, condition, true));
+                            Assert.ok(AssertFileMappings(generator.FileMappingCollection, condition, true));
+                            Assert.ok(AssertComponentFileMappings(generator.ComponentCollection, condition, true));
                         });
 
                     test(
@@ -319,9 +305,9 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                         async () =>
                         {
                             Assert.ok(
-                                await AssertFileMappings(
-                                    await generator.FileMappingCollection,
-                                    async (fileMapping) => await fileMapping.Source === generator.Base.templatePath(superSourceFile)));
+                                AssertFileMappings(
+                                    generator.FileMappingCollection,
+                                    (fileMapping) => fileMapping.Source === generator.Base.templatePath(superSourceFile)));
                         });
 
                     test(
@@ -334,11 +320,11 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                                         (component) => component.ID === superComponentID)));
 
                             Assert.ok(
-                                await AssertComponentFileMappings(
+                                AssertComponentFileMappings(
                                     generator.ComponentCollection,
-                                    async (fileMapping) =>
+                                    (fileMapping) =>
                                     {
-                                        return await fileMapping.Source === generator.Base.templatePath(superSourceFile);
+                                        return fileMapping.Source === generator.Base.templatePath(superSourceFile);
                                     }));
                         });
 
@@ -356,9 +342,9 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                         async () =>
                         {
                             Assert.ok(
-                                await AssertFileMappings(
-                                    await generator.FileMappingCollection,
-                                    async (fileMapping) => await fileMapping.Source === generator.Base.templatePath(superSourceFile)));
+                                AssertFileMappings(
+                                    generator.FileMappingCollection,
+                                    (fileMapping) => fileMapping.Source === generator.Base.templatePath(superSourceFile)));
                         });
 
                     test(
@@ -371,9 +357,9 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                                         (component) => component.ID === subComponentID)));
 
                             Assert.ok(
-                                await AssertComponentFileMappings(
+                                AssertComponentFileMappings(
                                     generator.ComponentCollection,
-                                    async (fileMapping) => await fileMapping.Source === generator.templatePath(subSourceFile)));
+                                    (fileMapping) => fileMapping.Source === generator.templatePath(subSourceFile)));
                         });
 
                     test(
@@ -381,9 +367,9 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                         async () =>
                         {
                             Assert.ok(
-                                await AssertFileMappings(
-                                    await generator.FileMappingCollection,
-                                    async (fileMapping) => await fileMapping.Source === generator.Base.templatePath(injectedSourceFile)));
+                                AssertFileMappings(
+                                    generator.FileMappingCollection,
+                                    (fileMapping) => fileMapping.Source === generator.Base.templatePath(injectedSourceFile)));
                         });
 
                     test(
@@ -391,9 +377,9 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                         async () =>
                         {
                             Assert.ok(
-                                await AssertComponentFileMappings(
+                                AssertComponentFileMappings(
                                     generator.ComponentCollection,
-                                    async (fileMapping) => await fileMapping.Source === generator.Base.templatePath(injectedSourceFile)));
+                                    (fileMapping) => fileMapping.Source === generator.Base.templatePath(injectedSourceFile)));
                         });
                 });
 

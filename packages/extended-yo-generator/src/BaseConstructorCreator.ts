@@ -3,7 +3,6 @@ import { IComponent } from "./Components/IComponent";
 import { IComponentCategory } from "./Components/IComponentCategory";
 import { IComponentCollection } from "./Components/IComponentCollection";
 import { IFileMapping } from "./Components/IFileMapping";
-import { ResolveValue } from "./Components/Resolving/ResolveValue";
 import { CompositeConstructor } from "./CompositeConstructor";
 import { Generator } from "./Generator";
 import { GeneratorConstructor } from "./GeneratorConstructor";
@@ -55,7 +54,7 @@ export abstract class BaseConstructorCreator
             /**
              * A component for resolving the file-mappings of the base.
              */
-            private baseFileMappingResolver: () => ResolveValue<Array<IFileMapping<any, any>>>;
+            private baseFileMappingResolver: () => Array<IFileMapping<any, any>>;
 
             /**
              * Initializes a new instance of the `BaseGenerator` class.
@@ -174,7 +173,7 @@ export abstract class BaseConstructorCreator
             /**
              * @inheritdoc
              */
-            public get BaseFileMappings(): ResolveValue<Array<IFileMapping<any, any>>>
+            public get BaseFileMappings(): Array<IFileMapping<any, any>>
             {
                 return this.baseFileMappingResolver();
             }
@@ -219,7 +218,7 @@ export abstract class BaseConstructorCreator
             /**
              * @inheritdoc
              */
-            public get FileMappings(): ResolveValue<Array<IFileMapping<any, any>>>
+            public get FileMappings(): Array<IFileMapping<any, any>>
             {
                 return this.Base.ResolvedFileMappings;
             }

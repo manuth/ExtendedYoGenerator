@@ -64,7 +64,7 @@ export class FileMappingTester<TGenerator extends IGenerator<TSettings, TOptions
         return (
             async () =>
             {
-                return pathExists(await this.FileMapping.Destination);
+                return pathExists(this.FileMapping.Destination);
             })();
     }
 
@@ -76,7 +76,7 @@ export class FileMappingTester<TGenerator extends IGenerator<TSettings, TOptions
         return (
             async () =>
             {
-                return (await readFile(await this.FileMapping.Destination)).toString();
+                return (await readFile(this.FileMapping.Destination)).toString();
             })();
     }
 
@@ -113,7 +113,7 @@ export class FileMappingTester<TGenerator extends IGenerator<TSettings, TOptions
      */
     public async WriteSource(content: string): Promise<void>
     {
-        return this.WriteFile(await this.FileMapping.Source, content);
+        return this.WriteFile(this.FileMapping.Source, content);
     }
 
     /**
@@ -124,7 +124,7 @@ export class FileMappingTester<TGenerator extends IGenerator<TSettings, TOptions
      */
     public async WriteDestination(content: string): Promise<void>
     {
-        return this.WriteFile(await this.FileMapping.Destination, content);
+        return this.WriteFile(this.FileMapping.Destination, content);
     }
 
     /**
@@ -166,15 +166,15 @@ export class FileMappingTester<TGenerator extends IGenerator<TSettings, TOptions
      */
     public async Clean(): Promise<void>
     {
-        if (this.Generator.fs.exists(await this.FileMapping.Destination))
+        if (this.Generator.fs.exists(this.FileMapping.Destination))
         {
-            this.Generator.fs.delete(await this.FileMapping.Destination);
+            this.Generator.fs.delete(this.FileMapping.Destination);
             await this.Commit();
         }
 
-        if (await pathExists(await this.FileMapping.Destination))
+        if (await pathExists(this.FileMapping.Destination))
         {
-            return remove(await this.FileMapping.Destination);
+            return remove(this.FileMapping.Destination);
         }
     }
 }
