@@ -67,7 +67,7 @@ export function ResolverTests(context: TestContext<TestGenerator, ITestGenerator
                             Assert.strictEqual(testValue, resolver.Resolve(null, null, testValue));
                             Assert.strictEqual(testValue, await resolver.Resolve<Promise<string>>(null, null, context.CreatePromise(testValue)));
                             Assert.strictEqual(testValue, resolver.Resolve(null, null, context.CreateFunction(testValue)));
-                            Assert.strictEqual(testValue, resolver.Resolve<Promise<string>>(null, null, context.CreatePromiseFunction(testValue)));
+                            Assert.strictEqual(testValue, await resolver.Resolve<Promise<string>>(null, null, context.CreatePromiseFunction(testValue)));
                         });
 
                     test(
