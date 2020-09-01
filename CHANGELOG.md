@@ -6,7 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v7.3.2...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v7.3.3...dev)
+
+## ExtendedYoGenerator v7.3.3
+### Added
+  - Export-statements for missing components
+  - Support for specifying the constructor of any generator using the `GeneratorConstructor<T>` type
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v7.3.1...v7.3.3)
 
 ## ExtendedYoGenerator v7.3.2
 ### Added
