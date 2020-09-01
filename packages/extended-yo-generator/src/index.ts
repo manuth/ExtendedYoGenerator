@@ -1,5 +1,5 @@
 export { Answers, ChoiceCollection, Transformer, Validator } from "inquirer";
-export { Question, ArgumentConfig, CompositionOptions, GeneratorConstructor, GeneratorOptions, InstallOptions, OptionConfig, Priority, QuestionRegistrationOptions, Questions, QueueOptions, Task, TaskOptions, TemplateRenderOptions } from "yeoman-generator";
+export { Question, ArgumentConfig, CompositionOptions, GeneratorOptions, InstallOptions, OptionConfig, Priority, QuestionRegistrationOptions, Questions, QueueOptions, Task, TaskOptions, TemplateRenderOptions } from "yeoman-generator";
 export { Component } from "./Components/Component";
 export { ComponentCategory } from "./Components/ComponentCategory";
 export { ComponentCollection } from "./Components/ComponentCollection";
@@ -16,7 +16,10 @@ export { Resolvable } from "./Components/Resolving/Resolvable";
 export { ResolvableAsync } from "./Components/Resolving/ResolvableAsync";
 export { ResolveFunction } from "./Components/Resolving/ResolveFunction";
 export { ResolveValue } from "./Components/Resolving/ResolveValue";
+export { CompositeConstructor } from "./CompositeConstructor";
 export { Generator } from "./Generator";
+export { GeneratorConstructor } from "./GeneratorConstructor";
 export { GeneratorSettingKey } from "./GeneratorSettingKey";
+export { IBaseGenerator } from "./IBaseGenerator";
 export { IGenerator } from "./IGenerator";
 export { IGeneratorSettings } from "./IGeneratorSettings";
