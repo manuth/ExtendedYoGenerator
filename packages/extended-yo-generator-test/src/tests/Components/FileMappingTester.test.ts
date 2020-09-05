@@ -1,7 +1,7 @@
 import Assert = require("assert");
 import { IFileMapping } from "@manuth/extended-yo-generator";
+import { TempFile } from "@manuth/temp-files";
 import { readFile, pathExists } from "fs-extra";
-import { TempFile } from "temp-filesystem";
 import { FileMappingTester } from "../../Components/FileMappingTester";
 import { TestContext } from "../../TestContext";
 import { TestGenerator } from "../../TestGenerator";

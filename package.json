@@ -16,7 +16,9 @@
     "version": "ts-node ./scripts/bumpVersion.ts",
     "prepare": "lerna bootstrap && npm run rebuild"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@manuth/temp-files": "^1.2.0"
+  },
   "devDependencies": {
     "@manuth/eslint-plugin-typescript": "^2.1.2",
     "@manuth/tsconfig": "^1.2.2",

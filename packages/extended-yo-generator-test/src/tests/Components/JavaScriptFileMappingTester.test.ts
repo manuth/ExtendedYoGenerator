@@ -1,6 +1,6 @@
 import Assert = require("assert");
 import { IFileMapping } from "@manuth/extended-yo-generator";
-import { TempFile } from "temp-filesystem";
+import { TempFile } from "@manuth/temp-files";
 import { JavaScriptFileMappingTester } from "../../Components/JavaScriptFileMappingTester";
 import { TestContext } from "../../TestContext";
 import TestGenerator = require("../../generators/app");

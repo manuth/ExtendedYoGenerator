@@ -1,6 +1,6 @@
 import Assert = require("assert");
 import { TestContext, TestGenerator, ITestGeneratorOptions, ITestGeneratorSettings, ITestOptions } from "@manuth/extended-yo-generator-test";
-import { TempFile } from "temp-filesystem";
+import { TempFile } from "@manuth/temp-files";
 import { Component } from "../../Components/Component";
 import { IComponent } from "../../Components/IComponent";
 
