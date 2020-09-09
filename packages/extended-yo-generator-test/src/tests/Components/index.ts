@@ -1,8 +1,8 @@
-import { TestContext } from "../../TestContext";
 import TestGenerator = require("../../generators/app");
+import { TestContext } from "../../TestContext";
 import { FileMappingTesterTests } from "./FileMappingTester.test";
-import { JSONFileMappingTesterTests } from "./JSONFileMappingTester.test";
 import { JavaScriptFileMappingTesterTests } from "./JavaScriptFileMappingTester.test";
+import { JSONFileMappingTesterTests } from "./JSONFileMappingTester.test";
 
 /**
  * Registers tests for components.

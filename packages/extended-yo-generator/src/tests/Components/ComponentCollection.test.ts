@@ -1,5 +1,5 @@
 import Assert = require("assert");
-import { TestContext, TestGenerator, ITestGeneratorOptions, ITestGeneratorSettings, ITestOptions } from "@manuth/extended-yo-generator-test";
+import { ITestGeneratorOptions, ITestGeneratorSettings, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { ComponentCollection } from "../../Components/ComponentCollection";
 import { IComponentCollection } from "../../Components/IComponentCollection";
 

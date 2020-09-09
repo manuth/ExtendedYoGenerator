@@ -1,7 +1,7 @@
 import Assert = require("assert");
-import { IRunContext, TestContext, TestGenerator, ITestOptions, ITestGeneratorOptions } from "@manuth/extended-yo-generator-test";
+import { IRunContext, ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { TempFile } from "@manuth/temp-files";
-import { writeFile, readFile } from "fs-extra";
+import { readFile, writeFile } from "fs-extra";
 import pkgUp = require("pkg-up");
 import Path = require("upath");
 import { GeneratorSettingKey } from "../../GeneratorSettingKey";

@@ -1,5 +1,5 @@
 import Assert = require("assert");
-import { TestContext, TestGenerator, ITestGeneratorOptions, ITestOptions } from "@manuth/extended-yo-generator-test";
+import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { Resolvable } from "../../../Components/Resolving/Resolvable";
 import { Resolver } from "../../../Components/Resolving/Resolver";
 
@@ -85,7 +85,7 @@ export function ResolverTests(context: TestContext<TestGenerator, ITestGenerator
                         () =>
                         {
                             // @ts-ignore
-                            Assert.notStrictEqual(testFunction, resolver.Resolve(null, null, testFunction));
+                            Assert.notStrictEqual(testFunction, resolver.Resolve<any>(null, null, testFunction));
                         });
 
                     test(

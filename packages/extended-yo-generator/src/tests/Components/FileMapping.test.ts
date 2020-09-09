@@ -1,8 +1,8 @@
 import Assert = require("assert");
-import { TestContext, TestGenerator, ITestGeneratorOptions, ITestGeneratorSettings, ITestOptions } from "@manuth/extended-yo-generator-test";
+import { ITestGeneratorOptions, ITestGeneratorSettings, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { TempDirectory, TempFile } from "@manuth/temp-files";
 import { render } from "ejs";
-import { writeFile, readFile } from "fs-extra";
+import { readFile, writeFile } from "fs-extra";
 import { Random } from "random-js";
 import { FileMapping } from "../../Components/FileMapping";
 import { IFileMapping } from "../../Components/IFileMapping";

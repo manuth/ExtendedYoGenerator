@@ -1,4 +1,4 @@
-import { GeneratorOptions, IGeneratorSettings, IGenerator, IFileMapping } from "@manuth/extended-yo-generator";
+import { GeneratorOptions, IFileMapping, IGenerator, IGeneratorSettings } from "@manuth/extended-yo-generator";
 import JSON = require("comment-json");
 import { FileMappingTester } from "./FileMappingTester";
 /**

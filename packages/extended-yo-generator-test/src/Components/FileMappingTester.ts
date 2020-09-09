@@ -1,6 +1,6 @@
 import Assert = require("assert");
-import { GeneratorOptions, IGenerator, IGeneratorSettings, IFileMapping, FileMapping } from "@manuth/extended-yo-generator";
-import { readFile, pathExists, remove } from "fs-extra";
+import { FileMapping, GeneratorOptions, IFileMapping, IGenerator, IGeneratorSettings } from "@manuth/extended-yo-generator";
+import { pathExists, readFile, remove } from "fs-extra";
 
 /**
  * Provides the functionality to test a file-mapping.

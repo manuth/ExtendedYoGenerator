@@ -1,4 +1,4 @@
-import { GeneratorOptions, IGenerator, IGeneratorSettings, IFileMapping } from "@manuth/extended-yo-generator";
+import { GeneratorOptions, IFileMapping, IGenerator, IGeneratorSettings } from "@manuth/extended-yo-generator";
 import { FileMappingTester } from "./FileMappingTester";
 
 /**

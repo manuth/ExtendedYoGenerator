@@ -1,5 +1,5 @@
 import Assert = require("assert");
-import { TestContext, TestGenerator, ITestGeneratorOptions, ITestOptions } from "@manuth/extended-yo-generator-test";
+import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { Random } from "random-js";
 import { IResolverTestOptions } from "./IResolverTestOptions";
 import { ResolverTest } from "./ResolverTest";
