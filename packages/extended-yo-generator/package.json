@@ -52,7 +52,7 @@
     "@types/ejs": "^3.0.4",
     "@types/fs-extra": "^9.0.1",
     "@types/mocha": "^8.0.3",
-    "@types/node": "^14.6.4",
+    "@types/node": "^14.10.1",
     "@types/pkg-up": "^3.1.0",
     "@types/yeoman-test": "^2.0.4",
     "concurrently": "^5.3.0",
