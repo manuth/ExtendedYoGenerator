@@ -1,5 +1,4 @@
-{
-  "name": "@manuth/extended-yo-generator",
+{		  "name": "@manuth/extended-yo-generator",
   "version": "7.3.3",
   "description": "An extended version of the Yeoman-Generator",
   "author": "Manuel Thalmann <m@nuth.ch>",
@@ -27,14 +26,16 @@
     "access": "public"
   },
   "scripts": {
-    "build": "npm run copy-files && tsc -b tsconfig.build.json",
+    "build": "npm run copy-files && npm run compile",
     "copy-files": "cd ../.. && npm run copy-files",
+    "compile": "tsc -b tsconfig.build.json",
+    "watch-compile": "npm run compile -- --watch",
     "rebuild": "npm run clean && npm run build",
-    "watch": "concurrently --raw \"npm run copy-files -- -- --watch | shusher\" \"npm run build -- --watch\"",
-    "clean": "rimraf ./lib",
+    "watch": "concurrently --raw \"npm run copy-files -- -- --watch | shusher\" \"npm run watch-compile\"",
+    "clean": "npm run compile -- --clean && rimraf ./lib",
     "lint-base": "eslint --max-warnings 0 --ignore-pattern \"!.eslintrc.js\"",
     "lint": "npm run lint-base -- --ext .js,.jsx,.ts,.tsx ./src .eslintrc.js",
-    "lint-compact": "npm run lint -- -f compact || exit 0",
+    "lint-ide": "npm run lint || exit 0",
     "test": "mocha",
     "prepare": "npm run rebuild"
   },
@@ -52,7 +53,7 @@
     "@types/ejs": "^3.0.4",
     "@types/fs-extra": "^9.0.1",
     "@types/mocha": "^8.0.3",
-    "@types/node": "^14.10.1",
+    "@types/node": "^14.10.3",
     "@types/pkg-up": "^3.1.0",
     "@types/yeoman-test": "^2.0.4",
     "concurrently": "^5.3.0",

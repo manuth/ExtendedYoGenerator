@@ -69,7 +69,7 @@ steps:
     when:
       event:
         - tag
-  - name: publish release
+  - name: publish
     image: plugins/github-release
     commands: []
     settings:

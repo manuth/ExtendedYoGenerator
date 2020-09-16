@@ -1,7 +1,7 @@
 {
     "extends": "@manuth/tsconfig/recommended",
-    "compileOnSave": true,
     "compilerOptions": {
+        "declaration": true,
         "declarationMap": true,
         "module": "CommonJS",
         "lib": [

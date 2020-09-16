@@ -110,19 +110,22 @@ dist
 tsconfig.json
 tsconfig.*.json
 
-# Linting-config
-.eslintrc.js
+# Lint config-files
+.eslintrc
+.eslintrc.*
 
 # Source-maps
-[Ll]ib/**/*.js.map
-[Ll]ib/**/*.d.ts.map
+[Ll]ib/**/*.map
 
 # Unit-Tests
-.mocharc.json
+.mocharc.*
 [Ll]ib/tests/
 
 # Visual Studio Code-Environment
 .vscode/
+
+# GitHub configuration
+.github/
 
 # Drone configuration
 .drone.yml

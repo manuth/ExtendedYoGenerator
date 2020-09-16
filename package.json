@@ -6,12 +6,12 @@
     "copy-files": "glob-exec --foreach \"./packages/*\" --parallel -- copy-and-watch ./{LICENSE,.npmignore} \"{{file}}\"",
     "rebuild": "npm run clean && npm run build",
     "watch": "concurrently --raw \"npm run copy-files -- --watch | shusher\" \"npm run build -- --watch\"",
-    "clean": "lerna run clean",
+    "clean": "npm run build -- --clean && lerna run clean",
     "lint-base": "eslint --max-warnings 0 --ignore-pattern \"!.eslintrc.js\"",
     "lint-local": "npm run lint-base -- --ext .js,.jsx,.ts,.tsx ./scripts .eslintrc.js",
-    "lint-local-compact": "npm run lint-local -- -f compact || exit 0",
+    "lint-local-ide": "npm run lint-local || exit 0",
     "lint": "npm run lint-local && lerna run lint",
-    "lint-compact": "npm run lint-local-compact && lerna run lint-compact",
+    "lint-ide": "npm run lint-local-ide && lerna run lint-ide",
     "test": "lerna run test",
     "version": "ts-node ./scripts/bumpVersion.ts",
     "prepare": "lerna bootstrap && npm run rebuild"
@@ -20,10 +20,10 @@
     "@manuth/temp-files": "^2.0.0"
   },
   "devDependencies": {
-    "@manuth/eslint-plugin-typescript": "^2.2.1",
+    "@manuth/eslint-plugin-typescript": "^2.3.0",
     "@manuth/tsconfig": "^1.2.3",
     "@types/git-branch": "^2.0.1",
-    "@types/node": "^14.10.1",
+    "@types/node": "^14.10.3",
     "@types/npm-which": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^4.1.1",
     "@typescript-eslint/eslint-plugin-tslint": "^4.1.1",

@@ -1,7 +1,6 @@
 const Path = require("path");
 
 module.exports = {
-    parser: "@typescript-eslint/parser",
     extends: [
         Path.join("..", "..", ".eslintrc.js")
     ],
