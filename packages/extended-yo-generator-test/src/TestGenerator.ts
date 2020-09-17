@@ -1,4 +1,4 @@
-import { Generator, IComponentCollection, Question, IFileMapping } from "@manuth/extended-yo-generator";
+import { Generator, IComponentCollection, IFileMapping, Question } from "@manuth/extended-yo-generator";
 import { join } from "upath";
 import { ITestGeneratorOptions } from "./ITestGeneratorOptions";
 import { ITestGeneratorSettings } from "./ITestGeneratorSettings";
