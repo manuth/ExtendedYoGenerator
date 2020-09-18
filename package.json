@@ -1,11 +1,26 @@
 {
   "name": "extended-yo-generator",
   "private": true,
+  "description": "Provides packages for executing and testing extended implementations of the yeoman-generator.",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "homepage": "https://github.com/manuth/ExtendedYoGenerator#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manuth/ExtendedYoGenerator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/manuth/ExtendedYoGenerator/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
-    "build": "npm run copy-files && tsc -b tsconfig.build.json",
+    "build": "npm run copy-files && npm run compile",
     "copy-files": "glob-exec --foreach \"./packages/*\" --parallel -- copy-and-watch ./{LICENSE,.npmignore} \"{{file}}\"",
+    "compile": "tsc -b tsconfig.build.json",
     "rebuild": "npm run clean && npm run build",
-    "watch": "concurrently --raw \"npm run copy-files -- --watch | shusher\" \"npm run build -- --watch\"",
+    "watch": "concurrently --raw \"npm run copy-files -- --watch | shusher\" \"npm run compile -- --watch\"",
     "clean": "npm run build -- --clean && lerna run clean",
     "lint-base": "eslint --max-warnings 0 --ignore-pattern \"!.eslintrc.js\"",
     "lint-local": "npm run lint-base -- --ext .js,.jsx,.ts,.tsx ./scripts .eslintrc.js",
@@ -23,7 +38,7 @@
     "@manuth/eslint-plugin-typescript": "^2.3.0",
     "@manuth/tsconfig": "^1.2.3",
     "@types/git-branch": "^2.0.1",
-    "@types/node": "^14.11.1",
+    "@types/node": "^14.10.3",
     "@types/npm-which": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^4.1.1",
     "@typescript-eslint/eslint-plugin-tslint": "^4.1.1",

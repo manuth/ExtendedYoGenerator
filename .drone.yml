@@ -6,7 +6,7 @@ steps:
   - name: install
     image: node
     commands:
-      - npm install
+      - npm install --unsafe-perm
       - npx lerna bootstrap
   - name: build
     image: node
@@ -20,7 +20,7 @@ steps:
     image: node
     commands:
       - npx lerna run test
-  - name: publish module to npm
+  - name: publish package to npm
     image: node
     environment:
       NPM_TOKEN:
@@ -33,7 +33,7 @@ steps:
         - tag
       ref:
         - refs/tags/v[0-9].[0-9].[0-9]
-  - name: publish module to github
+  - name: publish package to github
     image: node
     environment:
       GITHUB_TOKEN:
@@ -69,7 +69,7 @@ steps:
     when:
       event:
         - tag
-  - name: publish
+  - name: publish release
     image: plugins/github-release
     commands: []
     settings:
