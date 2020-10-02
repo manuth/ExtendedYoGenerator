@@ -1,5 +1,4 @@
 import Path = require("path");
-import { isNullOrUndefined } from "util";
 import { IGenerator } from "../IGenerator";
 import { IFileMapping } from "./IFileMapping";
 import { PathResolver } from "./Resolving/PathResolver";

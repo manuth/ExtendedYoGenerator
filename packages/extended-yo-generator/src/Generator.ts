@@ -1,5 +1,4 @@
 import Path = require("path");
-import { isNullOrUndefined } from "util";
 import chalk = require("chalk");
 import { ChoiceCollection, Separator } from "inquirer";
 import PkgUp = require("pkg-up");
