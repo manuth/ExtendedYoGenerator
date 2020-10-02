@@ -150,7 +150,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
                                     this.log(`${chalk.red(">>")} ${chalk.bold(component.DisplayName)} ${chalk.red("<<")}`);
                                 }
 
-                                if (!isNullOrUndefined(when))
+                                if (when)
                                 {
                                     if (typeof when === "function")
                                     {

@@ -97,7 +97,7 @@ export class FileMapping<TSettings, TOptions> extends PropertyResolver<IFileMapp
         let result = this.ResolveProperty(this, path);
 
         if (
-            isNullOrUndefined(result) ||
+            !result ||
             Path.isAbsolute(result))
         {
             return result;
