@@ -1,4 +1,4 @@
-import Assert = require("assert");
+import { notStrictEqual, ok, strictEqual } from "assert";
 import { TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { ComponentCollection } from "../../Components/ComponentCollection";
 import { FileMapping } from "../../Components/FileMapping";
@@ -268,25 +268,25 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                         () =>
                         {
                             let key = context.RandomString;
-                            Assert.strictEqual(generator.Settings, generator.Base.Settings);
+                            strictEqual(generator.Settings, generator.Base.Settings);
                             generator.Settings[key] = context.RandomString;
-                            Assert.strictEqual(generator.Settings[key], generator.Base.Settings[key]);
+                            strictEqual(generator.Settings[key], generator.Base.Settings[key]);
                         });
 
                     test(
                         "Checking whether a base generator is created…",
                         () =>
                         {
-                            Assert.ok(generator.Base instanceof SuperGenerator);
+                            ok(generator.Base instanceof SuperGenerator);
                         });
 
                     test(
                         "Checking whether template-paths of both the generator and its base-generator are set properly…",
                         () =>
                         {
-                            Assert.notStrictEqual(generator.templatePath(), generator.Base.templatePath());
-                            Assert.strictEqual(generator.templatePath(), generator.commonTemplatePath(subTemplateDir));
-                            Assert.strictEqual(generator.Base.templatePath(), generator.Base.commonTemplatePath(superTemplateDir));
+                            notStrictEqual(generator.templatePath(), generator.Base.templatePath());
+                            strictEqual(generator.templatePath(), generator.commonTemplatePath(subTemplateDir));
+                            strictEqual(generator.Base.templatePath(), generator.Base.commonTemplatePath(superTemplateDir));
                         });
 
                     test(
@@ -296,15 +296,15 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                             let condition: FileMappingCondition = (fileMapping) =>
                                 fileMapping.Destination === generator.destinationPath(destinationFile);
 
-                            Assert.ok(AssertFileMappings(generator.FileMappingCollection, condition, true));
-                            Assert.ok(AssertComponentFileMappings(generator.ComponentCollection, condition, true));
+                            ok(AssertFileMappings(generator.FileMappingCollection, condition, true));
+                            ok(AssertComponentFileMappings(generator.ComponentCollection, condition, true));
                         });
 
                     test(
                         "Checking whether file-mappings of the base-generator presist in the inheriting generator…",
                         async () =>
                         {
-                            Assert.ok(
+                            ok(
                                 AssertFileMappings(
                                     generator.FileMappingCollection,
                                     (fileMapping) => fileMapping.Source === generator.Base.templatePath(superSourceFile)));
@@ -314,12 +314,12 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                         "Checking whether components of the base-generator presist in the inheriting generator…",
                         async () =>
                         {
-                            Assert.ok(
+                            ok(
                                 generator.ComponentCollection.Categories.some(
                                     (category) => category.Components.some(
                                         (component) => component.ID === superComponentID)));
 
-                            Assert.ok(
+                            ok(
                                 AssertComponentFileMappings(
                                     generator.ComponentCollection,
                                     (fileMapping) =>
@@ -332,7 +332,7 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                         "Checking whether components can be added to existing categories as expected…",
                         async () =>
                         {
-                            Assert.strictEqual(
+                            strictEqual(
                                 generator.ComponentCollection.Categories.filter(
                                     (category) => category.DisplayName === categoryName).length, 1);
                         });
@@ -341,7 +341,7 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                         "Checking whether file-mappings of the inheriting generator are present…",
                         async () =>
                         {
-                            Assert.ok(
+                            ok(
                                 AssertFileMappings(
                                     generator.FileMappingCollection,
                                     (fileMapping) => fileMapping.Source === generator.Base.templatePath(superSourceFile)));
@@ -351,12 +351,12 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                         "Checking whether components of the inheriting generator are present…",
                         async () =>
                         {
-                            Assert.ok(
+                            ok(
                                 generator.ComponentCollection.Categories.some(
                                     (category) => category.Components.some(
                                         (component) => component.ID === subComponentID)));
 
-                            Assert.ok(
+                            ok(
                                 AssertComponentFileMappings(
                                     generator.ComponentCollection,
                                     (fileMapping) => fileMapping.Source === generator.templatePath(subSourceFile)));
@@ -366,7 +366,7 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                         "Checking whether the file-mappings of the base can be injected…",
                         async () =>
                         {
-                            Assert.ok(
+                            ok(
                                 AssertFileMappings(
                                     generator.FileMappingCollection,
                                     (fileMapping) => fileMapping.Source === generator.Base.templatePath(injectedSourceFile)));
@@ -376,7 +376,7 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                         "Checking whether the components of the base can be injected…",
                         async () =>
                         {
-                            Assert.ok(
+                            ok(
                                 AssertComponentFileMappings(
                                     generator.ComponentCollection,
                                     (fileMapping) => fileMapping.Source === generator.Base.templatePath(injectedSourceFile)));
@@ -407,14 +407,14 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                         "Checking whether the module-path of the base resolves to its package…",
                         async () =>
                         {
-                            Assert.strictEqual(generator.Base.modulePath(), (await context.Generator).modulePath());
+                            strictEqual(generator.Base.modulePath(), (await context.Generator).modulePath());
                         });
 
                     test(
                         "Checking whether the module-path of the generator is not affected by the module-path of the package…",
                         () =>
                         {
-                            Assert.notStrictEqual(generator.modulePath(), generator.Base.modulePath());
+                            notStrictEqual(generator.modulePath(), generator.Base.modulePath());
                         });
 
                     test(
@@ -424,8 +424,8 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                             let testGenerator = new class extends Generator.ComposeWith(class extends Generator { }, TestGenerator.Path)
                             { }([], {} as any);
 
-                            Assert.ok(!(testGenerator instanceof TestGenerator));
-                            Assert.ok(testGenerator instanceof Generator);
+                            ok(!(testGenerator instanceof TestGenerator));
+                            ok(testGenerator instanceof Generator);
                         });
                 });
         });

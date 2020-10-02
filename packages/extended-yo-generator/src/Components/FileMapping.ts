@@ -1,4 +1,4 @@
-import Path = require("path");
+import { isAbsolute } from "path";
 import { IGenerator } from "../IGenerator";
 import { IFileMapping } from "./IFileMapping";
 import { PathResolver } from "./Resolving/PathResolver";
@@ -97,7 +97,7 @@ export class FileMapping<TSettings, TOptions> extends PropertyResolver<IFileMapp
 
         if (
             !result ||
-            Path.isAbsolute(result))
+            isAbsolute(result))
         {
             return result;
         }

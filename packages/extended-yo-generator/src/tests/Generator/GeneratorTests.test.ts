@@ -1,9 +1,9 @@
-import Assert = require("assert");
+import { doesNotThrow, notStrictEqual, ok, strictEqual } from "assert";
 import { IRunContext, ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { TempFile } from "@manuth/temp-files";
 import { readFile, writeFile } from "fs-extra";
 import pkgUp = require("pkg-up");
-import Path = require("upath");
+import { dirname, isAbsolute, join, normalize, relative, resolve } from "upath";
 import { GeneratorSettingKey } from "../../GeneratorSettingKey";
 
 /**
@@ -35,7 +35,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
              */
             function AssertPath(actual: string, expected: string): void
             {
-                Assert.strictEqual(ProcessPath(actual), ProcessPath(expected));
+                strictEqual(ProcessPath(actual), ProcessPath(expected));
             }
 
             /**
@@ -49,13 +49,13 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
              */
             function ProcessPath(path: string): string
             {
-                return Path.normalize(Path.resolve(path));
+                return normalize(resolve(path));
             }
 
             suiteSetup(
                 async () =>
                 {
-                    moduleRoot = Path.dirname(pkgUp.sync({ cwd: context.GeneratorDirectory }));
+                    moduleRoot = dirname(pkgUp.sync({ cwd: context.GeneratorDirectory }));
 
                     runContext = context.ExecuteGenerator(
                         {
@@ -146,7 +146,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                         "Checking whether `modulePath` resolves to the root of the generator's module…",
                         () =>
                         {
-                            AssertPath(generator.modulePath(testPath), Path.join(moduleRoot, testPath));
+                            AssertPath(generator.modulePath(testPath), join(moduleRoot, testPath));
                         });
 
                     test(
@@ -154,10 +154,10 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                         () =>
                         {
                             let modulePath = generator.modulePath();
-                            Assert.ok(Path.isAbsolute(modulePath));
+                            ok(isAbsolute(modulePath));
                             generator.moduleRoot("this is a test");
-                            Assert.notStrictEqual(generator.modulePath(), modulePath);
-                            Assert.ok(Path.isAbsolute(generator.modulePath()));
+                            notStrictEqual(generator.modulePath(), modulePath);
+                            ok(isAbsolute(generator.modulePath()));
                             generator.moduleRoot(modulePath);
                         });
                 });
@@ -171,15 +171,15 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                     suiteSetup(
                         () =>
                         {
-                            relativePath = Path.relative(ProcessPath(moduleRoot), ProcessPath(generator.templatePath()));
+                            relativePath = relative(ProcessPath(moduleRoot), ProcessPath(generator.templatePath()));
                         });
 
                     test(
                         "Checking whether the template-path is a sub-directory of the module…",
                         () =>
                         {
-                            Assert.ok(!Path.isAbsolute(relativePath));
-                            Assert.ok(!relativePath.startsWith(".."));
+                            ok(!isAbsolute(relativePath));
+                            ok(!relativePath.startsWith(".."));
                         });
 
                     test(
@@ -187,7 +187,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                         () =>
                         {
                             options.TemplateRoot = null;
-                            Assert.doesNotThrow(() => generator.templatePath());
+                            doesNotThrow(() => generator.templatePath());
                         });
 
                     test(
@@ -195,7 +195,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                         () =>
                         {
                             options.TemplateRoot = "Test";
-                            AssertPath(generator.templatePath(testPath), Path.join(moduleRoot, relativePath, options.TemplateRoot, testPath));
+                            AssertPath(generator.templatePath(testPath), join(moduleRoot, relativePath, options.TemplateRoot, testPath));
                         });
                 });
 
@@ -291,31 +291,31 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                         "Checking whether only default components are selected by default…",
                         () =>
                         {
-                            Assert.strictEqual(generator.Settings[GeneratorSettingKey.Components].length, 1);
-                            Assert.ok(generator.Settings[GeneratorSettingKey.Components].includes(defaultID));
-                            Assert.ok(!generator.Settings[GeneratorSettingKey.Components].includes(hiddenID));
+                            strictEqual(generator.Settings[GeneratorSettingKey.Components].length, 1);
+                            ok(generator.Settings[GeneratorSettingKey.Components].includes(defaultID));
+                            ok(!generator.Settings[GeneratorSettingKey.Components].includes(hiddenID));
                         });
 
                     test(
                         "Checking whether additional questions are asked, only if components are selected…",
                         () =>
                         {
-                            Assert.ok(defaultQuestionID in generator.Settings);
-                            Assert.ok(!(hiddenQuestionID in generator.Settings));
+                            ok(defaultQuestionID in generator.Settings);
+                            ok(!(hiddenQuestionID in generator.Settings));
                         });
 
                     test(
                         "Checking whether default values are applied…",
                         () =>
                         {
-                            Assert.strictEqual(generator.Settings[defaultQuestionID], defaultValue);
+                            strictEqual(generator.Settings[defaultQuestionID], defaultValue);
                         });
 
                     test(
                         "Checking whether file-mappings are executed…",
                         () =>
                         {
-                            Assert.ok(fileMappingExecuted);
+                            ok(fileMappingExecuted);
                         });
                 });
 
@@ -369,15 +369,15 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                         "Checking whether only settings for enabled questions are present…",
                         () =>
                         {
-                            Assert.ok(defaultID in generator.Settings);
-                            Assert.ok(!(hiddenID in generator.Settings));
+                            ok(defaultID in generator.Settings);
+                            ok(!(hiddenID in generator.Settings));
                         });
 
                     test(
                         "Checking whether default values are applied…",
                         () =>
                         {
-                            Assert.strictEqual(generator.Settings[defaultID], defaultValue);
+                            strictEqual(generator.Settings[defaultID], defaultValue);
                         });
                 });
 
@@ -417,7 +417,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                         {
                             let runContext = context.ExecuteGenerator({ TestGeneratorOptions: options });
                             await runContext.toPromise();
-                            Assert.strictEqual((await readFile(runContext.generator.destinationPath(testFileName))).toString(), testContent);
+                            strictEqual((await readFile(runContext.generator.destinationPath(testFileName))).toString(), testContent);
                         });
                 });
 
@@ -444,9 +444,9 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                         "Checking whether a resolved file-mapping is created for each file-mapping…",
                         async () =>
                         {
-                            Assert.strictEqual(generator.ResolvedFileMappings.length, generator.FileMappings.length);
+                            strictEqual(generator.ResolvedFileMappings.length, generator.FileMappings.length);
 
-                            Assert.ok(
+                            ok(
                                 generator.FileMappings.every(
                                     (fileMappingOptions) =>
                                     {
@@ -516,7 +516,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                         "Checking whether default file-mappings are present…",
                         async () =>
                         {
-                            Assert.strictEqual(
+                            strictEqual(
                                 generator.FileMappingCollection.filter(
                                     (fileMapping) => fileMapping.Object.Destination === fileMappingDestination).length,
                                 1);
@@ -526,7 +526,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                         "Checking whether file-mappings of enabled components are present…",
                         async () =>
                         {
-                            Assert.strictEqual(
+                            strictEqual(
                                 generator.FileMappingCollection.filter(
                                     (fileMapping) => fileMapping.Object.Destination === enabledComponentDestination).length,
                                 1);
@@ -536,7 +536,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                         "Checking whether file-mappings of disabled components are not present…",
                         async () =>
                         {
-                            Assert.ok(
+                            ok(
                                 !generator.FileMappingCollection.some(
                                     (fileMapping) => fileMapping.Object.Destination === disabledComponentDestination));
                         });

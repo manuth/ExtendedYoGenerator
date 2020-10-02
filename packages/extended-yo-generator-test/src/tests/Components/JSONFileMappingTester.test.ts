@@ -1,4 +1,4 @@
-import Assert = require("assert");
+import { deepStrictEqual } from "assert";
 import { IFileMapping } from "@manuth/extended-yo-generator";
 import { TempFile } from "@manuth/temp-files";
 import { JSONFileMappingTester } from "../../Components/JSONFileMappingTester";
@@ -50,7 +50,7 @@ export function JSONFileMappingTesterTests(context: TestContext<TestGenerator>):
                         async () =>
                         {
                             await tester.Run();
-                            Assert.deepStrictEqual(await tester.Metadata, randomObject);
+                            deepStrictEqual(await tester.Metadata, randomObject);
                         });
                 });
         });

@@ -1,4 +1,4 @@
-import Assert = require("assert");
+import { doesNotReject, ok, rejects, strictEqual } from "assert";
 import { IFileMapping } from "@manuth/extended-yo-generator";
 import { TempFile } from "@manuth/temp-files";
 import { pathExists, readFile } from "fs-extra";
@@ -63,9 +63,9 @@ export function FileMappingTesterTests(context: TestContext<TestGenerator>): voi
                         "Checking whether `Exists` equals to the existence of the destination-file…",
                         async () =>
                         {
-                            Assert.ok(!await tester.Exists);
+                            ok(!await tester.Exists);
                             await tester.Run();
-                            Assert.ok(await tester.Exists);
+                            ok(await tester.Exists);
                         });
                 });
 
@@ -78,7 +78,7 @@ export function FileMappingTesterTests(context: TestContext<TestGenerator>): voi
                         async () =>
                         {
                             await tester.Run();
-                            Assert.strictEqual(await tester.Content, content);
+                            strictEqual(await tester.Content, content);
                         });
                 });
 
@@ -90,7 +90,7 @@ export function FileMappingTesterTests(context: TestContext<TestGenerator>): voi
                         "Checking whether the tester can be executed…",
                         async () =>
                         {
-                            return Assert.doesNotReject(() => tester.Run());
+                            return doesNotReject(() => tester.Run());
                         });
                 });
 
@@ -102,10 +102,10 @@ export function FileMappingTesterTests(context: TestContext<TestGenerator>): voi
                         "Checking whether contents are written to both the file-system and mem-fs…",
                         async () =>
                         {
-                            Assert.ok(!await tester.Exists);
+                            ok(!await tester.Exists);
                             await tester.WriteFile(tester.FileMapping.Destination, content);
-                            Assert.strictEqual(tester.Generator.fs.read(tester.FileMapping.Destination), content);
-                            Assert.strictEqual((await readFile(tester.FileMapping.Destination)).toString(), content);
+                            strictEqual(tester.Generator.fs.read(tester.FileMapping.Destination), content);
+                            strictEqual((await readFile(tester.FileMapping.Destination)).toString(), content);
                         });
                 });
 
@@ -118,7 +118,7 @@ export function FileMappingTesterTests(context: TestContext<TestGenerator>): voi
                         async () =>
                         {
                             await tester.WriteSource(randomValue);
-                            Assert.strictEqual((await readFile(tester.FileMapping.Source)).toString(), randomValue);
+                            strictEqual((await readFile(tester.FileMapping.Source)).toString(), randomValue);
                         });
                 });
 
@@ -131,7 +131,7 @@ export function FileMappingTesterTests(context: TestContext<TestGenerator>): voi
                         async () =>
                         {
                             await tester.WriteDestination(randomValue);
-                            Assert.strictEqual((await readFile(tester.FileMapping.Destination)).toString(), randomValue);
+                            strictEqual((await readFile(tester.FileMapping.Destination)).toString(), randomValue);
                         });
                 });
 
@@ -144,10 +144,10 @@ export function FileMappingTesterTests(context: TestContext<TestGenerator>): voi
                         async () =>
                         {
                             tester.Generator.fs.write(tester.FileMapping.Destination, randomValue);
-                            Assert.ok(!await tester.Exists);
+                            ok(!await tester.Exists);
                             await tester.Commit();
-                            Assert.ok(await tester.Exists);
-                            Assert.strictEqual((await readFile(tester.FileMapping.Destination)).toString(), randomValue);
+                            ok(await tester.Exists);
+                            strictEqual((await readFile(tester.FileMapping.Destination)).toString(), randomValue);
                         });
                 });
 
@@ -160,8 +160,8 @@ export function FileMappingTesterTests(context: TestContext<TestGenerator>): voi
                         async () =>
                         {
                             await tester.Run();
-                            await Assert.rejects(() => tester.AssertContent(content + "test"));
-                            return Assert.doesNotReject(() => tester.AssertContent(content));
+                            await rejects(() => tester.AssertContent(content + "test"));
+                            return doesNotReject(() => tester.AssertContent(content));
                         });
                 });
 
@@ -174,11 +174,11 @@ export function FileMappingTesterTests(context: TestContext<TestGenerator>): voi
                         async () =>
                         {
                             await tester.Run();
-                            Assert.ok(tester.Generator.fs.exists(tester.FileMapping.Destination));
-                            Assert.ok(await pathExists(tester.FileMapping.Destination));
+                            ok(tester.Generator.fs.exists(tester.FileMapping.Destination));
+                            ok(await pathExists(tester.FileMapping.Destination));
                             await tester.Clean();
-                            Assert.ok(!tester.Generator.fs.exists(tester.FileMapping.Destination));
-                            Assert.ok(!await pathExists(tester.FileMapping.Destination));
+                            ok(!tester.Generator.fs.exists(tester.FileMapping.Destination));
+                            ok(!await pathExists(tester.FileMapping.Destination));
                         });
                 });
         });

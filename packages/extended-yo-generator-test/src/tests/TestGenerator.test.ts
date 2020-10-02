@@ -1,4 +1,4 @@
-import Assert = require("assert");
+import { deepStrictEqual, doesNotReject, notStrictEqual, ok, strictEqual } from "assert";
 import { Random } from "random-js";
 import { IRunContext } from "../IRunContext";
 import { ITestGeneratorOptions } from "../ITestGeneratorOptions";
@@ -65,13 +65,13 @@ export function TestGeneratorTests(): void
                         {
                             let generator: TestGenerator;
 
-                            await Assert.doesNotReject(
+                            await doesNotReject(
                                 async () =>
                                 {
                                     generator = (await context.Generator).env.create(TestGenerator.Path) as any;
                                 });
 
-                            Assert.ok(generator instanceof TestGenerator);
+                            ok(generator instanceof TestGenerator);
                         });
                 });
 
@@ -103,10 +103,10 @@ export function TestGeneratorTests(): void
                                 }
                             ];
 
-                            Assert.strictEqual(generator.TemplateRoot, options.TemplateRoot);
-                            Assert.deepStrictEqual(generator.Questions, options.Questions);
-                            Assert.deepStrictEqual(generator.Components, options.Components);
-                            Assert.deepStrictEqual(generator.FileMappings, options.FileMappings);
+                            strictEqual(generator.TemplateRoot, options.TemplateRoot);
+                            deepStrictEqual(generator.Questions, options.Questions);
+                            deepStrictEqual(generator.Components, options.Components);
+                            deepStrictEqual(generator.FileMappings, options.FileMappings);
                         });
                 });
 
@@ -133,14 +133,14 @@ export function TestGeneratorTests(): void
                         () =>
                         {
                             generator.moduleRoot(context.RandomString);
-                            Assert.notStrictEqual(moduleRoot, generator.modulePath());
+                            notStrictEqual(moduleRoot, generator.modulePath());
                         });
 
                     test(
                         "Checking whether the module-root can be queried using this method…",
                         () =>
                         {
-                            Assert.strictEqual(generator.moduleRoot(), generator.modulePath());
+                            strictEqual(generator.moduleRoot(), generator.modulePath());
                         });
                 });
         });

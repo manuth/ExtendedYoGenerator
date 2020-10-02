@@ -1,4 +1,4 @@
-import Assert = require("assert");
+import { strictEqual } from "assert";
 import { ITestGeneratorOptions, ITestGeneratorSettings, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { TempFile } from "@manuth/temp-files";
 import { Component } from "../../Components/Component";
@@ -70,7 +70,7 @@ export function ComponentTests(context: TestContext<TestGenerator, ITestGenerato
                                 }
                             ];
 
-                            Assert.strictEqual(component.FileMappings[0].Destination, testFile.FullName);
+                            strictEqual(component.FileMappings[0].Destination, testFile.FullName);
                         });
                 });
         });

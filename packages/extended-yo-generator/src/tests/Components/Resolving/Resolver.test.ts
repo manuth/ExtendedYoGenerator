@@ -1,4 +1,4 @@
-import Assert = require("assert");
+import { strictEqual } from "assert";
 import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { Resolvable } from "../../../Components/Resolving/Resolvable";
 import { Resolver } from "../../../Components/Resolving/Resolver";
@@ -64,20 +64,20 @@ export function ResolverTests(context: TestContext<TestGenerator, ITestGenerator
                         "Checking whether values can be resolved no mather whether they are functions, promises or plain values…",
                         async () =>
                         {
-                            Assert.strictEqual(testValue, resolver.Resolve(null, null, testValue));
-                            Assert.strictEqual(testValue, await resolver.Resolve<Promise<string>>(null, null, context.CreatePromise(testValue)));
-                            Assert.strictEqual(testValue, resolver.Resolve(null, null, context.CreateFunction(testValue)));
-                            Assert.strictEqual(testValue, await resolver.Resolve<Promise<string>>(null, null, context.CreatePromiseFunction(testValue)));
+                            strictEqual(testValue, resolver.Resolve(null, null, testValue));
+                            strictEqual(testValue, await resolver.Resolve<Promise<string>>(null, null, context.CreatePromise(testValue)));
+                            strictEqual(testValue, resolver.Resolve(null, null, context.CreateFunction(testValue)));
+                            strictEqual(testValue, await resolver.Resolve<Promise<string>>(null, null, context.CreatePromiseFunction(testValue)));
                         });
 
                     test(
                         "Checking whether nested promises act as expected…",
                         async () =>
                         {
-                            Assert.strictEqual(await testPromise, await resolver.Resolve<Promise<string>>(null, null, testPromise));
-                            Assert.strictEqual(await testPromise, await resolver.Resolve(null, null, context.CreatePromise(testPromise)));
-                            Assert.strictEqual(await testPromise, await resolver.Resolve<Promise<string>>(null, null, context.CreateFunction(testPromise)));
-                            Assert.strictEqual(await testPromise, await resolver.Resolve<Promise<Promise<string>>>(null, null, context.CreatePromiseFunction(testPromise)));
+                            strictEqual(await testPromise, await resolver.Resolve<Promise<string>>(null, null, testPromise));
+                            strictEqual(await testPromise, await resolver.Resolve(null, null, context.CreatePromise(testPromise)));
+                            strictEqual(await testPromise, await resolver.Resolve<Promise<string>>(null, null, context.CreateFunction(testPromise)));
+                            strictEqual(await testPromise, await resolver.Resolve<Promise<Promise<string>>>(null, null, context.CreatePromiseFunction(testPromise)));
                         });
 
                     test(
@@ -92,9 +92,9 @@ export function ResolverTests(context: TestContext<TestGenerator, ITestGenerator
                         "Checking whether functions can be resolved otherwise…",
                         async () =>
                         {
-                            Assert.strictEqual(testFunction, await resolver.Resolve<Promise<() => void>>(null, null, context.CreatePromise(testFunction)));
-                            Assert.strictEqual(testFunction, resolver.Resolve<() => void>(null, null, context.CreateFunction(testFunction)));
-                            Assert.strictEqual(testFunction, await resolver.Resolve<Promise<() => void>>(null, null, context.CreatePromiseFunction(testFunction)));
+                            strictEqual(testFunction, await resolver.Resolve<Promise<() => void>>(null, null, context.CreatePromise(testFunction)));
+                            strictEqual(testFunction, resolver.Resolve<() => void>(null, null, context.CreateFunction(testFunction)));
+                            strictEqual(testFunction, await resolver.Resolve<Promise<() => void>>(null, null, context.CreatePromiseFunction(testFunction)));
                         });
 
                     test(
@@ -116,9 +116,9 @@ export function ResolverTests(context: TestContext<TestGenerator, ITestGenerator
                                         1);
                                 });
 
-                            Assert.strictEqual(test, null);
+                            strictEqual(test, null);
                             await result;
-                            Assert.strictEqual(test, value);
+                            strictEqual(test, value);
                         });
                 });
         });

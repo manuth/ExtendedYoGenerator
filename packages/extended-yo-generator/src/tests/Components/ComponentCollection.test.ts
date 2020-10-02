@@ -1,4 +1,4 @@
-import Assert = require("assert");
+import { strictEqual } from "assert";
 import { ITestGeneratorOptions, ITestGeneratorSettings, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { ComponentCollection } from "../../Components/ComponentCollection";
 import { IComponentCollection } from "../../Components/IComponentCollection";
@@ -53,7 +53,7 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                                 }
                             ];
 
-                            Assert.strictEqual(collection.Categories[0].DisplayName, testName);
+                            strictEqual(collection.Categories[0].DisplayName, testName);
                         });
                 });
         });

@@ -1,7 +1,7 @@
-import Path = require("path");
+import { dirname, join, resolve } from "path";
 import chalk = require("chalk");
 import { ChoiceCollection, Separator } from "inquirer";
-import PkgUp = require("pkg-up");
+import pkgUp = require("pkg-up");
 import YeomanGenerator = require("yeoman-generator");
 import { Question } from "yeoman-generator";
 import { BaseConstructorCreator } from "./BaseConstructorCreator";
@@ -45,7 +45,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     public constructor(args: string | string[], options: TOptions)
     {
         super(args, options);
-        this.ModuleRoot = Path.dirname(PkgUp.sync({ cwd: this.resolved }));
+        this.ModuleRoot = dirname(pkgUp.sync({ cwd: this.resolved }));
     }
 
     /**
@@ -61,7 +61,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
      */
     protected set ModuleRoot(value: string)
     {
-        this.moduleRootPath = Path.resolve(value);
+        this.moduleRootPath = resolve(value);
     }
 
     /**
@@ -299,7 +299,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
      */
     public modulePath(...path: string[]): string
     {
-        return Path.join(this.ModuleRoot, ...path);
+        return join(this.ModuleRoot, ...path);
     }
 
     /**
