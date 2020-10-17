@@ -1,4 +1,4 @@
-import { strictEqual } from "assert";
+import { notStrictEqual, strictEqual } from "assert";
 import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { Resolvable } from "../../../Components/Resolving/Resolvable";
 import { Resolver } from "../../../Components/Resolving/Resolver";
@@ -84,8 +84,7 @@ export function ResolverTests(context: TestContext<TestGenerator, ITestGenerator
                         "Checking whether plain functions cannot be resolved…",
                         () =>
                         {
-                            // @ts-ignore
-                            Assert.notStrictEqual(testFunction, resolver.Resolve<any>(null, null, testFunction));
+                            notStrictEqual(testFunction, resolver.Resolve<any>(null, null, testFunction));
                         });
 
                     test(
