@@ -1,4 +1,4 @@
-import { ITestGeneratorSettings, ITestGeneratorOptions, ITestOptions } from "@manuth/extended-yo-generator-test";
+import { ITestGeneratorOptions, ITestGeneratorSettings, ITestOptions } from "@manuth/extended-yo-generator-test";
 import { PropertyResolver } from "../../../Components/Resolving/PropertyResolver";
 import { IGenerator } from "../../../IGenerator";
 import { IResolverTestOptions } from "./IResolverTestOptions";

@@ -1,6 +1,6 @@
-import Assert = require("assert");
-import { GeneratorOptions, IGenerator, IGeneratorSettings, IFileMapping, FileMapping } from "@manuth/extended-yo-generator";
-import { readFile, pathExists, remove } from "fs-extra";
+import { strictEqual } from "assert";
+import { FileMapping, GeneratorOptions, IFileMapping, IGenerator, IGeneratorSettings } from "@manuth/extended-yo-generator";
+import { pathExists, readFile, remove } from "fs-extra";
 
 /**
  * Provides the functionality to test a file-mapping.
@@ -158,7 +158,7 @@ export class FileMappingTester<TGenerator extends IGenerator<TSettings, TOptions
      */
     public async AssertContent(expected: string): Promise<void>
     {
-        Assert.strictEqual(await this.Content, expected);
+        strictEqual(await this.Content, expected);
     }
 
     /**

@@ -1,5 +1,5 @@
-import Assert = require("assert");
-import { TestContext, TestGenerator, ITestGeneratorOptions, ITestOptions } from "@manuth/extended-yo-generator-test";
+import { doesNotReject, strictEqual } from "assert";
+import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { Random } from "random-js";
 import { IResolverTestOptions } from "./IResolverTestOptions";
 import { ResolverTest } from "./ResolverTest";
@@ -55,9 +55,9 @@ export function PropertyResolverTests(context: TestContext<TestGenerator, ITestG
                         "Checking whether properties are resolved correctly…",
                         async () =>
                         {
-                            Assert.strictEqual(await propertResolver.TestValue, testValue);
-                            Assert.strictEqual(await propertResolver.TestPromise, await testPromise);
-                            Assert.strictEqual(await propertResolver.TestFunction, testFunction);
+                            strictEqual(await propertResolver.TestValue, testValue);
+                            strictEqual(await propertResolver.TestPromise, await testPromise);
+                            strictEqual(await propertResolver.TestFunction, testFunction);
                         });
 
                     test(
@@ -69,7 +69,7 @@ export function PropertyResolverTests(context: TestContext<TestGenerator, ITestG
                                 return `${await target.TestPromise}${await target.TestFunction}`;
                             };
 
-                            Assert.strictEqual(await propertResolver.TestValue, `${await propertResolver.TestPromise}${await propertResolver.TestFunction}`);
+                            strictEqual(await propertResolver.TestValue, `${await propertResolver.TestPromise}${await propertResolver.TestFunction}`);
                         });
 
                     test(
@@ -108,8 +108,8 @@ export function PropertyResolverTests(context: TestContext<TestGenerator, ITestG
                                 }();
 
                             let testResolver = new ResolverTest(await context.Generator, testInstance);
-                            Assert.doesNotReject(() => testResolver.TestPromise);
-                            Assert.strictEqual(await testResolver.TestPromise, testInstance.TestValue);
+                            doesNotReject(() => testResolver.TestPromise);
+                            strictEqual(await testResolver.TestPromise, testInstance.TestValue);
                         });
                 });
         });

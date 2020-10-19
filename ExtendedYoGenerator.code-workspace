@@ -127,15 +127,14 @@
                 "command": "npm",
                 "args": [
                     "run",
-                    "lint-compact"
+                    "lint-ide"
                 ],
                 "options": {
                     "cwd": "${workspaceFolder:Solution Items}"
                 },
-                "problemMatcher": "$eslint-compact",
+                "problemMatcher": "$eslint-stylish",
                 "presentation": {
-                    "reveal": "never",
-                    "clear": true
+                    "reveal": "never"
                 }
             },
             {

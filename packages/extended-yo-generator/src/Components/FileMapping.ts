@@ -1,5 +1,4 @@
-import Path = require("path");
-import { isNullOrUndefined } from "util";
+import { isAbsolute } from "path";
 import { IGenerator } from "../IGenerator";
 import { IFileMapping } from "./IFileMapping";
 import { PathResolver } from "./Resolving/PathResolver";
@@ -97,8 +96,8 @@ export class FileMapping<TSettings, TOptions> extends PropertyResolver<IFileMapp
         let result = this.ResolveProperty(this, path);
 
         if (
-            isNullOrUndefined(result) ||
-            Path.isAbsolute(result))
+            !result ||
+            isAbsolute(result))
         {
             return result;
         }

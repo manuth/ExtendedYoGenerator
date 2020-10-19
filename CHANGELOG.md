@@ -6,7 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v7.3.3...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v7.4.0...dev)
+
+## ExtendedYoGenerator v7.4.0
+### Fixed
+  - Incorrect types for composed constructors
+
+### Updated
+  - All packages
+  - The development-environment
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v7.3.3...v7.4.0)
 
 ## ExtendedYoGenerator v7.3.3
 ### Added

@@ -1,14 +1,13 @@
-const Path = require("path");
+const { join } = require("path");
 
 module.exports = {
-    parser: "@typescript-eslint/parser",
     extends: [
-        Path.join("..", "..", ".eslintrc.js")
+        join("..", "..", ".eslintrc.js")
     ],
     parserOptions: {
         project: [
-            Path.join(__dirname, "tsconfig.json"),
-            Path.join(__dirname, "tsconfig.eslint.json")
+            join(__dirname, "tsconfig.json"),
+            join(__dirname, "tsconfig.eslint.json")
         ]
     }
 };

@@ -1,4 +1,4 @@
-import { TestContext, TestGenerator, ITestGeneratorOptions, ITestOptions } from "@manuth/extended-yo-generator-test";
+import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { PropertyResolverTests } from "./PropertyResolver.test";
 import { ResolverTests } from "./Resolver.test";
 

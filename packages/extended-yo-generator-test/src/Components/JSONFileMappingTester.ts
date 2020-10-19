@@ -1,6 +1,7 @@
-import { GeneratorOptions, IGeneratorSettings, IGenerator, IFileMapping } from "@manuth/extended-yo-generator";
-import JSON = require("comment-json");
+import { GeneratorOptions, IFileMapping, IGenerator, IGeneratorSettings } from "@manuth/extended-yo-generator";
+import { parse } from "comment-json";
 import { FileMappingTester } from "./FileMappingTester";
+
 /**
  * Provides the functionality to test json files-mappings.
  */
@@ -28,7 +29,7 @@ export class JSONFileMappingTester<TGenerator extends IGenerator<TSettings, TOpt
         return (
             async () =>
             {
-                return JSON.parse(await this.Content);
+                return parse(await this.Content);
             })();
     }
 }

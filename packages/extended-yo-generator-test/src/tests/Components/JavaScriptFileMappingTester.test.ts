@@ -1,9 +1,9 @@
-import Assert = require("assert");
+import { deepStrictEqual, notDeepStrictEqual, notStrictEqual, strictEqual } from "assert";
 import { IFileMapping } from "@manuth/extended-yo-generator";
-import { TempFile } from "temp-filesystem";
+import { TempFile } from "@manuth/temp-files";
 import { JavaScriptFileMappingTester } from "../../Components/JavaScriptFileMappingTester";
-import { TestContext } from "../../TestContext";
 import TestGenerator = require("../../generators/app");
+import { TestContext } from "../../TestContext";
 
 /**
  * Registers tests for the `JavaScriptFileMappingTester` class.
@@ -57,7 +57,7 @@ export function JavaScriptFileMappingTesterTests(context: TestContext<TestGenera
                         async () =>
                         {
                             await tester.Run();
-                            Assert.deepStrictEqual(await tester.Require(), randomObject);
+                            deepStrictEqual(await tester.Require(), randomObject);
                         });
 
                     test(
@@ -65,14 +65,14 @@ export function JavaScriptFileMappingTesterTests(context: TestContext<TestGenera
                         async () =>
                         {
                             await tester.Run();
-                            Assert.deepStrictEqual(await tester.Require(), randomObject);
-                            Assert.deepStrictEqual(await tester.Require(), await tester.Require());
-                            Assert.notStrictEqual(await tester.Require(), await tester.Require());
+                            deepStrictEqual(await tester.Require(), randomObject);
+                            deepStrictEqual(await tester.Require(), await tester.Require());
+                            notStrictEqual(await tester.Require(), await tester.Require());
                             await tester.WriteSource(`module.exports = ${JSON.stringify(randomString)};`);
                             await tester.Run();
-                            Assert.notStrictEqual(await tester.Require(), randomObject);
-                            Assert.notDeepStrictEqual(await tester.Require(), randomObject);
-                            Assert.strictEqual(await tester.Require(), randomString);
+                            notStrictEqual(await tester.Require(), randomObject);
+                            notDeepStrictEqual(await tester.Require(), randomObject);
+                            strictEqual(await tester.Require(), randomString);
                         });
                 });
         });

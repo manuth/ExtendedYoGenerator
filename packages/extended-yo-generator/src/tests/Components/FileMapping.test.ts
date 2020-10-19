@@ -1,9 +1,9 @@
-import Assert = require("assert");
-import { TestContext, TestGenerator, ITestGeneratorOptions, ITestGeneratorSettings, ITestOptions } from "@manuth/extended-yo-generator-test";
+import { doesNotReject, notStrictEqual, rejects, strictEqual } from "assert";
+import { ITestGeneratorOptions, ITestGeneratorSettings, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
+import { TempDirectory, TempFile } from "@manuth/temp-files";
 import { render } from "ejs";
-import { writeFile, readFile } from "fs-extra";
+import { readFile, writeFile } from "fs-extra";
 import { Random } from "random-js";
-import { TempDirectory, TempFile } from "temp-filesystem";
 import { FileMapping } from "../../Components/FileMapping";
 import { IFileMapping } from "../../Components/IFileMapping";
 
@@ -65,7 +65,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                         async () =>
                         {
                             fileMappingOptions.Source = testPath;
-                            Assert.strictEqual(fileMapping.Source, generator.templatePath(testPath));
+                            strictEqual(fileMapping.Source, generator.templatePath(testPath));
                         });
 
                     test(
@@ -73,7 +73,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                         async () =>
                         {
                             fileMappingOptions.Source = testDirectory.MakePath(testPath);
-                            Assert.strictEqual(fileMapping.Source, testDirectory.MakePath(testPath));
+                            strictEqual(fileMapping.Source, testDirectory.MakePath(testPath));
                         });
 
                     test(
@@ -81,7 +81,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                         async () =>
                         {
                             fileMappingOptions.Source = null;
-                            Assert.strictEqual(fileMapping.Source, null);
+                            strictEqual(fileMapping.Source, null);
                         });
                 });
 
@@ -94,7 +94,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                         async () =>
                         {
                             fileMappingOptions.Destination = testPath;
-                            Assert.strictEqual(fileMapping.Destination, generator.destinationPath(testPath));
+                            strictEqual(fileMapping.Destination, generator.destinationPath(testPath));
                         });
 
                     test(
@@ -102,7 +102,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                         async () =>
                         {
                             fileMappingOptions.Destination = testDirectory.MakePath(testPath);
-                            Assert.strictEqual(fileMapping.Destination, testDirectory.MakePath(testPath));
+                            strictEqual(fileMapping.Destination, testDirectory.MakePath(testPath));
                         });
 
                     test(
@@ -110,7 +110,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                         async () =>
                         {
                             fileMappingOptions.Destination = null;
-                            Assert.strictEqual(fileMapping.Destination, null);
+                            strictEqual(fileMapping.Destination, null);
                         });
                 });
 
@@ -138,10 +138,10 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                                     };
 
                                     fileMappingOptions.Processor = processor;
-                                    await Assert.doesNotReject(async () => fileMapping.Processor());
-                                    Assert.strictEqual(testValue, randomValue);
+                                    await doesNotReject(async () => fileMapping.Processor());
+                                    strictEqual(testValue, randomValue);
                                     fileMappingOptions.Processor = null;
-                                    Assert.notStrictEqual(fileMapping.Processor, null);
+                                    notStrictEqual(fileMapping.Processor, null);
                                 });
 
                             test(
@@ -181,8 +181,8 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                                         }();
 
                                     let fileMapping = new FileMapping(await context.Generator, fileMappingOptions);
-                                    await Assert.doesNotReject(async () => fileMapping.Processor());
-                                    Assert.strictEqual(testValue, fileMappingOptions.MyCustomProperty);
+                                    await doesNotReject(async () => fileMapping.Processor());
+                                    strictEqual(testValue, fileMappingOptions.MyCustomProperty);
                                 });
                         });
 
@@ -237,7 +237,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                                                 }
                                                 else
                                                 {
-                                                    Assert.strictEqual((await readFile(destinationFile.FullName)).toString(), content);
+                                                    strictEqual((await readFile(destinationFile.FullName)).toString(), content);
                                                     resolve();
                                                 }
                                             });
@@ -269,7 +269,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                                 {
                                     fileMappingOptions.Source = null;
 
-                                    Assert.rejects(
+                                    rejects(
                                         (async () =>
                                         {
                                             await fileMapping.Processor();
@@ -282,7 +282,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                                 {
                                     fileMappingOptions.Destination = null;
 
-                                    Assert.rejects(
+                                    rejects(
                                         (async () =>
                                         {
                                             await fileMapping.Processor();

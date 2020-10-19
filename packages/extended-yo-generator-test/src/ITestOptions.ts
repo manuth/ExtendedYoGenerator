@@ -1,4 +1,4 @@
-import { Question, GeneratorOptions, IComponentCollection, IGeneratorSettings, IFileMapping } from "@manuth/extended-yo-generator";
+import { GeneratorOptions, IComponentCollection, IFileMapping, IGeneratorSettings, Question } from "@manuth/extended-yo-generator";
 
 /**
  * Provides options for the test-generator.

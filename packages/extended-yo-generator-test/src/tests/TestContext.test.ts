@@ -1,4 +1,4 @@
-import Assert = require("assert");
+import { doesNotReject, ok, strictEqual } from "assert";
 import { Random } from "random-js";
 import { IRunContext } from "../IRunContext";
 import { ITestGeneratorOptions } from "../ITestGeneratorOptions";
@@ -55,14 +55,14 @@ export function TestContextTests(): void
                         "Checking whether an instance of the specified generator can be retrieved…",
                         () =>
                         {
-                            Assert.ok(generator instanceof TestGenerator);
+                            ok(generator instanceof TestGenerator);
                         });
 
                     test(
                         "Checking whether the process for retrieving a generator is only executed once…",
                         async () =>
                         {
-                            Assert.strictEqual(await testContext.Generator, generator);
+                            strictEqual(await testContext.Generator, generator);
                         });
                 });
 
@@ -74,7 +74,7 @@ export function TestContextTests(): void
                         "Checking whether values can be wrapped in promises correctly…",
                         async () =>
                         {
-                            Assert.strictEqual(await testContext.CreatePromise(randomValue), randomValue);
+                            strictEqual(await testContext.CreatePromise(randomValue), randomValue);
                         });
                 });
 
@@ -86,7 +86,7 @@ export function TestContextTests(): void
                         "Checking whether values can be wrapped in functions correctly",
                         () =>
                         {
-                            Assert.strictEqual(testContext.CreateFunction(randomValue)(), randomValue);
+                            strictEqual(testContext.CreateFunction(randomValue)(), randomValue);
                         });
                 });
 
@@ -98,7 +98,7 @@ export function TestContextTests(): void
                         "Checking whether values can be wrapped in promises and functions correctly…",
                         async () =>
                         {
-                            Assert.strictEqual(await testContext.CreatePromiseFunction(randomValue)(), randomValue);
+                            strictEqual(await testContext.CreatePromiseFunction(randomValue)(), randomValue);
                         });
                 });
 
@@ -118,9 +118,9 @@ export function TestContextTests(): void
                         "Checking whether generators can be executed…",
                         async () =>
                         {
-                            await Assert.doesNotReject(async () => runContext.toPromise());
-                            Assert.ok(runContext.ran);
-                            Assert.ok(runContext.generator instanceof TestGenerator);
+                            await doesNotReject(async () => runContext.toPromise());
+                            ok(runContext.ran);
+                            ok(runContext.generator instanceof TestGenerator);
                         });
 
                     test(
@@ -133,7 +133,7 @@ export function TestContextTests(): void
                                 });
 
                             await runContext.toPromise();
-                            Assert.strictEqual(runContext.generator.GeneratorOptions.testOption, options.testOption);
+                            strictEqual(runContext.generator.GeneratorOptions.testOption, options.testOption);
                         });
                 });
         });
