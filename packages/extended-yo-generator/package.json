@@ -1,6 +1,6 @@
 {
   "name": "@manuth/extended-yo-generator",
-  "version": "7.4.0",
+  "version": "7.5.0",
   "description": "An extended version of the Yeoman-Generator",
   "author": "Manuel Thalmann <m@nuth.ch>",
   "license": "MIT",
@@ -14,7 +14,7 @@
   "directories": {
     "lib": "lib"
   },
-  "homepage": "https://github.com/manuth/ExtendedYoGenerator/tree/master/packages/extended-yo-generator#readme",
+  "homepage": "https://github.com/manuth/ExtendedYoGenerator/tree/main/packages/extended-yo-generator#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/manuth/ExtendedYoGenerator.git",
@@ -49,22 +49,22 @@
     "yeoman-generator": "^4.12.0"
   },
   "devDependencies": {
-    "@manuth/extended-yo-generator-test": "^7.4.0",
+    "@manuth/extended-yo-generator-test": "^7.5.0",
     "@manuth/temp-files": "^2.0.1",
-    "@types/ejs": "^3.0.4",
-    "@types/fs-extra": "^9.0.2",
-    "@types/mocha": "^8.0.3",
-    "@types/node": "^14.11.10",
+    "@types/ejs": "^3.0.5",
+    "@types/fs-extra": "^9.0.5",
+    "@types/mocha": "^8.2.0",
+    "@types/node": "^14.14.13",
     "@types/pkg-up": "^3.1.0",
     "@types/yeoman-test": "^2.0.5",
     "concurrently": "^5.3.0",
     "ejs": "^3.1.5",
     "fs-extra": "^9.0.1",
-    "mocha": "^8.2.0",
+    "mocha": "^8.2.1",
     "rimraf": "^3.0.2",
     "shusher": "^0.1.1",
-    "typescript": "^4.0.3",
-    "upath": "^2.0.0",
+    "typescript": "^4.1.3",
+    "upath": "^2.0.1",
     "yeoman-test": "^3.0.0"
   }
 }

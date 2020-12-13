@@ -1,9 +1,9 @@
 export { FileMappingTester } from "./Components/FileMappingTester";
-export { JSONFileMappingTester } from "./Components/JSONFileMappingTester";
 export { JavaScriptFileMappingTester } from "./Components/JavaScriptFileMappingTester";
+export { JSONFileMappingTester } from "./Components/JSONFileMappingTester";
 export { IRunContext } from "./IRunContext";
-export { ITestOptions } from "./ITestOptions";
-export { ITestGeneratorSettings } from "./ITestGeneratorSettings";
 export { ITestGeneratorOptions } from "./ITestGeneratorOptions";
+export { ITestGeneratorSettings } from "./ITestGeneratorSettings";
+export { ITestOptions } from "./ITestOptions";
 export { TestContext } from "./TestContext";
 export { TestGenerator } from "./TestGenerator";

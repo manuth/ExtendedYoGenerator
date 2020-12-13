@@ -6,7 +6,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v7.4.0...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v7.5.0...dev)
+
+## ExtendedYoGenerator v7.5.0
+  - Refactored typescript-settings
+  - Reordered export-statements
+
+### Added
+  - Missing exports
+
+### Fixed
+  - Broken Dependabot-settings
+
+### Updated
+  - All packages
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v7.4.0...v7.5.0)
 
 ## ExtendedYoGenerator v7.4.0
 ### Fixed

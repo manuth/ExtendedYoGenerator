@@ -7,6 +7,11 @@
         "lib": [
             "ES2020"
         ],
+        "paths": {
+            "@manuth/*": [
+                "./packages/*"
+            ]
+        },
         "plugins": [
             {
                 "name": "@manuth/typescript-eslint-plugin"
