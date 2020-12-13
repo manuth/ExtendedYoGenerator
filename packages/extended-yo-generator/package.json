@@ -14,7 +14,7 @@
   "directories": {
     "lib": "lib"
   },
-  "homepage": "https://github.com/manuth/ExtendedYoGenerator/tree/master/packages/extended-yo-generator#readme",
+  "homepage": "https://github.com/manuth/ExtendedYoGenerator/tree/main/packages/extended-yo-generator#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/manuth/ExtendedYoGenerator.git",
