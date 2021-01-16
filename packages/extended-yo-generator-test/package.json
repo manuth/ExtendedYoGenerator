@@ -50,11 +50,11 @@
     "yeoman-test": "^4.0.0"
   },
   "devDependencies": {
-    "@manuth/temp-files": "^2.0.1",
-    "@types/fs-extra": "^9.0.5",
+    "@manuth/temp-files": "^2.0.3",
+    "@types/fs-extra": "^9.0.6",
     "@types/lodash.clonedeep": "^4.5.6",
     "@types/mocha": "^8.2.0",
-    "@types/node": "^14.14.14",
+    "@types/node": "^14.14.21",
     "concurrently": "^5.3.0",
     "lodash.clonedeep": "^4.5.0",
     "mocha": "^8.2.1",
