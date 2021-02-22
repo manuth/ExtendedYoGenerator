@@ -47,7 +47,7 @@
     "fs-extra": "^9.0.1",
     "random-js": "^2.1.0",
     "upath": "^2.0.1",
-    "yeoman-test": "^4.0.0"
+    "yeoman-test": "^4.0.2"
   },
   "devDependencies": {
     "@manuth/temp-files": "^2.0.3",
