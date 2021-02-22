@@ -46,7 +46,7 @@
     "chalk": "^4.1.0",
     "inquirer": "^7.3.3",
     "pkg-up": "^3.1.0",
-    "yeoman-generator": "^4.12.0"
+    "yeoman-generator": "^5.0.0"
   },
   "devDependencies": {
     "@manuth/extended-yo-generator-test": "^7.5.1",
