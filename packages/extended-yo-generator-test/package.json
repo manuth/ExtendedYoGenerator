@@ -55,7 +55,7 @@
     "@types/lodash.clonedeep": "^4.5.6",
     "@types/mocha": "^8.2.0",
     "@types/node": "^14.14.21",
-    "concurrently": "^5.3.0",
+    "concurrently": "^6.0.0",
     "lodash.clonedeep": "^4.5.0",
     "mocha": "^8.2.1",
     "rimraf": "^3.0.2",
