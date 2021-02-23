@@ -2,7 +2,9 @@ import { join } from "path";
 import { Generator, GeneratorOptions, IGeneratorSettings } from "@manuth/extended-yo-generator";
 import cloneDeep = require("lodash.clonedeep");
 import { Random } from "random-js";
-import { run, RunContextSettings } from "yeoman-test";
+import sinon = require("sinon");
+import Environment = require("yeoman-environment");
+import yeomanTest = require("yeoman-test");
 import { IRunContext } from "./IRunContext";
 import { ITestGeneratorOptions } from "./ITestGeneratorOptions";
 import { ITestOptions } from "./ITestOptions";
@@ -17,6 +19,16 @@ export class TestContext<TGenerator extends Generator<any, TOptions> = Generator
      * The default `TestContext<TGenerator, TOptions>` instance.
      */
     private static defaultInstance: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>> = null;
+
+    /**
+     * A method for creating an environment.
+     */
+    private envFactory: typeof Environment["createEnv"];
+
+    /**
+     * The mock of the `yeoman-environment`-creation.
+     */
+    private envMock: sinon.SinonStub<unknown[], unknown> = null;
 
     /**
      * The directory of the generator.
@@ -43,9 +55,13 @@ export class TestContext<TGenerator extends Generator<any, TOptions> = Generator
      *
      * @param generatorDirectory
      * The directory of the generator.
+     *
+     * @param envFactory
+     * A component for creating `yeoman-environment`s.
      */
-    public constructor(generatorDirectory: string)
+    public constructor(generatorDirectory: string, envFactory?: typeof Environment["createEnv"])
     {
+        this.envFactory = envFactory ?? ((...params) => Environment.createEnv(...params));
         this.generatorDirectory = generatorDirectory;
     }
 
@@ -193,14 +209,30 @@ export class TestContext<TGenerator extends Generator<any, TOptions> = Generator
      * @returns
      * The execution-context of the generator.
      */
-    public ExecuteGenerator(options?: TOptions, runSettings?: RunContextSettings): IRunContext<TGenerator>
+    public ExecuteGenerator(options?: TOptions, runSettings?: yeomanTest.RunContextSettings): IRunContext<TGenerator>
     {
-        let result = run(this.GeneratorDirectory, runSettings) as IRunContext<TGenerator>;
+        if (!this.envMock && this.envFactory)
+        {
+            this.envMock = sinon.stub(yeomanTest as any as typeof Environment, "createEnv").callsFake(
+                (...params) =>
+                {
+                    return this.envFactory(...params);
+                });
+        }
+
+        let result = yeomanTest.run(this.GeneratorDirectory, runSettings) as IRunContext<TGenerator>;
 
         if (options)
         {
             result = result.withOptions(options);
         }
+
+        result.toPromise().finally(
+            () =>
+            {
+                this.envMock.restore();
+                this.envMock = null;
+            });
 
         return result;
     }
