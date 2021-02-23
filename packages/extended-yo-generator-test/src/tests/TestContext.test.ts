@@ -49,7 +49,7 @@ export function TestContextTests(): void
                     return env;
                 }) as EnvFactory;
 
-                result.version = `${Environment.createEnv().getVersion()}${randexp("\\d+")}`;
+                result.version = `${Environment.createEnv().getVersion()}${randexp("\\d{10}")}`;
                 return result;
             }
 
