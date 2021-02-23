@@ -91,15 +91,19 @@ export function TestContextTests(): void
 
                     test(
                         "Checking whether a test-context without an `envFactory` can be initialized and used…",
-                        async () =>
+                        async function()
                         {
+                            this.timeout(3 * 1000);
+                            this.slow(1.5 * 1000);
                             await doesNotReject(() => new TestContext(TestContext.Default.GeneratorDirectory).ExecuteGenerator());
                         });
 
                     test(
                         "Checking whether the passed `envFactory` is being used…",
-                        async () =>
+                        async function()
                         {
+                            this.timeout(3 * 1000);
+                            this.slow(1.5 * 1000);
                             strictEqual((await testContext.ExecuteGenerator()).env.getVersion(), globalEnvFactory.version);
                         });
                 });
