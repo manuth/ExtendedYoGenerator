@@ -259,7 +259,12 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                     suiteSetup(
                         async function()
                         {
-                            generator = new SubGenerator([], {} as any);
+                            generator = new SubGenerator(
+                                [],
+                                {
+                                    env: (await TestContext.Default.Generator).env
+                                } as any);
+
                             generator.Base.moduleRoot(generator.Base.moduleRoot(context.RandomString));
                         });
 
@@ -400,7 +405,11 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                             class MyGenerator extends Generator.ComposeWith(TestGenerator, TestGenerator.Path)
                             { }
 
-                            generator = new MyGenerator([], {} as any);
+                            generator = new MyGenerator(
+                                [],
+                                {
+                                    env: (await TestContext.Default.Generator).env
+                                } as any);
                         });
 
                     test(
@@ -419,10 +428,14 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
 
                     test(
                         "Checking whether the base-generator is created using the constructor rather than the namespace (or path)…",
-                        () =>
+                        async () =>
                         {
                             let testGenerator = new class extends Generator.ComposeWith(class extends Generator { }, TestGenerator.Path)
-                            { }([], {} as any);
+                            { }(
+                                [],
+                                {
+                                    env: (await TestContext.Default.Generator).env
+                                });
 
                             ok(!(testGenerator instanceof TestGenerator));
                             ok(testGenerator instanceof Generator);
