@@ -95,6 +95,7 @@ export function TestContextTests(): void
                         {
                             this.timeout(3 * 1000);
                             this.slow(1.5 * 1000);
+                            console.log(require.resolve("mem-fs-editor"));
                             await doesNotReject(() => new TestContext(TestContext.Default.GeneratorDirectory).ExecuteGenerator());
                         });
 

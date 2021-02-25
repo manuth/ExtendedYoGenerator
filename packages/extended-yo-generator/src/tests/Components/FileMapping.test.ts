@@ -35,6 +35,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
             suiteSetup(
                 async () =>
                 {
+                    console.log(require.resolve("mem-fs-editor"));
                     random = new Random();
                     generator = await context.Generator;
                     fileMapping = new FileMapping(generator, fileMappingOptions);
