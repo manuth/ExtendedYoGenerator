@@ -1,5 +1,6 @@
 import { notStrictEqual, ok, strictEqual } from "assert";
 import { TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
+import Environment = require("yeoman-environment");
 import { ComponentCollection } from "../../Components/ComponentCollection";
 import { FileMapping } from "../../Components/FileMapping";
 import { IComponentCollection } from "../../Components/IComponentCollection";
@@ -239,6 +240,20 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                 return all ? values.every((value) => value) : values.some((value) => value);
             }
 
+            /**
+             * Initializes a new instance of the specified generator-constructor.
+             *
+             * @param generatorConstructor
+             * The constructor of the generator to instanciate.
+             *
+             * @returns
+             * The newly initialized generator.
+             */
+            function CreateGenerator<T extends Generator>(generatorConstructor: new(...args: any[]) => T): T
+            {
+                return new generatorConstructor([], { env: Environment.createEnv() });
+            }
+
             suiteSetup(
                 () =>
                 {
@@ -259,7 +274,7 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                     suiteSetup(
                         async function()
                         {
-                            generator = new SubGenerator([], {} as any);
+                            generator = CreateGenerator(SubGenerator);
                             generator.Base.moduleRoot(generator.Base.moduleRoot(context.RandomString));
                         });
 
@@ -421,9 +436,7 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                         "Checking whether the base-generator is created using the constructor rather than the namespace (or path)…",
                         () =>
                         {
-                            let testGenerator = new class extends Generator.ComposeWith(class extends Generator { }, TestGenerator.Path)
-                            { }([], {} as any);
-
+                            let testGenerator = CreateGenerator(class extends Generator.ComposeWith(class extends Generator { }, TestGenerator.Path) { });
                             ok(!(testGenerator instanceof TestGenerator));
                             ok(testGenerator instanceof Generator);
                         });
