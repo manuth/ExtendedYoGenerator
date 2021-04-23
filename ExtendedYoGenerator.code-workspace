@@ -27,8 +27,8 @@
                 "cwd": "${workspaceFolder:ExtendedYoGenerator}",
                 "program": "${workspaceFolder:ExtendedYoGenerator}/node_modules/mocha/bin/_mocha",
                 "internalConsoleOptions": "openOnSessionStart",
-                "sourceMaps": true,
                 "preLaunchTask": "Build",
+                "sourceMaps": true,
                 "presentation": {
                     "order": 2
                 }
@@ -40,8 +40,8 @@
                 "cwd": "${workspaceFolder:ExtendedYoGeneratorTest}",
                 "program": "${workspaceFolder:ExtendedYoGeneratorTest}/node_modules/mocha/bin/_mocha",
                 "internalConsoleOptions": "openOnSessionStart",
-                "sourceMaps": true,
                 "preLaunchTask": "Build",
+                "sourceMaps": true,
                 "presentation": {
                     "order": 3
                 }
