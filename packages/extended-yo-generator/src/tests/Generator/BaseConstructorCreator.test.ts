@@ -415,7 +415,7 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                             class MyGenerator extends Generator.ComposeWith(TestGenerator, TestGenerator.Path)
                             { }
 
-                            generator = new MyGenerator([], {} as any);
+                            generator = CreateGenerator(MyGenerator);
                         });
 
                     test(

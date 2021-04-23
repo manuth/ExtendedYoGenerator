@@ -6,7 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v7.5.3...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v8.0.0...dev)
+
+## ExtendedYoGenerator v8.0.0
+### Breaking
+  - Updated yeoman-dependencies which requires `yo@4.0.0^` to be installed in order to run generators using `ExtendedYoGenerator`
+
+### Updated
+  - All dependencies
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v7.5.3...v8.0.0)
 
 ## ExtendedYoGenerator v7.5.3
 ### Fixed
