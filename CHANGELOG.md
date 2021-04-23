@@ -6,11 +6,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v7.5.1...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v7.5.3...dev)
+
+## ExtendedYoGenerator v7.5.3
+### Fixed
+  - Vulnerabilities in dependencies
+  - Broken drone-pipelines
+
+### Added
+  - A workflow for merging Dependabot-PRs
+  - A workflow for analyzing the code
+
+### Updated
+  - Drone-pipelines to use small-sized images
+  - Dependencies of the package
+  - The `yeoman-test`-dependency
+  - Update tests as preparation for a yeoman-update
+
+### Removed
+  - Unnecessary dependencies
+  - Dependabot-settings for redundant directories
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v7.5.1...v7.5.3)
 
 ## ExtendedYoGenerator v7.5.1
 ### Fixed
-  - Vulnerabilities
+  - Vulnerabilities in dependencies
 
 ### Updated
   - All dependencies
