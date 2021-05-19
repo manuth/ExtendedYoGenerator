@@ -65,7 +65,7 @@
     "shusher": "^0.1.1",
     "typescript": "^4.2.4",
     "upath": "^2.0.1",
-    "yeoman-environment": "^3.3.0",
-    "yeoman-test": "^6.0.0"
+    "yeoman-environment": "^3.4.0",
+    "yeoman-test": "^6.1.0"
   }
 }
