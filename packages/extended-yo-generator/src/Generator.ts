@@ -1,5 +1,6 @@
 import { dirname, join, resolve } from "path";
 import chalk = require("chalk");
+import { ensureDirSync } from "fs-extra";
 import { ChoiceCollection, Separator } from "inquirer";
 import pkgUp = require("pkg-up");
 import YeomanGenerator = require("yeoman-generator");
@@ -277,15 +278,20 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
      * @param rootPath
      * The new destination root path.
      *
-     * @param skipEnvironment
-     * A value indicating whether `this.env.cwd` and the current working directory shouldn't be changed.
-     *
      * @returns
      * The `destinationRoot` of the generator.
      */
-    public destinationRoot(rootPath?: string, skipEnvironment?: boolean): string
+    public destinationRoot(rootPath?: string): string
     {
-        return super.destinationRoot(rootPath, skipEnvironment);
+        // This piece of code temporarily fixes [yeoman/generator#309](https://github.com/yeoman/environment/issues/309) as a workaround.
+        if (rootPath)
+        {
+            ensureDirSync(rootPath);
+            process.chdir(rootPath);
+            this.env.cwd = rootPath;
+        }
+
+        return super.destinationRoot(rootPath);
     }
 
     /**

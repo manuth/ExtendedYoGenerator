@@ -1,6 +1,6 @@
 import { doesNotThrow, notStrictEqual, ok, strictEqual } from "assert";
 import { IRunContext, ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
-import { TempFile } from "@manuth/temp-files";
+import { TempDirectory, TempFile } from "@manuth/temp-files";
 import { readFile, writeFile } from "fs-extra";
 import pkgUp = require("pkg-up");
 import { dirname, isAbsolute, join, normalize, relative, resolve } from "upath";
@@ -135,6 +135,37 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                         {
                             this.timeout(0);
                             await context.ExecuteGenerator({ TestGeneratorOptions: options }).toPromise();
+                        });
+                });
+
+            suite(
+                "destinationRoot",
+                () =>
+                {
+                    let workingDirectory: string;
+                    let tempDir: TempDirectory;
+
+                    suiteSetup(
+                        () =>
+                        {
+                            workingDirectory = process.cwd();
+                            tempDir = new TempDirectory();
+                        });
+
+                    suiteTeardown(
+                        () =>
+                        {
+                            process.chdir(workingDirectory);
+                            tempDir.Dispose();
+                        });
+
+                    test(
+                        "Checking whether changing the `destinationRoot` changes the working directory of the environment…",
+                        () =>
+                        {
+                            generator.destinationRoot(tempDir.FullName);
+                            AssertPath(generator.env.cwd, tempDir.FullName);
+                            AssertPath(process.cwd(), tempDir.FullName);
                         });
                 });
 
