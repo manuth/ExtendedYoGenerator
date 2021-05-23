@@ -136,6 +136,38 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                             this.timeout(0);
                             await context.ExecuteGenerator({ TestGeneratorOptions: options }).toPromise();
                         });
+
+                    test(
+                        "Checking whether dependencies are installed if the `package.json` is changed after changing the `destinationRoot`…",
+                        async function()
+                        {
+                            this.slow(10 * 1000);
+                            this.timeout(20 * 1000);
+
+                            let result = await context.ExecuteGenerator(
+                                {
+                                    TestGeneratorOptions: {
+                                        FileMappings: [
+                                            {
+                                                Destination: "package.json",
+                                                Processor: (target, generator) =>
+                                                {
+                                                    generator.fs.writeJSON(
+                                                        target.Destination,
+                                                        {
+                                                            name: ""
+                                                        });
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }).withOptions(
+                                {
+                                    skipInstall: false
+                                });
+
+                            result.assertFile("package-lock.json");
+                        });
                 });
 
             suite(
