@@ -133,8 +133,41 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                         "Checking whether the generator can be executed…",
                         async function()
                         {
-                            this.timeout(0);
+                            this.slow(1 * 1000);
+                            this.timeout(2 * 1000);
                             await context.ExecuteGenerator({ TestGeneratorOptions: options }).toPromise();
+                        });
+
+                    test(
+                        "Checking whether dependencies are installed if the `package.json` is changed after changing the `destinationRoot`…",
+                        async function()
+                        {
+                            this.slow(10 * 1000);
+                            this.timeout(20 * 1000);
+
+                            let result = await context.ExecuteGenerator(
+                                {
+                                    TestGeneratorOptions: {
+                                        FileMappings: [
+                                            {
+                                                Destination: "package.json",
+                                                Processor: (target, generator) =>
+                                                {
+                                                    generator.fs.writeJSON(
+                                                        target.Destination,
+                                                        {
+                                                            name: ""
+                                                        });
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }).withOptions(
+                                    {
+                                        skipInstall: false
+                                    });
+
+                            result.assertFile("package-lock.json");
                         });
                 });
 
@@ -444,8 +477,10 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
 
                     test(
                         "Checking whether file-mappings can be added which are executed in any case…",
-                        async () =>
+                        async function()
                         {
+                            this.slow(1 * 1000);
+                            this.timeout(1 * 1000);
                             let runContext = context.ExecuteGenerator({ TestGeneratorOptions: options });
                             await runContext.toPromise();
                             strictEqual((await readFile(runContext.generator.destinationPath(testFileName))).toString(), testContent);
