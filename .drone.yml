@@ -7,7 +7,6 @@ steps:
     image: node
     commands:
       - npm install --unsafe-perm
-      - npx lerna bootstrap
   - name: build
     image: node
     commands:
