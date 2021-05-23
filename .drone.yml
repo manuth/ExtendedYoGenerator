@@ -7,7 +7,6 @@ steps:
     image: node
     commands:
       - npm install --unsafe-perm
-      - npx lerna bootstrap
   - name: build
     image: node
     commands:
@@ -32,7 +31,7 @@ steps:
       event:
         - tag
       ref:
-        - refs/tags/v[0-9].[0-9].[0-9]
+        - refs/tags/v[0-9]*.[0-9]*.[0-9]*
   - name: publish package to github
     image: node
     environment:
@@ -46,7 +45,7 @@ steps:
       event:
         - tag
       ref:
-        - refs/tags/v[0-9].[0-9].[0-9]
+        - refs/tags/v[0-9]*.[0-9]*.[0-9]*
   - name: prepare release
     image: node
     commands:
