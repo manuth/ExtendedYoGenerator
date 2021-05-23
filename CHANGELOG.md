@@ -6,8 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 ### Fixed
-  - Issue caused by `yeoman-environment` and `yeoman-generator@5`  
-    For more information, see [yeoman/environment#309](https://github.com/yeoman/environment/issues/309)
+  - The module by adding a missing dependency
+
+### Added
+  - A missing dependency
 
 ### Updated
   - All dependencies
