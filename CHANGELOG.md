@@ -12,7 +12,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Updated
   - All dependencies
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v8.0.1...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v8.0.2...dev)
+
+## ExtendedYoGenerator v8.0.2
+### Fixed
+  - Issue caused by `yeoman-environment` and `yeoman-generator@5`  
+    For more information, see [yeoman/environment#309](https://github.com/yeoman/environment/issues/309)
+
+### Updated
+  - All dependencies
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v8.0.1...v8.0.2)
 
 ## ExtendedYoGenerator v8.0.1
 ### Updated
