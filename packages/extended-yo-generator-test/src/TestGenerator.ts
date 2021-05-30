@@ -52,7 +52,7 @@ export class TestGenerator<TSettings extends ITestGeneratorSettings = ITestGener
     /**
      * Gets or sets the name of the root of the template-folder.
      */
-    public get TemplateRoot(): string
+    public override get TemplateRoot(): string
     {
         return this.generatorOptions.TemplateRoot;
     }
@@ -60,7 +60,7 @@ export class TestGenerator<TSettings extends ITestGeneratorSettings = ITestGener
     /**
      * @inheritdoc
      */
-    public set TemplateRoot(value: string)
+    public override set TemplateRoot(value: string)
     {
         this.generatorOptions.TemplateRoot = value;
     }
@@ -68,7 +68,7 @@ export class TestGenerator<TSettings extends ITestGeneratorSettings = ITestGener
     /**
      * Gets or sets the components provided by the generator.
      */
-    public get Components(): IComponentCollection<TSettings, ITestGeneratorOptions<TOptions>>
+    public override get Components(): IComponentCollection<TSettings, ITestGeneratorOptions<TOptions>>
     {
         return this.generatorOptions.Components;
     }
@@ -76,7 +76,7 @@ export class TestGenerator<TSettings extends ITestGeneratorSettings = ITestGener
     /**
      * @inheritdoc
      */
-    public set Components(value: IComponentCollection<TSettings, ITestGeneratorOptions<TOptions>>)
+    public override set Components(value: IComponentCollection<TSettings, ITestGeneratorOptions<TOptions>>)
     {
         this.generatorOptions.Components = value;
     }
@@ -84,7 +84,7 @@ export class TestGenerator<TSettings extends ITestGeneratorSettings = ITestGener
     /**
      * Gets the questions to ask before executing the generator.
      */
-    public get Questions(): Question[]
+    public override get Questions(): Question[]
     {
         return this.generatorOptions.Questions;
     }
@@ -92,7 +92,7 @@ export class TestGenerator<TSettings extends ITestGeneratorSettings = ITestGener
     /**
      * @inheritdoc
      */
-    public set Questions(value: Question[])
+    public override set Questions(value: Question[])
     {
         this.generatorOptions.Questions = value;
     }
@@ -100,7 +100,7 @@ export class TestGenerator<TSettings extends ITestGeneratorSettings = ITestGener
     /**
      * @inheritdoc
      */
-    public get FileMappings(): Array<IFileMapping<TSettings, ITestGeneratorOptions<TOptions>>>
+    public override get FileMappings(): Array<IFileMapping<TSettings, ITestGeneratorOptions<TOptions>>>
     {
         return this.generatorOptions.FileMappings;
     }
@@ -108,7 +108,7 @@ export class TestGenerator<TSettings extends ITestGeneratorSettings = ITestGener
     /**
      * @inheritdoc
      */
-    public set FileMappings(value: Array<IFileMapping<TSettings, ITestGeneratorOptions<TOptions>>>)
+    public override set FileMappings(value: Array<IFileMapping<TSettings, ITestGeneratorOptions<TOptions>>>)
     {
         this.generatorOptions.FileMappings = value;
     }
@@ -135,7 +135,7 @@ export class TestGenerator<TSettings extends ITestGeneratorSettings = ITestGener
     /**
      * Gathers all information for executing the generator and saves them to the `Settings`.
      */
-    public async prompting(): Promise<void>
+    public override async prompting(): Promise<void>
     {
         this.log("Hi");
         return super.prompting();
@@ -144,7 +144,7 @@ export class TestGenerator<TSettings extends ITestGeneratorSettings = ITestGener
     /**
      * Writes all files for the components.
      */
-    public async writing(): Promise<void>
+    public override async writing(): Promise<void>
     {
         super.writing();
     }
@@ -152,7 +152,7 @@ export class TestGenerator<TSettings extends ITestGeneratorSettings = ITestGener
     /**
      * Finalizes the generation-process.
      */
-    public async end(): Promise<void>
+    public override async end(): Promise<void>
     {
         this.log("The end");
     }

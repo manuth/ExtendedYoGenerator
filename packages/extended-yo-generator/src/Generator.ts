@@ -281,7 +281,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
      * @returns
      * The `destinationRoot` of the generator.
      */
-    public destinationRoot(rootPath?: string): string
+    public override destinationRoot(rootPath?: string): string
     {
         // This piece of code temporarily fixes [yeoman/generator#309](https://github.com/yeoman/environment/issues/309) as a workaround.
         if (rootPath)
@@ -331,7 +331,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
      * @returns
      * The joined path.
      */
-    public templatePath(...path: string[]): string
+    public override templatePath(...path: string[]): string
     {
         return this.commonTemplatePath(...(this.TemplateRoot ? [this.TemplateRoot] : []), ...path);
     }
