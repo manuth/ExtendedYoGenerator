@@ -35,7 +35,7 @@ export function ResolverTests(context: TestContext<TestGenerator, ITestGenerator
                  * @returns
                  * The resolved value.
                  */
-                public Resolve<T>(target: null, generator: null, value: Resolvable<null, null, null, T>): T
+                public override Resolve<T>(target: null, generator: null, value: Resolvable<null, null, null, T>): T
                 {
                     return super.Resolve<T>(target, generator, value);
                 }

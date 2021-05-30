@@ -12,6 +12,9 @@
   "bugs": {
     "url": "https://github.com/manuth/ExtendedYoGenerator/issues"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "npm run copy-files && npm run compile",
     "copy-files": "glob-exec --foreach \"./packages/*\" --parallel -- copy-and-watch ./{LICENSE,CHANGELOG.md,.npmignore} \"{{file}}\"",
@@ -29,21 +32,21 @@
     "prepare": "lerna bootstrap --ignore-scripts && npm run rebuild"
   },
   "devDependencies": {
-    "@manuth/eslint-plugin-typescript": "^2.3.10",
-    "@manuth/tsconfig": "^1.2.9",
-    "@manuth/typescript-eslint-plugin": "^1.3.5",
+    "@manuth/eslint-plugin-typescript": "^3.0.1",
+    "@manuth/tsconfig": "^2.0.0",
+    "@manuth/typescript-eslint-plugin": "^1.3.6",
     "@types/git-branch": "^2.0.1",
-    "@types/node": "^15.6.0",
+    "@types/node": "^15.6.1",
     "@types/npm-which": "^3.0.0",
-    "@typescript-eslint/eslint-plugin": "^4.24.0",
-    "@typescript-eslint/eslint-plugin-tslint": "^4.24.0",
-    "@typescript-eslint/parser": "^4.24.0",
-    "concurrently": "^6.1.0",
+    "@typescript-eslint/eslint-plugin": "^4.25.0",
+    "@typescript-eslint/eslint-plugin-tslint": "^4.25.0",
+    "@typescript-eslint/parser": "^4.25.0",
+    "concurrently": "^6.2.0",
     "copy-and-watch": "^0.1.5",
     "eslint": "^7.27.0",
     "eslint-plugin-deprecation": "^1.2.1",
-    "eslint-plugin-import": "^2.23.3",
-    "eslint-plugin-jsdoc": "^34.8.2",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-jsdoc": "^35.1.0",
     "git-branch": "^2.0.1",
     "glob-exec": "^0.1.1",
     "lerna": "^4.0.0",
@@ -52,6 +55,6 @@
     "shusher": "^0.1.1",
     "ts-node": "^10.0.0",
     "tslint": "^6.1.3",
-    "typescript": "^4.2.4"
+    "typescript": "^4.3.2"
   }
 }

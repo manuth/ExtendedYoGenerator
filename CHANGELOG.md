@@ -6,7 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v8.0.3...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v8.0.4...dev)
+
+## ExtendedYoGenerator v8.0.4
+### Fixed
+  - Vulnerabilities in dependencies
+
+### Updated
+  - All dependencies
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v8.0.3...v8.0.4)
 
 ## ExtendedYoGenerator v8.0.3
 ### Fixed

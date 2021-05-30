@@ -38,7 +38,7 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                 /**
                  * @inheritdoc
                  */
-                public get TemplateRoot(): string
+                public override get TemplateRoot(): string
                 {
                     return superTemplateDir;
                 }
@@ -46,7 +46,7 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                 /**
                  * @inheritdoc
                  */
-                public get Components(): IComponentCollection<any, any>
+                public override get Components(): IComponentCollection<any, any>
                 {
                     return {
                         Question: "Choose the components!",
@@ -73,7 +73,7 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                 /**
                  * @inheritdoc
                  */
-                public get FileMappings(): Array<IFileMapping<any, any>>
+                public override get FileMappings(): Array<IFileMapping<any, any>>
                 {
                     return [
                         {
@@ -92,7 +92,7 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                 /**
                  * @inheritdoc
                  */
-                public get TemplateRoot(): string
+                public override get TemplateRoot(): string
                 {
                     return subTemplateDir;
                 }
@@ -100,7 +100,7 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                 /**
                  * @inheritdoc
                  */
-                public get FileMappings(): Array<IFileMapping<any, any>>
+                public override get FileMappings(): Array<IFileMapping<any, any>>
                 {
                     let result = super.FileMappings;
 
@@ -116,7 +116,7 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                 /**
                  * @inheritdoc
                  */
-                public get Components(): IComponentCollection<any, any>
+                public override get Components(): IComponentCollection<any, any>
                 {
                     let result = super.Components;
 
@@ -144,7 +144,7 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                 /**
                  * @inheritdoc
                  */
-                public get BaseFileMappings(): Array<IFileMapping<any, any>>
+                public override get BaseFileMappings(): Array<IFileMapping<any, any>>
                 {
                     let result = super.BaseFileMappings;
 
@@ -160,7 +160,7 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                 /**
                  * @inheritdoc
                  */
-                public get BaseComponents(): IComponentCollection<any, any>
+                public override get BaseComponents(): IComponentCollection<any, any>
                 {
                     let result = super.BaseComponents;
 
