@@ -9,5 +9,11 @@
         {
             "path": "../extended-yo-generator"
         }
+    ],
+    "include": [
+        "./src/**/*"
+    ],
+    "exclude": [
+        "./src/tests/**/*"
     ]
 }
