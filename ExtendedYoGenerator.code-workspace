@@ -31,7 +31,11 @@
                 "sourceMaps": true,
                 "presentation": {
                     "order": 2
-                }
+                },
+                "outFiles": [
+                    "${workspaceFolder:ExtendedYoGenerator}/**/*.js",
+                    "!**/node_modules/**"
+                ]
             },
             {
                 "type": "pwa-node",
@@ -44,7 +48,12 @@
                 "sourceMaps": true,
                 "presentation": {
                     "order": 3
-                }
+                },
+                "outFiles": [
+                    "${workspaceFolder:ExtendedYoGenerator}/**/*.js",
+                    "${workspaceFolder:ExtendedYoGeneratorTest}/**/*.js",
+                    "!**/node_modules/**"
+                ]
             }
         ],
         "compounds": [
