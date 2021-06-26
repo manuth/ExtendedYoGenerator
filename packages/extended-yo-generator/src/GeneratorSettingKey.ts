@@ -4,7 +4,7 @@
 export enum GeneratorSettingKey
 {
     /**
-     * Indicates the `Components`-setting.
+     * Indicates the {@link Components `Components`}-setting.
      */
     Components = "components"
 }

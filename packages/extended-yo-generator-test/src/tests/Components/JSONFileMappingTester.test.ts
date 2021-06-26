@@ -6,7 +6,7 @@ import TestGenerator = require("../../generators/app");
 import { TestContext } from "../../TestContext";
 
 /**
- * Registers tests for the `JSONFileMappingTester` class.
+ * Registers tests for the {@link JSONFileMappingTester `JSONFileMappingTester<TGenerator, TSettings, TOptions, TFileMapping>`} class.
  *
  * @param context
  * The test-context.

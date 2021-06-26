@@ -10,11 +10,17 @@ import { TestGenerator } from "./TestGenerator";
 
 /**
  * Represents a context for testing.
+ *
+ * @template TGenerator
+ * The type of the generator to test.
+ *
+ * @template TOptions
+ * The type of the options of the generator to test.
  */
 export class TestContext<TGenerator extends Generator<any, TOptions> = Generator<IGeneratorSettings, GeneratorOptions & any>, TOptions extends GeneratorOptions = GeneratorOptions>
 {
     /**
-     * The default `TestContext<TGenerator, TOptions>` instance.
+     * The default {@link TestContext `TestContext<TGenerator, TOptions>`} instance.
      */
     private static defaultInstance: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>> = null;
 
@@ -29,7 +35,7 @@ export class TestContext<TGenerator extends Generator<any, TOptions> = Generator
     private random: Random = new Random();
 
     /**
-     * An instance of the `RunContext` class that already has finished.
+     * An instance of {@link IRunContext `IRunContext<TGenerator>`} that already has finished.
      */
     private finishedContext: IRunContext<TGenerator> = null;
 
@@ -39,7 +45,7 @@ export class TestContext<TGenerator extends Generator<any, TOptions> = Generator
     private settingsBackup: any;
 
     /**
-     * Initializes a new instance of the `TestContext` class.
+     * Initializes a new instance of the {@link TestContext `TestContext<TGenerator, TOptions>`} class.
      *
      * @param generatorDirectory
      * The directory of the generator.
@@ -102,7 +108,7 @@ export class TestContext<TGenerator extends Generator<any, TOptions> = Generator
     }
 
     /**
-     * Gets the default instance of the `TestContext<TGenerator, TOptions>` class.
+     * Gets the default instance of the {@link TestContext `TestContext<TGenerator, TOptions>`} class.
      */
     public static get Default(): TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>>
     {
@@ -133,7 +139,10 @@ export class TestContext<TGenerator extends Generator<any, TOptions> = Generator
     }
 
     /**
-     * Creates a promise resolving the specified `value`.
+     * Creates a promise resolving the specified {@link value `value`}.
+     *
+     * @template T
+     * THe type of the specified {@link value `value`}.
      *
      * @param value
      * The value to promisify.
@@ -151,7 +160,10 @@ export class TestContext<TGenerator extends Generator<any, TOptions> = Generator
     }
 
     /**
-     * Nests the specified `value` into a function.
+     * Nests the specified {@link value `value`} into a function.
+     *
+     * @template T
+     * THe type of the specified {@link value `value`}.
      *
      * @param value
      * The value to nest into a function.
@@ -168,7 +180,10 @@ export class TestContext<TGenerator extends Generator<any, TOptions> = Generator
     }
 
     /**
-     * Nests the promisified `value` into a function.
+     * Nests the promisified {@link value `value`} into a function.
+     *
+     * @template T
+     * The type of the specified {@link value `value`}.
      *
      * @param value
      * The value to nest.

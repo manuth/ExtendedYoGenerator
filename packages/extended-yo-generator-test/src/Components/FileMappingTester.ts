@@ -4,6 +4,18 @@ import { pathExists, readFile, remove } from "fs-extra";
 
 /**
  * Provides the functionality to test a file-mapping.
+ *
+ * @template TGenerator
+ * The type of the generator for testing the file-mapping.
+ *
+ * @template TSettings
+ * The type of the settings of the generator.
+ *
+ * @template TOptions
+ * The type of the options of the generator.
+ *
+ * @template TFileMapping
+ * The type of the file-mapping to test.
  */
 export class FileMappingTester<TGenerator extends IGenerator<TSettings, TOptions>, TSettings extends IGeneratorSettings, TOptions extends GeneratorOptions, TFileMapping extends IFileMapping<TSettings, TOptions>>
 {
@@ -18,7 +30,7 @@ export class FileMappingTester<TGenerator extends IGenerator<TSettings, TOptions
     private fileMapping: TFileMapping;
 
     /**
-     * Initializes a new instance of the `FileMappingTester` class.
+     * Initializes a new instance of the {@link FileMappingTester `FileMappingTester<TGenerator, TSettings, TOptions, TFileMapping>`} class.
      *
      * @param generator
      * The generator of the file-mapping

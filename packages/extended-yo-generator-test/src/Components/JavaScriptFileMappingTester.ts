@@ -3,11 +3,23 @@ import { FileMappingTester } from "./FileMappingTester";
 
 /**
  * Provides the functionality to test javascript file-mappings.
+ *
+ * @template TGenerator
+ * The type of the generator for testing the file-mapping.
+ *
+ * @template TSettings
+ * The type of the settings of the generator.
+ *
+ * @template TOptions
+ * The type of the options of the generator.
+ *
+ * @template TFileMapping
+ * The type of the file-mapping to test.
  */
 export class JavaScriptFileMappingTester<TGenerator extends IGenerator<TSettings, TOptions>, TSettings extends IGeneratorSettings, TOptions extends GeneratorOptions, TFileMapping extends IFileMapping<TSettings, TOptions>> extends FileMappingTester<TGenerator, TSettings, TOptions, TFileMapping>
 {
     /**
-     * Initializes a new instance of the `JavaScriptFileMappingTester` class.
+     * Initializes a new instance of the {@link JavaScriptFileMappingTester `JavaScriptFileMappingTester<TGenerator, TSettings, TOptions, TFileMapping>`} class.
      *
      * @param generator
      * The generator of the file-mapping.

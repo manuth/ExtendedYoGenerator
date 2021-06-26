@@ -6,6 +6,12 @@ import { ITestOptions } from "./ITestOptions";
 
 /**
  * Represents a test-generator.
+ *
+ * @template TSettings
+ * The type of the settings of the generator.
+ *
+ * @template TOptions
+ * The type of the options of the generator.
  */
 export class TestGenerator<TSettings extends ITestGeneratorSettings = ITestGeneratorSettings, TOptions extends ITestOptions = ITestOptions> extends Generator<TSettings, ITestGeneratorOptions<TOptions>>
 {
@@ -15,7 +21,7 @@ export class TestGenerator<TSettings extends ITestGeneratorSettings = ITestGener
     private generatorOptions: Partial<TOptions> = {};
 
     /**
-     * Initializes a new instance of the `TestGenerator` class.
+     * Initializes a new instance of the {@link TestGenerator `TestGenerator<TSettings, TOptions>`} class.
      *
      * @param args
      * A set of arguments for the generator.
@@ -133,7 +139,7 @@ export class TestGenerator<TSettings extends ITestGeneratorSettings = ITestGener
     }
 
     /**
-     * Gathers all information for executing the generator and saves them to the `Settings`.
+     * Gathers all information for executing the generator and saves them to the {@link TestGenerator.Settings `Settings`}.
      */
     public override async prompting(): Promise<void>
     {

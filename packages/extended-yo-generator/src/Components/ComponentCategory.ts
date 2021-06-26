@@ -15,7 +15,7 @@ import { PropertyResolver } from "./Resolving/PropertyResolver";
 export class ComponentCategory<TSettings, TOptions> extends PropertyResolver<IComponentCategory<TSettings, TOptions>, ComponentCategory<TSettings, TOptions>, TSettings, TOptions> implements IComponentCategory<TSettings, TOptions>
 {
     /**
-     * Initializes a new instance of the `ComponentCategory` class.
+     * Initializes a new instance of the {@link ComponentCategory `ComponentCategory<TSettings, TOptions>`} class.
      *
      * @param generator
      * The generator of the category.

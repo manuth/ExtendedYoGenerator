@@ -4,7 +4,7 @@ import { ComponentCollection } from "../../Components/ComponentCollection";
 import { IComponentCollection } from "../../Components/IComponentCollection";
 
 /**
- * Provides tests for the `ComponentCollection` class.
+ * Provides tests for the {@link ComponentCollection `ComponentCollection<TSettings, TOptions>`} class.
  *
  * @param context
  * The test-context.

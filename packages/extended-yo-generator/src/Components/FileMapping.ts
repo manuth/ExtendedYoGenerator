@@ -17,7 +17,7 @@ import { Resolvable } from "./Resolving/Resolvable";
 export class FileMapping<TSettings, TOptions> extends PropertyResolver<IFileMapping<TSettings, TOptions>, FileMapping<TSettings, TOptions>, TSettings, TOptions> implements IFileMapping<TSettings, TOptions>
 {
     /**
-     * Initializes a new instance of the `FileMapping` class.
+     * Initializes a new instance of the {@link FileMapping `FileMapping<TSettings, TOptions>`} class.
      *
      * @param generator
      * The generator of the file-mapping.
@@ -80,13 +80,13 @@ export class FileMapping<TSettings, TOptions> extends PropertyResolver<IFileMapp
     }
 
     /**
-     * Resolves the path from the options with the specified `resolver`.
+     * Resolves the path from the options with the specified {@link resolver `resolver`}.
      *
      * @param path
      * The path to resolve.
      *
      * @param resolver
-     * The path-resolver to use.
+     * The {@link PathResolver `PathResolver`} to use.
      *
      * @returns
      * The resolved path.

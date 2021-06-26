@@ -30,7 +30,7 @@ export class PropertyResolver<TObject, TTarget, TSettings, TOptions> extends Res
     private object: TObject;
 
     /**
-     * Initializes a new instance of the `PropertyResolver<TTarget, TSettings>` class.
+     * Initializes a new instance of the {@link PropertyResolver `PropertyResolver<TObject, TTarget, TSettings, TOptions>`} class.
      *
      * @param generator
      * The generator of the component.
@@ -63,6 +63,9 @@ export class PropertyResolver<TObject, TTarget, TSettings, TOptions> extends Res
 
     /**
      * Resolves a value.
+     *
+     * @template T
+     * The type of the value to resolve.
      *
      * @param target
      * The component.

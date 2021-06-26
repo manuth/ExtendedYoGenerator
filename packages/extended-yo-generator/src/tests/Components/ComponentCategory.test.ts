@@ -4,7 +4,7 @@ import { ComponentCategory } from "../../Components/ComponentCategory";
 import { IComponentCategory } from "../../Components/IComponentCategory";
 
 /**
- * Provides tests for the `ComponentCategory` class.
+ * Provides tests for the {@link ComponentCategory `ComponentCategory<TSettings, TOptions>`} class.
  *
  * @param context
  * The test-context.

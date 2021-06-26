@@ -7,7 +7,7 @@ import { TestContext } from "../../TestContext";
 import { TestGenerator } from "../../TestGenerator";
 
 /**
- * Registers tests for the `FileMappingTester` class.
+ * Registers tests for the {@link FileMappingTester `FileMappingTester<TGenerator, TSettings, TOptions, TFileMapping>`} class.
  *
  * @param context
  * The test-context.

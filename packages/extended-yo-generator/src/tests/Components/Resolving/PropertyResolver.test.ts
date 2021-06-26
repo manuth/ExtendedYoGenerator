@@ -1,11 +1,13 @@
 import { doesNotReject, strictEqual } from "assert";
 import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { PropertyResolver } from "@manuth/extended-yo-generator/src/Components/Resolving/PropertyResolver";
 import { Random } from "random-js";
 import { IResolverTestOptions } from "./IResolverTestOptions";
 import { ResolverTest } from "./ResolverTest";
 
 /**
- * Registers tests for the `PropertyResolver` class.
+ * Registers tests for the {@link PropertyResolver `PropertyResolver<TObject, TTarget, TSettings, TOptions>`} class.
  *
  * @param context
  * The test-context to use.

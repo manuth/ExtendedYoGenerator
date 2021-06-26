@@ -4,7 +4,7 @@ import { AsyncResolveFunction } from "./Resolving/AsyncResolveFunction";
 import { Resolvable } from "./Resolving/Resolvable";
 
 /**
- * Represents a file-mapping.
+ * Represents a {@link FileMapping `FileMapping<TSettings, TOptions>`}.
  *
  * @template TSettings
  * The type of the settings of the generator.

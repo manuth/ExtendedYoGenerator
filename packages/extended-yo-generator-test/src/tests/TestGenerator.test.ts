@@ -7,7 +7,7 @@ import { TestContext } from "../TestContext";
 import { TestGenerator } from "../TestGenerator";
 
 /**
- * Registers tests for the `TestGenerator` class.
+ * Registers tests for the {@link TestGenerator `TestGenerator<TSettings, TOptions>`} class.
  */
 export function TestGeneratorTests(): void
 {

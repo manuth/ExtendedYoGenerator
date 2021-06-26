@@ -8,7 +8,7 @@ import { TestGenerator } from "../TestGenerator";
 import { IExampleOptions } from "./IExampleOptions";
 
 /**
- * Registers tests for the `TestContext` class.
+ * Registers tests for the {@link TestContext `TestContext<TGenerator, TOptions>`} class.
  */
 export function TestContextTests(): void
 {

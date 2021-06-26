@@ -4,7 +4,7 @@ import { Resolvable } from "../../../Components/Resolving/Resolvable";
 import { Resolver } from "../../../Components/Resolving/Resolver";
 
 /**
- * Registers tests for the `Resolver` class.
+ * Registers tests for the {@link Resolver `Resolver<TTarget, TSettings, TOptions>`} class.
  *
  * @param context
  * The context of the test-execution.
@@ -16,12 +16,15 @@ export function ResolverTests(context: TestContext<TestGenerator, ITestGenerator
         () =>
         {
             /**
-             * Represents a test-implementation of the `Resolver` class.
+             * Represents a test-implementation of the {@link Resolver `Resolver<TTarget, TSettings, TOptions>`} class.
              */
             class TestResolver extends Resolver<null, null, null>
             {
                 /**
                  * @inheritdoc
+                 *
+                 * @template T
+                 * The type of the value to resolve.
                  *
                  * @param target
                  * The component.

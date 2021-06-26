@@ -1,6 +1,7 @@
 import { notStrictEqual, ok, strictEqual } from "assert";
 import { TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import Environment = require("yeoman-environment");
+import { BaseConstructorCreator } from "../../BaseConstructorCreator";
 import { ComponentCollection } from "../../Components/ComponentCollection";
 import { FileMapping } from "../../Components/FileMapping";
 import { IComponentCollection } from "../../Components/IComponentCollection";
@@ -8,7 +9,7 @@ import { IFileMapping } from "../../Components/IFileMapping";
 import { Generator } from "../../Generator";
 
 /**
- * Registers tests for the `BaseConstructorCreator` class.
+ * Registers tests for the {@link BaseConstructorCreator `BaseConstructorCreator`} class.
  *
  * @param context
  * The test-context.
@@ -87,7 +88,7 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
             /**
              * A class for testing.
              */
-            class SubGenerator extends Generator.ComposeWith(SuperGenerator)
+            class SubGenerator extends BaseConstructorCreator.Create(SuperGenerator)
             {
                 /**
                  * @inheritdoc
@@ -192,7 +193,7 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
             type FileMappingCondition = (fileMapping: FileMapping<any, any>) => boolean;
 
             /**
-             * Asserts the truthyness of the specified `condition`.
+             * Asserts the truthyness of the specified {@link condition `condition`}.
              *
              * @param fileMappings
              * The file-mappings to check.
@@ -201,7 +202,7 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
              * The condition to check.
              *
              * @param all
-             * A value indicating whether all or only one file-mapping is expected to match the `condition`.
+             * A value indicating whether all or only one file-mapping is expected to match the {@link condition `condition`}.
              *
              * @returns
              * A value indicating whether the assertion is true.
@@ -215,7 +216,7 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
             }
 
             /**
-             * Asserts the truthyness of the specified `condition`.
+             * Asserts the truthyness of the specified {@link condition `condition`}.
              *
              * @param collection
              * The collection to check.
@@ -224,7 +225,7 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
              * The condition to check.
              *
              * @param all
-             * A value indicating whether all or only one file-mapping is expected to match the `condition`.
+             * A value indicating whether all or only one file-mapping is expected to match the {@link condition `condition`}.
              *
              * @returns
              * A value indicating whether the assertion is true.
@@ -242,6 +243,9 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
 
             /**
              * Initializes a new instance of the specified generator-constructor.
+             *
+             * @template T
+             * The type of the generator to create.
              *
              * @param generatorConstructor
              * The constructor of the generator to instanciate.

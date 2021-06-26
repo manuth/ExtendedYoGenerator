@@ -19,8 +19,11 @@ import { IGeneratorSettings } from "./IGeneratorSettings";
 /**
  * Represents a yeoman-generator.
  *
- * @template T
+ * @template TSettings
  * The type of the settings of the generator.
+ *
+ * @template TOptions
+ * The type of the options of the generator.
  */
 export abstract class Generator<TSettings extends IGeneratorSettings = IGeneratorSettings, TOptions extends YeomanGenerator.GeneratorOptions = YeomanGenerator.GeneratorOptions> extends YeomanGenerator<TOptions> implements IGenerator<TSettings, TOptions>
 {
@@ -35,7 +38,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     private settings: TSettings = {} as TSettings;
 
     /**
-     * Initializes a new instance of the `Generator` class.
+     * Initializes a new instance of the {@link Generator `Generator<TSettings, TOptions>`} class.
      *
      * @param args
      * A set of arguments for the generator.
@@ -239,6 +242,9 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     /**
      * Creates a base-generator class to extend.
      *
+     * @template T
+     * The type of the constructor of the base-generator.
+     *
      * @param base
      * The class to extend and to instanciate a base-generator.
      */
@@ -246,6 +252,9 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
 
     /**
      * Creates a base-generator class to extend from.
+     *
+     * @template T
+     * The type of the constructor of the base-generator.
      *
      * @param base
      * The class to extend and to instanciate a base-generator.
@@ -258,6 +267,9 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     /**
      * Creates a constructor for extending a generator.
      *
+     * @template T
+     * The type of the constructor of the base-generator.
+     *
      * @param base
      * The constructor of the base-generator.
      *
@@ -265,7 +277,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
      * The namespace or the path of the generator.
      *
      * @returns
-     * A constructor for extending the specified `base`-generator.
+     * A constructor for extending the specified {@link base `base`}-generator.
      */
     public static ComposeWith<T extends GeneratorConstructor>(base: T, namespaceOrPath?: string): CompositeConstructor<T>
     {
@@ -279,7 +291,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
      * The new destination root path.
      *
      * @returns
-     * The `destinationRoot` of the generator.
+     * The {@link Generator.destinationRoot `destinationRoot`} of the generator.
      */
     public override destinationRoot(rootPath?: string): string
     {
@@ -343,7 +355,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     { }
 
     /**
-     * Gathers all information for executing the generator and saves them to the `Settings`.
+     * Gathers all information for executing the generator and saves them to the {@link Generator.Settings `Settings`}.
      */
     public async prompting(): Promise<void>
     {
@@ -375,13 +387,16 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     { }
 
     /**
-     * Converts the specified `value` to a promise.
+     * Wraps the specified {@link value `value`} in a promise.
+     *
+     * @template T
+     * The type of the {@link value `value`} to wrap.
      *
      * @param value
-     * THe value to convert.
+     * The value to convert.
      *
      * @returns
-     * A promise which resolves to the specified `value`.
+     * A promise which resolves to the specified {@link value `value`}.
      */
     protected CreatePromise<T>(value: T): Promise<T>
     {

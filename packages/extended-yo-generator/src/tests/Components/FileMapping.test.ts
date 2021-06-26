@@ -8,7 +8,7 @@ import { FileMapping } from "../../Components/FileMapping";
 import { IFileMapping } from "../../Components/IFileMapping";
 
 /**
- * Provides tests for the `FileMapping` class.
+ * Provides tests for the {@link FileMapping `FileMapping<TSettings, TOptions>`} class.
  *
  * @param context
  * The test-context.
@@ -152,7 +152,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
 
                                     let fileMappingOptions = new
                                         /**
-                                         * Provides a test-implementation of the `IFileMapping<T>` interface.
+                                         * Provides a test-implementation of the {@link IFileMapping `IFileMapping<TSettings, TOptions>`} interface.
                                          */
                                         class FileMappingOptions implements IFileMapping<ITestGeneratorSettings, ITestGeneratorOptions<ITestOptions>>
                                         {

@@ -9,7 +9,7 @@ import { IResolverTestOptions } from "./IResolverTestOptions";
 export class ResolverTest extends PropertyResolver<IResolverTestOptions, ResolverTest, ITestGeneratorSettings, ITestGeneratorOptions<ITestOptions>>
 {
     /**
-     * Initializes a new instance of the `ResolverTest` class.
+     * Initializes a new instance of the {@link ResolverTest `ResolverTest`} class.
      *
      * @param generator
      * The generator for the test-object.

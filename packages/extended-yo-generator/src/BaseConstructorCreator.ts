@@ -14,7 +14,7 @@ import { IBaseGenerator } from "./IBaseGenerator";
 export abstract class BaseConstructorCreator
 {
     /**
-     * Initializes a new instance of the `BaseConstructor` class.
+     * Initializes a new instance of the {@link BaseConstructorCreator `BaseConstructorCreator`} class.
      */
     private constructor()
     { }
@@ -22,11 +22,14 @@ export abstract class BaseConstructorCreator
     /**
      * Creates a new base-constructor.
      *
+     * @template TBase
+     * The type of the constructor of the base-generator.
+     *
      * @param base
      * The constructor the generated constructor should be based on.
      *
      * @param namespaceOrPath
-     * The namespace or path to the generator with the specified `base`-constructor.
+     * The namespace or path to the generator with the specified {@link base `base`}-constructor.
      *
      * @returns
      * The generated constructor.
@@ -38,7 +41,7 @@ export abstract class BaseConstructorCreator
         return (
             <TConstructor extends new (...args: any[]) => any>(baseClass: TConstructor): CompositeConstructor<TConstructor> =>
             {
-                return class extends baseClass implements IBaseGenerator<InstanceType<TConstructor>>
+                return class BaseGenerator extends baseClass implements IBaseGenerator<InstanceType<TConstructor>>
                 {
                     /**
                      * The base-generator.
@@ -56,7 +59,7 @@ export abstract class BaseConstructorCreator
                     private baseFileMappingResolver: () => Array<IFileMapping<any, any>>;
 
                     /**
-                     * Initializes a new instance of the `BaseGenerator` class.
+                     * Initializes a new instance of the {@link BaseGenerator `BaseGenerator`} class.
                      *
                      * @param params
                      * The arguments of the constructor.
@@ -227,6 +230,9 @@ export abstract class BaseConstructorCreator
 
     /**
      * Gets all properties of the specified generator-class.
+     *
+     * @template T
+     * The type of the generator to get the properties for.
      *
      * @param ctor
      * The constructor whose properties to get.

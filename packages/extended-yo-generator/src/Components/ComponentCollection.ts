@@ -15,7 +15,7 @@ import { PropertyResolver } from "./Resolving/PropertyResolver";
 export class ComponentCollection<TSettings, TOptions> extends PropertyResolver<IComponentCollection<TSettings, TOptions>, ComponentCollection<TSettings, TOptions>, TSettings, TOptions> implements IComponentCollection<TSettings, TOptions>
 {
     /**
-     * Initrializes a new instance of the `ComponentCollection` class.
+     * Initrializes a new instance of the {@link ComponentCollection `ComponentCollection<TSettings, TOptions>`} class.
      *
      * @param generator
      * The generator of the collection.

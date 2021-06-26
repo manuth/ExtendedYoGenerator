@@ -5,7 +5,7 @@ import { Component } from "../../Components/Component";
 import { IComponent } from "../../Components/IComponent";
 
 /**
- * Provides tests for the `Component` class.
+ * Provides tests for the {@link Component `Component<TSettings, TOptions>`} class.
  *
  * @param context
  * The context to use.
