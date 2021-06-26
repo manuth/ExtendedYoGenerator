@@ -75,10 +75,11 @@
         "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
         "javascript.format.placeOpenBraceOnNewLineForControlBlocks": true,
         "javascript.format.placeOpenBraceOnNewLineForFunctions": true,
-        "mochaExplorer.require": "source-map-support/register",
         "typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
         "typescript.format.placeOpenBraceOnNewLineForControlBlocks": true,
         "typescript.format.placeOpenBraceOnNewLineForFunctions": true,
+        "mochaExplorer.require": "source-map-support/register",
+        "terminal.integrated.cwd": "${workspaceFolder:Solution Items}",
         "search.exclude": {
             "**/node_modules": true,
             "**/bower_components": true,
