@@ -1,7 +1,5 @@
 import { dirname, join, resolve } from "path";
-import chalk = require("chalk");
 import { ensureDirSync } from "fs-extra";
-import { ChoiceCollection, Separator } from "inquirer";
 import pkgUp = require("pkg-up");
 import YeomanGenerator = require("yeoman-generator");
 import { Question } from "yeoman-generator";
@@ -112,86 +110,10 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
      */
     public get QuestionCollection(): Array<Question<TSettings>>
     {
-        let result: Array<Question<TSettings>> = [];
-        let components: ChoiceCollection<TSettings> = [];
-        let defaults: string[] = [];
-
-        if (this.ComponentCollection)
-        {
-            for (let category of this.ComponentCollection.Categories ?? [])
-            {
-                components.push(new Separator(category.DisplayName));
-
-                for (let component of category.Components)
-                {
-                    let isDefault = component.DefaultEnabled ?? false;
-
-                    components.push(
-                        {
-                            value: component.ID,
-                            name: component.DisplayName,
-                            checked: isDefault
-                        });
-
-                    if (isDefault)
-                    {
-                        defaults.push(component.ID);
-                    }
-
-                    for (let i = 0; i < component.Questions?.length ?? 0; i++)
-                    {
-                        let question = component.Questions[i];
-                        let when = question.when;
-
-                        question.when = async (settings: TSettings) =>
-                        {
-                            if ((settings[GeneratorSettingKey.Components] ?? []).includes(component.ID))
-                            {
-                                if (i === 0)
-                                {
-                                    this.log();
-                                    this.log(`${chalk.red(">>")} ${chalk.bold(component.DisplayName)} ${chalk.red("<<")}`);
-                                }
-
-                                if (when)
-                                {
-                                    if (typeof when === "function")
-                                    {
-                                        return when(settings);
-                                    }
-                                    else
-                                    {
-                                        return when;
-                                    }
-                                }
-                                else
-                                {
-                                    return true;
-                                }
-                            }
-                            else
-                            {
-                                return false;
-                            }
-                        };
-
-                        result.push(question);
-                    }
-                }
-            }
-
-            result.unshift(
-                {
-                    type: "checkbox",
-                    name: GeneratorSettingKey.Components,
-                    message: this.Components.Question,
-                    choices: components,
-                    default: defaults
-                });
-        }
-
-        result.unshift(...(this.Questions ?? []));
-        return result;
+        return [
+            ...this.Questions ?? [],
+            ...this.ComponentCollection?.Questions ?? []
+        ];
     }
 
     /**
