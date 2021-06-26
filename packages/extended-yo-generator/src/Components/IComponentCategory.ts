@@ -1,4 +1,5 @@
 import { IComponent } from "./IComponent";
+import { IUniqueObject } from "./IUniqueObject";
 
 /**
  * Represents a category which contains components.
@@ -9,7 +10,7 @@ import { IComponent } from "./IComponent";
  * @template TOptions
  * The type of the options of the generator.
  */
-export interface IComponentCategory<TSettings, TOptions>
+export interface IComponentCategory<TSettings, TOptions> extends IUniqueObject
 {
     /**
      * Gets or sets the human-readable name of the category.
