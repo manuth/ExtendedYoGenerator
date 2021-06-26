@@ -1,5 +1,6 @@
 import { FileMapping } from "./FileMapping";
 import { FileProcessor } from "./FileProcessor";
+import { IUniqueObject } from "./IUniqueObject";
 import { AsyncResolveFunction } from "./Resolving/AsyncResolveFunction";
 import { Resolvable } from "./Resolving/Resolvable";
 
@@ -12,7 +13,7 @@ import { Resolvable } from "./Resolving/Resolvable";
  * @template TOptions
  * The type of the options of the generator.
  */
-export interface IFileMapping<TSettings, TOptions>
+export interface IFileMapping<TSettings, TOptions> extends IUniqueObject
 {
     /**
      * Gets or sets the path to the template of the component.
