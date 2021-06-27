@@ -1,5 +1,6 @@
 import { IGenerator } from "../IGenerator";
 import { Component } from "./Component";
+import { IComponent } from "./IComponent";
 import { IComponentCategory } from "./IComponentCategory";
 import { PropertyResolver } from "./Resolving/PropertyResolver";
 
@@ -37,11 +38,27 @@ export class ComponentCategory<TSettings, TOptions> extends PropertyResolver<ICo
     }
 
     /**
+     * @inheritdoc
+     */
+    public set ID(value: string)
+    {
+        this.Object.ID = value;
+    }
+
+    /**
      * Gets or sets the human-readable name of the category.
      */
     public get DisplayName(): string
     {
         return this.Object.DisplayName;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public set DisplayName(value: string)
+    {
+        this.Object.DisplayName = value;
     }
 
     /**
@@ -54,5 +71,13 @@ export class ComponentCategory<TSettings, TOptions> extends PropertyResolver<ICo
             {
                 return new Component(this.Generator, component);
             });
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public set Components(value: Array<IComponent<TSettings, TOptions>>)
+    {
+        this.Object.Components = value;
     }
 }

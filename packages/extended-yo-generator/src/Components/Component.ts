@@ -2,7 +2,9 @@ import { Question } from "yeoman-generator";
 import { IGenerator } from "../IGenerator";
 import { FileMapping } from "./FileMapping";
 import { IComponent } from "./IComponent";
+import { IFileMapping } from "./IFileMapping";
 import { PropertyResolver } from "./Resolving/PropertyResolver";
+import { Resolvable } from "./Resolving/Resolvable";
 
 /**
  * Represents a component.
@@ -30,7 +32,7 @@ export class Component<TSettings, TOptions> extends PropertyResolver<IComponent<
     }
 
     /**
-     * Gets the id of the component.
+     * Gets or sets the id of the component.
      */
     public get ID(): string
     {
@@ -38,7 +40,15 @@ export class Component<TSettings, TOptions> extends PropertyResolver<IComponent<
     }
 
     /**
-     * Gets the human-readable name of the component.
+     * @inheritdoc
+     */
+    public set ID(value: string)
+    {
+        this.Object.ID = value;
+    }
+
+    /**
+     * Gets or sets the human-readable name of the component.
      */
     public get DisplayName(): string
     {
@@ -46,7 +56,15 @@ export class Component<TSettings, TOptions> extends PropertyResolver<IComponent<
     }
 
     /**
-     * Gets a value indicating whether the component is enabled by default.
+     * @inheritdoc
+     */
+    public set DisplayName(value: string)
+    {
+        this.Object.DisplayName = value;
+    }
+
+    /**
+     * Gets or sets a value indicating whether the component is enabled by default.
      */
     public get DefaultEnabled(): boolean
     {
@@ -54,11 +72,27 @@ export class Component<TSettings, TOptions> extends PropertyResolver<IComponent<
     }
 
     /**
-     * Gets additional questions related to the component.
+     * @inheritdoc
+     */
+    public set DefaultEnabled(value: boolean)
+    {
+        this.Object.DefaultEnabled = value;
+    }
+
+    /**
+     * Gets or sets additional questions related to the component.
      */
     public get Questions(): Array<Question<TSettings>>
     {
         return this.Object.Questions;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public set Questions(value: Array<Question<TSettings>>)
+    {
+        this.Object.Questions = value;
     }
 
     /**
@@ -71,5 +105,13 @@ export class Component<TSettings, TOptions> extends PropertyResolver<IComponent<
             {
                 return new FileMapping(this.Generator, fileMapping);
             });
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public set FileMappings(value: Resolvable<Component<TSettings, TOptions>, TSettings, TOptions, Array<IFileMapping<TSettings, TOptions>>>)
+    {
+        this.Object.FileMappings = value;
     }
 }

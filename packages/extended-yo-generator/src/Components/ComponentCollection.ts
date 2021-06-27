@@ -5,6 +5,7 @@ import { GeneratorSettingKey } from "../GeneratorSettingKey";
 import { IGenerator } from "../IGenerator";
 import { IGeneratorSettings } from "../IGeneratorSettings";
 import { ComponentCategory } from "./ComponentCategory";
+import { IComponentCategory } from "./IComponentCategory";
 import { IComponentCollection } from "./IComponentCollection";
 import { PropertyResolver } from "./Resolving/PropertyResolver";
 
@@ -34,7 +35,7 @@ export class ComponentCollection<TSettings extends IGeneratorSettings, TOptions>
     }
 
     /**
-     * Gets the question to show when asking to choose components.
+     * Gets or sets the question to show when asking to choose components.
      */
     public get Question(): string
     {
@@ -42,7 +43,15 @@ export class ComponentCollection<TSettings extends IGeneratorSettings, TOptions>
     }
 
     /**
-     * Gets the component-categories.
+     * @inheritdoc
+     */
+    public set Question(value: string)
+    {
+        this.Object.Question = value;
+    }
+
+    /**
+     * Gets or sets the component-categories.
      */
     public get Categories(): Array<ComponentCategory<TSettings, TOptions>>
     {
@@ -51,6 +60,14 @@ export class ComponentCollection<TSettings extends IGeneratorSettings, TOptions>
             {
                 return new ComponentCategory(this.Generator, category);
             });
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public set Categories(value: Array<IComponentCategory<TSettings, TOptions>>)
+    {
+        this.Object.Categories = value;
     }
 
     /**

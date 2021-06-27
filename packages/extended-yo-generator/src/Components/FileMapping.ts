@@ -1,6 +1,8 @@
 import { isAbsolute } from "path";
 import { IGenerator } from "../IGenerator";
+import { FileProcessor } from "./FileProcessor";
 import { IFileMapping } from "./IFileMapping";
+import { AsyncResolveFunction } from "./Resolving/AsyncResolveFunction";
 import { PathResolver } from "./Resolving/PathResolver";
 import { PropertyResolver } from "./Resolving/PropertyResolver";
 import { Resolvable } from "./Resolving/Resolvable";
@@ -39,7 +41,15 @@ export class FileMapping<TSettings, TOptions> extends PropertyResolver<IFileMapp
     }
 
     /**
-     * Gets the path to the template of the component.
+     * @inheritdoc
+     */
+    public set ID(value: string)
+    {
+        this.Object.ID = value;
+    }
+
+    /**
+     * Gets or sets the path to the template of the component.
      */
     public get Source(): string
     {
@@ -47,7 +57,15 @@ export class FileMapping<TSettings, TOptions> extends PropertyResolver<IFileMapp
     }
 
     /**
-     * Gets the destination to save the component to.
+     * @inheritdoc
+     */
+    public set Source(value: Resolvable<FileMapping<TSettings, TOptions>, TSettings, TOptions, string>)
+    {
+        this.Object.Source = value;
+    }
+
+    /**
+     * Gets or sets the destination to save the component to.
      */
     public get Destination(): string
     {
@@ -55,7 +73,15 @@ export class FileMapping<TSettings, TOptions> extends PropertyResolver<IFileMapp
     }
 
     /**
-     * Gets the context to use for copying the file-entry.
+     * @inheritdoc
+     */
+    public set Destination(value: Resolvable<FileMapping<TSettings, TOptions>, TSettings, TOptions, string>)
+    {
+        this.Object.Destination = value;
+    }
+
+    /**
+     * Gets or sets the context to use for copying the file-entry.
      */
     public get Context(): () => Promise<any>
     {
@@ -63,7 +89,15 @@ export class FileMapping<TSettings, TOptions> extends PropertyResolver<IFileMapp
     }
 
     /**
-     * Gets the method to execute for processing the file-mapping.
+     * @inheritdoc
+     */
+    public set Context(value: AsyncResolveFunction<FileMapping<TSettings, TOptions>, TSettings, TOptions, any>)
+    {
+        this.Object.Context = value;
+    }
+
+    /**
+     * Gets or sets the method to execute for processing the file-mapping.
      */
     public get Processor(): () => void | Promise<void>
     {
@@ -85,6 +119,14 @@ export class FileMapping<TSettings, TOptions> extends PropertyResolver<IFileMapp
                 }
             };
         }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected set Processor(value: FileProcessor<TSettings, TOptions>)
+    {
+        this.Object.Processor = value;
     }
 
     /**
