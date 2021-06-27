@@ -29,6 +29,14 @@ export class ComponentCategory<TSettings, TOptions> extends PropertyResolver<ICo
     }
 
     /**
+     * @inheritdoc
+     */
+    public get ID(): string
+    {
+        return this.Object.ID;
+    }
+
+    /**
      * Gets or sets the human-readable name of the category.
      */
     public get DisplayName(): string

@@ -31,6 +31,14 @@ export class FileMapping<TSettings, TOptions> extends PropertyResolver<IFileMapp
     }
 
     /**
+     * @inheritdoc
+     */
+    public get ID(): string
+    {
+        return this.Object.ID;
+    }
+
+    /**
      * Gets the path to the template of the component.
      */
     public get Source(): string
