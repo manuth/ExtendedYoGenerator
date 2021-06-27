@@ -136,7 +136,7 @@ export class ComponentCollection<TSettings extends IGeneratorSettings, TOptions>
                         }
                         else
                         {
-                            return true;
+                            return false;
                         }
                     };
 
