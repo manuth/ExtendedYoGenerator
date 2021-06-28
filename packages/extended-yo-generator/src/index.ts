@@ -22,6 +22,6 @@ export { CompositeGeneratorConstructor } from "./CompositeGeneratorConstructor";
 export { Generator } from "./Generator";
 export { GeneratorConstructor } from "./GeneratorConstructor";
 export { GeneratorSettingKey } from "./GeneratorSettingKey";
-export { IBaseGenerator } from "./IBaseGenerator";
+export { IGeneratorExtension } from "./IBaseGenerator";
 export { IGenerator } from "./IGenerator";
 export { IGeneratorSettings } from "./IGeneratorSettings";

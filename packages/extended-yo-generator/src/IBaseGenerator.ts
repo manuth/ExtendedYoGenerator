@@ -1,15 +1,11 @@
 import { Generator } from "./Generator";
+import { IObjectExtension } from "./IObjectExtension";
 
 /**
- * Represents a generator-base.
+ * Represents a generator-extension.
  */
-export interface IBaseGenerator<T extends Generator<any, any>>
+export interface IGeneratorExtension<T extends Generator<any, any>> extends IObjectExtension<T>
 {
-    /**
-     * Gets the base-generator.
-     */
-    Base: T;
-
     /**
      * Gets the file-mappings of the base-generator.
      */

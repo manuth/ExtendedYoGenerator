@@ -6,7 +6,7 @@ import { IFileMapping } from "./Components/IFileMapping";
 import { CompositeGeneratorConstructor } from "./CompositeGeneratorConstructor";
 import { Generator } from "./Generator";
 import { GeneratorConstructor } from "./GeneratorConstructor";
-import { IBaseGenerator } from "./IBaseGenerator";
+import { IGeneratorExtension } from "./IBaseGenerator";
 
 /**
  * Provides the functionality to create base-generators.
@@ -41,7 +41,7 @@ export abstract class BaseGeneratorFactory
         return (
             <TConstructor extends new (...args: any[]) => Generator>(baseClass: TConstructor): CompositeGeneratorConstructor<TConstructor> =>
             {
-                return class BaseGenerator extends baseClass implements IBaseGenerator<InstanceType<TConstructor>>
+                return class BaseGenerator extends baseClass implements IGeneratorExtension<InstanceType<TConstructor>>
                 {
                     /**
                      * The base-generator.

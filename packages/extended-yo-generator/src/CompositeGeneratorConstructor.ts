@@ -1,6 +1,7 @@
+import { CompositeConstructor } from "./CompositeConstructor";
 import { Generator } from "./Generator";
 import { GeneratorConstructor } from "./GeneratorConstructor";
-import { IBaseGenerator } from "./IBaseGenerator";
+import { IGeneratorExtension } from "./IBaseGenerator";
 
 /**
  * Represents a constructor for a generator-base.
@@ -8,6 +9,6 @@ import { IBaseGenerator } from "./IBaseGenerator";
 export type CompositeGeneratorConstructor<T extends GeneratorConstructor> =
     T extends new (...args: any[]) => infer UGenerator ?
     UGenerator extends Generator<any, any> ?
-    (T & (new (...args: any[]) => (IBaseGenerator<UGenerator>))) :
+    CompositeConstructor<T, Generator<any, any>, IGeneratorExtension<UGenerator>> :
     never :
     never;
