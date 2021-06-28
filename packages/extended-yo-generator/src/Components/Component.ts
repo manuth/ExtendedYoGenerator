@@ -3,6 +3,7 @@ import { IGenerator } from "../IGenerator";
 import { FileMapping } from "./FileMapping";
 import { IComponent } from "./IComponent";
 import { IFileMapping } from "./IFileMapping";
+import { ObjectCollection } from "./ObjectCollection";
 import { PropertyResolver } from "./Resolving/PropertyResolver";
 import { Resolvable } from "./Resolving/Resolvable";
 
@@ -17,6 +18,11 @@ import { Resolvable } from "./Resolving/Resolvable";
  */
 export class Component<TSettings, TOptions> extends PropertyResolver<IComponent<TSettings, TOptions>, Component<TSettings, TOptions>, TSettings, TOptions> implements IComponent<TSettings, TOptions>
 {
+    /**
+     * The questions of the component.
+     */
+    private questionCollection: ObjectCollection<Question<TSettings>> = null;
+
     /**
      * Initializes a new instance of the {@link Component `Component<TSettings, TOptions>`} class.
      *
@@ -82,17 +88,14 @@ export class Component<TSettings, TOptions> extends PropertyResolver<IComponent<
     /**
      * Gets or sets additional questions related to the component.
      */
-    public get Questions(): Array<Question<TSettings>>
+    public get Questions(): ObjectCollection<Question<TSettings>>
     {
-        return this.Object.Questions;
-    }
+        if (this.questionCollection === null)
+        {
+            this.questionCollection = new ObjectCollection(this.Object.Questions);
+        }
 
-    /**
-     * @inheritdoc
-     */
-    public set Questions(value: Array<Question<TSettings>>)
-    {
-        this.Object.Questions = value;
+        return this.questionCollection;
     }
 
     /**
