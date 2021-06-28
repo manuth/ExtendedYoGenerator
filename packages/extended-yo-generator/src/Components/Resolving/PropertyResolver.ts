@@ -54,11 +54,19 @@ export class PropertyResolver<TObject, TTarget, TSettings, TOptions> extends Res
     }
 
     /**
-     * Gets the actual object.
+     * Gets or sets the actual object.
      */
     public get Object(): TObject
     {
         return this.object;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public set Object(value: TObject)
+    {
+        this.Object = value;
     }
 
     /**
