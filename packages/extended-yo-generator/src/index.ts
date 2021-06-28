@@ -18,7 +18,7 @@ export { ResolvableAsync } from "./Components/Resolving/ResolvableAsync";
 export { ResolveFunction } from "./Components/Resolving/ResolveFunction";
 export { Resolver } from "./Components/Resolving/Resolver";
 export { ResolveValue } from "./Components/Resolving/ResolveValue";
-export { CompositeGeneratorConstructor } from "./CompositeGeneratorConstructor";
+export { GeneratorExtensionConstructor } from "./GeneratorExtensionConstructor";
 export { Generator } from "./Generator";
 export { GeneratorConstructor } from "./GeneratorConstructor";
 export { GeneratorSettingKey } from "./GeneratorSettingKey";

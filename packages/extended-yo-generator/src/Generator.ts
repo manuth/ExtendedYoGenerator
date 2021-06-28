@@ -10,8 +10,8 @@ import { FileMappingOptionCollection } from "./Components/FileMappingOptionColle
 import { IComponentCollection } from "./Components/IComponentCollection";
 import { IFileMapping } from "./Components/IFileMapping";
 import { ObjectCollection } from "./Components/ObjectCollection";
-import { CompositeGeneratorConstructor } from "./CompositeGeneratorConstructor";
 import { GeneratorConstructor } from "./GeneratorConstructor";
+import { GeneratorExtensionConstructor } from "./GeneratorExtensionConstructor";
 import { GeneratorSettingKey } from "./GeneratorSettingKey";
 import { IGenerator } from "./IGenerator";
 import { IGeneratorSettings } from "./IGeneratorSettings";
@@ -175,7 +175,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
      * @param base
      * The class to extend and to instanciate a base-generator.
      */
-    public static ComposeWith<T extends GeneratorConstructor>(base: T): CompositeGeneratorConstructor<T>;
+    public static ComposeWith<T extends GeneratorConstructor>(base: T): GeneratorExtensionConstructor<T>;
 
     /**
      * Creates a base-generator class to extend from.
@@ -189,7 +189,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
      * @param namespaceOrPath
      * Either a plain path or the namespace or path of a generator for resolving the module-root of the base-generator.
      */
-    public static ComposeWith<T extends GeneratorConstructor>(base: T, namespaceOrPath: string): CompositeGeneratorConstructor<T>;
+    public static ComposeWith<T extends GeneratorConstructor>(base: T, namespaceOrPath: string): GeneratorExtensionConstructor<T>;
 
     /**
      * Creates a constructor for extending a generator.
@@ -206,7 +206,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
      * @returns
      * A constructor for extending the specified {@link base `base`}-generator.
      */
-    public static ComposeWith<T extends GeneratorConstructor>(base: T, namespaceOrPath?: string): CompositeGeneratorConstructor<T>
+    public static ComposeWith<T extends GeneratorConstructor>(base: T, namespaceOrPath?: string): GeneratorExtensionConstructor<T>
     {
         return BaseGeneratorFactory.Create(base, namespaceOrPath);
     }

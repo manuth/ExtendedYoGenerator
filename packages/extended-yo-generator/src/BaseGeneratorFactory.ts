@@ -3,9 +3,9 @@ import { ComponentCollection } from "./Components/ComponentCollection";
 import { FileMappingOptionCollection } from "./Components/FileMappingOptionCollection";
 import { IComponentCollection } from "./Components/IComponentCollection";
 import { IFileMapping } from "./Components/IFileMapping";
-import { CompositeGeneratorConstructor } from "./CompositeGeneratorConstructor";
 import { Generator } from "./Generator";
 import { GeneratorConstructor } from "./GeneratorConstructor";
+import { GeneratorExtensionConstructor } from "./GeneratorExtensionConstructor";
 import { IGeneratorExtension } from "./IBaseGenerator";
 
 /**
@@ -34,12 +34,12 @@ export abstract class BaseGeneratorFactory
      * @returns
      * The generated constructor.
      */
-    public static Create<TBase extends GeneratorConstructor>(base: TBase, namespaceOrPath?: string): CompositeGeneratorConstructor<TBase>
+    public static Create<TBase extends GeneratorConstructor>(base: TBase, namespaceOrPath?: string): GeneratorExtensionConstructor<TBase>
     {
         let resolvedKey = "resolved" as const;
 
         return (
-            <TConstructor extends new (...args: any[]) => Generator>(baseClass: TConstructor): CompositeGeneratorConstructor<TConstructor> =>
+            <TConstructor extends new (...args: any[]) => Generator>(baseClass: TConstructor): GeneratorExtensionConstructor<TConstructor> =>
             {
                 return class BaseGenerator extends baseClass implements IGeneratorExtension<InstanceType<TConstructor>>
                 {
@@ -194,7 +194,7 @@ export abstract class BaseGeneratorFactory
                     {
                         return this.Base.ResolvedFileMappings;
                     }
-                } as CompositeGeneratorConstructor<TConstructor>;
+                } as GeneratorExtensionConstructor<TConstructor>;
             })(base);
     }
 
