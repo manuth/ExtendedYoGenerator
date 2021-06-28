@@ -1,7 +1,7 @@
 import { notStrictEqual, ok, strictEqual } from "assert";
 import { TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import Environment = require("yeoman-environment");
-import { BaseConstructorCreator } from "../../BaseConstructorCreator";
+import { BaseGeneratorFactory } from "../../BaseGeneratorFactory";
 import { ComponentCollection } from "../../Components/ComponentCollection";
 import { FileMapping } from "../../Components/FileMapping";
 import { FileMappingOptionCollection } from "../../Components/FileMappingOptionCollection";
@@ -10,15 +10,15 @@ import { IFileMapping } from "../../Components/IFileMapping";
 import { Generator } from "../../Generator";
 
 /**
- * Registers tests for the {@link BaseConstructorCreator `BaseConstructorCreator`} class.
+ * Registers tests for the {@link BaseGeneratorFactory `BaseGeneratorFactory`} class.
  *
  * @param context
  * The test-context.
  */
-export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>): void
+export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): void
 {
     suite(
-        "BaseConstructorCreator",
+        "BaseGeneratorFactory",
         () =>
         {
             let superTemplateDir: string;
@@ -89,7 +89,7 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
             /**
              * A class for testing.
              */
-            class SubGenerator extends BaseConstructorCreator.Create(SuperGenerator)
+            class SubGenerator extends BaseGeneratorFactory.Create(SuperGenerator)
             {
                 /**
                  * @inheritdoc

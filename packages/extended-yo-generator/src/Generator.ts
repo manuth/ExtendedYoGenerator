@@ -3,7 +3,7 @@ import { ensureDirSync } from "fs-extra";
 import pkgUp = require("pkg-up");
 import YeomanGenerator = require("yeoman-generator");
 import { Question } from "yeoman-generator";
-import { BaseConstructorCreator } from "./BaseConstructorCreator";
+import { BaseGeneratorFactory } from "./BaseGeneratorFactory";
 import { ComponentCollection } from "./Components/ComponentCollection";
 import { FileMapping } from "./Components/FileMapping";
 import { FileMappingOptionCollection } from "./Components/FileMappingOptionCollection";
@@ -208,7 +208,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
      */
     public static ComposeWith<T extends GeneratorConstructor>(base: T, namespaceOrPath?: string): CompositeConstructor<T>
     {
-        return BaseConstructorCreator.Create(base, namespaceOrPath);
+        return BaseGeneratorFactory.Create(base, namespaceOrPath);
     }
 
     /**

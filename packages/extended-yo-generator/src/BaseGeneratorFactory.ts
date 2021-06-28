@@ -9,12 +9,12 @@ import { GeneratorConstructor } from "./GeneratorConstructor";
 import { IBaseGenerator } from "./IBaseGenerator";
 
 /**
- * Provides the functionality to create base-constructors.
+ * Provides the functionality to create base-generators.
  */
-export abstract class BaseConstructorCreator
+export abstract class BaseGeneratorFactory
 {
     /**
-     * Initializes a new instance of the {@link BaseConstructorCreator `BaseConstructorCreator`} class.
+     * Initializes a new instance of the {@link BaseGeneratorFactory `BaseGeneratorFactory`} class.
      */
     private constructor()
     { }
@@ -100,7 +100,7 @@ export abstract class BaseConstructorCreator
                         let componentPropertyName = "ComponentCollection" as keyof Generator;
                         let destinationPathName = "destinationPath" as keyof Generator;
                         let destinationRootName = "destinationRoot" as keyof Generator;
-                        let propertyDescriptors = BaseConstructorCreator.GetAllProperties(base);
+                        let propertyDescriptors = BaseGeneratorFactory.GetAllProperties(base);
                         let settingsProperty = propertyDescriptors[settingsPropertyName];
                         let fileMappingProperty = propertyDescriptors[fileMappingPropertyName];
                         let componentProperty = propertyDescriptors[componentPropertyName];
