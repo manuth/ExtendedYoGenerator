@@ -5,7 +5,7 @@ import { IBaseGenerator } from "./IBaseGenerator";
 /**
  * Represents a constructor for a generator-base.
  */
-export type CompositeConstructor<T extends GeneratorConstructor> =
+export type CompositeGeneratorConstructor<T extends GeneratorConstructor> =
     T extends new (...args: any[]) => infer UGenerator ?
     UGenerator extends Generator<any, any> ?
     (T & (new (...args: any[]) => (IBaseGenerator<UGenerator>))) :
