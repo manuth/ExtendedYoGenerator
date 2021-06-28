@@ -36,7 +36,7 @@
     "@manuth/tsconfig": "^2.0.2",
     "@manuth/typescript-eslint-plugin": "^1.4.1",
     "@types/git-branch": "^2.0.1",
-    "@types/node": "^15.12.4",
+    "@types/node": "^15.12.5",
     "@types/npm-which": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^4.28.0",
     "@typescript-eslint/eslint-plugin-tslint": "^4.28.0",
