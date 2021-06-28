@@ -29,7 +29,7 @@ export class CategoryOptionCollection extends PropertyResolverCollection<ICompon
      * The options of the file-mapping.
      *
      * @returns
-     * A newly created {@link Component `Component<TSettings, TOptions>`}.
+     * A newly created {@link ComponentCategory `ComponentCategory<TSettings, TOptions>`}.
      */
     protected CreateItem(options: IComponentCategory<any, any>): ComponentCategory<any, any>
     {

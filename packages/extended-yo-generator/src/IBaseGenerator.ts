@@ -3,6 +3,9 @@ import { IObjectExtension } from "./IObjectExtension";
 
 /**
  * Represents a generator-extension.
+ *
+ * @template T
+ * The type of the base generator.
  */
 export interface IGeneratorExtension<T extends Generator<any, any>> extends IObjectExtension<T>
 {

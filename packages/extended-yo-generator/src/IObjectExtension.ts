@@ -1,5 +1,8 @@
 /**
  * Represents an extension for a type.
+ *
+ * @template T
+ * The type of the base.
  */
 export interface IObjectExtension<T extends any>
 {
