@@ -1,8 +1,8 @@
 import { doesNotReject, strictEqual } from "assert";
 import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { PropertyResolver } from "@manuth/extended-yo-generator/src/Components/Resolving/PropertyResolver";
 import { Random } from "random-js";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { PropertyResolver } from "../../../Components/Resolving/PropertyResolver";
 import { IResolverTestOptions } from "./IResolverTestOptions";
 import { ResolverTest } from "./ResolverTest";
 
