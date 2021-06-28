@@ -5,8 +5,8 @@ import { GeneratorSettingKey } from "../GeneratorSettingKey";
 import { IGenerator } from "../IGenerator";
 import { IGeneratorSettings } from "../IGeneratorSettings";
 import { ComponentCategory } from "./ComponentCategory";
-import { IComponentCategory } from "./IComponentCategory";
 import { IComponentCollection } from "./IComponentCollection";
+import { PropertyResolverCollection } from "./PropertyResolverCollection";
 import { PropertyResolver } from "./Resolving/PropertyResolver";
 
 /**
@@ -20,6 +20,11 @@ import { PropertyResolver } from "./Resolving/PropertyResolver";
  */
 export class ComponentCollection<TSettings extends IGeneratorSettings, TOptions> extends PropertyResolver<IComponentCollection<TSettings, TOptions>, ComponentCollection<TSettings, TOptions>, TSettings, TOptions> implements IComponentCollection<TSettings, TOptions>
 {
+    /**
+     * The categories of the collection.
+     */
+    private categoryCollection: PropertyResolverCollection<ComponentCategory<TSettings, TOptions>> = null;
+
     /**
      * Initrializes a new instance of the {@link ComponentCollection `ComponentCollection<TSettings, TOptions>`} class.
      *
@@ -53,21 +58,19 @@ export class ComponentCollection<TSettings extends IGeneratorSettings, TOptions>
     /**
      * Gets or sets the component-categories.
      */
-    public get Categories(): Array<ComponentCategory<TSettings, TOptions>>
+    public get Categories(): PropertyResolverCollection<ComponentCategory<TSettings, TOptions>>
     {
-        return this.Object.Categories.map(
-            (category) =>
-            {
-                return new ComponentCategory(this.Generator, category);
-            });
-    }
+        if (this.categoryCollection === null)
+        {
+            this.categoryCollection = new PropertyResolverCollection(
+                this.Object.Categories.map(
+                    (category) =>
+                    {
+                        return new ComponentCategory(this.Generator, category);
+                    }));
+        }
 
-    /**
-     * @inheritdoc
-     */
-    public set Categories(value: Array<IComponentCategory<TSettings, TOptions>>)
-    {
-        this.Object.Categories = value;
+        return this.categoryCollection;
     }
 
     /**
