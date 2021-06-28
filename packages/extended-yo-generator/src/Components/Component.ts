@@ -2,10 +2,9 @@ import { Question } from "yeoman-generator";
 import { IGenerator } from "../IGenerator";
 import { FileMapping } from "./FileMapping";
 import { IComponent } from "./IComponent";
-import { IFileMapping } from "./IFileMapping";
 import { ObjectCollection } from "./ObjectCollection";
+import { PropertyResolverCollection } from "./PropertyResolverCollection";
 import { PropertyResolver } from "./Resolving/PropertyResolver";
-import { Resolvable } from "./Resolving/Resolvable";
 
 /**
  * Represents a component.
@@ -22,6 +21,11 @@ export class Component<TSettings, TOptions> extends PropertyResolver<IComponent<
      * The questions of the component.
      */
     private questionCollection: ObjectCollection<Question<TSettings>> = null;
+
+    /**
+     * The file-mappings of the component.
+     */
+    private fileMappingCollection: PropertyResolverCollection<FileMapping<TSettings, TOptions>> = null;
 
     /**
      * Initializes a new instance of the {@link Component `Component<TSettings, TOptions>`} class.
@@ -101,20 +105,18 @@ export class Component<TSettings, TOptions> extends PropertyResolver<IComponent<
     /**
      * Gets or sets the file-mappings of the component.
      */
-    public get FileMappings(): Array<FileMapping<TSettings, TOptions>>
+    public get FileMappings(): PropertyResolverCollection<FileMapping<TSettings, TOptions>>
     {
-        return this.ResolveProperty(this, this.Object.FileMappings).map(
-            (fileMapping) =>
-            {
-                return new FileMapping(this.Generator, fileMapping);
-            });
-    }
+        if (this.fileMappingCollection === null)
+        {
+            this.fileMappingCollection = new PropertyResolverCollection(
+                this.ResolveProperty(this, this.Object.FileMappings).map(
+                    (fileMapping) =>
+                    {
+                        return new FileMapping(this.Generator, fileMapping);
+                    }));
+        }
 
-    /**
-     * @inheritdoc
-     */
-    public set FileMappings(value: Resolvable<Component<TSettings, TOptions>, TSettings, TOptions, Array<IFileMapping<TSettings, TOptions>>>)
-    {
-        this.Object.FileMappings = value;
+        return this.fileMappingCollection;
     }
 }
