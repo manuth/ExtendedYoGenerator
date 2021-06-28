@@ -1,7 +1,7 @@
 import { IGenerator } from "../IGenerator";
 import { Component } from "./Component";
+import { ComponentOptionCollection } from "./ComponentOptionCollection";
 import { IComponentCategory } from "./IComponentCategory";
-import { PropertyResolverCollection } from "./PropertyResolverCollection";
 import { PropertyResolver } from "./Resolving/PropertyResolver";
 
 /**
@@ -18,7 +18,7 @@ export class ComponentCategory<TSettings, TOptions> extends PropertyResolver<ICo
     /**
      * The components of the category.
      */
-    private componentCollection: PropertyResolverCollection<Component<TSettings, TOptions>> = null;
+    private componentCollection: ComponentOptionCollection = null;
 
     /**
      * Initializes a new instance of the {@link ComponentCategory `ComponentCategory<TSettings, TOptions>`} class.
@@ -69,11 +69,12 @@ export class ComponentCategory<TSettings, TOptions> extends PropertyResolver<ICo
     /**
      * Gets the components of the category.
      */
-    public get Components(): PropertyResolverCollection<Component<TSettings, TOptions>>
+    public get Components(): ComponentOptionCollection
     {
         if (this.componentCollection === null)
         {
-            this.componentCollection = new PropertyResolverCollection(
+            this.componentCollection = new ComponentOptionCollection(
+                this.Generator,
                 this.Object.Components.map(
                     (component) =>
                     {
