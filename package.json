@@ -29,8 +29,10 @@
     "lint-ide": "npm run lint-local-ide && lerna run lint-ide",
     "test": "lerna run test",
     "version": "ts-node ./scripts/bumpVersion.ts",
-    "prepare": "lerna bootstrap --ignore-scripts && npm run rebuild"
+    "prepare": "lerna bootstrap --ignore-scripts && npm run patchTypeScript && npm run rebuild",
+    "patchTypeScript": "ts-patch install && ts-patch --persist && lerna run patchTypeScript"
   },
+  "dependencies": {},
   "devDependencies": {
     "@manuth/eslint-plugin-typescript": "^3.1.2",
     "@manuth/tsconfig": "^2.0.2",
@@ -38,6 +40,7 @@
     "@types/git-branch": "^2.0.1",
     "@types/node": "^15.12.5",
     "@types/npm-which": "^3.0.0",
+    "@types/ts-nameof": "^4.2.1",
     "@typescript-eslint/eslint-plugin": "^4.28.0",
     "@typescript-eslint/eslint-plugin-tslint": "^4.28.0",
     "@typescript-eslint/parser": "^4.28.0",
@@ -54,7 +57,9 @@
     "random-js": "^2.1.0",
     "shusher": "^0.1.1",
     "source-map-support": "^0.5.19",
+    "ts-nameof": "^5.0.0",
     "ts-node": "^10.0.0",
+    "ts-patch": "^1.3.3",
     "tslint": "^6.1.3",
     "typescript": "^4.3.4"
   }
