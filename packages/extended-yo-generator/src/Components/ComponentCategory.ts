@@ -1,7 +1,7 @@
 import { IGenerator } from "../IGenerator";
 import { Component } from "./Component";
-import { IComponent } from "./IComponent";
 import { IComponentCategory } from "./IComponentCategory";
+import { PropertyResolverCollection } from "./PropertyResolverCollection";
 import { PropertyResolver } from "./Resolving/PropertyResolver";
 
 /**
@@ -15,6 +15,11 @@ import { PropertyResolver } from "./Resolving/PropertyResolver";
  */
 export class ComponentCategory<TSettings, TOptions> extends PropertyResolver<IComponentCategory<TSettings, TOptions>, ComponentCategory<TSettings, TOptions>, TSettings, TOptions> implements IComponentCategory<TSettings, TOptions>
 {
+    /**
+     * The components of the category.
+     */
+    private componentCollection: PropertyResolverCollection<Component<TSettings, TOptions>> = null;
+
     /**
      * Initializes a new instance of the {@link ComponentCategory `ComponentCategory<TSettings, TOptions>`} class.
      *
@@ -64,20 +69,18 @@ export class ComponentCategory<TSettings, TOptions> extends PropertyResolver<ICo
     /**
      * Gets the components of the category.
      */
-    public get Components(): Array<Component<TSettings, TOptions>>
+    public get Components(): PropertyResolverCollection<Component<TSettings, TOptions>>
     {
-        return this.Object.Components.map(
-            (component) =>
-            {
-                return new Component(this.Generator, component);
-            });
-    }
+        if (this.componentCollection === null)
+        {
+            this.componentCollection = new PropertyResolverCollection(
+                this.Object.Components.map(
+                    (component) =>
+                    {
+                        return new Component(this.Generator, component);
+                    }));
+        }
 
-    /**
-     * @inheritdoc
-     */
-    public set Components(value: Array<IComponent<TSettings, TOptions>>)
-    {
-        this.Object.Components = value;
+        return this.componentCollection;
     }
 }
