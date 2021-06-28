@@ -67,7 +67,7 @@ export class UniqueObjectCollection<T extends IUniqueObject> extends ObjectColle
      */
     public override Get(filter: string | Constructor<T> | Predicate<T>): T
     {
-        return this[this.FindIndex(filter)];
+        return super.Get(filter as any);
     }
 
     /**
@@ -194,9 +194,9 @@ export class UniqueObjectCollection<T extends IUniqueObject> extends ObjectColle
      * @returns
      * The index of the item that was found.
      */
-    protected override FindIndex(filter: string | Constructor<T> | Predicate<T>): number
+    protected override FindIndexes(filter: string | Constructor<T> | Predicate<T>): number[]
     {
-        return super.FindIndex(filter as any);
+        return super.FindIndexes(filter as any);
     }
 
     /**

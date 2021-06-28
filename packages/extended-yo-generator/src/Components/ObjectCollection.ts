@@ -16,9 +16,24 @@ export class ObjectCollection<T extends Partial<Record<string, any>>> extends Ar
      * @param items
      * The items of the collection.
      */
-    public constructor(items: T[])
+    public constructor(items: T[]);
+
+    /**
+     * Initializes a new instance of the {@link ObjectCollection `ObjectCollection<T>`} class.
+     *
+     * @param args
+     * The arguments for initializing the new collection.
+     */
+    public constructor(...args: any[])
     {
-        super(...items);
+        if (
+            args.length === 1 &&
+            Array.isArray(args[0]))
+        {
+            args = args[0];
+        }
+
+        super(...args);
     }
 
     /**
@@ -54,7 +69,7 @@ export class ObjectCollection<T extends Partial<Record<string, any>>> extends Ar
      */
     public Get(filter: Constructor<T> | Predicate<T>): T
     {
-        return this[this.FindIndex(filter)];
+        return this[this.FindIndexes(filter)[0]];
     }
 
     /**
@@ -118,8 +133,10 @@ export class ObjectCollection<T extends Partial<Record<string, any>>> extends Ar
         }
         else
         {
-            let index = this.FindIndex(filter);
-            this[index] = replacement(this[index]);
+            for (let index of this.FindIndexes(filter).reverse())
+            {
+                this[index] = replacement(this[index]);
+            }
         }
     }
 
@@ -147,7 +164,10 @@ export class ObjectCollection<T extends Partial<Record<string, any>>> extends Ar
      */
     public Remove(filter: Constructor<T> | Predicate<T>): void
     {
-        this.splice(this.FindIndex(filter), 1);
+        for (let i of this.FindIndexes(filter).reverse())
+        {
+            this.splice(i, 1);
+        }
     }
 
     /**
@@ -170,18 +190,19 @@ export class ObjectCollection<T extends Partial<Record<string, any>>> extends Ar
      * @returns
      * The index of the item that was found.
      */
-    protected FindIndex(filter: Constructor<T> | Predicate<T>): number
+    protected FindIndexes(filter: Constructor<T> | Predicate<T>): number[]
     {
-        let result = this.findIndex(this.GetPredicate(filter));
+        let result: number[] = [];
 
-        if (typeof result === "number")
+        for (let i = 0; i < this.length; i++)
         {
-            return result;
+            if (this.GetPredicate(filter)(this[i]))
+            {
+                result.push(i);
+            }
         }
-        else
-        {
-            throw new RangeError(`An item which applies to the specified filter \`${filter}\` doesn't exist!`);
-        }
+
+        return result;
     }
 
     /**
