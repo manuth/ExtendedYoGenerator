@@ -24,6 +24,53 @@ export class UniqueObjectCollection<T extends IUniqueObject> extends ObjectColle
     }
 
     /**
+     * Gets the item with the specified {@link id `id`}.
+     *
+     * @param id
+     * The id of the item to get.
+     *
+     * @returns
+     * The item with the specified {@link id `id`}.
+     */
+    public override Get(id: string): T;
+
+    /**
+     * Gets the item with the specified {@link type `type`}.
+     *
+     * @param type
+     * The type of the item to get.
+     *
+     * @returns
+     * The item with the specified {@link type `type`}.
+     */
+    public override Get(type: Constructor<T>): T;
+
+    /**
+     * Gets the item which applies to the specified {@link predicate `predicate`}.
+     *
+     * @param predicate
+     * The predicate for finding the item to get.
+     *
+     * @returns
+     * The item which applies to the specified {@link predicate `predicate`}.
+     */
+    public override Get(predicate: Predicate<T>): T;
+
+    /**
+     * Gets the item indicated by the specified {@link filter `filter`}.
+     *
+     * @param filter
+     * The item to get.
+     *
+     * @returns
+     * The item indicated by the specified {@link filter `filter`}.
+     */
+    public override Get(filter: string | Constructor<T> | Predicate<T>): T
+    {
+        return this[this.FindIndex(filter)];
+    }
+
+    /**
      * Replaces the item with the specified {@link id `id`} with the specified {@link item `item`}.
      *
      * @param id

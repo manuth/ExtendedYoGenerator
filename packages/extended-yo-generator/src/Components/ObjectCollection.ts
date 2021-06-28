@@ -22,6 +22,42 @@ export class ObjectCollection<T extends Partial<Record<string, any>>> extends Ar
     }
 
     /**
+     * Gets the item with the specified {@link type `type`}.
+     *
+     * @param type
+     * The type of the item to get.
+     *
+     * @returns
+     * The item with the specified {@link type `type`}.
+     */
+    public Get(type: Constructor<T>): T;
+
+    /**
+     * Gets the item which applies to the specified {@link predicate `predicate`}.
+     *
+     * @param predicate
+     * The predicate for finding the item to get.
+     *
+     * @returns
+     * The item which applies to the specified {@link predicate `predicate`}.
+     */
+    public Get(predicate: Predicate<T>): T;
+
+    /**
+     * Gets the item indicated by the specified {@link filter `filter`}.
+     *
+     * @param filter
+     * The item to get.
+     *
+     * @returns
+     * The item indicated by the specified {@link filter `filter`}.
+     */
+    public Get(filter: Constructor<T> | Predicate<T>): T
+    {
+        return this[this.FindIndex(filter)];
+    }
+
+    /**
      * Replaces the item with the specified {@link type `type`} with the specified {@link item `item`}.
      *
      * @param type
