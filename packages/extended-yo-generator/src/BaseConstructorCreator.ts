@@ -1,7 +1,6 @@
-import dargs from "dargs";
 import YeomanGenerator = require("yeoman-generator");
-import { IComponent } from "./Components/IComponent";
-import { IComponentCategory } from "./Components/IComponentCategory";
+import { ComponentCollection } from "./Components/ComponentCollection";
+import { FileMappingOptionCollection } from "./Components/FileMappingOptionCollection";
 import { IComponentCollection } from "./Components/IComponentCollection";
 import { IFileMapping } from "./Components/IFileMapping";
 import { CompositeConstructor } from "./CompositeConstructor";
@@ -52,12 +51,12 @@ export abstract class BaseConstructorCreator
                     /**
                      * A component for resolving the components of the base.
                      */
-                    private baseComponentResolver: () => IComponentCollection<any, any>;
+                    private baseComponentResolver: () => ComponentCollection<any, any>;
 
                     /**
                      * A component for resolving the file-mappings of the base.
                      */
-                    private baseFileMappingResolver: () => Array<IFileMapping<any, any>>;
+                    private baseFileMappingResolver: () => FileMappingOptionCollection;
 
                     /**
                      * Initializes a new instance of the {@link BaseGenerator `BaseGenerator`} class.
@@ -69,7 +68,7 @@ export abstract class BaseConstructorCreator
                     {
                         super(...params);
                         let classProcessor: (base: TConstructor) => void = () => { };
-                        let instanceOptions = { arguments: dargs(this.args), options: this.options };
+                        let instanceOptions = { options: this.options };
 
                         if (namespaceOrPath)
                         {
@@ -97,8 +96,8 @@ export abstract class BaseConstructorCreator
                         classProcessor(baseClass);
 
                         let settingsPropertyName = "Settings" as keyof Generator;
-                        let fileMappingPropertyName = "FileMappings" as keyof Generator;
-                        let componentPropertyName = "Components" as keyof Generator;
+                        let fileMappingPropertyName = "ResolvedFileMappings" as keyof Generator;
+                        let componentPropertyName = "ComponentCollection" as keyof Generator;
                         let destinationPathName = "destinationPath" as keyof Generator;
                         let destinationRootName = "destinationRoot" as keyof Generator;
                         let propertyDescriptors = BaseConstructorCreator.GetAllProperties(base);
@@ -167,7 +166,7 @@ export abstract class BaseConstructorCreator
                     /**
                      * @inheritdoc
                      */
-                    public get BaseComponents(): IComponentCollection<any, any>
+                    public get BaseComponents(): ComponentCollection<any, any>
                     {
                         return this.baseComponentResolver();
                     }
@@ -175,7 +174,7 @@ export abstract class BaseConstructorCreator
                     /**
                      * @inheritdoc
                      */
-                    public get BaseFileMappings(): Array<IFileMapping<any, any>>
+                    public get BaseFileMappings(): FileMappingOptionCollection
                     {
                         return this.baseFileMappingResolver();
                     }
@@ -185,36 +184,7 @@ export abstract class BaseConstructorCreator
                      */
                     public override get Components(): IComponentCollection<any, any>
                     {
-                        let result: IComponentCollection<any, any> = this.Base.ComponentCollection;
-
-                        return {
-                            ...result,
-                            Question: result.Question,
-                            Categories: [
-                                ...(result.Categories ?? []).map(
-                                    (category): IComponentCategory<any, any> =>
-                                    {
-                                        return {
-                                            ...category,
-                                            DisplayName: category.DisplayName,
-                                            Components: [
-                                                ...(category.Components ?? []).map(
-                                                    (component): IComponent<any, any> =>
-                                                    {
-                                                        return {
-                                                            ...component,
-                                                            ID: component.ID,
-                                                            DisplayName: component.DisplayName,
-                                                            DefaultEnabled: component.DefaultEnabled,
-                                                            Questions: [...(component.Questions ?? [])],
-                                                            FileMappings: component.FileMappings
-                                                        };
-                                                    })
-                                            ]
-                                        };
-                                    })
-                            ]
-                        };
+                        return this.Base.ComponentCollection;
                     }
 
                     /**

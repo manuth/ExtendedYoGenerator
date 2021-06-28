@@ -4,6 +4,7 @@ import Environment = require("yeoman-environment");
 import { BaseConstructorCreator } from "../../BaseConstructorCreator";
 import { ComponentCollection } from "../../Components/ComponentCollection";
 import { FileMapping } from "../../Components/FileMapping";
+import { FileMappingOptionCollection } from "../../Components/FileMappingOptionCollection";
 import { IComponentCollection } from "../../Components/IComponentCollection";
 import { IFileMapping } from "../../Components/IFileMapping";
 import { Generator } from "../../Generator";
@@ -145,11 +146,11 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                 /**
                  * @inheritdoc
                  */
-                public override get BaseFileMappings(): Array<IFileMapping<any, any>>
+                public override get BaseFileMappings(): FileMappingOptionCollection
                 {
                     let result = super.BaseFileMappings;
 
-                    result.push(
+                    result.Add(
                         {
                             Source: injectedSourceFile,
                             Destination: destinationFile
@@ -161,7 +162,7 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                 /**
                  * @inheritdoc
                  */
-                public override get BaseComponents(): IComponentCollection<any, any>
+                public override get BaseComponents(): ComponentCollection<any, any>
                 {
                     let result = super.BaseComponents;
 
@@ -169,7 +170,7 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                     {
                         if (category.DisplayName === categoryName)
                         {
-                            category.Components.push(
+                            category.Components.Add(
                                 {
                                     ID: injectedComponentID,
                                     DisplayName: "",

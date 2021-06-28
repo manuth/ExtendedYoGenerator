@@ -6,8 +6,10 @@ import { Question } from "yeoman-generator";
 import { BaseConstructorCreator } from "./BaseConstructorCreator";
 import { ComponentCollection } from "./Components/ComponentCollection";
 import { FileMapping } from "./Components/FileMapping";
+import { FileMappingOptionCollection } from "./Components/FileMappingOptionCollection";
 import { IComponentCollection } from "./Components/IComponentCollection";
 import { IFileMapping } from "./Components/IFileMapping";
+import { ObjectCollection } from "./Components/ObjectCollection";
 import { CompositeConstructor } from "./CompositeConstructor";
 import { GeneratorConstructor } from "./GeneratorConstructor";
 import { GeneratorSettingKey } from "./GeneratorSettingKey";
@@ -108,12 +110,13 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     /**
      * Gets all questions including questions for the components.
      */
-    public get QuestionCollection(): Array<Question<TSettings>>
+    public get QuestionCollection(): ObjectCollection<Question<TSettings>>
     {
-        return [
-            ...this.Questions ?? [],
-            ...this.ComponentCollection?.Questions ?? []
-        ];
+        return new ObjectCollection(
+            [
+                ...this.Questions ?? [],
+                ...this.ComponentCollection?.Questions ?? []
+            ]);
     }
 
     /**
@@ -127,15 +130,17 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     /**
      * Gets the file-mappings of the generator.
      */
-    public get ResolvedFileMappings(): Array<FileMapping<TSettings, TOptions>>
+    public get ResolvedFileMappings(): FileMappingOptionCollection
     {
-        return (this.FileMappings ?? []).map((fileMapping) => new FileMapping(this, fileMapping));
+        return new FileMappingOptionCollection(
+            this,
+            (this.FileMappings ?? []).map((fileMapping) => new FileMapping(this, fileMapping)));
     }
 
     /**
      * Gets the file-mappings to process.
      */
-    public get FileMappingCollection(): Array<FileMapping<TSettings, TOptions>>
+    public get FileMappingCollection(): FileMappingOptionCollection
     {
         let result = this.ResolvedFileMappings;
 

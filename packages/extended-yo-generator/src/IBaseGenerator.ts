@@ -13,10 +13,10 @@ export interface IBaseGenerator<T extends Generator<any, any>>
     /**
      * Gets the file-mappings of the base-generator.
      */
-    BaseFileMappings: T["FileMappings"];
+    BaseFileMappings: T["ResolvedFileMappings"];
 
     /**
      * Gets the components of the base-generator.
      */
-    BaseComponents: T["Components"];
+    BaseComponents: T["ComponentCollection"];
 }
