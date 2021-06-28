@@ -55,7 +55,7 @@ export class ObjectCollection<T extends Partial<Record<string, any>>> extends Ar
     public Replace(predicate: Predicate<T>, item: T): void;
 
     /**
-     * Replaces the item which matches the {@link predicate `predicate`} with a replacement created by the {@link filter `filter`}.
+     * Replaces the item which matches the {@link predicate `predicate`} with a replacement created by the specified {@link filter `filter`}.
      *
      * @param predicate
      * The item to replace.
@@ -69,10 +69,10 @@ export class ObjectCollection<T extends Partial<Record<string, any>>> extends Ar
      * Replaces the item which matches the {@link filter `filter`} with the specified {@link replacement `replacement`}.
      *
      * @param filter
-     * The item to replace.
+     * A filter for determining the item to replace.
      *
      * @param replacement
-     * The replacement of the item.
+     * The replacement for the item.
      */
     public Replace(filter: Constructor<T> | Predicate<T>, replacement: T | Filter<T>): void
     {
