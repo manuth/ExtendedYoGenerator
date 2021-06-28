@@ -4,9 +4,9 @@ import { Question } from "yeoman-generator";
 import { GeneratorSettingKey } from "../GeneratorSettingKey";
 import { IGenerator } from "../IGenerator";
 import { IGeneratorSettings } from "../IGeneratorSettings";
+import { CategoryOptionCollection } from "./CategoryOptionCollection";
 import { ComponentCategory } from "./ComponentCategory";
 import { IComponentCollection } from "./IComponentCollection";
-import { PropertyResolverCollection } from "./PropertyResolverCollection";
 import { PropertyResolver } from "./Resolving/PropertyResolver";
 
 /**
@@ -23,7 +23,7 @@ export class ComponentCollection<TSettings extends IGeneratorSettings, TOptions>
     /**
      * The categories of the collection.
      */
-    private categoryCollection: PropertyResolverCollection<ComponentCategory<TSettings, TOptions>> = null;
+    private categoryCollection: CategoryOptionCollection = null;
 
     /**
      * Initrializes a new instance of the {@link ComponentCollection `ComponentCollection<TSettings, TOptions>`} class.
@@ -58,11 +58,12 @@ export class ComponentCollection<TSettings extends IGeneratorSettings, TOptions>
     /**
      * Gets or sets the component-categories.
      */
-    public get Categories(): PropertyResolverCollection<ComponentCategory<TSettings, TOptions>>
+    public get Categories(): CategoryOptionCollection
     {
         if (this.categoryCollection === null)
         {
-            this.categoryCollection = new PropertyResolverCollection(
+            this.categoryCollection = new CategoryOptionCollection(
+                this.Generator,
                 this.Object.Categories.map(
                     (category) =>
                     {
