@@ -8,13 +8,8 @@ import { Predicate } from "./Predicate";
  * @template T
  * The type of the items to edit.
  */
-export class ObjectCollection<T extends Partial<Record<string, any>>>
+export class ObjectCollection<T extends Partial<Record<string, any>>> extends Array<T>
 {
-    /**
-     * The items of the collection.
-     */
-    private items: T[];
-
     /**
      * Initializes a new instance of the {@link ObjectCollection `ObjectCollection<T>`} class.
      *
@@ -23,15 +18,7 @@ export class ObjectCollection<T extends Partial<Record<string, any>>>
      */
     public constructor(items: T[])
     {
-        this.items = items;
-    }
-
-    /**
-     * Gets the items of the collection.
-     */
-    protected get Items(): T[]
-    {
-        return this.items;
+        super(...items);
     }
 
     /**
@@ -96,7 +83,7 @@ export class ObjectCollection<T extends Partial<Record<string, any>>>
         else
         {
             let index = this.FindIndex(filter);
-            this.Items[index] = replacement(this.Items[index]);
+            this[index] = replacement(this[index]);
         }
     }
 
@@ -124,7 +111,7 @@ export class ObjectCollection<T extends Partial<Record<string, any>>>
      */
     public Remove(filter: Constructor<T> | Predicate<T>): void
     {
-        this.Items.splice(this.FindIndex(filter), 1);
+        this.splice(this.FindIndex(filter), 1);
     }
 
     /**
@@ -135,7 +122,7 @@ export class ObjectCollection<T extends Partial<Record<string, any>>>
      */
     public Add(item: T): void
     {
-        this.Items.push(item);
+        this.push(item);
     }
 
     /**
@@ -149,7 +136,7 @@ export class ObjectCollection<T extends Partial<Record<string, any>>>
      */
     protected FindIndex(filter: Constructor<T> | Predicate<T>): number
     {
-        let result = this.Items.findIndex(this.GetPredicate(filter));
+        let result = this.findIndex(this.GetPredicate(filter));
 
         if (typeof result === "number")
         {
