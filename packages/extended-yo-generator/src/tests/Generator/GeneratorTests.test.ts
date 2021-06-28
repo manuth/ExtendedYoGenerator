@@ -39,7 +39,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
             }
 
             /**
-             * Resolves and normalizes a path for better comparsion.
+             * Resolves and normalizes a path for better comparison.
              *
              * @param path
              * The path to process.
@@ -316,14 +316,14 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                                             },
                                             {
                                                 ID: hiddenID,
-                                                DisplayName: "Shhh - wanna have some of this, too?",
+                                                DisplayName: "Shush - wanna have some of this, too?",
                                                 DefaultEnabled: false,
                                                 FileMappings: [],
                                                 Questions: [
                                                     {
                                                         type: "input",
                                                         name: hiddenQuestionID,
-                                                        message: "Anwer me!",
+                                                        message: "Answer me!",
                                                         default: "default value"
                                                     }
                                                 ]

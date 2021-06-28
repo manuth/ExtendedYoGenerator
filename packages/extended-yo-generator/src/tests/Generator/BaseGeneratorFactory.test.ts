@@ -194,7 +194,7 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
             type FileMappingCondition = (fileMapping: FileMapping<any, any>) => boolean;
 
             /**
-             * Asserts the truthyness of the specified {@link condition `condition`}.
+             * Asserts the truthiness of the specified {@link condition `condition`}.
              *
              * @param fileMappings
              * The file-mappings to check.
@@ -217,7 +217,7 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
             }
 
             /**
-             * Asserts the truthyness of the specified {@link condition `condition`}.
+             * Asserts the truthiness of the specified {@link condition `condition`}.
              *
              * @param collection
              * The collection to check.
@@ -249,7 +249,7 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
              * The type of the generator to create.
              *
              * @param generatorConstructor
-             * The constructor of the generator to instanciate.
+             * The constructor of the generator to instantiate.
              *
              * @returns
              * The newly initialized generator.
@@ -321,7 +321,7 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                         });
 
                     test(
-                        "Checking whether file-mappings of the base-generator presist in the inheriting generator…",
+                        "Checking whether file-mappings of the base-generator persist in the inheriting generator…",
                         async () =>
                         {
                             ok(
@@ -331,7 +331,7 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                         });
 
                     test(
-                        "Checking whether components of the base-generator presist in the inheriting generator…",
+                        "Checking whether components of the base-generator persist in the inheriting generator…",
                         async () =>
                         {
                             ok(

@@ -26,7 +26,7 @@ export class ComponentCollection<TSettings extends IGeneratorSettings, TOptions>
     private categoryCollection: CategoryOptionCollection = null;
 
     /**
-     * Initrializes a new instance of the {@link ComponentCollection `ComponentCollection<TSettings, TOptions>`} class.
+     * Initializes a new instance of the {@link ComponentCollection `ComponentCollection<TSettings, TOptions>`} class.
      *
      * @param generator
      * The generator of the collection.

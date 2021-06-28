@@ -31,7 +31,7 @@ export interface IComponent<TSettings, TOptions> extends IUniqueObject
     DefaultEnabled?: boolean;
 
     /**
-     * Gets or sets additional quetions related to the component.
+     * Gets or sets additional questions related to the component.
      */
     Questions?: Array<Question<TSettings>>;
 

@@ -1,7 +1,7 @@
 import { ResolveFunction } from "./ResolveFunction";
 
 /**
- * Represents a resolveable value.
+ * Represents a resolvable value.
  *
  * @template TTarget
  * The type of the resolve-target.

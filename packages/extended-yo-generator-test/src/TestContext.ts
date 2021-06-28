@@ -142,13 +142,13 @@ export class TestContext<TGenerator extends Generator<any, TOptions> = Generator
      * Creates a promise resolving the specified {@link value `value`}.
      *
      * @template T
-     * THe type of the specified {@link value `value`}.
+     * The type of the specified {@link value `value`}.
      *
      * @param value
      * The value to promisify.
      *
      * @returns
-     * The promisified value.
+     * The specified {@link value `value`} wrapped in a {@link Promise `Promise<T>`}.
      */
     public CreatePromise<T>(value: T): Promise<T>
     {
@@ -163,7 +163,7 @@ export class TestContext<TGenerator extends Generator<any, TOptions> = Generator
      * Nests the specified {@link value `value`} into a function.
      *
      * @template T
-     * THe type of the specified {@link value `value`}.
+     * The type of the specified {@link value `value`}.
      *
      * @param value
      * The value to nest into a function.
@@ -180,7 +180,7 @@ export class TestContext<TGenerator extends Generator<any, TOptions> = Generator
     }
 
     /**
-     * Nests the promisified {@link value `value`} into a function.
+     * Nests the {@link value `value`} wrapped in a {@link Promise `Promise<T>`} into a function.
      *
      * @template T
      * The type of the specified {@link value `value`}.
@@ -189,7 +189,7 @@ export class TestContext<TGenerator extends Generator<any, TOptions> = Generator
      * The value to nest.
      *
      * @returns
-     * The promisified value nested into a function.
+     * The specified {@link value `value`} wrapped in a {@link Promise `Promise<T>`} nested into a function.
      */
     public CreatePromiseFunction<T>(value: T): () => Promise<T>
     {

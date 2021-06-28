@@ -104,8 +104,8 @@ await tester.Run();
 Assert.strictEqual((await tester.Metadata).name, "my-awesome-module");
 ```
 
-#### JavaScriptFilemappingTester
-Using thie file-mapping tester you can check whether the destination-file exports the expected members. This is especially useful because the file is automatically deleted from the require-cache in order to hot-reload changes made to the destination-file.
+#### JavaScriptFileMappingTester
+Using the file-mapping tester you can check whether the destination-file exports the expected members. This is especially useful because the file is automatically deleted from the require-cache in order to hot-reload changes made to the destination-file.
 
 ```ts
 import Assert = require("assert");

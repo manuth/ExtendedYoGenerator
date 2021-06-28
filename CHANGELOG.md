@@ -133,7 +133,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 This release brings back support for resolvable properties, though all properties (except for `IFileMapping.Context`) must be synchronous.
 
 ### Added
-  - Support for synchonous resolvable values in `IFileMapping`s
+  - Support for synchronous resolvable values in `IFileMapping`s
 
 [Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v7.2.0...v7.3.0)
 
@@ -189,7 +189,7 @@ This release brings a handy new feature for making extending generators easier. 
   - Reverted the `destinationRoot` behavior
 
 ### Fixed
-  - Malworking TypeScript intellisense
+  - Nonfunctioning TypeScript intellisense
 
 ### Added
   - Support for setting the `moduleRoot` of `TestGenerator`s
