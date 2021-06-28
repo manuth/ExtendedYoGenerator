@@ -1,7 +1,7 @@
 import { Question } from "yeoman-generator";
 import { IGenerator } from "../IGenerator";
 import { FileMapping } from "./FileMapping";
-import { FileMappingCollection } from "./FileMappingCollection";
+import { FileMappingOptionCollection } from "./FileMappingOptionCollection";
 import { IComponent } from "./IComponent";
 import { ObjectCollection } from "./ObjectCollection";
 import { PropertyResolver } from "./Resolving/PropertyResolver";
@@ -25,7 +25,7 @@ export class Component<TSettings, TOptions> extends PropertyResolver<IComponent<
     /**
      * The file-mappings of the component.
      */
-    private fileMappingCollection: FileMappingCollection = null;
+    private fileMappingCollection: FileMappingOptionCollection = null;
 
     /**
      * Initializes a new instance of the {@link Component `Component<TSettings, TOptions>`} class.
@@ -105,11 +105,11 @@ export class Component<TSettings, TOptions> extends PropertyResolver<IComponent<
     /**
      * Gets or sets the file-mappings of the component.
      */
-    public get FileMappings(): FileMappingCollection
+    public get FileMappings(): FileMappingOptionCollection
     {
         if (this.fileMappingCollection === null)
         {
-            this.fileMappingCollection = new FileMappingCollection(
+            this.fileMappingCollection = new FileMappingOptionCollection(
                 this.Generator,
                 this.ResolveProperty(this, this.Object.FileMappings).map(
                     (fileMapping) =>
