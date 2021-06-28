@@ -1,3 +1,4 @@
+import dargs from "dargs";
 import YeomanGenerator = require("yeoman-generator");
 import { IComponent } from "./Components/IComponent";
 import { IComponentCategory } from "./Components/IComponentCategory";
@@ -36,10 +37,10 @@ export abstract class BaseConstructorCreator
      */
     public static Create<TBase extends GeneratorConstructor>(base: TBase, namespaceOrPath?: string): CompositeConstructor<TBase>
     {
-        let resolvedKey: keyof YeomanGenerator = "resolved";
+        let resolvedKey = "resolved" as const;
 
         return (
-            <TConstructor extends new (...args: any[]) => any>(baseClass: TConstructor): CompositeConstructor<TConstructor> =>
+            <TConstructor extends new (...args: any[]) => Generator>(baseClass: TConstructor): CompositeConstructor<TConstructor> =>
             {
                 return class BaseGenerator extends baseClass implements IBaseGenerator<InstanceType<TConstructor>>
                 {
@@ -67,9 +68,8 @@ export abstract class BaseConstructorCreator
                     public constructor(...params: any[])
                     {
                         super(...params);
-                        let [args, options] = params as [string | string[], YeomanGenerator.GeneratorOptions];
                         let classProcessor: (base: TConstructor) => void = () => { };
-                        let instanceOptions = { arguments: args, options };
+                        let instanceOptions = { arguments: dargs(this.args), options: this.options };
 
                         if (namespaceOrPath)
                         {
@@ -85,7 +85,7 @@ export abstract class BaseConstructorCreator
 
                             try
                             {
-                                (baseClass as any)[resolvedKey] = this.env.get(namespaceOrPath)?.[resolvedKey] ?? namespaceOrPath;
+                                (baseClass as any)[resolvedKey] = (this.env.get(namespaceOrPath) as any)?.[resolvedKey] ?? namespaceOrPath;
                             }
                             catch
                             {
@@ -93,7 +93,7 @@ export abstract class BaseConstructorCreator
                             }
                         }
 
-                        this.base = this.env.instantiate(baseClass, instanceOptions);
+                        this.base = this.env.instantiate(baseClass, instanceOptions) as InstanceType<TConstructor>;
                         classProcessor(baseClass);
 
                         let settingsPropertyName = "Settings" as keyof Generator;
@@ -183,7 +183,7 @@ export abstract class BaseConstructorCreator
                     /**
                      * @inheritdoc
                      */
-                    public get Components(): IComponentCollection<any, any>
+                    public override get Components(): IComponentCollection<any, any>
                     {
                         let result: IComponentCollection<any, any> = this.Base.ComponentCollection;
 
@@ -220,7 +220,7 @@ export abstract class BaseConstructorCreator
                     /**
                      * @inheritdoc
                      */
-                    public get FileMappings(): Array<IFileMapping<any, any>>
+                    public override get FileMappings(): Array<IFileMapping<any, any>>
                     {
                         return this.Base.ResolvedFileMappings;
                     }
