@@ -1,5 +1,6 @@
 import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { ObjectCollectionTests } from "./ObjectCollection.test";
+import { UniqueObjectCollectionTests } from "./UniqueObjectCollection.test";
 
 /**
  * Registers tests for collections.
@@ -14,5 +15,6 @@ export function CollectionTests(context: TestContext<TestGenerator, ITestGenerat
         () =>
         {
             ObjectCollectionTests();
+            UniqueObjectCollectionTests();
         });
 }
