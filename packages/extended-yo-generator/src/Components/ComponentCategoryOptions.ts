@@ -7,6 +7,12 @@ import { IComponent } from "./IComponent";
 
 /**
  * Provides data for creating a {@link ComponentCategory `ComponentCategory<TSettings, TOptions>`}.
+ *
+ * @template TSettings
+ * The type of the settings of the generator.
+ *
+ * @template TOptions
+ * The type of the options of the generator.
  */
 export abstract class ComponentCategoryOptions<TSettings extends IGeneratorSettings, TOptions extends GeneratorOptions> extends GeneratorComponent<TSettings, TOptions, ComponentCategory<TSettings, TOptions>>
 {

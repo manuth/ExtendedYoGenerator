@@ -10,6 +10,9 @@ import { ObjectExtensionFactory } from "./ObjectExtensionFactory";
 
 /**
  * Provides the functionality to create base-generators.
+ *
+ * @template T
+ * The type of the constructor of the base generator.
  */
 export class BaseGeneratorFactory<T extends GeneratorConstructor> extends ObjectExtensionFactory<T>
 {
@@ -56,7 +59,7 @@ export class BaseGeneratorFactory<T extends GeneratorConstructor> extends Object
      * Creates a new base-constructor.
      *
      * @template TBase
-     * The type of the constructor of the base-generator.
+     * The type of the constructor of the base generator.
      *
      * @param base
      * The constructor the generated constructor should be based on.

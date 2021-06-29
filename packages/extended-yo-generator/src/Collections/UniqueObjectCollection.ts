@@ -8,7 +8,7 @@ import { ObjectCollection } from "./ObjectCollection";
  * Provides the functionality to edit a collection of {@link IUniqueObject `IUniqueObject`}s.
  *
  * @template T
- * The type of the items to edit.
+ * The type of the items in this collection.
  */
 export class UniqueObjectCollection<T extends IUniqueObject> extends ObjectCollection<T>
 {

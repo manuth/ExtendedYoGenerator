@@ -5,6 +5,9 @@ import { ObjectExtensionFactory } from "./ObjectExtensionFactory";
 
 /**
  * Provides the functionality to create base-{@link GeneratorComponent `GeneratorComponent<TSettings, TOptions, TResolved>`}s.
+ *
+ * @template T
+ * The type of the constructor of the base {@link GeneratorComponent `GeneratorComponent<TSettings, TOptions, TResolved>`}.
  */
 export class GeneratorComponentExtensionFactory<T extends Constructor<GeneratorComponent<any, any, any>>> extends ObjectExtensionFactory<T>
 {

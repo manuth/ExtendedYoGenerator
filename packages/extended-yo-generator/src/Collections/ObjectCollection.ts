@@ -6,7 +6,7 @@ import { Predicate } from "../Predicate";
  * Provides the functionality to edit a collection of objects.
  *
  * @template T
- * The type of the items to edit.
+ * The type of the items in this collection.
  */
 export class ObjectCollection<T extends Partial<Record<string, any>>> extends Array<T>
 {
@@ -208,8 +208,11 @@ export class ObjectCollection<T extends Partial<Record<string, any>>> extends Ar
     /**
      * Checks whether the specified {@link func `func`} is a constructor.
      *
+     * @template T
+     * The type of the object that can be instantiated.
+     *
      * @param func
-     * ¨The function to check.
+     * The function to check.
      *
      * @returns
      * A value indicating whether the specified {@link func `func`} is a constructor.

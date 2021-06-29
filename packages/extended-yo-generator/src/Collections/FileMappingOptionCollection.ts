@@ -9,7 +9,7 @@ import { PropertyResolverCollection } from "./PropertyResolverCollection";
 export class FileMappingOptionCollection extends PropertyResolverCollection<IFileMapping<any, any>, FileMapping<any, any>>
 {
     /**
-     * Initializes a new instance of the {@link FileMappingOptionCollection `FileMappingCollection`} class.
+     * Initializes a new instance of the {@link FileMappingOptionCollection `FileMappingOptionCollection`} class.
      *
      * @param generator
      * The generator of the collection.

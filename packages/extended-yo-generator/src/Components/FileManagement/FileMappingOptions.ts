@@ -7,6 +7,12 @@ import { FileMapping } from "./FileMapping";
 
 /**
  * Provides data for creating a {@link FileMapping `FileMapping<TSettings, TOptions>`}.
+ *
+ * @template TSettings
+ * The type of the settings of the generator.
+ *
+ * @template TOptions
+ * The type of the options of the generator.
  */
 export abstract class FileMappingOptions<TSettings extends IGeneratorSettings, TOptions extends GeneratorOptions> extends GeneratorComponent<TSettings, TOptions, FileMapping<TSettings, TOptions>>
 {
@@ -67,7 +73,7 @@ export abstract class FileMappingOptions<TSettings extends IGeneratorSettings, T
     public async Processor?(): Promise<void>;
 
     /**
-     * Reads the contents of the file located at the specified `path`.
+     * Reads the contents of the file located at the specified {@link path `path`}.
      *
      * @param path
      * The path to the file to read.
@@ -92,7 +98,7 @@ export abstract class FileMappingOptions<TSettings extends IGeneratorSettings, T
     }
 
     /**
-     * Writes the specified `content` to the file located at the specified `path`.
+     * Writes the specified {@link content `content`} to the file located at the specified {@link path `path`}.
      *
      * @param path
      * The path to the file to write.
@@ -106,7 +112,7 @@ export abstract class FileMappingOptions<TSettings extends IGeneratorSettings, T
     }
 
     /**
-     * Writes the specified `content` to the destination-file.
+     * Writes the specified {@link content `content`} to the destination-file.
      *
      * @param content
      * The content to write.

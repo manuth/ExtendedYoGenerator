@@ -8,6 +8,12 @@ import { IComponentCollection } from "./IComponentCollection";
 
 /**
  * Provides options for creating a {@link ComponentCollection `ComponentCollection<TSettings, TOptions>`}.
+ *
+ * @template TSettings
+ * The type of the settings of the generator.
+ *
+ * @template TOptions
+ * The type of the options of the generator.
  */
 export abstract class ComponentCollectionOptions<TSettings extends IGeneratorSettings, TOptions extends GeneratorOptions> extends GeneratorComponent<TSettings, TOptions, ComponentCollection<TSettings, TOptions>> implements IComponentCollection<TSettings, TOptions>
 {

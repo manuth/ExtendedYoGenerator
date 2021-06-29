@@ -9,10 +9,13 @@ import { UniqueObjectCollection } from "./UniqueObjectCollection";
 /**
  * Provides the functionality to edit a collection of {@link PropertyResolver `PropertyResolver<TObject, TTarget, TSettings, TOptions>`}s.
  *
- * @template T
- * The type of the items to edit.
+ * @template TObject
+ * The type of the unresolved objects in this collection.
+ *
+ * @template TTarget
+ * The type of the resolved objects in this collection.
  */
-export abstract class PropertyResolverCollection<T extends IUniqueObject, TTarget extends PropertyResolver<T, any, any, any> & IUniqueObject> extends UniqueObjectCollection<TTarget>
+export abstract class PropertyResolverCollection<TObject extends IUniqueObject, TTarget extends PropertyResolver<TObject, any, any, any> & IUniqueObject> extends UniqueObjectCollection<TTarget>
 {
     /**
      * The generator of the collection.
@@ -51,7 +54,7 @@ export abstract class PropertyResolverCollection<T extends IUniqueObject, TTarge
      * @param item
      * The replacement of the item.
      */
-    public override Replace(id: string, item: T): void;
+    public override Replace(id: string, item: TObject): void;
 
     /**
      * Replaces the item with the specified {@link id `id`} with the specified {@link item `item`}.
@@ -128,7 +131,7 @@ export abstract class PropertyResolverCollection<T extends IUniqueObject, TTarge
      * @param replacement
      * The replacement for the item.
      */
-    public override Replace(filter: string | Constructor<TTarget> | Predicate<TTarget>, replacement: T | TTarget | Filter<TTarget>): void
+    public override Replace(filter: string | Constructor<TTarget> | Predicate<TTarget>, replacement: TObject | TTarget | Filter<TTarget>): void
     {
         if (
             typeof replacement !== "function" &&
@@ -154,7 +157,7 @@ export abstract class PropertyResolverCollection<T extends IUniqueObject, TTarge
      * @param item
      * The item to add.
      */
-    public override Add(item: T): void;
+    public override Add(item: TObject): void;
 
     /**
      * Adds the specified {@link item `item`} to the collection.
@@ -170,7 +173,7 @@ export abstract class PropertyResolverCollection<T extends IUniqueObject, TTarge
      * @param item
      * The item to add.
      */
-    public override Add(item: T | TTarget): void
+    public override Add(item: TObject | TTarget): void
     {
         if (item instanceof PropertyResolver)
         {
@@ -188,7 +191,7 @@ export abstract class PropertyResolverCollection<T extends IUniqueObject, TTarge
      * @param options
      * The options for the new item.
      */
-    protected abstract CreateItem(options: T): TTarget;
+    protected abstract CreateItem(options: TObject): TTarget;
 
     /**
      * @inheritdoc
@@ -199,7 +202,7 @@ export abstract class PropertyResolverCollection<T extends IUniqueObject, TTarge
      * @returns
      * A predicate which represents the specified {@link filter `filter`}.
      */
-    protected override GetPredicate(filter: string | Constructor<T | TTarget> | Predicate<T | TTarget>): Predicate<TTarget>
+    protected override GetPredicate(filter: string | Constructor<TObject | TTarget> | Predicate<TObject | TTarget>): Predicate<TTarget>
     {
         if (
             typeof filter !== "string" &&

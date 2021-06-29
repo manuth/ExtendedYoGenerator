@@ -4,6 +4,9 @@ import { IObjectExtension } from "./IObjectExtension";
 
 /**
  * Provides the functionality to create an object-extension.
+ *
+ * @template T
+ * The type of the constructor of the base object.
  */
 export class ObjectExtensionFactory<T extends Constructor<any>>
 {

@@ -6,6 +6,9 @@ import { IObjectExtension } from "./IObjectExtension";
 
 /**
  * Represents a constructor for a {@link GeneratorComponent `GeneratorComponent<TSettings, TOptions, TResolved>`}-extension.
+ *
+ * @template T
+ * The type of the constructor of the base {@link GeneratorComponent `GeneratorComponent<TSettings, TOptions, TResolved>`}.
  */
 export type GeneratorComponentExtensionConstructor<T extends Constructor<GeneratorComponent<any, any, any>>> =
     T extends new (...args: any[]) => infer UComponent ?

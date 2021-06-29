@@ -7,9 +7,6 @@ import { IObjectExtension } from "./IObjectExtension";
  * @template TConstructor
  * The type of the constructor.
  *
- * @template TInstance
- * The type of the object that can be instantiated by {@link TConstructor `TConstructor`}.
- *
  * @template TExtension
  * The type of the object that can be instantiated by this constructor.
  */
