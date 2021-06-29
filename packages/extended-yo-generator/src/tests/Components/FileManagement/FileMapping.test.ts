@@ -16,7 +16,7 @@ import { IFileMapping } from "../../../Components/FileManagement/IFileMapping";
 export function FileMappingTests(context: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>>): void
 {
     suite(
-        "FileMapping",
+        nameof(FileMapping),
         () =>
         {
             let random: Random;
@@ -57,7 +57,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                 });
 
             suite(
-                "Source",
+                nameof<FileMapping<any, any>>((fileMapping) => fileMapping.Source),
                 () =>
                 {
                     test(
@@ -86,7 +86,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                 });
 
             suite(
-                "Destination",
+                nameof<IFileMapping<any, any>>((fileMapping) => fileMapping.Destination),
                 async () =>
                 {
                     test(
@@ -115,11 +115,11 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                 });
 
             suite(
-                "Processor",
+                nameof<FileMapping<any, any>>((fileMapping) => fileMapping.Processor),
                 async () =>
                 {
                     suite(
-                        "Testing cases when `Processor` is defined…",
+                        `Testing cases when \`${nameof<FileMapping<any, any>>((f) => f.Processor)}\` is defined…`,
                         () =>
                         {
                             test(
@@ -187,7 +187,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                         });
 
                     suite(
-                        "Testing cases when `Processor` is undefined…",
+                        `Testing cases when \`${nameof<FileMapping<any, any>>((f) => f.Processor)}\` is undefined…`,
                         () =>
                         {
                             let testContent = "This is a <%= test %>.";
@@ -245,7 +245,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                             }
 
                             test(
-                                "Checking whether files are copied by default if `Context` is not defined…",
+                                `Checking whether files are copied by default if \`${nameof<FileMapping<any, any>>((f) => f.Context)}\` is not defined…`,
                                 async function()
                                 {
                                     this.timeout(0);
@@ -254,7 +254,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                                 });
 
                             test(
-                                "Checking whether files are copied using `ejs` if `Context` is defined…",
+                                `Checking whether files are copied using \`ejs\` if \`${nameof<FileMapping<any, any>>((f) => f.Context)}\` is defined…`,
                                 async function()
                                 {
                                     this.timeout(0);
@@ -264,7 +264,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                                 });
 
                             test(
-                                "Checking whether leaving `Source` undefined causes an error…",
+                                `Checking whether leaving \`${nameof<FileMapping<any, any>>((f) => f.Source)}\` undefined causes an error…`,
                                 async () =>
                                 {
                                     fileMappingOptions.Source = null;
@@ -277,7 +277,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                                 });
 
                             test(
-                                "Checking whether leaving `Destination` undefined causes an error…",
+                                `Checking whether leaving \`${nameof<FileMapping<any, any>>((f) => f.Destination)}\` undefined causes an error…`,
                                 async () =>
                                 {
                                     fileMappingOptions.Destination = null;

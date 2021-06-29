@@ -18,7 +18,7 @@ import { Generator } from "../../Generator";
 export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): void
 {
     suite(
-        "BaseGeneratorFactory",
+        nameof(BaseGeneratorFactory),
         () =>
         {
             let superTemplateDir: string;

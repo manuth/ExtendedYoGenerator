@@ -14,7 +14,7 @@ import { TestContext } from "../../TestContext";
 export function JavaScriptFileMappingTesterTests(context: TestContext<TestGenerator>): void
 {
     suite(
-        "JavaScriptFileMappingTester",
+        nameof(JavaScriptFileMappingTester),
         () =>
         {
             let sourceFile: TempFile;
@@ -49,7 +49,7 @@ export function JavaScriptFileMappingTesterTests(context: TestContext<TestGenera
                 });
 
             suite(
-                "Require",
+                nameof<JavaScriptFileMappingTester<any, any, any, any>>((tester) => tester.Require),
                 () =>
                 {
                     test(

@@ -12,7 +12,7 @@ import { TestGenerator } from "../TestGenerator";
 export function TestGeneratorTests(): void
 {
     suite(
-        "TestGenerator",
+        nameof(TestGenerator),
         () =>
         {
             let random: Random;
@@ -56,7 +56,7 @@ export function TestGeneratorTests(): void
                 });
 
             suite(
-                "Path",
+                nameof(TestGenerator.Path),
                 () =>
                 {
                     test(
@@ -76,7 +76,7 @@ export function TestGeneratorTests(): void
                 });
 
             suite(
-                "GeneratorOptions",
+                nameof<TestGenerator>((generator) => generator.options),
                 () =>
                 {
                     test(
@@ -111,7 +111,7 @@ export function TestGeneratorTests(): void
                 });
 
             suite(
-                "moduleRoot",
+                nameof<TestGenerator>((generator) => generator.moduleRoot),
                 () =>
                 {
                     let moduleRoot: string;

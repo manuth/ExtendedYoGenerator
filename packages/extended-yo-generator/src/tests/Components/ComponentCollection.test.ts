@@ -12,7 +12,7 @@ import { IComponentCollection } from "../../Components/IComponentCollection";
 export function ComponentCollectionTests(context: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>>): void
 {
     suite(
-        "ComponentCollection",
+        nameof(ComponentCollection),
         () =>
         {
             let generator: TestGenerator;
@@ -38,11 +38,11 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                 });
 
             suite(
-                "Categories",
+                nameof<ComponentCollection<any, any>>((collection) => collection.Categories),
                 () =>
                 {
                     test(
-                        "Checking whether changes to the `Categories` option immediately take affect…",
+                        `Checking whether changes to the \`${nameof<ComponentCollection<any, any>>((c) => c.Categories)}\` option immediately take affect…`,
                         () =>
                         {
                             let testName = "This is a test";

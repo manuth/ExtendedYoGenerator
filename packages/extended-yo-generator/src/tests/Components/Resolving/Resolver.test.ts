@@ -12,7 +12,7 @@ import { Resolver } from "../../../Components/Resolving/Resolver";
 export function ResolverTests(context: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>>): void
 {
     suite(
-        "Resolver",
+        nameof(Resolver),
         () =>
         {
             /**
@@ -45,7 +45,7 @@ export function ResolverTests(context: TestContext<TestGenerator, ITestGenerator
             }
 
             suite(
-                "Resolve",
+                nameof<TestResolver>((resolver) => resolver.Resolve),
                 async () =>
                 {
                     let resolver: TestResolver;
@@ -64,7 +64,7 @@ export function ResolverTests(context: TestContext<TestGenerator, ITestGenerator
                         });
 
                     test(
-                        "Checking whether values can be resolved no mather whether they are functions, promises or plain values…",
+                        `Checking whether values can be resolved no mather whether they are \`${nameof(Function)}\`s, \`${nameof(Promise)}\`s or plain values…`,
                         async () =>
                         {
                             strictEqual(testValue, resolver.Resolve(null, null, testValue));
@@ -74,7 +74,7 @@ export function ResolverTests(context: TestContext<TestGenerator, ITestGenerator
                         });
 
                     test(
-                        "Checking whether nested promises act as expected…",
+                        `Checking whether nested \`${nameof(Promise)}\`s act as expected…`,
                         async () =>
                         {
                             strictEqual(await testPromise, await resolver.Resolve<Promise<string>>(null, null, testPromise));
@@ -84,14 +84,14 @@ export function ResolverTests(context: TestContext<TestGenerator, ITestGenerator
                         });
 
                     test(
-                        "Checking whether plain functions cannot be resolved…",
+                        `Checking whether plain \`${nameof(Function)}\`s cannot be resolved…`,
                         () =>
                         {
                             notStrictEqual(testFunction, resolver.Resolve<any>(null, null, testFunction));
                         });
 
                     test(
-                        "Checking whether functions can be resolved otherwise…",
+                        `Checking whether \`${nameof(Function)}\` can be resolved otherwise…`,
                         async () =>
                         {
                             strictEqual(testFunction, await resolver.Resolve<Promise<() => void>>(null, null, context.CreatePromise(testFunction)));

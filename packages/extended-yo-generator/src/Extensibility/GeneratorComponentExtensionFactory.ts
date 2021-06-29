@@ -89,7 +89,7 @@ export class GeneratorComponentExtensionFactory<T extends Constructor<GeneratorC
     protected override InitializeBase(base: T, instance: InstanceType<GeneratorComponentExtensionConstructor<T>>, ...args: any[]): InstanceType<T>
     {
         let result = super.InitializeBase(base, instance, ...args);
-        let generatorPropertyName = "Generator" as keyof GeneratorComponent<any, any, any>;
+        let generatorPropertyName = nameof<GeneratorComponent<any, any, any>>((component) => component.Generator);
         let propertyDescriptors = this.GetAllProperties(base);
         let generatorProperty = propertyDescriptors[generatorPropertyName];
 

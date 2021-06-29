@@ -1,7 +1,6 @@
 import { doesNotReject, strictEqual } from "assert";
 import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { Random } from "random-js";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { PropertyResolver } from "../../../Components/Resolving/PropertyResolver";
 import { IResolverTestOptions } from "./IResolverTestOptions";
 import { ResolverTest } from "./ResolverTest";
@@ -15,7 +14,7 @@ import { ResolverTest } from "./ResolverTest";
 export function PropertyResolverTests(context: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>>): void
 {
     suite(
-        "PropertyResolver",
+        nameof<PropertyResolver<any, any, any, any>>(),
         () =>
         {
             let random: Random;
@@ -50,7 +49,7 @@ export function PropertyResolverTests(context: TestContext<TestGenerator, ITestG
                 });
 
             suite(
-                "ResolveProperty",
+                nameof<PropertyResolver<any, any, any, any>>(),
                 () =>
                 {
                     test(

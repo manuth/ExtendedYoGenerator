@@ -13,7 +13,7 @@ import { IComponent } from "../../Components/IComponent";
 export function ComponentTests(context: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>>): void
 {
     suite(
-        "Component",
+        nameof(Component),
         () =>
         {
             let generator: TestGenerator;
@@ -43,7 +43,7 @@ export function ComponentTests(context: TestContext<TestGenerator, ITestGenerato
                 });
 
             suite(
-                "FileMappings",
+                nameof<Component<any, any>>((component) => component.FileMappings),
                 () =>
                 {
                     let testFile: TempFile;
@@ -61,7 +61,7 @@ export function ComponentTests(context: TestContext<TestGenerator, ITestGenerato
                         });
 
                     test(
-                        "Checking whether changes to the `FileMappings` option immediately take affect…",
+                        `Checking whether changes to the \`${nameof<Component<any, any>>((c) => c.FileMappings)}\` option immediately take affect…`,
                         async () =>
                         {
                             componentOptions.FileMappings = [

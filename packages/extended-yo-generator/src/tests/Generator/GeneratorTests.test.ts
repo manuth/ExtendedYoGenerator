@@ -139,7 +139,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                         });
 
                     test(
-                        "Checking whether dependencies are installed if the `package.json` is changed after changing the `destinationRoot`…",
+                        `Checking whether dependencies are installed if the \`package.json\` is changed after changing the \`${nameof<TestGenerator>((g) => g.destinationRoot)}\`…`,
                         async function()
                         {
                             this.slow(10 * 1000);
@@ -172,7 +172,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                 });
 
             suite(
-                "destinationRoot",
+                nameof<TestGenerator>((generator) => generator.destinationRoot),
                 () =>
                 {
                     let workingDirectory: string;
@@ -193,7 +193,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                         });
 
                     test(
-                        "Checking whether changing the `destinationRoot` changes the working directory of the environment…",
+                        `Checking whether changing the \`${nameof<TestGenerator>((g) => g.destinationRoot)}\` changes the working directory of the environment…`,
                         () =>
                         {
                             generator.destinationRoot(tempDir.FullName);
@@ -203,18 +203,18 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                 });
 
             suite(
-                "modulePath",
+                nameof<TestGenerator>((generator) => generator.modulePath),
                 () =>
                 {
                     test(
-                        "Checking whether `modulePath` resolves to the root of the generator's module…",
+                        `Checking whether \`${nameof<TestGenerator>((g) => g.modulePath)}\` resolves to the root of the generator's module…`,
                         () =>
                         {
                             AssertPath(generator.modulePath(testPath), join(moduleRoot, testPath));
                         });
 
                     test(
-                        "Checking whether `modulePath` always is absolute…",
+                        `Checking whether \`${nameof<TestGenerator>((g) => g.modulePath)}\` always is absolute…`,
                         () =>
                         {
                             let modulePath = generator.modulePath();
@@ -227,7 +227,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                 });
 
             suite(
-                "templatePath",
+                nameof<TestGenerator>((generator) => generator.templatePath),
                 () =>
                 {
                     let relativePath: string;
@@ -247,7 +247,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                         });
 
                     test(
-                        "Checking whether `TemplateRoot` is optional…",
+                        `Checking whether \`${nameof<TestGenerator>((g) => g.TemplateRoot)}\` is optional…`,
                         () =>
                         {
                             options.TemplateRoot = null;
@@ -255,7 +255,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                         });
 
                     test(
-                        "Checking whether the template-path resolves to the specified `TemplateRoot`…",
+                        `Checking whether the template-path resolves to the specified \`${nameof<TestGenerator>((g) => g.TemplateRoot)}\`…`,
                         () =>
                         {
                             options.TemplateRoot = "Test";
@@ -264,7 +264,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                 });
 
             suite(
-                "Components",
+                nameof<TestGenerator>((generator) => generator.Components),
                 () =>
                 {
                     let generator: TestGenerator;
@@ -384,7 +384,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                 });
 
             suite(
-                "Questions",
+                nameof<TestGenerator>((generator) => generator.Questions),
                 () =>
                 {
                     let generator: TestGenerator;
@@ -446,7 +446,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                 });
 
             suite(
-                "FileMappings",
+                nameof<TestGenerator>((generator) => generator.FileMappings),
                 () =>
                 {
                     let tempFile: TempFile;
@@ -488,7 +488,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                 });
 
             suite(
-                "ResolvedFileMappings",
+                nameof<TestGenerator>((generator) => generator.ResolvedFileMappings),
                 () =>
                 {
                     suiteSetup(
@@ -526,7 +526,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                 });
 
             suite(
-                "FileMappingCollection",
+                nameof<TestGenerator>((generator) => generator.FileMappingCollection),
                 () =>
                 {
                     let enabledComponentDestination: string;

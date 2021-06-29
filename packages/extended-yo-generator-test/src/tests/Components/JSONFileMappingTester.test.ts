@@ -14,7 +14,7 @@ import { TestContext } from "../../TestContext";
 export function JSONFileMappingTesterTests(context: TestContext<TestGenerator>): void
 {
     suite(
-        "JSONFileMappingTester",
+        nameof(JSONFileMappingTester),
         () =>
         {
             let sourceFile: TempFile;
@@ -42,7 +42,7 @@ export function JSONFileMappingTesterTests(context: TestContext<TestGenerator>):
                 });
 
             suite(
-                "Metadata",
+                nameof<JSONFileMappingTester<any, any, any, any>>((tester) => tester.Metadata),
                 () =>
                 {
                     test(

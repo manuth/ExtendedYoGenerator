@@ -160,7 +160,7 @@ export class BaseGeneratorFactory<T extends GeneratorConstructor> extends Object
      */
     protected override Initialize(base: T, instance: InstanceType<GeneratorExtensionConstructor<T>>, ...args: any[]): void
     {
-        let resolvedKey = "resolved" as const;
+        let resolvedKey = nameof<Generator>((generator) => generator.resolved);
         this.classProcessor = () => { };
 
         if (this.namespaceOrPath)
@@ -207,11 +207,11 @@ export class BaseGeneratorFactory<T extends GeneratorConstructor> extends Object
         let result = instance.env.instantiate(base, instanceOptions) as InstanceType<T>;
         this.classProcessor(base);
 
-        let settingsPropertyName = "Settings" as keyof Generator;
-        let fileMappingPropertyName = "ResolvedFileMappings" as keyof Generator;
-        let componentPropertyName = "ComponentCollection" as keyof Generator;
-        let destinationPathName = "destinationPath" as keyof Generator;
-        let destinationRootName = "destinationRoot" as keyof Generator;
+        let settingsPropertyName = nameof<Generator>((generator) => generator.Settings);
+        let fileMappingPropertyName = nameof<Generator>((generator) => generator.ResolvedFileMappings);
+        let componentPropertyName = nameof<Generator>((generator) => generator.ComponentCollection);
+        let destinationPathName = nameof<Generator>((generator) => generator.destinationPath);
+        let destinationRootName = nameof<Generator>((generator) => generator.destinationRoot);
         let propertyDescriptors = this.GetAllProperties(base);
         let settingsProperty = propertyDescriptors[settingsPropertyName];
         let fileMappingProperty = propertyDescriptors[fileMappingPropertyName];

@@ -13,7 +13,7 @@ import { IExampleOptions } from "./IExampleOptions";
 export function TestContextTests(): void
 {
     suite(
-        "TestContext",
+        nameof(TestContext),
         () =>
         {
             let random: Random;
@@ -39,7 +39,7 @@ export function TestContextTests(): void
                 });
 
             suite(
-                "Generator",
+                nameof<TestContext>((context) => context.Generator),
                 () =>
                 {
                     let generator: TestGenerator<ITestGeneratorSettings, IExampleOptions>;
@@ -67,7 +67,7 @@ export function TestContextTests(): void
                 });
 
             suite(
-                "CreatePromise",
+                nameof<TestContext>((context) => context.CreatePromise),
                 () =>
                 {
                     test(
@@ -79,7 +79,7 @@ export function TestContextTests(): void
                 });
 
             suite(
-                "CreateFunction",
+                nameof<TestContext>((context) => context.CreateFunction),
                 () =>
                 {
                     test(
@@ -91,7 +91,7 @@ export function TestContextTests(): void
                 });
 
             suite(
-                "CreatePromiseFunction",
+                nameof<TestContext>((context) => context.CreatePromiseFunction),
                 () =>
                 {
                     test(
@@ -103,7 +103,7 @@ export function TestContextTests(): void
                 });
 
             suite(
-                "ExecuteGenerator",
+                nameof<TestContext>((context) => context.ExecuteGenerator),
                 () =>
                 {
                     let runContext: IRunContext<TestGenerator<ITestGeneratorSettings, IExampleOptions>>;
