@@ -1,4 +1,4 @@
-import { Generator } from "./Generator";
+import { GeneratorConstructor } from "./GeneratorConstructor";
 import { IObjectExtension } from "./IObjectExtension";
 
 /**
@@ -7,15 +7,15 @@ import { IObjectExtension } from "./IObjectExtension";
  * @template T
  * The type of the base generator.
  */
-export interface IGeneratorExtension<T extends Generator<any, any>> extends IObjectExtension<T>
+export interface IGeneratorExtension<T extends GeneratorConstructor> extends IObjectExtension<T>
 {
     /**
      * Gets the file-mappings of the base-generator.
      */
-    BaseFileMappings: T["ResolvedFileMappings"];
+    BaseFileMappings: InstanceType<T>["ResolvedFileMappings"];
 
     /**
      * Gets the components of the base-generator.
      */
-    BaseComponents: T["ComponentCollection"];
+    BaseComponents: InstanceType<T>["ComponentCollection"];
 }

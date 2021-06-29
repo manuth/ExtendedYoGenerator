@@ -12,6 +12,6 @@ import { IGeneratorExtension } from "./IBaseGenerator";
 export type GeneratorExtensionConstructor<T extends GeneratorConstructor> =
     T extends new (...args: any[]) => infer UGenerator ?
     UGenerator extends Generator<any, any> ?
-    ExtensionConstructor<T, Generator<any, any>, IGeneratorExtension<UGenerator>> :
+    ExtensionConstructor<T, IGeneratorExtension<T>> :
     never :
     never;

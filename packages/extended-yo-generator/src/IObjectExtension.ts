@@ -1,13 +1,15 @@
+import { Constructor } from "./Constructor";
+
 /**
  * Represents an extension for a type.
  *
- * @template T
+ * @template TConstructor
  * The type of the base.
  */
-export interface IObjectExtension<T extends any>
+export interface IObjectExtension<TConstructor extends Constructor<any>>
 {
     /**
      * Gets the base of the extension.
      */
-    Base: T;
+    Base: InstanceType<TConstructor>;
 }

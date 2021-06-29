@@ -13,9 +13,7 @@ import { IObjectExtension } from "./IObjectExtension";
  * @template TExtension
  * The type of the object that can be instantiated by this constructor.
  */
-export type ExtensionConstructor<TConstructor extends Constructor<any>, TInstance, TExtension extends IObjectExtension<TInstance>> =
-    TConstructor extends new (...args: any[]) => infer UInstance ?
-    UInstance extends TInstance ?
+export type ExtensionConstructor<TConstructor extends Constructor<any>, TExtension extends IObjectExtension<TConstructor>> =
+    TConstructor extends new (...args: any[]) => any ?
     (TConstructor & (new (...args: any[]) => (TExtension))) :
-    never :
     never;
