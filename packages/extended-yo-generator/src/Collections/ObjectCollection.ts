@@ -1,4 +1,4 @@
-import { Constructor } from "../Constructor";
+import { AbstractConstructor } from "../AbstractConstructor";
 import { Filter } from "../Filter";
 import { Predicate } from "../Predicate";
 
@@ -45,7 +45,7 @@ export class ObjectCollection<T extends Partial<Record<string, any>>> extends Ar
      * @returns
      * The item with the specified {@link type `type`}.
      */
-    public Get(type: Constructor<T>): T;
+    public Get(type: AbstractConstructor<T>): T;
 
     /**
      * Gets the item which applies to the specified {@link predicate `predicate`}.
@@ -67,7 +67,7 @@ export class ObjectCollection<T extends Partial<Record<string, any>>> extends Ar
      * @returns
      * The item indicated by the specified {@link filter `filter`}.
      */
-    public Get(filter: Constructor<T> | Predicate<T>): T
+    public Get(filter: AbstractConstructor<T> | Predicate<T>): T
     {
         return this[this.FindIndexes(filter)[0]];
     }
@@ -81,7 +81,7 @@ export class ObjectCollection<T extends Partial<Record<string, any>>> extends Ar
      * @param item
      * The replacement of the item.
      */
-    public Replace(type: Constructor<T>, item: T): void;
+    public Replace(type: AbstractConstructor<T>, item: T): void;
 
     /**
      * Replaces the item with the specified {@link type `type`} with a replacement created by the {@link filter `filter`}.
@@ -92,7 +92,7 @@ export class ObjectCollection<T extends Partial<Record<string, any>>> extends Ar
      * @param filter
      * A method for creating the replacement for the item.
      */
-    public Replace(type: Constructor<T>, filter: Filter<T>): void;
+    public Replace(type: AbstractConstructor<T>, filter: Filter<T>): void;
 
     /**
      * Replaces the item which matches the {@link predicate `predicate`} with the specified {@link item `item`}.
@@ -125,7 +125,7 @@ export class ObjectCollection<T extends Partial<Record<string, any>>> extends Ar
      * @param replacement
      * The replacement for the item.
      */
-    public Replace(filter: Constructor<T> | Predicate<T>, replacement: T | Filter<T>): void
+    public Replace(filter: AbstractConstructor<T> | Predicate<T>, replacement: T | Filter<T>): void
     {
         if (typeof replacement !== "function")
         {
@@ -146,7 +146,7 @@ export class ObjectCollection<T extends Partial<Record<string, any>>> extends Ar
      * @param type
      * The type of the item to remove.
      */
-    public Remove(type: Constructor<T>): void;
+    public Remove(type: AbstractConstructor<T>): void;
 
     /**
      * Removes the item which applies to the specified {@link predicate `predicate`}.
@@ -162,7 +162,7 @@ export class ObjectCollection<T extends Partial<Record<string, any>>> extends Ar
      * @param filter
      * The item to remove.
      */
-    public Remove(filter: Constructor<T> | Predicate<T>): void
+    public Remove(filter: AbstractConstructor<T> | Predicate<T>): void
     {
         for (let i of this.FindIndexes(filter).reverse())
         {
@@ -190,7 +190,7 @@ export class ObjectCollection<T extends Partial<Record<string, any>>> extends Ar
      * @returns
      * The index of the item that was found.
      */
-    protected FindIndexes(filter: Constructor<T> | Predicate<T>): number[]
+    protected FindIndexes(filter: AbstractConstructor<T> | Predicate<T>): number[]
     {
         let result: number[] = [];
 
@@ -217,7 +217,7 @@ export class ObjectCollection<T extends Partial<Record<string, any>>> extends Ar
      * @returns
      * A value indicating whether the specified {@link func `func`} is a constructor.
      */
-    protected IsConstructor<T extends any>(func: ((...args: any[]) => any) | Constructor<T>): func is Constructor<T>
+    protected IsConstructor<T extends any>(func: ((...args: any[]) => any) | AbstractConstructor<T>): func is AbstractConstructor<T>
     {
         try
         {
@@ -239,7 +239,7 @@ export class ObjectCollection<T extends Partial<Record<string, any>>> extends Ar
      * @returns
      * A predicate which represents the specified {@link filter `filter`}.
      */
-    protected GetPredicate(filter: Constructor<T> | Predicate<T>): Predicate<T>
+    protected GetPredicate(filter: AbstractConstructor<T> | Predicate<T>): Predicate<T>
     {
         if (this.IsConstructor(filter))
         {

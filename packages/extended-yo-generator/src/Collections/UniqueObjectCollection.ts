@@ -1,4 +1,4 @@
-import { Constructor } from "../Constructor";
+import { AbstractConstructor } from "../AbstractConstructor";
 import { Filter } from "../Filter";
 import { IUniqueObject } from "../IUniqueObject";
 import { Predicate } from "../Predicate";
@@ -43,7 +43,7 @@ export class UniqueObjectCollection<T extends IUniqueObject> extends ObjectColle
      * @returns
      * The item with the specified {@link type `type`}.
      */
-    public override Get(type: Constructor<T>): T;
+    public override Get(type: AbstractConstructor<T>): T;
 
     /**
      * Gets the item which applies to the specified {@link predicate `predicate`}.
@@ -65,7 +65,7 @@ export class UniqueObjectCollection<T extends IUniqueObject> extends ObjectColle
      * @returns
      * The item indicated by the specified {@link filter `filter`}.
      */
-    public override Get(filter: string | Constructor<T> | Predicate<T>): T
+    public override Get(filter: string | AbstractConstructor<T> | Predicate<T>): T
     {
         return super.Get(filter as any);
     }
@@ -101,7 +101,7 @@ export class UniqueObjectCollection<T extends IUniqueObject> extends ObjectColle
      * @param item
      * The replacement of the item.
      */
-    public override Replace(type: Constructor<T>, item: T): void;
+    public override Replace(type: AbstractConstructor<T>, item: T): void;
 
     /**
      * Replaces the item with the specified {@link type `type`} with a replacement created by the {@link filter `filter`}.
@@ -112,7 +112,7 @@ export class UniqueObjectCollection<T extends IUniqueObject> extends ObjectColle
      * @param filter
      * A method for creating the replacement for the item.
      */
-    public override Replace(type: Constructor<T>, filter: Filter<T>): void;
+    public override Replace(type: AbstractConstructor<T>, filter: Filter<T>): void;
 
     /**
      * Replaces the item which matches the {@link predicate `predicate`} with the specified {@link item `item`}.
@@ -145,7 +145,7 @@ export class UniqueObjectCollection<T extends IUniqueObject> extends ObjectColle
      * @param replacement
      * The replacement for the item.
      */
-    public override Replace(filter: string | Constructor<T> | Predicate<T>, replacement: T | Filter<T>): void
+    public override Replace(filter: string | AbstractConstructor<T> | Predicate<T>, replacement: T | Filter<T>): void
     {
         super.Replace(filter as any, replacement as any);
     }
@@ -164,7 +164,7 @@ export class UniqueObjectCollection<T extends IUniqueObject> extends ObjectColle
      * @param type
      * The type of the item to remove.
      */
-    public override Remove(type: Constructor<T>): void;
+    public override Remove(type: AbstractConstructor<T>): void;
 
     /**
      * Removes the item which applies to the specified {@link predicate `predicate`}.
@@ -180,7 +180,7 @@ export class UniqueObjectCollection<T extends IUniqueObject> extends ObjectColle
      * @param filter
      * The item to remove.
      */
-    public override Remove(filter: string | Constructor<T> | Predicate<T>): void
+    public override Remove(filter: string | AbstractConstructor<T> | Predicate<T>): void
     {
         super.Remove(filter as any);
     }
@@ -194,7 +194,7 @@ export class UniqueObjectCollection<T extends IUniqueObject> extends ObjectColle
      * @returns
      * The index of the item that was found.
      */
-    protected override FindIndexes(filter: string | Constructor<T> | Predicate<T>): number[]
+    protected override FindIndexes(filter: string | AbstractConstructor<T> | Predicate<T>): number[]
     {
         return super.FindIndexes(filter as any);
     }
@@ -208,7 +208,7 @@ export class UniqueObjectCollection<T extends IUniqueObject> extends ObjectColle
      * @returns
      * A predicate which represents the specified {@link filter `filter`}.
      */
-    protected override GetPredicate(filter: string | Constructor<T> | Predicate<T>): Predicate<T>
+    protected override GetPredicate(filter: string | AbstractConstructor<T> | Predicate<T>): Predicate<T>
     {
         if (typeof filter === "string")
         {
