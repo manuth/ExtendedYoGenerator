@@ -7,17 +7,51 @@ import { Generator } from "./Generator";
 import { GeneratorConstructor } from "./GeneratorConstructor";
 import { GeneratorExtensionConstructor } from "./GeneratorExtensionConstructor";
 import { IGeneratorExtension } from "./IBaseGenerator";
+import { ObjectExtensionFactory } from "./ObjectExtensionFactory";
 
 /**
  * Provides the functionality to create base-generators.
  */
-export abstract class BaseGeneratorFactory
+export class BaseGeneratorFactory<T extends GeneratorConstructor> extends ObjectExtensionFactory<T>
 {
+    /**
+     * The namespace or the path of the generator to extend.
+     */
+    private namespaceOrPath: string = null;
+
+    /**
+     * A component for preprocessing the base-class.
+     *
+     * @param base
+     * The base-class to process.
+     */
+    private classProcessor: (base: T) => void;
+
+    /**
+     * A component for resolving the components of the base.
+     */
+    private baseComponentResolver: () => ComponentCollection<any, any>;
+
+    /**
+     * A component for resolving the file-mappings of the base.
+     */
+    private baseFileMappingResolver: () => FileMappingOptionCollection;
+
     /**
      * Initializes a new instance of the {@link BaseGeneratorFactory `BaseGeneratorFactory`} class.
      */
-    private constructor()
-    { }
+    protected constructor()
+    {
+        super();
+    }
+
+    /**
+     * Gets the default instance of the {@link BaseGeneratorFactory `BaseGeneratorFactory<T>`} class.
+     */
+    protected static override get Default(): BaseGeneratorFactory<any>
+    {
+        return new BaseGeneratorFactory();
+    }
 
     /**
      * Creates a new base-constructor.
@@ -34,30 +68,33 @@ export abstract class BaseGeneratorFactory
      * @returns
      * The generated constructor.
      */
-    public static Create<TBase extends GeneratorConstructor>(base: TBase, namespaceOrPath?: string): GeneratorExtensionConstructor<TBase>
+    public static override Create<TBase extends GeneratorConstructor>(base: TBase, namespaceOrPath?: string): GeneratorExtensionConstructor<TBase>
     {
-        let resolvedKey = "resolved" as const;
+        return this.Default.Create(base, namespaceOrPath);
+    }
+
+    /**
+     * Creates a new base-constructor.
+     *
+     * @param base
+     * The constructor the generated constructor should be based on.
+     *
+     * @param namespaceOrPath
+     * The namespace or path to the generator with the specified {@link base `base`}-constructor.
+     *
+     * @returns
+     * The generated constructor.
+     */
+    public override Create(base: T, namespaceOrPath?: string): GeneratorExtensionConstructor<T>
+    {
+        let self = this;
+        this.namespaceOrPath = namespaceOrPath;
 
         return (
             <TConstructor extends new (...args: any[]) => Generator>(baseClass: TConstructor): GeneratorExtensionConstructor<TConstructor> =>
             {
-                return class BaseGenerator extends baseClass implements IGeneratorExtension<InstanceType<TConstructor>>
+                return class BaseGenerator extends super.Create(base) implements IGeneratorExtension<T>
                 {
-                    /**
-                     * The base-generator.
-                     */
-                    private base: InstanceType<TConstructor>;
-
-                    /**
-                     * A component for resolving the components of the base.
-                     */
-                    private baseComponentResolver: () => ComponentCollection<any, any>;
-
-                    /**
-                     * A component for resolving the file-mappings of the base.
-                     */
-                    private baseFileMappingResolver: () => FileMappingOptionCollection;
-
                     /**
                      * Initializes a new instance of the {@link BaseGenerator `BaseGenerator`} class.
                      *
@@ -67,100 +104,6 @@ export abstract class BaseGeneratorFactory
                     public constructor(...params: any[])
                     {
                         super(...params);
-                        let classProcessor: (base: TConstructor) => void = () => { };
-                        let instanceOptions = { options: this.options };
-
-                        if (namespaceOrPath)
-                        {
-                            if (resolvedKey in baseClass)
-                            {
-                                let resolvedPath: string = (baseClass as any)[resolvedKey];
-                                classProcessor = (base) => (base as any)[resolvedKey] = resolvedPath;
-                            }
-                            else
-                            {
-                                classProcessor = (base) => delete (base as any)[resolvedKey];
-                            }
-
-                            try
-                            {
-                                (baseClass as any)[resolvedKey] = (this.env.get(namespaceOrPath) as any)?.[resolvedKey] ?? namespaceOrPath;
-                            }
-                            catch
-                            {
-                                (baseClass as any)[resolvedKey] = namespaceOrPath;
-                            }
-                        }
-
-                        this.base = this.env.instantiate(baseClass, instanceOptions) as InstanceType<TConstructor>;
-                        classProcessor(baseClass);
-
-                        let settingsPropertyName = "Settings" as keyof Generator;
-                        let fileMappingPropertyName = "ResolvedFileMappings" as keyof Generator;
-                        let componentPropertyName = "ComponentCollection" as keyof Generator;
-                        let destinationPathName = "destinationPath" as keyof Generator;
-                        let destinationRootName = "destinationRoot" as keyof Generator;
-                        let propertyDescriptors = BaseGeneratorFactory.GetAllProperties(base);
-                        let settingsProperty = propertyDescriptors[settingsPropertyName];
-                        let fileMappingProperty = propertyDescriptors[fileMappingPropertyName];
-                        let componentProperty = propertyDescriptors[componentPropertyName];
-                        let destinationPath = propertyDescriptors[destinationPathName];
-                        let destinationRoot = propertyDescriptors[destinationRootName];
-                        let self = this;
-                        this.baseComponentResolver = componentProperty.get.bind(this.Base);
-                        this.baseFileMappingResolver = fileMappingProperty.get.bind(this.Base);
-
-                        settingsProperty = {
-                            ...settingsProperty,
-                            get()
-                            {
-                                return self.Settings;
-                            }
-                        };
-
-                        fileMappingProperty = {
-                            ...fileMappingProperty,
-                            get()
-                            {
-                                return self.BaseFileMappings;
-                            }
-                        };
-
-                        componentProperty = {
-                            ...componentProperty,
-                            get()
-                            {
-                                return self.BaseComponents;
-                            }
-                        };
-
-                        destinationRoot = {
-                            ...destinationRoot,
-                            value: (...args: any[]) => this.destinationRoot(...args)
-                        };
-
-                        destinationPath = {
-                            ...destinationPath,
-                            value: (...args: any[]) => this.destinationPath(...args)
-                        };
-
-                        Object.defineProperties(
-                            this.Base,
-                            {
-                                [settingsPropertyName]: settingsProperty,
-                                [fileMappingPropertyName]: fileMappingProperty,
-                                [componentPropertyName]: componentProperty,
-                                [destinationRootName]: destinationRoot,
-                                [destinationPathName]: destinationPath
-                            });
-                    }
-
-                    /**
-                     * @inheritdoc
-                     */
-                    public get Base(): InstanceType<TConstructor>
-                    {
-                        return this.base;
                     }
 
                     /**
@@ -168,7 +111,7 @@ export abstract class BaseGeneratorFactory
                      */
                     public get BaseComponents(): ComponentCollection<any, any>
                     {
-                        return this.baseComponentResolver();
+                        return self.baseComponentResolver();
                     }
 
                     /**
@@ -176,7 +119,7 @@ export abstract class BaseGeneratorFactory
                      */
                     public get BaseFileMappings(): FileMappingOptionCollection
                     {
-                        return this.baseFileMappingResolver();
+                        return self.baseFileMappingResolver();
                     }
 
                     /**
@@ -199,6 +142,131 @@ export abstract class BaseGeneratorFactory
     }
 
     /**
+     * @inheritdoc
+     *
+     * @param base
+     * The constructor of the base type.
+     *
+     * @param instance
+     * The instance of the extension type.
+     *
+     * @param args
+     * The arguments for initializing the base.
+     *
+     * @returns
+     * The newly created base object.
+     */
+    protected override Initialize(base: T, instance: InstanceType<GeneratorExtensionConstructor<T>>, ...args: any[]): void
+    {
+        let resolvedKey = "resolved" as const;
+        this.classProcessor = () => { };
+
+        if (this.namespaceOrPath)
+        {
+            if (resolvedKey in base)
+            {
+                let resolvedPath: string = (base as any)[resolvedKey];
+                this.classProcessor = (base) => (base as any)[resolvedKey] = resolvedPath;
+            }
+            else
+            {
+                this.classProcessor = (base) => delete (base as any)[resolvedKey];
+            }
+
+            try
+            {
+                (base as any)[resolvedKey] = (instance.env.get(this.namespaceOrPath) as any)?.[resolvedKey] ?? this.namespaceOrPath;
+            }
+            catch
+            {
+                (base as any)[resolvedKey] = this.namespaceOrPath;
+            }
+        }
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @param base
+     * The constructor of the base type.
+     *
+     * @param instance
+     * The instance of the extension type.
+     *
+     * @param args
+     * The arguments for initializing the base.
+     *
+     * @returns
+     * The newly created base object.
+     */
+    protected override InitializeBase(base: T, instance: InstanceType<GeneratorExtensionConstructor<T>>, ...args: any[]): InstanceType<T>
+    {
+        let instanceOptions = { options: instance.options };
+        let result = instance.env.instantiate(base, instanceOptions) as InstanceType<T>;
+        this.classProcessor(base);
+
+        let settingsPropertyName = "Settings" as keyof Generator;
+        let fileMappingPropertyName = "ResolvedFileMappings" as keyof Generator;
+        let componentPropertyName = "ComponentCollection" as keyof Generator;
+        let destinationPathName = "destinationPath" as keyof Generator;
+        let destinationRootName = "destinationRoot" as keyof Generator;
+        let propertyDescriptors = this.GetAllProperties(base);
+        let settingsProperty = propertyDescriptors[settingsPropertyName];
+        let fileMappingProperty = propertyDescriptors[fileMappingPropertyName];
+        let componentProperty = propertyDescriptors[componentPropertyName];
+        let destinationPath = propertyDescriptors[destinationPathName];
+        let destinationRoot = propertyDescriptors[destinationRootName];
+        this.baseComponentResolver = componentProperty.get.bind(result);
+        this.baseFileMappingResolver = fileMappingProperty.get.bind(result);
+
+        settingsProperty = {
+            ...settingsProperty,
+            get()
+            {
+                return instance.Settings;
+            }
+        };
+
+        fileMappingProperty = {
+            ...fileMappingProperty,
+            get()
+            {
+                return instance.BaseFileMappings;
+            }
+        };
+
+        componentProperty = {
+            ...componentProperty,
+            get()
+            {
+                return instance.BaseComponents;
+            }
+        };
+
+        destinationRoot = {
+            ...destinationRoot,
+            value: (...args: any[]) => instance.destinationRoot(...args)
+        };
+
+        destinationPath = {
+            ...destinationPath,
+            value: (...args: any[]) => instance.destinationPath(...args)
+        };
+
+        Object.defineProperties(
+            result,
+            {
+                [settingsPropertyName]: settingsProperty,
+                [fileMappingPropertyName]: fileMappingProperty,
+                [componentPropertyName]: componentProperty,
+                [destinationRootName]: destinationRoot,
+                [destinationPathName]: destinationPath
+            });
+
+        return result;
+    }
+
+    /**
      * Gets all properties of the specified generator-class.
      *
      * @template T
@@ -210,7 +278,7 @@ export abstract class BaseGeneratorFactory
      * @returns
      * The properties of the specified class.
      */
-    protected static GetAllProperties<T extends GeneratorConstructor>(ctor: T): { [P in keyof T]: TypedPropertyDescriptor<T[P]> } & { [x: string]: PropertyDescriptor }
+    protected GetAllProperties<T extends GeneratorConstructor>(ctor: T): { [P in keyof T]: TypedPropertyDescriptor<T[P]> } & { [x: string]: PropertyDescriptor }
     {
         let result: { [P in keyof T]: TypedPropertyDescriptor<T[P]> } & { [x: string]: PropertyDescriptor } = {} as any;
 
