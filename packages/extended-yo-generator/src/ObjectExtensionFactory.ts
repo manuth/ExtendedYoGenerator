@@ -137,4 +137,31 @@ export class ObjectExtensionFactory<T extends Constructor<any>>
     {
         return new base(...args);
     }
+
+    /**
+     * Gets all properties of the specified generator-class.
+     *
+     * @template T
+     * The type of the generator to get the properties for.
+     *
+     * @param ctor
+     * The constructor whose properties to get.
+     *
+     * @returns
+     * The properties of the specified class.
+     */
+    protected GetAllProperties<T extends Constructor<any>>(ctor: T): { [P in keyof T]: TypedPropertyDescriptor<T[P]> } & { [x: string]: PropertyDescriptor }
+    {
+        let result: { [P in keyof T]: TypedPropertyDescriptor<T[P]> } & { [x: string]: PropertyDescriptor } = {} as any;
+
+        for (let current = ctor.prototype; current !== Object.prototype; current = Object.getPrototypeOf(current))
+        {
+            result = {
+                ...Object.getOwnPropertyDescriptors(current),
+                ...result
+            };
+        }
+
+        return result;
+    }
 }

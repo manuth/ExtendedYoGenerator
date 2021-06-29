@@ -1,4 +1,3 @@
-import YeomanGenerator = require("yeoman-generator");
 import { ComponentCollection } from "./Components/ComponentCollection";
 import { FileMappingOptionCollection } from "./Components/FileMappingOptionCollection";
 import { IComponentCollection } from "./Components/IComponentCollection";
@@ -262,33 +261,6 @@ export class BaseGeneratorFactory<T extends GeneratorConstructor> extends Object
                 [destinationRootName]: destinationRoot,
                 [destinationPathName]: destinationPath
             });
-
-        return result;
-    }
-
-    /**
-     * Gets all properties of the specified generator-class.
-     *
-     * @template T
-     * The type of the generator to get the properties for.
-     *
-     * @param ctor
-     * The constructor whose properties to get.
-     *
-     * @returns
-     * The properties of the specified class.
-     */
-    protected GetAllProperties<T extends GeneratorConstructor>(ctor: T): { [P in keyof T]: TypedPropertyDescriptor<T[P]> } & { [x: string]: PropertyDescriptor }
-    {
-        let result: { [P in keyof T]: TypedPropertyDescriptor<T[P]> } & { [x: string]: PropertyDescriptor } = {} as any;
-
-        for (let current = ctor.prototype; current !== YeomanGenerator.prototype && current !== Object.prototype; current = Object.getPrototypeOf(current))
-        {
-            result = {
-                ...Object.getOwnPropertyDescriptors(current),
-                ...result
-            };
-        }
 
         return result;
     }
