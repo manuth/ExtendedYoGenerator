@@ -42,7 +42,7 @@ export function ComponentCategoryTests(context: TestContext<TestGenerator, ITest
                 () =>
                 {
                     test(
-                        "Checking whether changes to the `Components` option immediately take affect…",
+                        "Checking whether changes made to the `Components` option immediately take affect…",
                         () =>
                         {
                             let testID = "this-is-a-test";
