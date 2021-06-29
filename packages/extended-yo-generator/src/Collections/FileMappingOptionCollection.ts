@@ -17,9 +17,17 @@ export class FileMappingOptionCollection extends PropertyResolverCollection<IFil
      * @param items
      * The items to edit.
      */
-    public constructor(generator: IGenerator<any, any>, items: Array<FileMapping<any, any>>)
+    public constructor(generator: IGenerator<any, any>, items: Array<FileMapping<any, any>>);
+
+    /**
+     * Initializes a new instance of the {@link FileMappingOptionCollection `FileMappingOptionCollection`} class.
+     *
+     * @param args
+     * The arguments for initializing the new collection.
+     */
+    public constructor(...args: any[])
     {
-        super(generator, items);
+        super(...(args as [any, any]));
     }
 
     /**

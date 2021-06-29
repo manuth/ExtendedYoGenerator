@@ -17,9 +17,17 @@ export class ComponentOptionCollection extends PropertyResolverCollection<ICompo
      * @param items
      * The items to edit.
      */
-    public constructor(generator: IGenerator<any, any>, items: Array<Component<any, any>>)
+    public constructor(generator: IGenerator<any, any>, items: Array<Component<any, any>>);
+
+    /**
+     * Initializes a new instance of the {@link ComponentOptionCollection `ComponentOptionCollection`} class.
+     *
+     * @param args
+     * The arguments for initializing the new collection.
+     */
+    public constructor(...args: any[])
     {
-        super(generator, items);
+        super(...(args as [any, any]));
     }
 
     /**
