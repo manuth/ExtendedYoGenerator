@@ -73,6 +73,17 @@ export class ObjectCollection<T extends Partial<Record<string, any>>> extends Ar
     }
 
     /**
+     * Adds the specified {@link item `item`} to the collection.
+     *
+     * @param item
+     * The item to add.
+     */
+    public Add(item: T): void
+    {
+        this.push(item);
+    }
+
+    /**
      * Replaces the item with the specified {@link type `type`} with the specified {@link item `item`}.
      *
      * @param type
@@ -168,17 +179,6 @@ export class ObjectCollection<T extends Partial<Record<string, any>>> extends Ar
         {
             this.splice(i, 1);
         }
-    }
-
-    /**
-     * Adds the specified {@link item `item`} to the collection.
-     *
-     * @param item
-     * The item to add.
-     */
-    public Add(item: T): void
-    {
-        this.push(item);
     }
 
     /**
