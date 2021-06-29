@@ -9,7 +9,7 @@ import { ResolverTest } from "./ResolverTest";
  * Registers tests for the {@link PropertyResolver `PropertyResolver<TObject, TTarget, TSettings, TOptions>`} class.
  *
  * @param context
- * The test-context to use.
+ * The test-context.
  */
 export function PropertyResolverTests(context: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>>): void
 {

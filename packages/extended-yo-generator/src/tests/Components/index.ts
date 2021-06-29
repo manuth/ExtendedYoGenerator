@@ -9,7 +9,7 @@ import { ResolvingTests } from "./Resolving";
  * Registers tests for components.
  *
  * @param context
- * The test-context to use.
+ * The test-context.
  */
 export function ComponentsTests(context: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>>): void
 {
