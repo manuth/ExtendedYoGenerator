@@ -1,6 +1,6 @@
 import { TestContext } from "@manuth/extended-yo-generator-test";
 import { ComponentsTests } from "./Components";
-import { ExtendedGeneratorTests } from "./GeneratorTests.test";
+import { ExtendedGeneratorTests } from "./Generator.test";
 
 suite(
     "ExtendedYoGenerator",
