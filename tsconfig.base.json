@@ -9,7 +9,7 @@
         ],
         "paths": {
             "@manuth/*": [
-                "./packages/*"
+                "./packages/*/src"
             ]
         },
         "plugins": [
