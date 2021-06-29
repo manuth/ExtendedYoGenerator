@@ -182,6 +182,14 @@ export class ObjectCollection<T extends Partial<Record<string, any>>> extends Ar
     }
 
     /**
+     * Clears the collection.
+     */
+    public Clear(): void
+    {
+        this.splice(0, this.length);
+    }
+
+    /**
      * Finds the index of the first item which applies to the specified {@link filter `filter`}.
      *
      * @param filter
