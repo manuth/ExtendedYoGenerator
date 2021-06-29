@@ -4,8 +4,8 @@ import { TempDirectory, TempFile } from "@manuth/temp-files";
 import { render } from "ejs";
 import { readFile, writeFile } from "fs-extra";
 import { Random } from "random-js";
-import { FileMapping } from "../../Components/FileMapping";
-import { IFileMapping } from "../../Components/IFileMapping";
+import { FileMapping } from "../../../Components/FileManagement/FileMapping";
+import { IFileMapping } from "../../../Components/FileManagement/IFileMapping";
 
 /**
  * Provides tests for the {@link FileMapping `FileMapping<TSettings, TOptions>`} class.

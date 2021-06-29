@@ -1,12 +1,12 @@
 import { notStrictEqual, ok, strictEqual } from "assert";
 import { TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import Environment = require("yeoman-environment");
-import { BaseGeneratorFactory } from "../../BaseGeneratorFactory";
+import { FileMappingOptionCollection } from "../../Collections/FileMappingOptionCollection";
 import { ComponentCollection } from "../../Components/ComponentCollection";
-import { FileMapping } from "../../Components/FileMapping";
-import { FileMappingOptionCollection } from "../../Components/FileMappingOptionCollection";
+import { FileMapping } from "../../Components/FileManagement/FileMapping";
+import { IFileMapping } from "../../Components/FileManagement/IFileMapping";
 import { IComponentCollection } from "../../Components/IComponentCollection";
-import { IFileMapping } from "../../Components/IFileMapping";
+import { BaseGeneratorFactory } from "../../Extensibility/BaseGeneratorFactory";
 import { Generator } from "../../Generator";
 
 /**
