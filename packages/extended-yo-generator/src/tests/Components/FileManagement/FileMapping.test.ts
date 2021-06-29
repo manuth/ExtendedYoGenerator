@@ -77,7 +77,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                         });
 
                     test(
-                        "Checking whether `null`-values are preserved…",
+                        `Checking whether \`${null}\`-values are preserved…`,
                         async () =>
                         {
                             fileMappingOptions.Source = null;
@@ -106,7 +106,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                         });
 
                     test(
-                        "Checking whether `null`-values are preserved…",
+                        `Checking whether \`${null}\`-values are preserved…`,
                         async () =>
                         {
                             fileMappingOptions.Destination = null;
