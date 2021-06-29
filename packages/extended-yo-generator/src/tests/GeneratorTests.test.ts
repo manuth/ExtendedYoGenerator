@@ -4,7 +4,7 @@ import { TempDirectory, TempFile } from "@manuth/temp-files";
 import { readFile, writeFile } from "fs-extra";
 import pkgUp = require("pkg-up");
 import { dirname, isAbsolute, join, normalize, relative, resolve } from "upath";
-import { GeneratorSettingKey } from "../../GeneratorSettingKey";
+import { GeneratorSettingKey } from "../GeneratorSettingKey";
 
 /**
  * Registers tests for the TSGenerator-generator.
@@ -533,6 +533,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                     let disabledComponentDestination: string;
                     let fileMappingDestination: string;
 
+                   
                     setup(
                         () =>
                         {
