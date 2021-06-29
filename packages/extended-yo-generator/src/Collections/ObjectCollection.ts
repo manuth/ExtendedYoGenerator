@@ -69,7 +69,16 @@ export class ObjectCollection<T extends Partial<Record<string, any>>> extends Ar
      */
     public Get(filter: AbstractConstructor<T> | Predicate<T>): T
     {
-        return this[this.FindIndexes(filter)[0]];
+        let indexes = this.FindIndexes(filter);
+
+        if (indexes.length === 0)
+        {
+            throw new RangeError(`An item which applies to the specified filter \`${filter}\` doesn't exist!`);
+        }
+        else
+        {
+            return this[this.FindIndexes(filter)[0]];
+        }
     }
 
     /**
