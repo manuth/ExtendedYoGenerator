@@ -8,7 +8,7 @@ import { Predicate } from "../Predicate";
  * @template T
  * The type of the items in this collection.
  */
-export class ObjectCollection<T extends Partial<Record<string, any>>> extends Array<T>
+export class ObjectCollection<T extends any> extends Array<T>
 {
     /**
      * Initializes a new instance of the {@link ObjectCollection `ObjectCollection<T>`} class.
@@ -155,7 +155,7 @@ export class ObjectCollection<T extends Partial<Record<string, any>>> extends Ar
         {
             for (let index of this.FindIndexes(filter).reverse())
             {
-                this[index] = replacement(this[index]);
+                this[index] = (replacement as Filter<T>)(this[index]);
             }
         }
     }
