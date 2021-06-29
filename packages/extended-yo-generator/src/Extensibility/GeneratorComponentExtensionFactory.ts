@@ -1,5 +1,5 @@
-import { GeneratorComponent } from "./Components/GeneratorComponent";
-import { Constructor } from "./Constructor";
+import { GeneratorComponent } from "../Components/GeneratorComponent";
+import { Constructor } from "../Constructor";
 import { GeneratorComponentExtensionConstructor } from "./GeneratorComponentExtensionConstructor";
 import { ObjectExtensionFactory } from "./ObjectExtensionFactory";
 

@@ -1,5 +1,5 @@
+import { IUniqueObject } from "../IUniqueObject";
 import { IComponent } from "./IComponent";
-import { IUniqueObject } from "./IUniqueObject";
 
 /**
  * Represents a category which contains components.

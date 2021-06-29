@@ -1,9 +1,9 @@
+import { PropertyResolver } from "../Components/Resolving/PropertyResolver";
 import { Constructor } from "../Constructor";
+import { Filter } from "../Filter";
 import { IGenerator } from "../IGenerator";
-import { Filter } from "./Filter";
-import { IUniqueObject } from "./IUniqueObject";
-import { Predicate } from "./Predicate";
-import { PropertyResolver } from "./Resolving/PropertyResolver";
+import { IUniqueObject } from "../IUniqueObject";
+import { Predicate } from "../Predicate";
 import { UniqueObjectCollection } from "./UniqueObjectCollection";
 
 /**

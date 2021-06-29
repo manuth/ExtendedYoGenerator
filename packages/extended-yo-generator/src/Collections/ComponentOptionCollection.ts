@@ -1,6 +1,6 @@
+import { Component } from "../Components/Component";
+import { IComponent } from "../Components/IComponent";
 import { IGenerator } from "../IGenerator";
-import { Component } from "./Component";
-import { IComponent } from "./IComponent";
 import { PropertyResolverCollection } from "./PropertyResolverCollection";
 
 /**

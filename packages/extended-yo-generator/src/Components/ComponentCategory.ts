@@ -1,6 +1,6 @@
+import { ComponentOptionCollection } from "../Collections/ComponentOptionCollection";
 import { IGenerator } from "../IGenerator";
 import { Component } from "./Component";
-import { ComponentOptionCollection } from "./ComponentOptionCollection";
 import { IComponentCategory } from "./IComponentCategory";
 import { PropertyResolver } from "./Resolving/PropertyResolver";
 

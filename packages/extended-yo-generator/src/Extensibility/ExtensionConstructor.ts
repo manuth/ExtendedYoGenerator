@@ -1,4 +1,4 @@
-import { Constructor } from "./Constructor";
+import { Constructor } from "../Constructor";
 import { IObjectExtension } from "./IObjectExtension";
 
 /**

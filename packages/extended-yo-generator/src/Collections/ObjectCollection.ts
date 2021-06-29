@@ -1,6 +1,6 @@
 import { Constructor } from "../Constructor";
-import { Filter } from "./Filter";
-import { Predicate } from "./Predicate";
+import { Filter } from "../Filter";
+import { Predicate } from "../Predicate";
 
 /**
  * Provides the functionality to edit a collection of objects.

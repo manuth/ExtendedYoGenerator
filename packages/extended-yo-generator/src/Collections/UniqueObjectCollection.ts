@@ -1,8 +1,8 @@
 import { Constructor } from "../Constructor";
-import { Filter } from "./Filter";
-import { IUniqueObject } from "./IUniqueObject";
+import { Filter } from "../Filter";
+import { IUniqueObject } from "../IUniqueObject";
+import { Predicate } from "../Predicate";
 import { ObjectCollection } from "./ObjectCollection";
-import { Predicate } from "./Predicate";
 
 /**
  * Provides the functionality to edit a collection of {@link IUniqueObject `IUniqueObject`}s.

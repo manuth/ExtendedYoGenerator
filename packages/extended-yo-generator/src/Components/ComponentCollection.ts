@@ -1,10 +1,10 @@
 import chalk = require("chalk");
 import { CheckboxQuestion, ChoiceCollection, Separator } from "inquirer";
 import { Question } from "yeoman-generator";
+import { CategoryOptionCollection } from "../Collections/CategoryOptionCollection";
 import { GeneratorSettingKey } from "../GeneratorSettingKey";
 import { IGenerator } from "../IGenerator";
 import { IGeneratorSettings } from "../IGeneratorSettings";
-import { CategoryOptionCollection } from "./CategoryOptionCollection";
 import { ComponentCategory } from "./ComponentCategory";
 import { IComponentCollection } from "./IComponentCollection";
 import { PropertyResolver } from "./Resolving/PropertyResolver";

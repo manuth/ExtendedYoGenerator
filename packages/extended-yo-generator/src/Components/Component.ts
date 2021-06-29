@@ -1,9 +1,9 @@
 import { Question } from "yeoman-generator";
+import { FileMappingOptionCollection } from "../Collections/FileMappingOptionCollection";
+import { ObjectCollection } from "../Collections/ObjectCollection";
 import { IGenerator } from "../IGenerator";
-import { FileMapping } from "./FileMapping";
-import { FileMappingOptionCollection } from "./FileMappingOptionCollection";
+import { FileMapping } from "./FileManagement/FileMapping";
 import { IComponent } from "./IComponent";
-import { ObjectCollection } from "./ObjectCollection";
 import { PropertyResolver } from "./Resolving/PropertyResolver";
 
 /**

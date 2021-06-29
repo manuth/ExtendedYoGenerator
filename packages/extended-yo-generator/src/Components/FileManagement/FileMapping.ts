@@ -1,11 +1,11 @@
 import { isAbsolute } from "path";
-import { IGenerator } from "../IGenerator";
+import { IGenerator } from "../../IGenerator";
+import { AsyncResolveFunction } from "../Resolving/AsyncResolveFunction";
+import { PathResolver } from "../Resolving/PathResolver";
+import { PropertyResolver } from "../Resolving/PropertyResolver";
+import { Resolvable } from "../Resolving/Resolvable";
 import { FileProcessor } from "./FileProcessor";
 import { IFileMapping } from "./IFileMapping";
-import { AsyncResolveFunction } from "./Resolving/AsyncResolveFunction";
-import { PathResolver } from "./Resolving/PathResolver";
-import { PropertyResolver } from "./Resolving/PropertyResolver";
-import { Resolvable } from "./Resolving/Resolvable";
 
 /**
  * Represents a file-mapping.

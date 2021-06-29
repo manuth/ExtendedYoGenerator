@@ -2,7 +2,7 @@ import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from 
 import { ComponentTests } from "./Component.test";
 import { ComponentCategoryTests } from "./ComponentCategory.test";
 import { ComponentCollectionTests } from "./ComponentCollection.test";
-import { FileMappingTests } from "./FileMapping.test";
+import { FileManagementTests } from "./FileManagement";
 import { ResolvingTests } from "./Resolving";
 
 /**
@@ -18,7 +18,7 @@ export function ComponentsTests(context: TestContext<TestGenerator, ITestGenerat
         () =>
         {
             ResolvingTests(context);
-            FileMappingTests(context);
+            FileManagementTests(context);
             ComponentTests(context);
             ComponentCategoryTests(context);
             ComponentCollectionTests(context);

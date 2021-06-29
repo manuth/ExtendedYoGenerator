@@ -1,6 +1,6 @@
+import { FileMapping } from "../Components/FileManagement/FileMapping";
+import { IFileMapping } from "../Components/FileManagement/IFileMapping";
 import { IGenerator } from "../IGenerator";
-import { FileMapping } from "./FileMapping";
-import { IFileMapping } from "./IFileMapping";
 import { PropertyResolverCollection } from "./PropertyResolverCollection";
 
 /**

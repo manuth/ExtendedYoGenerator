@@ -1,6 +1,6 @@
+import { Generator } from "../Generator";
+import { GeneratorConstructor } from "../GeneratorConstructor";
 import { ExtensionConstructor } from "./ExtensionConstructor";
-import { Generator } from "./Generator";
-import { GeneratorConstructor } from "./GeneratorConstructor";
 import { IGeneratorExtension } from "./IBaseGenerator";
 
 /**

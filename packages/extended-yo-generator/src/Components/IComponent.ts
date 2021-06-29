@@ -1,7 +1,7 @@
 import { Question } from "yeoman-generator";
+import { IUniqueObject } from "../IUniqueObject";
 import { Component } from "./Component";
-import { IFileMapping } from "./IFileMapping";
-import { IUniqueObject } from "./IUniqueObject";
+import { IFileMapping } from "./FileManagement/IFileMapping";
 import { Resolvable } from "./Resolving/Resolvable";
 
 /**

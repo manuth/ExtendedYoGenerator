@@ -1,9 +1,9 @@
-import { ComponentCollection } from "./Components/ComponentCollection";
-import { FileMappingOptionCollection } from "./Components/FileMappingOptionCollection";
-import { IComponentCollection } from "./Components/IComponentCollection";
-import { IFileMapping } from "./Components/IFileMapping";
-import { Generator } from "./Generator";
-import { GeneratorConstructor } from "./GeneratorConstructor";
+import { FileMappingOptionCollection } from "../Collections/FileMappingOptionCollection";
+import { ComponentCollection } from "../Components/ComponentCollection";
+import { IFileMapping } from "../Components/FileManagement/IFileMapping";
+import { IComponentCollection } from "../Components/IComponentCollection";
+import { Generator } from "../Generator";
+import { GeneratorConstructor } from "../GeneratorConstructor";
 import { GeneratorExtensionConstructor } from "./GeneratorExtensionConstructor";
 import { IGeneratorExtension } from "./IBaseGenerator";
 import { ObjectExtensionFactory } from "./ObjectExtensionFactory";

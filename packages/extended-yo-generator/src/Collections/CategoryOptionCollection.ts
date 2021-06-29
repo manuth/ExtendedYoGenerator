@@ -1,6 +1,6 @@
+import { ComponentCategory } from "../Components/ComponentCategory";
+import { IComponentCategory } from "../Components/IComponentCategory";
 import { IGenerator } from "../IGenerator";
-import { ComponentCategory } from "./ComponentCategory";
-import { IComponentCategory } from "./IComponentCategory";
 import { PropertyResolverCollection } from "./PropertyResolverCollection";
 
 /**

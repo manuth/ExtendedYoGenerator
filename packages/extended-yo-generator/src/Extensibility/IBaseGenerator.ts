@@ -1,4 +1,4 @@
-import { GeneratorConstructor } from "./GeneratorConstructor";
+import { GeneratorConstructor } from "../GeneratorConstructor";
 import { IObjectExtension } from "./IObjectExtension";
 
 /**
