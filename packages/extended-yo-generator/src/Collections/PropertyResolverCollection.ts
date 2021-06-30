@@ -70,6 +70,53 @@ export abstract class PropertyResolverCollection<TObject extends IUniqueObject, 
     }
 
     /**
+     * Gets the item with the specified {@link id `id`}.
+     *
+     * @param id
+     * The id of the item to get.
+     *
+     * @returns
+     * The item with the specified {@link id `id`}.
+     */
+    public override Get(id: string): TTarget;
+
+    /**
+     * Gets the item with the specified {@link type `type`}.
+     *
+     * @param type
+     * The type of the item to get.
+     *
+     * @returns
+     * The item with the specified {@link type `type`}.
+     */
+    public override Get(type: AbstractConstructor<TObject | TTarget>): TTarget;
+
+    /**
+     * Gets the item which applies to the specified {@link predicate `predicate`}.
+     *
+     * @param predicate
+     * The predicate for finding the item to get.
+     *
+     * @returns
+     * The item which applies to the specified {@link predicate `predicate`}.
+     */
+    public override Get(predicate: Predicate<TTarget>): TTarget;
+
+    /**
+     * Gets the item indicated by the specified {@link filter `filter`}.
+     *
+     * @param filter
+     * The item to get.
+     *
+     * @returns
+     * The item indicated by the specified {@link filter `filter`}.
+     */
+    public override Get(filter: string | AbstractConstructor<TObject | TTarget> | Predicate<TTarget>): TTarget
+    {
+        return super.Get(filter as any);
+    }
+
+    /**
      * Replaces the item with the specified {@link id `id`} with the specified {@link item `item`}.
      *
      * @param id
