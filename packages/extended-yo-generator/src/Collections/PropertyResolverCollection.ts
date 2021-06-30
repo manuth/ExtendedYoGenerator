@@ -111,7 +111,7 @@ export abstract class PropertyResolverCollection<TObject extends IUniqueObject, 
      * @param item
      * The replacement of the item.
      */
-    public override Replace(type: AbstractConstructor<TTarget>, item: TTarget): void;
+    public override Replace(type: AbstractConstructor<TObject | TTarget>, item: TTarget): void;
 
     /**
      * Replaces the item with the specified {@link type `type`} with a replacement created by the {@link filter `filter`}.
@@ -122,7 +122,7 @@ export abstract class PropertyResolverCollection<TObject extends IUniqueObject, 
      * @param filter
      * A method for creating the replacement for the item.
      */
-    public override Replace(type: AbstractConstructor<TTarget>, filter: Filter<TTarget>): void;
+    public override Replace(type: AbstractConstructor<TObject | TTarget>, filter: Filter<TTarget>): void;
 
     /**
      * Replaces the item which matches the {@link predicate `predicate`} with the specified {@link item `item`}.
@@ -155,7 +155,7 @@ export abstract class PropertyResolverCollection<TObject extends IUniqueObject, 
      * @param replacement
      * The replacement for the item.
      */
-    public override Replace(filter: string | AbstractConstructor<TTarget> | Predicate<TTarget>, replacement: TObject | TTarget | Filter<TTarget>): void
+    public override Replace(filter: string | AbstractConstructor<TObject | TTarget> | Predicate<TTarget>, replacement: TObject | TTarget | Filter<TTarget>): void
     {
         if (
             typeof replacement !== "function" &&
