@@ -23,7 +23,7 @@ export abstract class PropertyResolverCollection<TObject extends IUniqueObject, 
     private generator: IGenerator<any, any>;
 
     /**
-     * Initializes a new instance of the {@link PropertyResolverCollection `PropertyResolverCollection<T>`} class.
+     * Initializes a new instance of the {@link PropertyResolverCollection `PropertyResolverCollection<TObject, TTarget>`} class.
      *
      * @param generator
      * The generator of the collection.
@@ -34,7 +34,7 @@ export abstract class PropertyResolverCollection<TObject extends IUniqueObject, 
     public constructor(generator: IGenerator<any, any>, items: TTarget[]);
 
     /**
-     * Initializes a new instance of the {@link PropertyResolverCollection `PropertyResolverCollection<T>`} class.
+     * Initializes a new instance of the {@link PropertyResolverCollection `PropertyResolverCollection<TObject, TTarget>`} class.
      *
      * @param args
      * The arguments for initializing the new collection.
