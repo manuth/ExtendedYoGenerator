@@ -1,4 +1,5 @@
 import { doesNotThrow, ok, strictEqual, throws } from "assert";
+import { Random } from "random-js";
 import { UniqueObjectCollection } from "../../Collections/UniqueObjectCollection";
 import { IUniqueObject } from "../../IUniqueObject";
 
@@ -11,30 +12,44 @@ export function UniqueObjectCollectionTests(): void
         nameof(UniqueObjectCollection),
         () =>
         {
-            let staticItem: IUniqueObject;
-            let testItem: IUniqueObject;
+            let random: Random;
             let collection: UniqueObjectCollection<IUniqueObject>;
+            let testItems: IUniqueObject[];
+            let randomItemGenerator: Generator<IUniqueObject>;
+            let randomItem: IUniqueObject;
 
             suiteSetup(
                 () =>
                 {
-                    staticItem = {
-                        ID: "item"
-                    };
+                    random = new Random();
+                    testItems = [];
 
-                    testItem = {
-                        ID: "testItem"
-                    };
+                    for (let i = 0; i < random.integer(10, 20); i++)
+                    {
+                        testItems.push(
+                            {
+                                ID: random.string(i)
+                            });
+                    }
+
+                    randomItemGenerator = function*()
+                    {
+                        let i = 20;
+
+                        while (true)
+                        {
+                            yield {
+                                ID: random.string(i++)
+                            } as IUniqueObject;
+                        }
+                    }();
                 });
 
             setup(
                 () =>
                 {
-                    collection = new UniqueObjectCollection(
-                        [
-                            staticItem,
-                            testItem
-                        ]);
+                    collection = new UniqueObjectCollection(testItems);
+                    randomItem = randomItemGenerator.next().value;
                 });
 
             suite(
@@ -45,7 +60,7 @@ export function UniqueObjectCollectionTests(): void
                         `Checking whether items can be queried by their \`${nameof<IUniqueObject>((o) => o.ID)}\`…`,
                         () =>
                         {
-                            strictEqual(collection.Get(staticItem.ID), staticItem);
+                            strictEqual(collection.Get(randomItem.ID), randomItem);
                         });
                 });
 
@@ -57,10 +72,11 @@ export function UniqueObjectCollectionTests(): void
                         `Checking whether items can be replaced by their \`${nameof<IUniqueObject>((o) => o.ID)}\`…`,
                         () =>
                         {
+                            let replacement = randomItemGenerator.next().value;
                             collection.Clear();
-                            collection.push(testItem, staticItem);
-                            collection.Replace(testItem.ID, staticItem);
-                            ok(!collection.some((item) => item === testItem));
+                            collection.push(randomItem, replacement);
+                            collection.Replace(randomItem.ID, replacement);
+                            ok(!collection.some((item) => item === randomItem));
                             strictEqual(collection.filter((item) => item === item).length, 2);
                         });
                 });
@@ -73,11 +89,12 @@ export function UniqueObjectCollectionTests(): void
                         `Checking whether items can be removed by their \`${nameof<IUniqueObject>((o) => o.ID)}\`…`,
                         () =>
                         {
+                            let strippedItem = randomItemGenerator.next().value;
                             collection.Clear();
-                            collection.push(testItem, staticItem);
-                            collection.Remove(testItem.ID);
-                            doesNotThrow(() => collection.Get(staticItem.ID));
-                            throws(() => collection.Get(testItem.ID));
+                            collection.push(randomItem, strippedItem);
+                            collection.Remove(strippedItem.ID);
+                            doesNotThrow(() => collection.Get(randomItem.ID));
+                            throws(() => collection.Get(strippedItem.ID));
                         });
                 });
         });
