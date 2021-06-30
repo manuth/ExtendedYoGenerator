@@ -226,7 +226,7 @@ export abstract class PropertyResolverCollection<TObject extends IUniqueObject, 
             typeof filter !== "string" &&
             this.IsConstructor(filter))
         {
-            return (item) => item.Object instanceof filter;
+            return (item) => (item instanceof filter || item.Object instanceof filter);
         }
         else
         {
