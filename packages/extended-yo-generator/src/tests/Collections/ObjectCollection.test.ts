@@ -99,19 +99,19 @@ export function ObjectCollectionTests(): void
                         `Checking whether items can be replaced using \`${nameof<Predicate<any>>()}\`s…`,
                         () =>
                         {
-                            let item = "item";
+                            let staticItem = "static";
                             let stripped = "stripped";
                             let replacement = "replacement";
 
                             let collection = new ObjectCollection<string>(
                                 [
-                                    item,
+                                    staticItem,
                                     stripped,
                                     stripped
                                 ]);
 
                             collection.Replace((item: string) => item === stripped, replacement);
-                            ok(collection.includes(item));
+                            ok(collection.includes(staticItem));
                             ok(!collection.includes(stripped));
                             strictEqual(collection.filter((item) => item === replacement).length, 2);
                         });

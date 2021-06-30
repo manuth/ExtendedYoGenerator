@@ -11,14 +11,14 @@ export function UniqueObjectCollectionTests(): void
         nameof(UniqueObjectCollection),
         () =>
         {
-            let item: IUniqueObject;
+            let staticItem: IUniqueObject;
             let testItem: IUniqueObject;
             let collection: UniqueObjectCollection<IUniqueObject>;
 
             suiteSetup(
                 () =>
                 {
-                    item = {
+                    staticItem = {
                         ID: "item"
                     };
 
@@ -32,7 +32,7 @@ export function UniqueObjectCollectionTests(): void
                 {
                     collection = new UniqueObjectCollection(
                         [
-                            item,
+                            staticItem,
                             testItem
                         ]);
                 });
@@ -45,7 +45,7 @@ export function UniqueObjectCollectionTests(): void
                         `Checking whether items can be queried by their \`${nameof<IUniqueObject>((o) => o.ID)}\`…`,
                         () =>
                         {
-                            strictEqual(collection.Get(item.ID), item);
+                            strictEqual(collection.Get(staticItem.ID), staticItem);
                         });
                 });
 
@@ -58,8 +58,8 @@ export function UniqueObjectCollectionTests(): void
                         () =>
                         {
                             collection.Clear();
-                            collection.push(testItem, item);
-                            collection.Replace(testItem.ID, item);
+                            collection.push(testItem, staticItem);
+                            collection.Replace(testItem.ID, staticItem);
                             ok(!collection.some((item) => item === testItem));
                             strictEqual(collection.filter((item) => item === item).length, 2);
                         });
@@ -74,9 +74,9 @@ export function UniqueObjectCollectionTests(): void
                         () =>
                         {
                             collection.Clear();
-                            collection.push(testItem, item);
+                            collection.push(testItem, staticItem);
                             collection.Remove(testItem.ID);
-                            doesNotThrow(() => collection.Get(item.ID));
+                            doesNotThrow(() => collection.Get(staticItem.ID));
                             throws(() => collection.Get(testItem.ID));
                         });
                 });
