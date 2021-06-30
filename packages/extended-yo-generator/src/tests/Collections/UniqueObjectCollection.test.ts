@@ -24,7 +24,7 @@ export function UniqueObjectCollectionTests(): void
                     random = new Random();
                     testItems = [];
 
-                    for (let i = 0; i < random.integer(10, 20); i++)
+                    for (let i = random.integer(10, 20); i > 0; i--)
                     {
                         testItems.push(
                             {
