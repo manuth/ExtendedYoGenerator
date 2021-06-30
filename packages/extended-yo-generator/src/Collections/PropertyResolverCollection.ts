@@ -89,7 +89,18 @@ export abstract class PropertyResolverCollection<TObject extends IUniqueObject, 
      * @returns
      * The item with the specified {@link type `type`}.
      */
-    public override Get(type: AbstractConstructor<TObject | TTarget>): TTarget;
+    public override Get(type: AbstractConstructor<TTarget>): TTarget;
+
+    /**
+     * Gets the item with an {@link PropertyResolver.Object `Object`} of the the specified {@link type `type`}.
+     *
+     * @param type
+     * The type of the item to get.
+     *
+     * @returns
+     * The item with an {@link PropertyResolver.Object `Object`} of the specified {@link type `type`}.
+     */
+    public override Get(type: AbstractConstructor<TObject>): TTarget;
 
     /**
      * Gets the item which applies to the specified {@link predicate `predicate`}.
@@ -158,7 +169,40 @@ export abstract class PropertyResolverCollection<TObject extends IUniqueObject, 
      * @param item
      * The replacement of the item.
      */
-    public override Replace(type: AbstractConstructor<TObject | TTarget>, item: TTarget): void;
+    public override Replace(type: AbstractConstructor<TTarget>, item: TTarget): void;
+
+    /**
+     * Replaces the item with the specified {@link type `type`} with the specified {@link item `item`}.
+     *
+     * @param type
+     * The type of the item to replace.
+     *
+     * @param item
+     * The replacement of the item.
+     */
+    public override Replace(type: AbstractConstructor<TTarget>, item: TObject): void;
+
+    /**
+     * Replaces the item with an {@link PropertyResolver.Object `Object`} of the specified {@link type `type`} with the specified {@link item `item`}.
+     *
+     * @param type
+     * The type of the item to replace.
+     *
+     * @param item
+     * The replacement of the item.
+     */
+    public override Replace(type: AbstractConstructor<TObject>, item: TTarget): void;
+
+    /**
+     * Replaces the item with an {@link PropertyResolver.Object `Object`} of the specified {@link type `type`} with the specified {@link item `item`}.
+     *
+     * @param type
+     * The type of the item to replace.
+     *
+     * @param item
+     * The replacement of the item.
+     */
+    public override Replace(type: AbstractConstructor<TObject>, item: TObject): void;
 
     /**
      * Replaces the item with the specified {@link type `type`} with a replacement created by the {@link filter `filter`}.
@@ -169,7 +213,18 @@ export abstract class PropertyResolverCollection<TObject extends IUniqueObject, 
      * @param filter
      * A method for creating the replacement for the item.
      */
-    public override Replace(type: AbstractConstructor<TObject | TTarget>, filter: Filter<TTarget>): void;
+    public override Replace(type: AbstractConstructor<TTarget>, filter: Filter<TTarget>): void;
+
+    /**
+     * Replaces the item with an {@link PropertyResolver.Object `Object`} of the specified {@link type `type`} with a replacement created by the {@link filter `filter`}.
+     *
+     * @param type
+     * The type of the item to replace.
+     *
+     * @param filter
+     * A method for creating the replacement for the item.
+     */
+    public override Replace(type: AbstractConstructor<TObject>, filter: Filter<TTarget>): void;
 
     /**
      * Replaces the item which matches the {@link predicate `predicate`} with the specified {@link item `item`}.
@@ -181,6 +236,17 @@ export abstract class PropertyResolverCollection<TObject extends IUniqueObject, 
      * The replacement of the item.
      */
     public override Replace(predicate: Predicate<TTarget>, item: TTarget): void;
+
+    /**
+     * Replaces the item which matches the {@link predicate `predicate`} with the specified {@link item `item`}.
+     *
+     * @param predicate
+     * The predicate for finding the item to replace.
+     *
+     * @param item
+     * The replacement of the item.
+     */
+    public override Replace(predicate: Predicate<TTarget>, item: TObject): void;
 
     /**
      * Replaces the item which matches the {@link predicate `predicate`} with a replacement created by the {@link filter `filter`}.
