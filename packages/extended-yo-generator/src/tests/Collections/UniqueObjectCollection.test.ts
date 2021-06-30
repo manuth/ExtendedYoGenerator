@@ -14,7 +14,6 @@ export function UniqueObjectCollectionTests(): void
         {
             let random: Random;
             let collection: UniqueObjectCollection<IUniqueObject>;
-            let testItems: IUniqueObject[];
             let randomItemGenerator: Generator<IUniqueObject>;
             let randomItem: IUniqueObject;
 
@@ -22,19 +21,10 @@ export function UniqueObjectCollectionTests(): void
                 () =>
                 {
                     random = new Random();
-                    testItems = [];
-
-                    for (let i = random.integer(10, 20); i > 0; i--)
-                    {
-                        testItems.push(
-                            {
-                                ID: random.string(i)
-                            });
-                    }
 
                     randomItemGenerator = function*()
                     {
-                        let i = 20;
+                        let i = 0;
 
                         while (true)
                         {
@@ -48,7 +38,7 @@ export function UniqueObjectCollectionTests(): void
             setup(
                 () =>
                 {
-                    collection = new UniqueObjectCollection(testItems);
+                    collection = new UniqueObjectCollection([]);
                     randomItem = randomItemGenerator.next().value;
                 });
 
@@ -60,6 +50,7 @@ export function UniqueObjectCollectionTests(): void
                         `Checking whether items can be queried by their \`${nameof<IUniqueObject>((o) => o.ID)}\`…`,
                         () =>
                         {
+                            collection.push(randomItem);
                             strictEqual(collection.Get(randomItem.ID), randomItem);
                         });
                 });
@@ -73,7 +64,6 @@ export function UniqueObjectCollectionTests(): void
                         () =>
                         {
                             let replacement = randomItemGenerator.next().value;
-                            collection.Clear();
                             collection.push(randomItem, replacement);
                             collection.Replace(randomItem.ID, replacement);
                             ok(!collection.some((item) => item === randomItem));
