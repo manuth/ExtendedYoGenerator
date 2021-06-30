@@ -161,13 +161,7 @@ export abstract class PropertyResolverCollection<TObject extends IUniqueObject, 
             typeof replacement !== "function" &&
             !(replacement instanceof PropertyResolver))
         {
-            super.Replace(
-                filter as any,
-                (item) =>
-                {
-                    item.Object = replacement;
-                    return item;
-                });
+            super.Replace(filter as any, this.CreateItem(replacement));
         }
         else
         {
