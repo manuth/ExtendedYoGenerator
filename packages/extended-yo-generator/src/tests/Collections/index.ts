@@ -1,5 +1,6 @@
 import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { ObjectCollectionTests } from "./ObjectCollection.test";
+import { PropertyResolverCollectionTests } from "./PropertyResolverCollection.test";
 import { UniqueObjectCollectionTests } from "./UniqueObjectCollection.test";
 
 /**
@@ -16,5 +17,6 @@ export function CollectionTests(context: TestContext<TestGenerator, ITestGenerat
         {
             ObjectCollectionTests();
             UniqueObjectCollectionTests();
+            PropertyResolverCollectionTests(context);
         });
 }
