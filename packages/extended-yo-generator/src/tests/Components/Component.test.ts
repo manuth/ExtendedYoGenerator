@@ -61,7 +61,7 @@ export function ComponentTests(context: TestContext<TestGenerator, ITestGenerato
                         });
 
                     test(
-                        `Checking whether changes to the \`${nameof<Component<any, any>>((c) => c.FileMappings)}\` option immediately take affect…`,
+                        `Checking whether changes made to the \`${nameof<Component<any, any>>((c) => c.FileMappings)}\` option immediately take affect until the property has been queried the first time…`,
                         async () =>
                         {
                             componentOptions.FileMappings = [
