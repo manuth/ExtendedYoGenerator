@@ -117,7 +117,7 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                 () =>
                 {
                     test(
-                        `Checking whether changes made to the \`${nameof<ComponentCollection<any, any>>((c) => c.Categories)}\` option immediately take affect…`,
+                        `Checking whether changes made to the \`${nameof<ComponentCollection<any, any>>((c) => c.Categories)}\` option immediately take effect…`,
                         () =>
                         {
                             let testName = "This is a test";

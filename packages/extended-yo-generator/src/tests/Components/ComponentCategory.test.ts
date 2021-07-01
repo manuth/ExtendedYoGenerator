@@ -43,7 +43,7 @@ export function ComponentCategoryTests(context: TestContext<TestGenerator, ITest
                 () =>
                 {
                     test(
-                        `Checking whether changes made to the \`${nameof<ComponentCategory<any, any>>((c) => c.Components)}\` option immediately take affect…`,
+                        `Checking whether changes made to the \`${nameof<ComponentCategory<any, any>>((c) => c.Components)}\` option immediately take effect…`,
                         () =>
                         {
                             let testID = "this-is-a-test";
