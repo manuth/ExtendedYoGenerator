@@ -67,7 +67,7 @@ export function UniqueObjectCollectionTests(): void
                             collection.push(randomItem, replacement);
                             collection.Replace(randomItem.ID, replacement);
                             ok(!collection.some((item) => item === randomItem));
-                            strictEqual(collection.filter((item) => item === item).length, 2);
+                            strictEqual(collection.filter((item) => item === replacement).length, 2);
                         });
                 });
 
