@@ -254,7 +254,7 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
              * @returns
              * The newly initialized generator.
              */
-            function CreateGenerator<T extends Generator>(generatorConstructor: new(...args: any[]) => T): T
+            function CreateGenerator<T extends Generator>(generatorConstructor: new (...args: any[]) => T): T
             {
                 return new generatorConstructor([], { env: Environment.createEnv() });
             }
@@ -354,7 +354,8 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                         {
                             strictEqual(
                                 generator.ComponentCollection.Categories.filter(
-                                    (category) => category.DisplayName === categoryName).length, 1);
+                                    (category) => category.DisplayName === categoryName).length,
+                                1);
                         });
 
                     test(
