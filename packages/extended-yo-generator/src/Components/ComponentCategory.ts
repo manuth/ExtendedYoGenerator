@@ -16,11 +16,6 @@ import { PropertyResolver } from "./Resolving/PropertyResolver";
 export class ComponentCategory<TSettings, TOptions> extends PropertyResolver<IComponentCategory<TSettings, TOptions>, ComponentCategory<TSettings, TOptions>, TSettings, TOptions> implements IComponentCategory<TSettings, TOptions>
 {
     /**
-     * The components of the category.
-     */
-    private componentCollection: ComponentOptionCollection = null;
-
-    /**
      * Initializes a new instance of the {@link ComponentCategory `ComponentCategory<TSettings, TOptions>`} class.
      *
      * @param generator
@@ -71,17 +66,12 @@ export class ComponentCategory<TSettings, TOptions> extends PropertyResolver<ICo
      */
     public get Components(): ComponentOptionCollection
     {
-        if (this.componentCollection === null)
-        {
-            this.componentCollection = new ComponentOptionCollection(
-                this.Generator,
-                this.Object.Components.map(
-                    (component) =>
-                    {
-                        return new Component(this.Generator, component);
-                    }));
-        }
-
-        return this.componentCollection;
+        return new ComponentOptionCollection(
+            this.Generator,
+            this.Object.Components.map(
+                (component) =>
+                {
+                    return new Component(this.Generator, component);
+                }));
     }
 }

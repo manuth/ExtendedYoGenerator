@@ -18,16 +18,6 @@ import { PropertyResolver } from "./Resolving/PropertyResolver";
 export class Component<TSettings, TOptions> extends PropertyResolver<IComponent<TSettings, TOptions>, Component<TSettings, TOptions>, TSettings, TOptions> implements IComponent<TSettings, TOptions>
 {
     /**
-     * The questions of the component.
-     */
-    private questionCollection: ObjectCollection<Question<TSettings>> = null;
-
-    /**
-     * The file-mappings of the component.
-     */
-    private fileMappingCollection: FileMappingOptionCollection = null;
-
-    /**
      * Initializes a new instance of the {@link Component `Component<TSettings, TOptions>`} class.
      *
      * @param generator
@@ -94,12 +84,7 @@ export class Component<TSettings, TOptions> extends PropertyResolver<IComponent<
      */
     public get Questions(): ObjectCollection<Question<TSettings>>
     {
-        if (this.questionCollection === null)
-        {
-            this.questionCollection = new ObjectCollection(this.Object.Questions);
-        }
-
-        return this.questionCollection;
+        return new ObjectCollection(this.Object.Questions);
     }
 
     /**
@@ -107,17 +92,12 @@ export class Component<TSettings, TOptions> extends PropertyResolver<IComponent<
      */
     public get FileMappings(): FileMappingOptionCollection
     {
-        if (this.fileMappingCollection === null)
-        {
-            this.fileMappingCollection = new FileMappingOptionCollection(
-                this.Generator,
-                this.ResolveProperty(this, this.Object.FileMappings).map(
-                    (fileMapping) =>
-                    {
-                        return new FileMapping(this.Generator, fileMapping);
-                    }));
-        }
-
-        return this.fileMappingCollection;
+        return new FileMappingOptionCollection(
+            this.Generator,
+            this.ResolveProperty(this, this.Object.FileMappings).map(
+                (fileMapping) =>
+                {
+                    return new FileMapping(this.Generator, fileMapping);
+                }));
     }
 }
