@@ -129,7 +129,7 @@ export class ComponentCollection<TSettings extends IGeneratorSettings, TOptions>
                                 this.Generator.log(`${chalk.red(">>")} ${chalk.bold(component.DisplayName)} ${chalk.red("<<")}`);
                             }
 
-                            if (predicate)
+                            if (predicate !== null && predicate !== undefined)
                             {
                                 if (typeof predicate === "function")
                                 {
