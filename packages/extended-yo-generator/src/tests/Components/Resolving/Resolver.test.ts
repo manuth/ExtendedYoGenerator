@@ -67,36 +67,36 @@ export function ResolverTests(context: TestContext<TestGenerator, ITestGenerator
                         `Checking whether values can be resolved no mather whether they are \`${nameof(Function)}\`s, \`${nameof(Promise)}\`s or plain values…`,
                         async () =>
                         {
-                            strictEqual(testValue, resolver.Resolve(null, null, testValue));
-                            strictEqual(testValue, await resolver.Resolve<Promise<string>>(null, null, context.CreatePromise(testValue)));
-                            strictEqual(testValue, resolver.Resolve(null, null, context.CreateFunction(testValue)));
-                            strictEqual(testValue, await resolver.Resolve<Promise<string>>(null, null, context.CreatePromiseFunction(testValue)));
+                            strictEqual(resolver.Resolve(null, null, testValue), testValue);
+                            strictEqual(await resolver.Resolve<Promise<string>>(null, null, context.CreatePromise(testValue)), testValue);
+                            strictEqual(resolver.Resolve(null, null, context.CreateFunction(testValue)), testValue);
+                            strictEqual(await resolver.Resolve<Promise<string>>(null, null, context.CreatePromiseFunction(testValue)), testValue);
                         });
 
                     test(
                         `Checking whether nested \`${nameof(Promise)}\`s act as expected…`,
                         async () =>
                         {
-                            strictEqual(await testPromise, await resolver.Resolve<Promise<string>>(null, null, testPromise));
-                            strictEqual(await testPromise, await resolver.Resolve(null, null, context.CreatePromise(testPromise)));
-                            strictEqual(await testPromise, await resolver.Resolve<Promise<string>>(null, null, context.CreateFunction(testPromise)));
-                            strictEqual(await testPromise, await resolver.Resolve<Promise<Promise<string>>>(null, null, context.CreatePromiseFunction(testPromise)));
+                            strictEqual(await resolver.Resolve<Promise<string>>(null, null, testPromise), await testPromise);
+                            strictEqual(await resolver.Resolve(null, null, context.CreatePromise(testPromise)), await testPromise);
+                            strictEqual(await resolver.Resolve<Promise<string>>(null, null, context.CreateFunction(testPromise)), await testPromise);
+                            strictEqual(await resolver.Resolve<Promise<Promise<string>>>(null, null, context.CreatePromiseFunction(testPromise)), await testPromise);
                         });
 
                     test(
                         `Checking whether plain \`${nameof(Function)}\`s cannot be resolved…`,
                         () =>
                         {
-                            notStrictEqual(testFunction, resolver.Resolve<any>(null, null, testFunction));
+                            notStrictEqual(resolver.Resolve<any>(null, null, testFunction), testFunction);
                         });
 
                     test(
                         `Checking whether \`${nameof(Function)}\` can be resolved otherwise…`,
                         async () =>
                         {
-                            strictEqual(testFunction, await resolver.Resolve<Promise<() => void>>(null, null, context.CreatePromise(testFunction)));
-                            strictEqual(testFunction, resolver.Resolve<() => void>(null, null, context.CreateFunction(testFunction)));
-                            strictEqual(testFunction, await resolver.Resolve<Promise<() => void>>(null, null, context.CreatePromiseFunction(testFunction)));
+                            strictEqual(await resolver.Resolve<Promise<() => void>>(null, null, context.CreatePromise(testFunction)), testFunction);
+                            strictEqual(resolver.Resolve<() => void>(null, null, context.CreateFunction(testFunction)), testFunction);
+                            strictEqual(await resolver.Resolve<Promise<() => void>>(null, null, context.CreatePromiseFunction(testFunction)), testFunction);
                         });
 
                     test(
