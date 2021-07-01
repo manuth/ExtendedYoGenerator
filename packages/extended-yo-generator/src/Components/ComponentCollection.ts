@@ -117,41 +117,44 @@ export class ComponentCollection<TSettings extends IGeneratorSettings, TOptions>
                 for (let i = 0; i < component.Questions?.length ?? 0; i++)
                 {
                     let question = component.Questions[i];
-                    let predicate = question.when;
 
-                    question.when = async (settings: TSettings) =>
-                    {
-                        if ((settings[GeneratorSettingKey.Components] ?? []).includes(component.ID))
+                    result.push(
                         {
-                            if (i === 0)
+                            ...question,
+                            when: async (settings: TSettings) =>
                             {
-                                this.Generator.log();
-                                this.Generator.log(`${chalk.red(">>")} ${chalk.bold(component.DisplayName)} ${chalk.red("<<")}`);
-                            }
+                                let predicate = question.when;
 
-                            if (predicate !== null && predicate !== undefined)
-                            {
-                                if (typeof predicate === "function")
+                                if ((settings[GeneratorSettingKey.Components] ?? []).includes(component.ID))
                                 {
-                                    return predicate(settings);
+                                    if (i === 0)
+                                    {
+                                        this.Generator.log();
+                                        this.Generator.log(`${chalk.red(">>")} ${chalk.bold(component.DisplayName)} ${chalk.red("<<")}`);
+                                    }
+
+                                    if (predicate !== null && predicate !== undefined)
+                                    {
+                                        if (typeof predicate === "function")
+                                        {
+                                            return predicate(settings);
+                                        }
+                                        else
+                                        {
+                                            return predicate;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        return true;
+                                    }
                                 }
                                 else
                                 {
-                                    return predicate;
+                                    return false;
                                 }
                             }
-                            else
-                            {
-                                return true;
-                            }
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    };
-
-                    result.push(question);
+                        });
                 }
             }
         }
