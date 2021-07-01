@@ -23,8 +23,9 @@ export function FileMappingOptionCollectionTests(context: TestContext): void
             let collection: FileMappingOptionCollection;
 
             suiteSetup(
-                async () =>
+                async function()
                 {
+                    this.timeout(30 * 1000);
                     random = new Random();
                     generator = await context.Generator;
                 });

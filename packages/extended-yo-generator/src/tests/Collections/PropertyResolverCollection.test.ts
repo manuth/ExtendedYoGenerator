@@ -74,8 +74,9 @@ export function PropertyResolverCollectionTests(context: TestContext): void
             let fileMappingGenerator: globalThis.Generator<IFileMapping<any, any>>;
 
             suiteSetup(
-                async () =>
+                async function()
                 {
+                    this.timeout(30 * 1000);
                     generator = await context.Generator;
                     random = new Random();
                 });

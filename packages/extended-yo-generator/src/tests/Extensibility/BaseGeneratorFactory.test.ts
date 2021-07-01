@@ -260,8 +260,10 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
             }
 
             suiteSetup(
-                () =>
+                async function()
                 {
+                    this.timeout(30 * 1000);
+                    await context.Generator;
                     superTemplateDir = context.RandomString + "1";
                     subTemplateDir = context.RandomString + "2";
                     superSourceFile = context.RandomString + "1";

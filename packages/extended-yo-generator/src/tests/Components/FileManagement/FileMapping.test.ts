@@ -33,8 +33,9 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
             };
 
             suiteSetup(
-                async () =>
+                async function()
                 {
+                    this.timeout(30 * 1000);
                     random = new Random();
                     generator = await context.Generator;
                     fileMapping = new FileMapping(generator, fileMappingOptions);

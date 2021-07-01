@@ -24,8 +24,9 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
             };
 
             suiteSetup(
-                async () =>
+                async function()
                 {
+                    this.timeout(30 * 1000);
                     generator = await context.Generator;
                     collection = new ComponentCollection(generator, collectionOptions);
                 });

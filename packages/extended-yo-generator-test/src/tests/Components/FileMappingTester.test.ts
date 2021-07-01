@@ -28,7 +28,7 @@ export function FileMappingTesterTests(context: TestContext<TestGenerator>): voi
             suiteSetup(
                 async function()
                 {
-                    this.timeout(0);
+                    this.timeout(30 * 1000);
                     sourceFile = new TempFile();
                     destinationFile = new TempFile();
 

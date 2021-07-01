@@ -32,7 +32,7 @@ export function PropertyResolverTests(context: TestContext<TestGenerator, ITestG
             suiteSetup(
                 async function()
                 {
-                    this.timeout(0);
+                    this.timeout(30 * 1000);
                     random = new Random();
 
                     propertyResolver = new ResolverTest(

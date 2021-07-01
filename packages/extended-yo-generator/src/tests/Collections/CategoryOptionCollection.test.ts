@@ -23,8 +23,9 @@ export function CategoryOptionCollectionTests(context: TestContext): void
             let collection: CategoryOptionCollection;
 
             suiteSetup(
-                async () =>
+                async function()
                 {
+                    this.timeout(30 * 1000);
                     random = new Random();
                     generator = await context.Generator;
                 });

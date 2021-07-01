@@ -61,8 +61,10 @@ export function TestGeneratorTests(): void
                 {
                     test(
                         "Checking whether a generator can be instantiated from the specified path…",
-                        async () =>
+                        async function()
                         {
+                            this.timeout(50 * 1000);
+                            this.slow(25 * 1000);
                             let generator: TestGenerator;
 
                             await doesNotReject(

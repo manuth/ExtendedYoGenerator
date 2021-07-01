@@ -27,7 +27,7 @@ export function JavaScriptFileMappingTesterTests(context: TestContext<TestGenera
             suiteSetup(
                 async function()
                 {
-                    this.timeout(0);
+                    this.timeout(30 * 1000);
                     sourceFile = new TempFile();
                     destinationFile = new TempFile();
 
