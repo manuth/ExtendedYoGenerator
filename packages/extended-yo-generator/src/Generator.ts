@@ -150,10 +150,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
             {
                 if ((this.Settings[GeneratorSettingKey.Components] ?? []).includes(component.ID))
                 {
-                    for (let fileMapping of component.FileMappings)
-                    {
-                        result.Add(fileMapping);
-                    }
+                    result.AddRange(component.FileMappings);
                 }
             }
         }

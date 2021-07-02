@@ -64,8 +64,7 @@ export function UniqueObjectCollectionTests(): void
                         () =>
                         {
                             let replacement = randomItemGenerator.next().value;
-                            collection.Add(randomItem);
-                            collection.Add(replacement);
+                            collection.AddRange([randomItem, replacement]);
                             collection.Replace(randomItem.ID, replacement);
                             ok(!collection.Items.some((item) => item === randomItem));
                             strictEqual(collection.Items.filter((item) => item === replacement).length, 2);
@@ -82,8 +81,7 @@ export function UniqueObjectCollectionTests(): void
                         {
                             let strippedItem = randomItemGenerator.next().value;
                             collection.Clear();
-                            collection.Add(randomItem);
-                            collection.Add(strippedItem);
+                            collection.AddRange([randomItem, strippedItem]);
                             collection.Remove(strippedItem.ID);
                             doesNotThrow(() => collection.Get(randomItem.ID));
                             throws(() => collection.Get(strippedItem.ID));

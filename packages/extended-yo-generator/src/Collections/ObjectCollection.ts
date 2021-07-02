@@ -145,10 +145,21 @@ export class ObjectCollection<T extends any>
      */
     public Add(item: T): void
     {
+        this.AddRange([item]);
+    }
+
+    /**
+     * Adds the specified {@link items `items`} to the collection.
+     *
+     * @param items
+     * The items to add.
+     */
+    public AddRange(items: T[]): void
+    {
         this.Actions.push(
             {
                 Type: CollectionActionType.Addition,
-                Item: item
+                Items: items
             });
     }
 
@@ -352,7 +363,7 @@ export class ObjectCollection<T extends any>
         switch (action.Type)
         {
             case CollectionActionType.Addition:
-                items.push(action.Item);
+                items.push(...action.Items);
                 break;
             case CollectionActionType.Substitution:
             case CollectionActionType.Removal:

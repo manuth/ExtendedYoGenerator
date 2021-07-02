@@ -14,5 +14,5 @@ export interface IAdditionAction<T> extends ICollectionAction
     /**
      * The items to add.
      */
-    Item: T;
+    Items: T[];
 }
