@@ -15,6 +15,7 @@ export function ObjectCollectionEditorTests(): void
         {
             let tempDir: TempDirectory;
             let tempFile: TempFile;
+            let source: TempFileSystem[];
             let collection: ObjectCollectionEditor<TempFileSystem>;
 
             suiteSetup(
@@ -34,11 +35,12 @@ export function ObjectCollectionEditorTests(): void
             setup(
                 () =>
                 {
-                    collection = new ObjectCollectionEditor(
-                        [
-                            tempDir,
-                            tempFile
-                        ]);
+                    source = [
+                        tempDir,
+                        tempFile
+                    ];
+
+                    collection = new ObjectCollectionEditor(source);
                 });
 
             suite(
@@ -51,6 +53,30 @@ export function ObjectCollectionEditorTests(): void
                         {
                             collection.Items.includes(tempDir);
                             collection.Items.includes(tempFile);
+                        });
+                });
+
+            suite(
+                nameof<ObjectCollectionEditor<any>>((collection) => collection.Items),
+                () =>
+                {
+                    test(
+                        "Checking whether changes are applied lazily…",
+                        () =>
+                        {
+                            collection.Add(null);
+
+                            ok(
+                                source.every(
+                                    (item) =>
+                                    {
+                                        return collection.Items.includes(item);
+                                    }));
+
+                            ok(collection.Items.includes(null));
+                            source.splice(0, source.length);
+                            ok(collection.Items.includes(null));
+                            strictEqual(collection.Items.length, 1);
                         });
                 });
 
