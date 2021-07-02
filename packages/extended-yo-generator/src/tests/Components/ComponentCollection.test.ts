@@ -1,8 +1,10 @@
 import { ok, strictEqual } from "assert";
 import { ITestGeneratorOptions, ITestGeneratorSettings, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
-import { CheckboxQuestion } from "inquirer";
+import rescape = require("@stdlib/utils-escape-regexp-string");
+import { CheckboxChoiceOptions, CheckboxQuestion, Separator } from "inquirer";
 import { Random } from "random-js";
-import { Question } from "yeoman-environment";
+import { replace, replaceGetter, restore } from "sinon";
+import { Logger, Question } from "yeoman-environment";
 import { Component } from "../../Components/Component";
 import { ComponentCollection } from "../../Components/ComponentCollection";
 import { IComponent } from "../../Components/IComponent";
@@ -67,9 +69,6 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
             setup(
                 () =>
                 {
-                    collectionOptions.Question = null;
-                    collectionOptions.Categories = [];
-
                     randomString = function*()
                     {
                         let i = 1;
@@ -80,7 +79,10 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                         }
                     }();
 
-                    for (let i = random.integer(1, 5); i > 0; i--)
+                    collectionOptions.Question = randomString.next().value;
+                    collectionOptions.Categories = [];
+
+                    for (let i = random.integer(2, 5); i > 0; i--)
                     {
                         let category: IComponentCategory<any, any> = {
                             ID: randomString.next().value,
@@ -88,7 +90,7 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                             Components: []
                         };
 
-                        for (let i = random.integer(1, 5); i > 0; i--)
+                        for (let i = random.integer(2, 5); i > 0; i--)
                         {
                             let component: IComponent<any, any> = {
                                 ID: randomString.next().value,
@@ -97,7 +99,7 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                                 Questions: []
                             };
 
-                            for (let i = random.integer(1, 5); i > 0; i--)
+                            for (let i = random.integer(2, 5); i > 0; i--)
                             {
                                 component.Questions.push(
                                     {
@@ -129,6 +131,90 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                             ];
 
                             strictEqual(collection.Categories[0].DisplayName, testName);
+                        });
+                });
+
+            suite(
+                nameof<MyComponentCollection>((collection) => collection.ComponentChoiceQuestion),
+                () =>
+                {
+                    setup(
+                        () =>
+                        {
+                            for (let category of collectionOptions.Categories)
+                            {
+                                category.DisplayName = randomString.next().value;
+
+                                for (let component of category.Components)
+                                {
+                                    component.DisplayName = randomString.next().value;
+                                    component.DefaultEnabled = random.bool();
+                                }
+                            }
+                        });
+
+                    test(
+                        `Checking whether the message of the question is applied according to the ${nameof<MyComponentCollection>((c) => c.Question)}\`-property…`,
+                        () =>
+                        {
+                            strictEqual(collection.ComponentChoiceQuestion.message, collectionOptions.Question);
+                        });
+
+                    test(
+                        `Checking whether separators for all \`${nameof<MyComponentCollection>((c) => c.Categories)}\` are present…`,
+                        () =>
+                        {
+                            for (let category of collection.Categories)
+                            {
+                                ok(
+                                    Array.isArray(collection.ComponentChoiceQuestion.choices) &&
+                                    collection.ComponentChoiceQuestion.choices.some(
+                                        (choice) =>
+                                        {
+                                            return choice instanceof Separator &&
+                                                choice.line === category.DisplayName;
+                                        }));
+                            }
+                        });
+
+                    test(
+                        `Checking whether choices for all \`${nameof<MyComponentCollection>((c) => c.Categories[0].Components)}\` are present…`,
+                        () =>
+                        {
+                            for (let component of collection.Categories.flatMap((category) => category.Components))
+                            {
+                                ok(
+                                    Array.isArray(collection.ComponentChoiceQuestion.choices) &&
+                                    collection.ComponentChoiceQuestion.choices.some(
+                                        (choice: CheckboxChoiceOptions<any>) =>
+                                        {
+                                            return choice.name === component.DisplayName &&
+                                                choice.value === component.ID;
+                                        }));
+                            }
+                        });
+
+                    test(
+                        `Checking whether components with \`${nameof<Component<any, any>>((c) => c.DefaultEnabled)}\` set to \`${true}\` are enabled by default…`,
+                        () =>
+                        {
+                            for (let component of collection.Categories.flatMap((category) => category.Components))
+                            {
+                                strictEqual(
+                                    Array.isArray(collection.ComponentChoiceQuestion.default) &&
+                                    collection.ComponentChoiceQuestion.default.includes(component.ID),
+                                    component.DefaultEnabled);
+
+                                ok(
+                                    Array.isArray(collection.ComponentChoiceQuestion.choices) &&
+                                    collection.ComponentChoiceQuestion.choices.some(
+                                        (choice: CheckboxChoiceOptions<any>) =>
+                                        {
+                                            return choice.name === component.DisplayName &&
+                                                choice.value === component.ID &&
+                                                choice.checked === component.DefaultEnabled;
+                                        }));
+                            }
                         });
                 });
 
@@ -167,6 +253,71 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                                     }
                                 }
                             }
+                        });
+
+                    test(
+                        "Checking whether headings for the selected components are displayed to the user…",
+                        async () =>
+                        {
+                            let componentSample = random.sample(collection.Categories.flatMap((category) => category.Components), 2);
+                            let enabledComponent = componentSample[0];
+                            let disabledComponent = componentSample[1];
+                            let logMessages: string[] = [];
+                            enabledComponent.DisplayName = randomString.next().value;
+                            disabledComponent.DisplayName = randomString.next().value;
+
+                            /**
+                             * Asserts the presence of the heading of the specified {@link component `component`} is present in the log-messages.
+                             *
+                             * @param component
+                             * The component to check.
+                             *
+                             * @param present
+                             * A value indicating whether the heading is expected to be present.
+                             *
+                             * @returns
+                             * A value indicating whether the heading of the specified {@link component `component`} is present.
+                             */
+                            function AssertHeadingPresence(component: Component<any, any>, present: boolean): void
+                            {
+                                strictEqual(
+                                    logMessages.some(
+                                        (logMessage) => new RegExp(`\\b${rescape(component.DisplayName)}\\b`).test(logMessage)),
+                                    present);
+                            }
+
+                            replaceGetter(
+                                generator,
+                                "Settings",
+                                () =>
+                                {
+                                    return {
+                                        [GeneratorSettingKey.Components]: [
+                                            enabledComponent.ID
+                                        ]
+                                    } as ITestGeneratorSettings;
+                                });
+
+                            replace(
+                                generator,
+                                "log",
+                                (
+                                    (message) =>
+                                    {
+                                        logMessages.push(message);
+                                    }) as Logger);
+
+                            for (let question of collection.ComponentQuestions)
+                            {
+                                if (typeof question.when === "function")
+                                {
+                                    question.when(generator.Settings);
+                                }
+                            }
+
+                            restore();
+                            AssertHeadingPresence(enabledComponent, true);
+                            AssertHeadingPresence(disabledComponent, false);
                         });
 
                     test(
