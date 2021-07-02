@@ -21,6 +21,11 @@ import { PropertyResolver } from "./Resolving/PropertyResolver";
 export class ComponentCollection<TSettings extends IGeneratorSettings, TOptions> extends PropertyResolver<IComponentCollection<TSettings, TOptions>, ComponentCollection<TSettings, TOptions>, TSettings, TOptions> implements IComponentCollection<TSettings, TOptions>
 {
     /**
+     * A component for editing the categories of this collection.
+     */
+    private categories: CategoryOptionCollection = null;
+
+    /**
      * Initializes a new instance of the {@link ComponentCollection `ComponentCollection<TSettings, TOptions>`} class.
      *
      * @param generator
@@ -55,16 +60,21 @@ export class ComponentCollection<TSettings extends IGeneratorSettings, TOptions>
      */
     public get CategoryCollection(): CategoryOptionCollection
     {
-        return new CategoryOptionCollection(
-            this.Generator,
-            () =>
-            {
-                return this.Object.Categories.map(
-                    (category) =>
-                    {
-                        return new ComponentCategory(this.Generator, category);
-                    });
-            });
+        if (this.categories === null)
+        {
+            this.categories = new CategoryOptionCollection(
+                this.Generator,
+                () =>
+                {
+                    return this.Object.Categories.map(
+                        (category) =>
+                        {
+                            return new ComponentCategory(this.Generator, category);
+                        });
+                });
+        }
+
+        return this.categories;
     }
 
     /**

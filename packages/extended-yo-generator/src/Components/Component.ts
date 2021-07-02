@@ -18,6 +18,16 @@ import { PropertyResolver } from "./Resolving/PropertyResolver";
 export class Component<TSettings, TOptions> extends PropertyResolver<IComponent<TSettings, TOptions>, Component<TSettings, TOptions>, TSettings, TOptions> implements IComponent<TSettings, TOptions>
 {
     /**
+     * A component for editing the questions of this component.
+     */
+    private questionCollection: ObjectCollection<Question<TSettings>> = null;
+
+    /**
+     * A component for editing the file-mappings of this component.
+     */
+    private fileMappingCollection: FileMappingOptionCollection = null;
+
+    /**
      * Initializes a new instance of the {@link Component `Component<TSettings, TOptions>`} class.
      *
      * @param generator
@@ -84,7 +94,12 @@ export class Component<TSettings, TOptions> extends PropertyResolver<IComponent<
      */
     public get QuestionCollection(): ObjectCollection<Question<TSettings>>
     {
-        return new ObjectCollection(this.Object.Questions ?? []);
+        if (this.questionCollection === null)
+        {
+            this.questionCollection = new ObjectCollection(this.Object.Questions ?? []);
+        }
+
+        return this.questionCollection;
     }
 
     /**
@@ -100,16 +115,21 @@ export class Component<TSettings, TOptions> extends PropertyResolver<IComponent<
      */
     public get FileMappingCollection(): FileMappingOptionCollection
     {
-        return new FileMappingOptionCollection(
-            this.Generator,
-            () =>
-            {
-                return this.ResolveProperty(this, this.Object.FileMappings).map(
-                    (fileMapping) =>
-                    {
-                        return new FileMapping(this.Generator, fileMapping);
-                    });
-            });
+        if (this.fileMappingCollection === null)
+        {
+            this.fileMappingCollection = new FileMappingOptionCollection(
+                this.Generator,
+                () =>
+                {
+                    return this.ResolveProperty(this, this.Object.FileMappings).map(
+                        (fileMapping) =>
+                        {
+                            return new FileMapping(this.Generator, fileMapping);
+                        });
+                });
+        }
+
+        return this.fileMappingCollection;
     }
 
     /**
