@@ -156,14 +156,14 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                 {
                     let result = super.BaseComponents;
 
-                    result.CategoryCollection.Replace(
+                    result.Categories.Replace(
                         (category: ComponentCategory<any, any>) =>
                         {
                             return category.DisplayName === categoryName;
                         },
                         (category) =>
                         {
-                            category.ComponentCollection.Add(
+                            category.Components.Add(
                                 {
                                     ID: injectedComponentID,
                                     DisplayName: "",
@@ -227,10 +227,10 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
              */
             function AssertComponentFileMappings(collection: ComponentCollection<any, any>, condition: FileMappingCondition, all = false): boolean
             {
-                let values = collection.Categories.flatMap(
+                let values = collection.Categories.Items.flatMap(
                     (category) =>
                     {
-                        return category.Components.map((component) => AssertFileMappings(component.FileMappings, condition, all));
+                        return category.Components.Items.map((component) => AssertFileMappings(component.FileMappings.Items, condition, all));
                     });
 
                 return all ? values.every((value) => value) : values.some((value) => value);
@@ -379,8 +379,8 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                         async () =>
                         {
                             ok(
-                                generator.ComponentCollection.Categories.some(
-                                    (category) => category.Components.some(
+                                generator.ComponentCollection.Categories.Items.some(
+                                    (category) => category.Components.Items.some(
                                         (component) => component.ID === superComponentID)));
 
                             ok(
@@ -397,7 +397,7 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                         async () =>
                         {
                             strictEqual(
-                                generator.ComponentCollection.Categories.filter(
+                                generator.ComponentCollection.Categories.Items.filter(
                                     (category) => category.DisplayName === categoryName).length,
                                 1);
                         });
@@ -417,8 +417,8 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                         async () =>
                         {
                             ok(
-                                generator.ComponentCollection.Categories.some(
-                                    (category) => category.Components.some(
+                                generator.ComponentCollection.Categories.Items.some(
+                                    (category) => category.Components.Items.some(
                                         (component) => component.ID === subComponentID)));
 
                             ok(

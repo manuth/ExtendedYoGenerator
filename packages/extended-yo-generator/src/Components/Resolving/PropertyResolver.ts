@@ -17,7 +17,7 @@ import { Resolver } from "./Resolver";
  * @template TOptions
  * The type of the options of the generator.
  */
-export class PropertyResolver<TObject, TTarget, TSettings, TOptions> extends Resolver<TTarget, TSettings, TOptions>
+export abstract class PropertyResolver<TObject, TTarget, TSettings, TOptions> extends Resolver<TTarget, TSettings, TOptions>
 {
     /**
      * The generator of the component.
@@ -68,6 +68,11 @@ export class PropertyResolver<TObject, TTarget, TSettings, TOptions> extends Res
     {
         this.Object = value;
     }
+
+    /**
+     * Gets the resolved representation of the object.
+     */
+    public abstract get Result(): TObject;
 
     /**
      * Resolves a value.

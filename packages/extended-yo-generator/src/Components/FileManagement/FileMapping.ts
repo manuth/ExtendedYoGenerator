@@ -35,6 +35,14 @@ export class FileMapping<TSettings, TOptions> extends PropertyResolver<IFileMapp
     /**
      * @inheritdoc
      */
+    public get Result(): IFileMapping<TSettings, TOptions>
+    {
+        return this;
+    }
+
+    /**
+     * @inheritdoc
+     */
     public get ID(): string
     {
         return this.Object.ID;

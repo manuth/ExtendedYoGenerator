@@ -13,7 +13,7 @@ import { PropertyResolver } from "./Resolving/PropertyResolver";
  * @template TOptions
  * The type of the options of the generator.
  */
-export class ComponentCategory<TSettings, TOptions> extends PropertyResolver<IComponentCategory<TSettings, TOptions>, ComponentCategory<TSettings, TOptions>, TSettings, TOptions> implements IComponentCategory<TSettings, TOptions>
+export class ComponentCategory<TSettings, TOptions> extends PropertyResolver<IComponentCategory<TSettings, TOptions>, ComponentCategory<TSettings, TOptions>, TSettings, TOptions>
 {
     /**
      * An object for editing the components of this category.
@@ -67,9 +67,9 @@ export class ComponentCategory<TSettings, TOptions> extends PropertyResolver<ICo
     }
 
     /**
-     * Gets an object for editing the components of the category.
+     * Gets the components of the category.
      */
-    public get ComponentCollection(): ComponentOptionCollection
+    public get Components(): ComponentOptionCollection
     {
         if (this.components === null)
         {
@@ -89,10 +89,14 @@ export class ComponentCategory<TSettings, TOptions> extends PropertyResolver<ICo
     }
 
     /**
-     * Gets the components of the category.
+     * @inheritdoc
      */
-    public get Components(): Array<Component<TSettings, TOptions>>
+    public get Result(): IComponentCategory<TSettings, TOptions>
     {
-        return this.ComponentCollection.Items;
+        return {
+            ID: this.ID,
+            DisplayName: this.DisplayName,
+            Components: this.Components.Items.map((item) => item.Result)
+        };
     }
 }

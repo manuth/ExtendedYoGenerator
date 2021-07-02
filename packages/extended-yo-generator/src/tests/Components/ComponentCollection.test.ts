@@ -130,7 +130,7 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                                 }
                             ];
 
-                            strictEqual(collection.Categories[0].DisplayName, testName);
+                            strictEqual(collection.Categories.Items[0].DisplayName, testName);
                         });
                 });
 
@@ -164,7 +164,7 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                         `Checking whether separators for all \`${nameof<MyComponentCollection>((c) => c.Categories)}\` are present…`,
                         () =>
                         {
-                            for (let category of collection.Categories)
+                            for (let category of collection.Categories.Items)
                             {
                                 ok(
                                     Array.isArray(collection.ComponentChoiceQuestion.choices) &&
@@ -178,10 +178,10 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                         });
 
                     test(
-                        `Checking whether choices for all \`${nameof<MyComponentCollection>((c) => c.Categories[0].Components)}\` are present…`,
+                        `Checking whether choices for all \`${nameof<MyComponentCollection>((c) => c.Categories.Items[0].Components)}\` are present…`,
                         () =>
                         {
-                            for (let component of collection.Categories.flatMap((category) => category.Components))
+                            for (let component of collection.Categories.Items.flatMap((category) => category.Components.Items))
                             {
                                 ok(
                                     Array.isArray(collection.ComponentChoiceQuestion.choices) &&
@@ -198,7 +198,7 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                         `Checking whether components with \`${nameof<Component<any, any>>((c) => c.DefaultEnabled)}\` set to \`${true}\` are enabled by default…`,
                         () =>
                         {
-                            for (let component of collection.Categories.flatMap((category) => category.Components))
+                            for (let component of collection.Categories.Items.flatMap((category) => category.Components.Items))
                             {
                                 strictEqual(
                                     Array.isArray(collection.ComponentChoiceQuestion.default) &&
@@ -229,8 +229,8 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                     setup(
                         () =>
                         {
-                            component = random.pick(random.pick(collection.Categories).Components);
-                            question = random.pick(component.Questions);
+                            component = random.pick(random.pick(collection.Categories.Items).Components.Items);
+                            question = random.pick(component.Questions.Items);
                             componentQuestion = collection.ComponentQuestions.find((item) => item.name === question.name);
                         });
 
@@ -259,7 +259,7 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                         "Checking whether headings for the selected components are displayed to the user…",
                         async () =>
                         {
-                            let componentSample = random.sample(collection.Categories.flatMap((category) => category.Components), 2);
+                            let componentSample = random.sample(collection.Categories.Items.flatMap((category) => category.Components.Items), 2);
                             let enabledComponent = componentSample[0];
                             let disabledComponent = componentSample[1];
                             let logMessages: string[] = [];

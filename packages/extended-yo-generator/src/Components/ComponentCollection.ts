@@ -18,7 +18,7 @@ import { PropertyResolver } from "./Resolving/PropertyResolver";
  * @template TOptions
  * The type of the options of the generator.
  */
-export class ComponentCollection<TSettings extends IGeneratorSettings, TOptions> extends PropertyResolver<IComponentCollection<TSettings, TOptions>, ComponentCollection<TSettings, TOptions>, TSettings, TOptions> implements IComponentCollection<TSettings, TOptions>
+export class ComponentCollection<TSettings extends IGeneratorSettings, TOptions> extends PropertyResolver<IComponentCollection<TSettings, TOptions>, ComponentCollection<TSettings, TOptions>, TSettings, TOptions>
 {
     /**
      * A component for editing the categories of this collection.
@@ -56,9 +56,9 @@ export class ComponentCollection<TSettings extends IGeneratorSettings, TOptions>
     }
 
     /**
-     * Gets a component for editing the categories of this collection.
+     * Gets or sets the component-categories.
      */
-    public get CategoryCollection(): CategoryOptionCollection
+    public get Categories(): CategoryOptionCollection
     {
         if (this.categories === null)
         {
@@ -78,14 +78,6 @@ export class ComponentCollection<TSettings extends IGeneratorSettings, TOptions>
     }
 
     /**
-     * Gets or sets the component-categories.
-     */
-    public get Categories(): Array<ComponentCategory<TSettings, TOptions>>
-    {
-        return this.CategoryCollection.Items;
-    }
-
-    /**
      * Gets the question to ask for the components.
      */
     protected get ComponentChoiceQuestion(): CheckboxQuestion<TSettings>
@@ -93,11 +85,11 @@ export class ComponentCollection<TSettings extends IGeneratorSettings, TOptions>
         let components: ChoiceCollection<TSettings> = [];
         let defaults: string[] = [];
 
-        for (let category of this.Categories ?? [])
+        for (let category of this.Categories.Items ?? [])
         {
             components.push(new Separator(category.DisplayName));
 
-            for (let component of category.Components)
+            for (let component of category.Components.Items)
             {
                 let isDefault = component.DefaultEnabled ?? false;
 
@@ -131,13 +123,13 @@ export class ComponentCollection<TSettings extends IGeneratorSettings, TOptions>
     {
         let result: Array<Question<TSettings>> = [];
 
-        for (let category of this.Categories ?? [])
+        for (let category of this.Categories.Items ?? [])
         {
-            for (let component of category.Components)
+            for (let component of category.Components.Items)
             {
-                for (let i = 0; i < component.Questions?.length ?? 0; i++)
+                for (let i = 0; i < component.Questions.Items.length ?? 0; i++)
                 {
-                    let question = component.Questions[i];
+                    let question = component.Questions.Items[i];
 
                     result.push(
                         {
@@ -192,5 +184,16 @@ export class ComponentCollection<TSettings extends IGeneratorSettings, TOptions>
             this.ComponentChoiceQuestion,
             ...this.ComponentQuestions
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public get Result(): IComponentCollection<TSettings, TOptions>
+    {
+        return {
+            Question: this.Question,
+            Categories: this.Categories.Items.map((item) => item.Result)
+        };
     }
 }

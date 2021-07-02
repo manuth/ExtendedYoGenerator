@@ -144,13 +144,13 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     {
         let result = this.ResolvedFileMappings;
 
-        for (let category of this.ComponentCollection?.Categories ?? [])
+        for (let category of this.ComponentCollection?.Categories?.Items ?? [])
         {
-            for (let component of category.Components)
+            for (let component of category.Components.Items)
             {
                 if ((this.Settings[GeneratorSettingKey.Components] ?? []).includes(component.ID))
                 {
-                    result.AddRange(component.FileMappings);
+                    result.AddRange(component.FileMappings.Items);
                 }
             }
         }

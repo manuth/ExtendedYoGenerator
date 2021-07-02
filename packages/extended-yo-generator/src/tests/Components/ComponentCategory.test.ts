@@ -55,7 +55,7 @@ export function ComponentCategoryTests(context: TestContext<TestGenerator, ITest
                                 }
                             ];
 
-                            strictEqual(category.Components[0].ID, testID);
+                            strictEqual(category.Components.Items[0].ID, testID);
                         });
                 });
         });

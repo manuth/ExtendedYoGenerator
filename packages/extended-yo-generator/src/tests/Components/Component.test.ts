@@ -71,7 +71,7 @@ export function ComponentTests(context: TestContext<TestGenerator, ITestGenerato
                                 }
                             ];
 
-                            strictEqual(component.FileMappings[0].Destination, testFile.FullName);
+                            strictEqual(component.FileMappings.Items[0].Destination, testFile.FullName);
                         });
                 });
         });

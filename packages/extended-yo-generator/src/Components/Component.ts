@@ -15,17 +15,17 @@ import { PropertyResolver } from "./Resolving/PropertyResolver";
  * @template TOptions
  * The type of the options of the generator.
  */
-export class Component<TSettings, TOptions> extends PropertyResolver<IComponent<TSettings, TOptions>, Component<TSettings, TOptions>, TSettings, TOptions> implements IComponent<TSettings, TOptions>
+export class Component<TSettings, TOptions> extends PropertyResolver<IComponent<TSettings, TOptions>, Component<TSettings, TOptions>, TSettings, TOptions>
 {
     /**
      * A component for editing the questions of this component.
      */
-    private questionCollection: ObjectCollection<Question<TSettings>> = null;
+    private questions: ObjectCollection<Question<TSettings>> = null;
 
     /**
      * A component for editing the file-mappings of this component.
      */
-    private fileMappingCollection: FileMappingOptionCollection = null;
+    private fileMappings: FileMappingOptionCollection = null;
 
     /**
      * Initializes a new instance of the {@link Component `Component<TSettings, TOptions>`} class.
@@ -90,34 +90,26 @@ export class Component<TSettings, TOptions> extends PropertyResolver<IComponent<
     }
 
     /**
-     * Gets the a component for editing the questions of the component.
-     */
-    public get QuestionCollection(): ObjectCollection<Question<TSettings>>
-    {
-        if (this.questionCollection === null)
-        {
-            this.questionCollection = new ObjectCollection(this.Object.Questions ?? []);
-        }
-
-        return this.questionCollection;
-    }
-
-    /**
      * Gets additional questions related to the component.
      */
-    public get Questions(): Array<Question<TSettings>>
+    public get Questions(): ObjectCollection<Question<TSettings>>
     {
-        return this.QuestionCollection.Items;
+        if (this.questions === null)
+        {
+            this.questions = new ObjectCollection(this.Object.Questions ?? []);
+        }
+
+        return this.questions;
     }
 
     /**
-     * Gets a component for editing the file-mappings of the component.
+     * Gets the file-mappings of the component.
      */
-    public get FileMappingCollection(): FileMappingOptionCollection
+    public get FileMappings(): FileMappingOptionCollection
     {
-        if (this.fileMappingCollection === null)
+        if (this.fileMappings === null)
         {
-            this.fileMappingCollection = new FileMappingOptionCollection(
+            this.fileMappings = new FileMappingOptionCollection(
                 this.Generator,
                 () =>
                 {
@@ -129,14 +121,20 @@ export class Component<TSettings, TOptions> extends PropertyResolver<IComponent<
                 });
         }
 
-        return this.fileMappingCollection;
+        return this.fileMappings;
     }
 
     /**
-     * Gets the file-mappings of the component.
+     * @inheritdoc
      */
-    public get FileMappings(): Array<FileMapping<TSettings, TOptions>>
+    public get Result(): IComponent<TSettings, TOptions>
     {
-        return this.FileMappingCollection.Items;
+        return {
+            ID: this.ID,
+            DisplayName: this.DisplayName,
+            DefaultEnabled: this.DefaultEnabled,
+            Questions: this.Questions.Items,
+            FileMappings: () => this.FileMappings.Items
+        };
     }
 }
