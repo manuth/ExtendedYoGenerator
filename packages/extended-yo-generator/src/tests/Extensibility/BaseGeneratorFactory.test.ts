@@ -170,7 +170,7 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                     {
                         if (category.DisplayName === categoryName)
                         {
-                            category.Components.Add(
+                            category.ComponentCollection.Add(
                                 {
                                     ID: injectedComponentID,
                                     DisplayName: "",
