@@ -31,33 +31,9 @@ export abstract class PropertyResolverCollection<TObject extends IUniqueObject, 
      * @param items
      * The items to edit.
      */
-    public constructor(generator: IGenerator<any, any>, items: TTarget[]);
-
-    /**
-     * Initializes a new instance of the {@link PropertyResolverCollection `PropertyResolverCollection<TObject, TTarget>`} class.
-     *
-     * @param args
-     * The arguments for initializing the new collection.
-     */
-    public constructor(...args: any[])
+    public constructor(generator: IGenerator<any, any>, items: TTarget[])
     {
-        let generator: IGenerator<any, any>;
-        let params: any[];
-
-        if (
-            args.length === 2 &&
-            nameof<IGenerator<any, any>>((generator) => generator.Settings) in args[0] &&
-            Array.isArray(args[1]))
-        {
-            generator = args[0];
-            params = args[1];
-        }
-        else
-        {
-            params = args;
-        }
-
-        super(params);
+        super(items);
         this.generator = generator;
     }
 

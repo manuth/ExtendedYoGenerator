@@ -115,8 +115,8 @@ export function PropertyResolverCollectionTests(context: TestContext): void
 
                             collection = new MyCollection(generator, items);
                             strictEqual(collection.Generator, generator);
-                            strictEqual(collection.length, items.length);
-                            ok(items.every((item) => collection.includes(item)));
+                            strictEqual(collection.Items.length, items.length);
+                            ok(items.every((item) => collection.Items.includes(item)));
                         });
                 });
 
@@ -130,10 +130,10 @@ export function PropertyResolverCollectionTests(context: TestContext): void
                         {
                             let strippedItem = new MyFileMapping(generator, fileMappingGenerator.next().value);
                             let replacement = new FileMapping(generator, fileMappingGenerator.next().value);
-                            collection.push(strippedItem);
-                            ok(collection.includes(strippedItem));
+                            collection.Add(strippedItem);
+                            ok(collection.Items.includes(strippedItem));
                             collection.Replace(MyFileMapping, replacement);
-                            ok(!collection.includes(strippedItem));
+                            ok(!collection.Items.includes(strippedItem));
                             throws(() => collection.Get(MyFileMapping));
                         });
 
@@ -146,14 +146,14 @@ export function PropertyResolverCollectionTests(context: TestContext): void
 
                             let assertion = (): boolean =>
                             {
-                                return collection.map((fileMapping) => fileMapping.Object).includes(strippedItem);
+                                return collection.Items.map((fileMapping) => fileMapping.Object).includes(strippedItem);
                             };
 
                             collection.Add(strippedItem);
                             ok(assertion());
                             collection.Replace(MyFileMappingOptions, replacement);
                             ok(!assertion());
-                            ok(collection.includes(replacement));
+                            ok(collection.Items.includes(replacement));
                             throws(() => collection.Get(MyFileMappingOptions));
                         });
 
@@ -164,10 +164,10 @@ export function PropertyResolverCollectionTests(context: TestContext): void
                             let strippedItem = new MyFileMapping(generator, fileMappingGenerator.next().value);
                             let replacement = fileMappingGenerator.next().value;
                             collection.Add(strippedItem);
-                            ok(collection.includes(strippedItem));
+                            ok(collection.Items.includes(strippedItem));
                             collection.Replace(MyFileMapping, replacement);
-                            ok(!collection.includes(strippedItem));
-                            ok(collection.some((item) => item.Object === replacement));
+                            ok(!collection.Items.includes(strippedItem));
+                            ok(collection.Items.some((item) => item.Object === replacement));
                         });
                 });
 
@@ -182,7 +182,7 @@ export function PropertyResolverCollectionTests(context: TestContext): void
                             let addition = new MyFileMapping(generator, fileMappingGenerator.next().value);
                             collection.Clear();
                             collection.Add(addition);
-                            ok(collection.includes(addition));
+                            ok(collection.Items.includes(addition));
                             doesNotThrow(() => collection.Get(MyFileMapping));
                         });
 
@@ -193,7 +193,7 @@ export function PropertyResolverCollectionTests(context: TestContext): void
                             let addition = new MyFileMappingOptions(generator);
                             collection.Clear();
                             collection.Add(addition);
-                            ok(collection.some((item) => item.Object === addition));
+                            ok(collection.Items.some((item) => item.Object === addition));
                             doesNotThrow(() => collection.Get(MyFileMappingOptions));
                         });
                 });

@@ -80,17 +80,25 @@ export class Component<TSettings, TOptions> extends PropertyResolver<IComponent<
     }
 
     /**
-     * Gets or sets additional questions related to the component.
+     * Gets the a component for editing the questions of the component.
      */
-    public get Questions(): ObjectCollection<Question<TSettings>>
+    public get QuestionCollection(): ObjectCollection<Question<TSettings>>
     {
-        return new ObjectCollection(this.Object.Questions);
+        return new ObjectCollection(this.Object.Questions ?? []);
     }
 
     /**
-     * Gets or sets the file-mappings of the component.
+     * Gets additional questions related to the component.
      */
-    public get FileMappings(): FileMappingOptionCollection
+    public get Questions(): Array<Question<TSettings>>
+    {
+        return this.QuestionCollection.Items;
+    }
+
+    /**
+     * Gets a component for editing the file-mappings of the component.
+     */
+    public get FileMappingCollection(): FileMappingOptionCollection
     {
         return new FileMappingOptionCollection(
             this.Generator,
@@ -99,5 +107,13 @@ export class Component<TSettings, TOptions> extends PropertyResolver<IComponent<
                 {
                     return new FileMapping(this.Generator, fileMapping);
                 }));
+    }
+
+    /**
+     * Gets the file-mappings of the component.
+     */
+    public get FileMappings(): Array<FileMapping<TSettings, TOptions>>
+    {
+        return this.FileMappingCollection.Items;
     }
 }

@@ -49,8 +49,8 @@ export function ObjectCollectionTests(): void
                         "Checking whether all items are added to the collection…",
                         () =>
                         {
-                            collection.includes(tempDir);
-                            collection.includes(tempFile);
+                            collection.Items.includes(tempDir);
+                            collection.Items.includes(tempFile);
                         });
                 });
 
@@ -64,7 +64,7 @@ export function ObjectCollectionTests(): void
                         {
                             strictEqual(collection.Get(TempDirectory), tempDir);
                             strictEqual(collection.Get(TempFile), tempFile);
-                            strictEqual(collection.Get(TempFileSystem), collection.find((item) => item instanceof TempFileSystem));
+                            strictEqual(collection.Get(TempFileSystem), collection.Items.find((item) => item instanceof TempFileSystem));
                         });
 
                     test(
@@ -91,8 +91,8 @@ export function ObjectCollectionTests(): void
 
                             throws(() => collection.Get(TempDirectory));
                             strictEqual(collection.Get(TempFile), tempFile);
-                            ok(!collection.includes(tempDir));
-                            ok(collection.includes(tempFile));
+                            ok(!collection.Items.includes(tempDir));
+                            ok(collection.Items.includes(tempFile));
                         });
 
                     test(
@@ -111,9 +111,9 @@ export function ObjectCollectionTests(): void
                                 ]);
 
                             collection.Replace((item: string) => item === stripped, replacement);
-                            ok(collection.includes(staticItem));
-                            ok(!collection.includes(stripped));
-                            strictEqual(collection.filter((item) => item === replacement).length, 2);
+                            ok(collection.Items.includes(staticItem));
+                            ok(!collection.Items.includes(stripped));
+                            strictEqual(collection.Items.filter((item) => item === replacement).length, 2);
                         });
                 });
 
@@ -126,8 +126,8 @@ export function ObjectCollectionTests(): void
                         () =>
                         {
                             collection.Remove(TempDirectory);
-                            ok(!collection.includes(tempDir));
-                            ok(collection.includes(tempFile));
+                            ok(!collection.Items.includes(tempDir));
+                            ok(collection.Items.includes(tempFile));
                         });
 
                     test(
@@ -149,7 +149,7 @@ export function ObjectCollectionTests(): void
                         () =>
                         {
                             collection.Clear();
-                            strictEqual(collection.length, 0);
+                            strictEqual(collection.Items.length, 0);
                         });
                 });
         });

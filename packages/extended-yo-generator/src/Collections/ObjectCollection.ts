@@ -1,6 +1,10 @@
 import { AbstractConstructor } from "../AbstractConstructor";
 import { Filter } from "../Filter";
 import { Predicate } from "../Predicate";
+import { CollectionActionType } from "./CollectionActionType";
+import { IAdditionAction } from "./IAdditionAction";
+import { IRemovalAction } from "./IRemovalAction";
+import { ISubstitutionAction } from "./ISubstitutionAction";
 
 /**
  * Provides the functionality to edit a collection of objects.
@@ -8,32 +12,60 @@ import { Predicate } from "../Predicate";
  * @template T
  * The type of the items in this collection.
  */
-export class ObjectCollection<T extends any> extends Array<T>
+export class ObjectCollection<T extends any>
 {
+    /**
+     * The items of the collection.
+     */
+    private items: readonly T[];
+
+    /**
+     * The actions to apply to the inner collection.
+     */
+    private actions: Array<IRemovalAction<T> | ISubstitutionAction<T> | IAdditionAction<T>> = [];
+
     /**
      * Initializes a new instance of the {@link ObjectCollection `ObjectCollection<T>`} class.
      *
      * @param items
      * The items of the collection.
      */
-    public constructor(items: T[]);
+    public constructor(items: T[])
+    {
+        this.items = items;
+    }
 
     /**
-     * Initializes a new instance of the {@link ObjectCollection `ObjectCollection<T>`} class.
-     *
-     * @param args
-     * The arguments for initializing the new collection.
+     * Gets the source of the collection.
      */
-    public constructor(...args: any[])
+    protected get Source(): T[]
     {
-        if (
-            args.length === 1 &&
-            Array.isArray(args[0]))
+        return [
+            ...this.items
+        ];
+    }
+
+    /**
+     * Gets the items of the collection.
+     */
+    public get Items(): T[]
+    {
+        let items = this.Source;
+
+        for (let action of this.Actions)
         {
-            args = args[0];
+            this.ExecuteAction(items, action);
         }
 
-        super(...args);
+        return items;
+    }
+
+    /**
+     * Gets the actions to apply to the inner collection.
+     */
+    protected get Actions(): Array<IRemovalAction<T> | ISubstitutionAction<T> | IAdditionAction<T>>
+    {
+        return this.actions;
     }
 
     /**
@@ -69,15 +101,16 @@ export class ObjectCollection<T extends any> extends Array<T>
      */
     public Get(filter: AbstractConstructor<T> | Predicate<T>): T
     {
-        let indexes = this.FindIndexes(filter);
+        let items = this.Items;
+        let index = this.FindIndexes(items, this.GetPredicate(filter)).next().value;
 
-        if (indexes.length === 0)
+        if (index === null)
         {
             throw new RangeError(`An item which applies to the specified filter \`${filter}\` doesn't exist!`);
         }
         else
         {
-            return this[this.FindIndexes(filter)[0]];
+            return items[index];
         }
     }
 
@@ -89,7 +122,11 @@ export class ObjectCollection<T extends any> extends Array<T>
      */
     public Add(item: T): void
     {
-        this.push(item);
+        this.Actions.push(
+            {
+                Type: CollectionActionType.Addition,
+                Item: item
+            });
     }
 
     /**
@@ -153,10 +190,12 @@ export class ObjectCollection<T extends any> extends Array<T>
         }
         else
         {
-            for (let index of this.FindIndexes(filter).reverse())
-            {
-                this[index] = (replacement as Filter<T>)(this[index]);
-            }
+            this.Actions.push(
+                {
+                    Type: CollectionActionType.Substitution,
+                    Filter: this.GetPredicate(filter),
+                    Replacement: replacement as Filter<T>
+                });
         }
     }
 
@@ -184,10 +223,11 @@ export class ObjectCollection<T extends any> extends Array<T>
      */
     public Remove(filter: AbstractConstructor<T> | Predicate<T>): void
     {
-        for (let i of this.FindIndexes(filter).reverse())
-        {
-            this.splice(i, 1);
-        }
+        this.Actions.push(
+            {
+                Type: CollectionActionType.Removal,
+                Filter: this.GetPredicate(filter)
+            });
     }
 
     /**
@@ -195,11 +235,15 @@ export class ObjectCollection<T extends any> extends Array<T>
      */
     public Clear(): void
     {
-        this.splice(0, this.length);
+        this.Actions.splice(0, this.Actions.length);
+        this.Remove(() => true);
     }
 
     /**
-     * Finds the index of the first item which applies to the specified {@link filter `filter`}.
+     * Finds the index of the specified {@link items `items`} which apply to the specified {@link filter `filter`}.
+     *
+     * @param items
+     * The items to search for the specified {@link filter `filter`}.
      *
      * @param filter
      * The filter to find an index by.
@@ -207,19 +251,22 @@ export class ObjectCollection<T extends any> extends Array<T>
      * @returns
      * The index of the item that was found.
      */
-    protected FindIndexes(filter: AbstractConstructor<T> | Predicate<T>): number[]
+    protected FindIndexes(items: readonly T[], filter: Predicate<T>): Generator<number, null>
     {
-        let result: number[] = [];
+        let self = this;
 
-        for (let i = 0; i < this.length; i++)
+        return function*(): Generator<number, null>
         {
-            if (this.GetPredicate(filter)(this[i]))
+            for (let i = 0; i < items.length; i++)
             {
-                result.push(i);
+                if (self.GetPredicate(filter)(items[i]))
+                {
+                    yield i;
+                }
             }
-        }
 
-        return result;
+            return null;
+        }();
     }
 
     /**
@@ -265,6 +312,60 @@ export class ObjectCollection<T extends any> extends Array<T>
         else
         {
             return filter;
+        }
+    }
+
+    /**
+     * Executes the specified {@link action `action`} on the specified {@link items `items`}.
+     *
+     * @param items
+     * The items to execute the action on.
+     *
+     * @param action
+     * The action to execute.
+     */
+    protected ExecuteAction(items: T[], action: IRemovalAction<T> | ISubstitutionAction<T> | IAdditionAction<T>): void
+    {
+        switch (action.Type)
+        {
+            case CollectionActionType.Addition:
+                items.push(action.Item);
+                break;
+            case CollectionActionType.Substitution:
+            case CollectionActionType.Removal:
+                let innerAction: (indexes: number[]) => void;
+
+                if (action.Type === CollectionActionType.Removal)
+                {
+                    innerAction = (indexes) =>
+                    {
+                        for (let index of indexes.reverse())
+                        {
+                            items.splice(index, 1);
+                        }
+                    };
+                }
+                else
+                {
+                    innerAction = (indexes) =>
+                    {
+                        for (let index of indexes)
+                        {
+                            items[index] = action.Replacement(items[index]);
+                        }
+                    };
+                }
+
+                let indexGenerator = this.FindIndexes(items, action.Filter);
+                let indexes: number[] = [];
+
+                for (let current = indexGenerator.next(); !current.done; current = indexGenerator.next())
+                {
+                    indexes.push(current.value);
+                }
+
+                innerAction(indexes);
+                break;
         }
     }
 }

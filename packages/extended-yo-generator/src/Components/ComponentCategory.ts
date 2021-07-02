@@ -62,9 +62,9 @@ export class ComponentCategory<TSettings, TOptions> extends PropertyResolver<ICo
     }
 
     /**
-     * Gets the components of the category.
+     * Gets an object for editing the components of the category.
      */
-    public get Components(): ComponentOptionCollection
+    public get ComponentCollection(): ComponentOptionCollection
     {
         return new ComponentOptionCollection(
             this.Generator,
@@ -73,5 +73,13 @@ export class ComponentCategory<TSettings, TOptions> extends PropertyResolver<ICo
                 {
                     return new Component(this.Generator, component);
                 }));
+    }
+
+    /**
+     * Gets the components of the category.
+     */
+    public get Components(): Array<Component<TSettings, TOptions>>
+    {
+        return this.ComponentCollection.Items;
     }
 }

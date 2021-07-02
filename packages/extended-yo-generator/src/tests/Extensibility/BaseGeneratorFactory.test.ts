@@ -318,7 +318,7 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                             let condition: FileMappingCondition = (fileMapping) =>
                                 fileMapping.Destination === generator.destinationPath(destinationFile);
 
-                            ok(AssertFileMappings(generator.FileMappingCollection, condition, true));
+                            ok(AssertFileMappings(generator.FileMappingCollection.Items, condition, true));
                             ok(AssertComponentFileMappings(generator.ComponentCollection, condition, true));
                         });
 
@@ -328,7 +328,7 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                         {
                             ok(
                                 AssertFileMappings(
-                                    generator.FileMappingCollection,
+                                    generator.FileMappingCollection.Items,
                                     (fileMapping) => fileMapping.Source === generator.Base.templatePath(superSourceFile)));
                         });
 
@@ -366,7 +366,7 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                         {
                             ok(
                                 AssertFileMappings(
-                                    generator.FileMappingCollection,
+                                    generator.FileMappingCollection.Items,
                                     (fileMapping) => fileMapping.Source === generator.Base.templatePath(superSourceFile)));
                         });
 
@@ -391,7 +391,7 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                         {
                             ok(
                                 AssertFileMappings(
-                                    generator.FileMappingCollection,
+                                    generator.FileMappingCollection.Items,
                                     (fileMapping) => fileMapping.Source === generator.Base.templatePath(injectedSourceFile)));
                         });
 

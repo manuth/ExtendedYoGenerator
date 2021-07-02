@@ -150,7 +150,10 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
             {
                 if ((this.Settings[GeneratorSettingKey.Components] ?? []).includes(component.ID))
                 {
-                    result.push(...component.FileMappings);
+                    for (let fileMapping of component.FileMappings)
+                    {
+                        result.Add(fileMapping);
+                    }
                 }
             }
         }
@@ -286,7 +289,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
      */
     public async prompting(): Promise<void>
     {
-        Object.assign(this.Settings, await this.prompt(this.QuestionCollection));
+        Object.assign(this.Settings, await this.prompt(this.QuestionCollection.Items));
         this.log();
     }
 
@@ -295,7 +298,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
      */
     public async writing(): Promise<void>
     {
-        for (let fileMapping of this.FileMappingCollection)
+        for (let fileMapping of this.FileMappingCollection.Items)
         {
             await this.ProcessFile(fileMapping);
         }

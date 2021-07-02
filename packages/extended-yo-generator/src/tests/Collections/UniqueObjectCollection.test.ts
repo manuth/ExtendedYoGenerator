@@ -50,7 +50,7 @@ export function UniqueObjectCollectionTests(): void
                         `Checking whether items can be queried by their \`${nameof<IUniqueObject>((o) => o.ID)}\`…`,
                         () =>
                         {
-                            collection.push(randomItem);
+                            collection.Add(randomItem);
                             strictEqual(collection.Get(randomItem.ID), randomItem);
                         });
                 });
@@ -64,10 +64,11 @@ export function UniqueObjectCollectionTests(): void
                         () =>
                         {
                             let replacement = randomItemGenerator.next().value;
-                            collection.push(randomItem, replacement);
+                            collection.Add(randomItem);
+                            collection.Add(replacement);
                             collection.Replace(randomItem.ID, replacement);
-                            ok(!collection.some((item) => item === randomItem));
-                            strictEqual(collection.filter((item) => item === replacement).length, 2);
+                            ok(!collection.Items.some((item) => item === randomItem));
+                            strictEqual(collection.Items.filter((item) => item === replacement).length, 2);
                         });
                 });
 
@@ -81,7 +82,8 @@ export function UniqueObjectCollectionTests(): void
                         {
                             let strippedItem = randomItemGenerator.next().value;
                             collection.Clear();
-                            collection.push(randomItem, strippedItem);
+                            collection.Add(randomItem);
+                            collection.Add(strippedItem);
                             collection.Remove(strippedItem.ID);
                             doesNotThrow(() => collection.Get(randomItem.ID));
                             throws(() => collection.Get(strippedItem.ID));

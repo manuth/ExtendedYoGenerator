@@ -1,6 +1,7 @@
 import { FileMappingOptionCollection } from "../Collections/FileMappingOptionCollection";
 import { ComponentCollection } from "../Components/ComponentCollection";
 import { IFileMapping } from "../Components/FileManagement/IFileMapping";
+import { IComponentCategory } from "../Components/IComponentCategory";
 import { IComponentCollection } from "../Components/IComponentCollection";
 import { Generator } from "../Generator";
 import { GeneratorConstructor } from "../GeneratorConstructor";
@@ -129,7 +130,26 @@ export class BaseGeneratorFactory<T extends GeneratorConstructor> extends Object
                      */
                     public override get Components(): IComponentCollection<any, any>
                     {
-                        return this.Base.ComponentCollection;
+                        let components = this.Base.ComponentCollection as IComponentCollection<any, any>;
+
+                        return {
+                            ...components,
+                            Question: components.Question,
+                            Categories: [
+                                ...components.Categories.map(
+                                    (category): IComponentCategory<any, any> =>
+                                    {
+                                        return {
+                                            ...category,
+                                            ID: category.ID,
+                                            DisplayName: category.DisplayName,
+                                            Components: [
+                                                ...category.Components
+                                            ]
+                                        };
+                                    })
+                            ]
+                        };
                     }
 
                     /**
@@ -137,7 +157,7 @@ export class BaseGeneratorFactory<T extends GeneratorConstructor> extends Object
                      */
                     public override get FileMappings(): Array<IFileMapping<any, any>>
                     {
-                        return this.Base.ResolvedFileMappings;
+                        return this.Base.ResolvedFileMappings.Items;
                     }
                 } as GeneratorExtensionConstructor<TConstructor>;
             })(base);

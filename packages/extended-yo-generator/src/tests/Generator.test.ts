@@ -511,13 +511,13 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                         "Checking whether a resolved file-mapping is created for each file-mapping…",
                         async () =>
                         {
-                            strictEqual(generator.ResolvedFileMappings.length, generator.FileMappings.length);
+                            strictEqual(generator.ResolvedFileMappings.Items.length, generator.FileMappings.length);
 
                             ok(
                                 generator.FileMappings.every(
                                     (fileMappingOptions) =>
                                     {
-                                        return generator.ResolvedFileMappings.some(
+                                        return generator.ResolvedFileMappings.Items.some(
                                             (fileMapping) =>
                                             {
                                                 return fileMapping.Object === fileMappingOptions;
@@ -584,7 +584,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                         async () =>
                         {
                             strictEqual(
-                                generator.FileMappingCollection.filter(
+                                generator.FileMappingCollection.Items.filter(
                                     (fileMapping) => fileMapping.Object.Destination === fileMappingDestination).length,
                                 1);
                         });
@@ -594,7 +594,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                         async () =>
                         {
                             strictEqual(
-                                generator.FileMappingCollection.filter(
+                                generator.FileMappingCollection.Items.filter(
                                     (fileMapping) => fileMapping.Object.Destination === enabledComponentDestination).length,
                                 1);
                         });
@@ -604,7 +604,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                         async () =>
                         {
                             ok(
-                                !generator.FileMappingCollection.some(
+                                !generator.FileMappingCollection.Items.some(
                                     (fileMapping) => fileMapping.Object.Destination === disabledComponentDestination));
                         });
                 });

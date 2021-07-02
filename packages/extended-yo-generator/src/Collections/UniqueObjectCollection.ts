@@ -18,24 +18,9 @@ export class UniqueObjectCollection<T extends IUniqueObject> extends ObjectColle
      * @param items
      * The items of the collection.
      */
-    public constructor(items: T[]);
-
-    /**
-     * Initializes a new instance of the {@link UniqueObjectCollection `UniqueObjectCollection<T>`} class.
-     *
-     * @param args
-     * The arguments for initializing the new collection.
-     */
-    public constructor(...args: any[])
+    public constructor(items: T[])
     {
-        if (
-            args.length === 1 &&
-            Array.isArray(args[0]))
-        {
-            args = args[0];
-        }
-
-        super(...(args as [any]));
+        super(items);
     }
 
     /**
@@ -198,20 +183,6 @@ export class UniqueObjectCollection<T extends IUniqueObject> extends ObjectColle
     public override Remove(filter: string | AbstractConstructor<T> | Predicate<T>): void
     {
         super.Remove(filter as any);
-    }
-
-    /**
-     * @inheritdoc
-     *
-     * @param filter
-     * The filter to find an index by.
-     *
-     * @returns
-     * The index of the item that was found.
-     */
-    protected override FindIndexes(filter: string | AbstractConstructor<T> | Predicate<T>): number[]
-    {
-        return super.FindIndexes(filter as any);
     }
 
     /**

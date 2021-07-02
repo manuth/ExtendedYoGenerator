@@ -51,9 +51,9 @@ export class ComponentCollection<TSettings extends IGeneratorSettings, TOptions>
     }
 
     /**
-     * Gets or sets the component-categories.
+     * Gets a component for editing the categories of this collection.
      */
-    public get Categories(): CategoryOptionCollection
+    public get CategoryCollection(): CategoryOptionCollection
     {
         return new CategoryOptionCollection(
             this.Generator,
@@ -62,6 +62,14 @@ export class ComponentCollection<TSettings extends IGeneratorSettings, TOptions>
                 {
                     return new ComponentCategory(this.Generator, category);
                 }));
+    }
+
+    /**
+     * Gets or sets the component-categories.
+     */
+    public get Categories(): Array<ComponentCategory<TSettings, TOptions>>
+    {
+        return this.CategoryCollection.Items;
     }
 
     /**
