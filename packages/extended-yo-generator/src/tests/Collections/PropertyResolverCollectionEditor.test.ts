@@ -1,7 +1,7 @@
 import { doesNotThrow, ok, strictEqual, throws } from "assert";
 import { TestContext } from "@manuth/extended-yo-generator-test";
 import { Random } from "random-js";
-import { PropertyResolverCollection } from "../../Collections/PropertyResolverCollection";
+import { PropertyResolverCollectionEditor } from "../../Collections/PropertyResolverCollectionEditor";
 import { FileMapping } from "../../Components/FileManagement/FileMapping";
 import { FileMappingOptions } from "../../Components/FileManagement/FileMappingOptions";
 import { IFileMapping } from "../../Components/FileManagement/IFileMapping";
@@ -14,16 +14,16 @@ import { IGenerator } from "../../IGenerator";
  * @param context
  * The test-context.
  */
-export function PropertyResolverCollectionTests(context: TestContext): void
+export function PropertyResolverCollectionEditorTests(context: TestContext): void
 {
     suite(
-        nameof(PropertyResolverCollection),
+        nameof(PropertyResolverCollectionEditor),
         () =>
         {
             /**
              * An implementation of the {@link PropertyResolverCollection `PropertyResolverCollection<TObject, TTarget>`} class for testing.
              */
-            class MyCollection extends PropertyResolverCollection<IFileMapping<any, any>, FileMapping<any, any>>
+            class MyCollection extends PropertyResolverCollectionEditor<IFileMapping<any, any>, FileMapping<any, any>>
             {
                 /**
                  * @inheritdoc
@@ -101,7 +101,7 @@ export function PropertyResolverCollectionTests(context: TestContext): void
                 });
 
             suite(
-                nameof(PropertyResolverCollection.constructor),
+                nameof(PropertyResolverCollectionEditor.constructor),
                 () =>
                 {
                     test(
@@ -121,7 +121,7 @@ export function PropertyResolverCollectionTests(context: TestContext): void
                 });
 
             suite(
-                nameof<PropertyResolverCollection<any, any>>((collection) => collection.Replace),
+                nameof<PropertyResolverCollectionEditor<any, any>>((collection) => collection.Replace),
                 () =>
                 {
                     test(
@@ -172,7 +172,7 @@ export function PropertyResolverCollectionTests(context: TestContext): void
                 });
 
             suite(
-                nameof<PropertyResolverCollection<any, any>>((collection) => collection.Add),
+                nameof<PropertyResolverCollectionEditor<any, any>>((collection) => collection.Add),
                 () =>
                 {
                     test(

@@ -2,7 +2,7 @@ import { AbstractConstructor } from "../AbstractConstructor";
 import { Filter } from "../Filter";
 import { IUniqueObject } from "../IUniqueObject";
 import { Predicate } from "../Predicate";
-import { ObjectCollection } from "./ObjectCollection";
+import { ObjectCollectionEditor } from "./ObjectCollectionEditor";
 
 /**
  * Provides the functionality to edit a collection of {@link IUniqueObject `IUniqueObject`}s.
@@ -10,10 +10,10 @@ import { ObjectCollection } from "./ObjectCollection";
  * @template T
  * The type of the items in this collection.
  */
-export class UniqueObjectCollection<T extends IUniqueObject> extends ObjectCollection<T>
+export class UniqueObjectCollectionEditor<T extends IUniqueObject> extends ObjectCollectionEditor<T>
 {
     /**
-     * Initializes a new instance of the {@link UniqueObjectCollection `UniqueObjectCollection<T>`} class.
+     * Initializes a new instance of the {@link UniqueObjectCollectionEditor `UniqueObjectCollectionEditor<T>`} class.
      *
      * @param items
      * The items of the collection.
@@ -21,7 +21,7 @@ export class UniqueObjectCollection<T extends IUniqueObject> extends ObjectColle
     public constructor(items: T[]);
 
     /**
-     * Initializes a new instance of the {@link UniqueObjectCollection `UniqueObjectCollection<T>`} class.
+     * Initializes a new instance of the {@link UniqueObjectCollectionEditor `UniqueObjectCollectionEditor<T>`} class.
      *
      * @param itemProvider
      * A function for providing the items.
@@ -29,7 +29,7 @@ export class UniqueObjectCollection<T extends IUniqueObject> extends ObjectColle
     public constructor(itemProvider: () => T[]);
 
     /**
-     * Initializes a new instance of the {@link UniqueObjectCollection `UniqueObjectCollection<T>`} class.
+     * Initializes a new instance of the {@link UniqueObjectCollectionEditor `UniqueObjectCollectionEditor<T>`} class.
      *
      * @param items
      * The items for initializing the new collection.

@@ -12,7 +12,7 @@ import { ISubstitutionAction } from "./ISubstitutionAction";
  * @template T
  * The type of the items in this collection.
  */
-export class ObjectCollection<T extends any>
+export class ObjectCollectionEditor<T extends any>
 {
     /**
      * A function for providing the items.
@@ -25,7 +25,7 @@ export class ObjectCollection<T extends any>
     private actions: Array<IRemovalAction<T> | ISubstitutionAction<T> | IAdditionAction<T>> = [];
 
     /**
-     * Initializes a new instance of the {@link ObjectCollection `ObjectCollection<T>`} class.
+     * Initializes a new instance of the {@link ObjectCollectionEditor `ObjectCollectionEditor<T>`} class.
      *
      * @param items
      * The items of the collection.
@@ -33,7 +33,7 @@ export class ObjectCollection<T extends any>
     public constructor(items: T[]);
 
     /**
-     * Initializes a new instance of the {@link ObjectCollection `ObjectCollection<T>`} class.
+     * Initializes a new instance of the {@link ObjectCollectionEditor `ObjectCollectionEditor<T>`} class.
      *
      * @param itemProvider
      * A function for providing the items to edit.
@@ -41,7 +41,7 @@ export class ObjectCollection<T extends any>
     public constructor(itemProvider: () => T[]);
 
     /**
-     * Initializes a new instance of the {@link ObjectCollection `ObjectCollection<T>`} class.
+     * Initializes a new instance of the {@link ObjectCollectionEditor `ObjectCollectionEditor<T>`} class.
      *
      * @param items
      * The items for initializing the new collection.

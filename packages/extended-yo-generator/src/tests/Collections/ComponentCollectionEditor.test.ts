@@ -1,7 +1,7 @@
 import { doesNotThrow } from "assert";
 import { TestContext } from "@manuth/extended-yo-generator-test";
 import { Random } from "random-js";
-import { ComponentOptionCollection } from "../../Collections/ComponentOptionCollection";
+import { ComponentCollectionEditor } from "../../Collections/ComponentCollectionEditor";
 import { Component } from "../../Components/Component";
 import { IComponent } from "../../Components/IComponent";
 import { Generator } from "../../Generator";
@@ -12,15 +12,15 @@ import { Generator } from "../../Generator";
  * @param context
  * The test-context.
  */
-export function ComponentOptionCollectionTests(context: TestContext): void
+export function ComponentCollectionEditorTests(context: TestContext): void
 {
     suite(
-        nameof(ComponentOptionCollection),
+        nameof(ComponentCollectionEditor),
         () =>
         {
             let random: Random;
             let generator: Generator;
-            let collection: ComponentOptionCollection;
+            let collection: ComponentCollectionEditor;
 
             suiteSetup(
                 async function()
@@ -33,11 +33,11 @@ export function ComponentOptionCollectionTests(context: TestContext): void
             setup(
                 () =>
                 {
-                    collection = new ComponentOptionCollection(generator, []);
+                    collection = new ComponentCollectionEditor(generator, []);
                 });
 
             suite(
-                nameof<ComponentOptionCollection>((collection) => collection.Add),
+                nameof<ComponentCollectionEditor>((collection) => collection.Add),
                 () =>
                 {
                     test(

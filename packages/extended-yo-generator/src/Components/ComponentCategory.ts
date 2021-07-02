@@ -1,4 +1,4 @@
-import { ComponentOptionCollection } from "../Collections/ComponentOptionCollection";
+import { ComponentCollectionEditor } from "../Collections/ComponentCollectionEditor";
 import { IGenerator } from "../IGenerator";
 import { Component } from "./Component";
 import { IComponentCategory } from "./IComponentCategory";
@@ -18,7 +18,7 @@ export class ComponentCategory<TSettings, TOptions> extends PropertyResolver<ICo
     /**
      * An object for editing the components of this category.
      */
-    private components: ComponentOptionCollection = null;
+    private components: ComponentCollectionEditor = null;
 
     /**
      * Initializes a new instance of the {@link ComponentCategory `ComponentCategory<TSettings, TOptions>`} class.
@@ -69,11 +69,11 @@ export class ComponentCategory<TSettings, TOptions> extends PropertyResolver<ICo
     /**
      * Gets the components of the category.
      */
-    public get Components(): ComponentOptionCollection
+    public get Components(): ComponentCollectionEditor
     {
         if (this.components === null)
         {
-            this.components = new ComponentOptionCollection(
+            this.components = new ComponentCollectionEditor(
                 this.Generator,
                 () =>
                 {

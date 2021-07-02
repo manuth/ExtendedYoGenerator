@@ -1,21 +1,21 @@
 import { doesNotThrow, ok, strictEqual, throws } from "assert";
 import { TempDirectory, TempFile, TempFileSystem } from "@manuth/temp-files";
 import { statSync } from "fs-extra";
-import { ObjectCollection } from "../../Collections/ObjectCollection";
+import { ObjectCollectionEditor } from "../../Collections/ObjectCollectionEditor";
 import { Predicate } from "../../Predicate";
 
 /**
  * Registers tests for the {@link ObjectCollection `ObjectCollection<T>`} class.
  */
-export function ObjectCollectionTests(): void
+export function ObjectCollectionEditorTests(): void
 {
     suite(
-        nameof(ObjectCollection),
+        nameof(ObjectCollectionEditor),
         () =>
         {
             let tempDir: TempDirectory;
             let tempFile: TempFile;
-            let collection: ObjectCollection<TempFileSystem>;
+            let collection: ObjectCollectionEditor<TempFileSystem>;
 
             suiteSetup(
                 () =>
@@ -34,7 +34,7 @@ export function ObjectCollectionTests(): void
             setup(
                 () =>
                 {
-                    collection = new ObjectCollection(
+                    collection = new ObjectCollectionEditor(
                         [
                             tempDir,
                             tempFile
@@ -42,7 +42,7 @@ export function ObjectCollectionTests(): void
                 });
 
             suite(
-                nameof(ObjectCollection.constructor),
+                nameof(ObjectCollectionEditor.constructor),
                 () =>
                 {
                     test(
@@ -55,7 +55,7 @@ export function ObjectCollectionTests(): void
                 });
 
             suite(
-                nameof<ObjectCollection<any>>((collection) => collection.Get),
+                nameof<ObjectCollectionEditor<any>>((collection) => collection.Get),
                 () =>
                 {
                     test(
@@ -78,7 +78,7 @@ export function ObjectCollectionTests(): void
                 });
 
             suite(
-                nameof<ObjectCollection<any>>((collection) => collection.Replace),
+                nameof<ObjectCollectionEditor<any>>((collection) => collection.Replace),
                 () =>
                 {
                     test(
@@ -103,7 +103,7 @@ export function ObjectCollectionTests(): void
                             let stripped = "stripped";
                             let replacement = "replacement";
 
-                            let collection = new ObjectCollection<string>(
+                            let collection = new ObjectCollectionEditor<string>(
                                 [
                                     staticItem,
                                     stripped,
@@ -118,7 +118,7 @@ export function ObjectCollectionTests(): void
                 });
 
             suite(
-                nameof<ObjectCollection<any>>((collection) => collection.Remove),
+                nameof<ObjectCollectionEditor<any>>((collection) => collection.Remove),
                 () =>
                 {
                     test(
@@ -141,7 +141,7 @@ export function ObjectCollectionTests(): void
                 });
 
             suite(
-                nameof<ObjectCollection<any>>((collection) => collection.Clear),
+                nameof<ObjectCollectionEditor<any>>((collection) => collection.Clear),
                 () =>
                 {
                     test(

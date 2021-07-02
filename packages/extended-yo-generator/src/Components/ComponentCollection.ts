@@ -1,7 +1,7 @@
 import chalk = require("chalk");
 import { CheckboxQuestion, ChoiceCollection, Separator } from "inquirer";
 import { Question } from "yeoman-generator";
-import { CategoryOptionCollection } from "../Collections/CategoryOptionCollection";
+import { CategoryCollectionEditor } from "../Collections/CategoryCollectionEditor";
 import { GeneratorSettingKey } from "../GeneratorSettingKey";
 import { IGenerator } from "../IGenerator";
 import { IGeneratorSettings } from "../IGeneratorSettings";
@@ -23,7 +23,7 @@ export class ComponentCollection<TSettings extends IGeneratorSettings, TOptions>
     /**
      * A component for editing the categories of this collection.
      */
-    private categories: CategoryOptionCollection = null;
+    private categories: CategoryCollectionEditor = null;
 
     /**
      * Initializes a new instance of the {@link ComponentCollection `ComponentCollection<TSettings, TOptions>`} class.
@@ -58,11 +58,11 @@ export class ComponentCollection<TSettings extends IGeneratorSettings, TOptions>
     /**
      * Gets or sets the component-categories.
      */
-    public get Categories(): CategoryOptionCollection
+    public get Categories(): CategoryCollectionEditor
     {
         if (this.categories === null)
         {
-            this.categories = new CategoryOptionCollection(
+            this.categories = new CategoryCollectionEditor(
                 this.Generator,
                 () =>
                 {

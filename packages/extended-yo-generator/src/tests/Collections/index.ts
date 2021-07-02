@@ -1,10 +1,10 @@
 import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
-import { CategoryOptionCollectionTests } from "./CategoryOptionCollection.test";
-import { ComponentOptionCollectionTests } from "./ComponentOptionCollection.test";
-import { FileMappingOptionCollectionTests } from "./FileMappingOptionCollection.test";
-import { ObjectCollectionTests } from "./ObjectCollection.test";
-import { PropertyResolverCollectionTests } from "./PropertyResolverCollection.test";
-import { UniqueObjectCollectionTests } from "./UniqueObjectCollection.test";
+import { CategoryCollectionEditorTests } from "./CategoryCollectionEditor.test";
+import { ComponentCollectionEditorTests } from "./ComponentCollectionEditor.test";
+import { FileMappingCollectionEditorTests } from "./FileMappingCollectionEditor.test";
+import { ObjectCollectionEditorTests } from "./ObjectCollectionEditor.test";
+import { PropertyResolverCollectionEditorTests } from "./PropertyResolverCollectionEditor.test";
+import { UniqueObjectCollectionEditorTests } from "./UniqueObjectCollectionEditor.test";
 
 /**
  * Registers tests for collections.
@@ -18,11 +18,11 @@ export function CollectionTests(context: TestContext<TestGenerator, ITestGenerat
         "Collections",
         () =>
         {
-            ObjectCollectionTests();
-            UniqueObjectCollectionTests();
-            PropertyResolverCollectionTests(context);
-            FileMappingOptionCollectionTests(context);
-            ComponentOptionCollectionTests(context);
-            CategoryOptionCollectionTests(context);
+            ObjectCollectionEditorTests();
+            UniqueObjectCollectionEditorTests();
+            PropertyResolverCollectionEditorTests(context);
+            FileMappingCollectionEditorTests(context);
+            ComponentCollectionEditorTests(context);
+            CategoryCollectionEditorTests(context);
         });
 }

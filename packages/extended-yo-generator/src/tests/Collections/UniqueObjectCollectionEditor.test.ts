@@ -1,19 +1,19 @@
 import { doesNotThrow, ok, strictEqual, throws } from "assert";
 import { Random } from "random-js";
-import { UniqueObjectCollection } from "../../Collections/UniqueObjectCollection";
+import { UniqueObjectCollectionEditor } from "../../Collections/UniqueObjectCollectionEditor";
 import { IUniqueObject } from "../../IUniqueObject";
 
 /**
  * Registers tests for the {@link UniqueObjectCollection `UniqueObjectCollection<T>`} class.
  */
-export function UniqueObjectCollectionTests(): void
+export function UniqueObjectCollectionEditorTests(): void
 {
     suite(
-        nameof(UniqueObjectCollection),
+        nameof(UniqueObjectCollectionEditor),
         () =>
         {
             let random: Random;
-            let collection: UniqueObjectCollection<IUniqueObject>;
+            let collection: UniqueObjectCollectionEditor<IUniqueObject>;
             let randomItemGenerator: Generator<IUniqueObject>;
             let randomItem: IUniqueObject;
 
@@ -38,12 +38,12 @@ export function UniqueObjectCollectionTests(): void
             setup(
                 () =>
                 {
-                    collection = new UniqueObjectCollection([]);
+                    collection = new UniqueObjectCollectionEditor([]);
                     randomItem = randomItemGenerator.next().value;
                 });
 
             suite(
-                nameof<UniqueObjectCollection<any>>((collection) => collection.Get),
+                nameof<UniqueObjectCollectionEditor<any>>((collection) => collection.Get),
                 () =>
                 {
                     test(
@@ -56,7 +56,7 @@ export function UniqueObjectCollectionTests(): void
                 });
 
             suite(
-                nameof<UniqueObjectCollection<IUniqueObject>>((collection) => collection.Replace),
+                nameof<UniqueObjectCollectionEditor<IUniqueObject>>((collection) => collection.Replace),
                 () =>
                 {
                     test(
@@ -72,7 +72,7 @@ export function UniqueObjectCollectionTests(): void
                 });
 
             suite(
-                nameof<UniqueObjectCollection<IUniqueObject>>((collection) => collection.Remove),
+                nameof<UniqueObjectCollectionEditor<IUniqueObject>>((collection) => collection.Remove),
                 () =>
                 {
                     test(

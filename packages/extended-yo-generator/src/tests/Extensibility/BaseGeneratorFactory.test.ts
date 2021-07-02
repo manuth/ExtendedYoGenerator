@@ -1,7 +1,7 @@
 import { notStrictEqual, ok, strictEqual } from "assert";
 import { TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import Environment = require("yeoman-environment");
-import { FileMappingOptionCollection } from "../../Collections/FileMappingOptionCollection";
+import { FileMappingCollectionEditor } from "../../Collections/FileMappingCollectionEditor";
 import { ComponentCategory } from "../../Components/ComponentCategory";
 import { ComponentCollection } from "../../Components/ComponentCollection";
 import { FileMapping } from "../../Components/FileManagement/FileMapping";
@@ -136,7 +136,7 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                 /**
                  * @inheritdoc
                  */
-                public override get BaseFileMappings(): FileMappingOptionCollection
+                public override get BaseFileMappings(): FileMappingCollectionEditor
                 {
                     let result = super.BaseFileMappings;
 

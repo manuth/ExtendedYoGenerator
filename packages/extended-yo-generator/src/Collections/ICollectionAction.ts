@@ -1,9 +1,9 @@
 import { CollectionActionType } from "./CollectionActionType";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { ObjectCollection } from "./ObjectCollection";
+import { ObjectCollectionEditor } from "./ObjectCollectionEditor";
 
 /**
- * Represents an action for the {@link ObjectCollection `ObjectCollection<T>`}
+ * Represents an action for the {@link ObjectCollectionEditor `ObjectCollectionEditor<T>`}
  */
 export interface ICollectionAction
 {

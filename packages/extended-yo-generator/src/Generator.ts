@@ -3,8 +3,8 @@ import { ensureDirSync } from "fs-extra";
 import pkgUp = require("pkg-up");
 import YeomanGenerator = require("yeoman-generator");
 import { Question } from "yeoman-generator";
-import { FileMappingOptionCollection } from "./Collections/FileMappingOptionCollection";
-import { ObjectCollection } from "./Collections/ObjectCollection";
+import { FileMappingCollectionEditor } from "./Collections/FileMappingCollectionEditor";
+import { ObjectCollectionEditor } from "./Collections/ObjectCollectionEditor";
 import { ComponentCollection } from "./Components/ComponentCollection";
 import { FileMapping } from "./Components/FileManagement/FileMapping";
 import { IFileMapping } from "./Components/FileManagement/IFileMapping";
@@ -110,9 +110,9 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     /**
      * Gets all questions including questions for the components.
      */
-    public get QuestionCollection(): ObjectCollection<Question<TSettings>>
+    public get QuestionCollection(): ObjectCollectionEditor<Question<TSettings>>
     {
-        return new ObjectCollection(
+        return new ObjectCollectionEditor(
             [
                 ...this.Questions ?? [],
                 ...this.ComponentCollection?.Questions ?? []
@@ -130,9 +130,9 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     /**
      * Gets the file-mappings of the generator.
      */
-    public get ResolvedFileMappings(): FileMappingOptionCollection
+    public get ResolvedFileMappings(): FileMappingCollectionEditor
     {
-        return new FileMappingOptionCollection(
+        return new FileMappingCollectionEditor(
             this,
             (this.FileMappings ?? []).map((fileMapping) => new FileMapping(this, fileMapping)));
     }
@@ -140,7 +140,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     /**
      * Gets the file-mappings to process.
      */
-    public get FileMappingCollection(): FileMappingOptionCollection
+    public get FileMappingCollection(): FileMappingCollectionEditor
     {
         let result = this.ResolvedFileMappings;
 

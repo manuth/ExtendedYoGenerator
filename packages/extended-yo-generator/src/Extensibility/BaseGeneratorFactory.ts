@@ -1,4 +1,4 @@
-import { FileMappingOptionCollection } from "../Collections/FileMappingOptionCollection";
+import { FileMappingCollectionEditor } from "../Collections/FileMappingCollectionEditor";
 import { ComponentCollection } from "../Components/ComponentCollection";
 import { IFileMapping } from "../Components/FileManagement/IFileMapping";
 import { IComponentCollection } from "../Components/IComponentCollection";
@@ -37,7 +37,7 @@ export class BaseGeneratorFactory<T extends GeneratorConstructor> extends Object
     /**
      * A component for resolving the file-mappings of the base.
      */
-    private baseFileMappingResolver: () => FileMappingOptionCollection;
+    private baseFileMappingResolver: () => FileMappingCollectionEditor;
 
     /**
      * Initializes a new instance of the {@link BaseGeneratorFactory `BaseGeneratorFactory`} class.
@@ -119,7 +119,7 @@ export class BaseGeneratorFactory<T extends GeneratorConstructor> extends Object
                     /**
                      * @inheritdoc
                      */
-                    public get BaseFileMappings(): FileMappingOptionCollection
+                    public get BaseFileMappings(): FileMappingCollectionEditor
                     {
                         return self.baseFileMappingResolver();
                     }

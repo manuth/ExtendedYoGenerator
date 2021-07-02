@@ -1,8 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { ObjectCollection } from "./ObjectCollection";
+import { ObjectCollectionEditor } from "./ObjectCollectionEditor";
 
 /**
- * Represents an action-type for the {@link ObjectCollection `ObjectCollection<T>`}.
+ * Represents an action-type for the {@link ObjectCollectionEditor `ObjectCollectionEditor<T>`}.
  */
 export enum CollectionActionType
 {

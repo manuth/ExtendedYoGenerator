@@ -1,15 +1,15 @@
 import { FileMapping } from "../Components/FileManagement/FileMapping";
 import { IFileMapping } from "../Components/FileManagement/IFileMapping";
 import { IGenerator } from "../IGenerator";
-import { PropertyResolverCollection } from "./PropertyResolverCollection";
+import { PropertyResolverCollectionEditor } from "./PropertyResolverCollectionEditor";
 
 /**
  * Represents a set of file-mappings.
  */
-export class FileMappingOptionCollection extends PropertyResolverCollection<IFileMapping<any, any>, FileMapping<any, any>>
+export class FileMappingCollectionEditor extends PropertyResolverCollectionEditor<IFileMapping<any, any>, FileMapping<any, any>>
 {
     /**
-     * Initializes a new instance of the {@link FileMappingOptionCollection `FileMappingOptionCollection`} class.
+     * Initializes a new instance of the {@link FileMappingCollectionEditor `FileMappingCollectionEditor`} class.
      *
      * @param generator
      * The generator of the collection.
@@ -20,7 +20,7 @@ export class FileMappingOptionCollection extends PropertyResolverCollection<IFil
     public constructor(generator: IGenerator<any, any>, items: Array<FileMapping<any, any>>);
 
     /**
-     * Initializes a new instance of the {@link FileMappingOptionCollection `FileMappingOptionCollection`} class.
+     * Initializes a new instance of the {@link FileMappingCollectionEditor `FileMappingCollectionEditor`} class.
      *
      * @param generator
      * The generator of the collection.
@@ -31,7 +31,7 @@ export class FileMappingOptionCollection extends PropertyResolverCollection<IFil
     public constructor(generator: IGenerator<any, any>, itemProvider: () => Array<FileMapping<any, any>>);
 
     /**
-     * Initializes a new instance of the {@link FileMappingOptionCollection `FileMappingOptionCollection`} class.
+     * Initializes a new instance of the {@link FileMappingCollectionEditor `FileMappingCollectionEditor`} class.
      *
      * @param args
      * The arguments for initializing the new collection.

@@ -1,7 +1,7 @@
 import { doesNotThrow } from "assert";
 import { TestContext } from "@manuth/extended-yo-generator-test";
 import { Random } from "random-js";
-import { FileMappingOptionCollection } from "../../Collections/FileMappingOptionCollection";
+import { FileMappingCollectionEditor } from "../../Collections/FileMappingCollectionEditor";
 import { FileMapping } from "../../Components/FileManagement/FileMapping";
 import { IFileMapping } from "../../Components/FileManagement/IFileMapping";
 import { Generator } from "../../Generator";
@@ -12,15 +12,15 @@ import { Generator } from "../../Generator";
  * @param context
  * The test-context.
  */
-export function FileMappingOptionCollectionTests(context: TestContext): void
+export function FileMappingCollectionEditorTests(context: TestContext): void
 {
     suite(
-        nameof(FileMappingOptionCollection),
+        nameof(FileMappingCollectionEditor),
         () =>
         {
             let random: Random;
             let generator: Generator;
-            let collection: FileMappingOptionCollection;
+            let collection: FileMappingCollectionEditor;
 
             suiteSetup(
                 async function()
@@ -33,11 +33,11 @@ export function FileMappingOptionCollectionTests(context: TestContext): void
             setup(
                 () =>
                 {
-                    collection = new FileMappingOptionCollection(generator, []);
+                    collection = new FileMappingCollectionEditor(generator, []);
                 });
 
             suite(
-                nameof<FileMappingOptionCollection>((collection) => collection.Add),
+                nameof<FileMappingCollectionEditor>((collection) => collection.Add),
                 () =>
                 {
                     test(

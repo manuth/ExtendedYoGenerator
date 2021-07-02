@@ -1,6 +1,6 @@
 import { Question } from "yeoman-generator";
-import { FileMappingOptionCollection } from "../Collections/FileMappingOptionCollection";
-import { ObjectCollection } from "../Collections/ObjectCollection";
+import { FileMappingCollectionEditor } from "../Collections/FileMappingCollectionEditor";
+import { ObjectCollectionEditor } from "../Collections/ObjectCollectionEditor";
 import { IGenerator } from "../IGenerator";
 import { FileMapping } from "./FileManagement/FileMapping";
 import { IComponent } from "./IComponent";
@@ -20,12 +20,12 @@ export class Component<TSettings, TOptions> extends PropertyResolver<IComponent<
     /**
      * A component for editing the questions of this component.
      */
-    private questions: ObjectCollection<Question<TSettings>> = null;
+    private questions: ObjectCollectionEditor<Question<TSettings>> = null;
 
     /**
      * A component for editing the file-mappings of this component.
      */
-    private fileMappings: FileMappingOptionCollection = null;
+    private fileMappings: FileMappingCollectionEditor = null;
 
     /**
      * Initializes a new instance of the {@link Component `Component<TSettings, TOptions>`} class.
@@ -92,11 +92,11 @@ export class Component<TSettings, TOptions> extends PropertyResolver<IComponent<
     /**
      * Gets additional questions related to the component.
      */
-    public get Questions(): ObjectCollection<Question<TSettings>>
+    public get Questions(): ObjectCollectionEditor<Question<TSettings>>
     {
         if (this.questions === null)
         {
-            this.questions = new ObjectCollection(this.Object.Questions ?? []);
+            this.questions = new ObjectCollectionEditor(this.Object.Questions ?? []);
         }
 
         return this.questions;
@@ -105,11 +105,11 @@ export class Component<TSettings, TOptions> extends PropertyResolver<IComponent<
     /**
      * Gets the file-mappings of the component.
      */
-    public get FileMappings(): FileMappingOptionCollection
+    public get FileMappings(): FileMappingCollectionEditor
     {
         if (this.fileMappings === null)
         {
-            this.fileMappings = new FileMappingOptionCollection(
+            this.fileMappings = new FileMappingCollectionEditor(
                 this.Generator,
                 () =>
                 {

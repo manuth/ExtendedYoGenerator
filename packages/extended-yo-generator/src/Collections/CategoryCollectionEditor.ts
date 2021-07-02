@@ -1,15 +1,15 @@
 import { ComponentCategory } from "../Components/ComponentCategory";
 import { IComponentCategory } from "../Components/IComponentCategory";
 import { IGenerator } from "../IGenerator";
-import { PropertyResolverCollection } from "./PropertyResolverCollection";
+import { PropertyResolverCollectionEditor } from "./PropertyResolverCollectionEditor";
 
 /**
  * Represents a set of component-categories.
  */
-export class CategoryOptionCollection extends PropertyResolverCollection<IComponentCategory<any, any>, ComponentCategory<any, any>>
+export class CategoryCollectionEditor extends PropertyResolverCollectionEditor<IComponentCategory<any, any>, ComponentCategory<any, any>>
 {
     /**
-     * Initializes a new instance of the {@link CategoryOptionCollection `CategoryOptionCollection`} class.
+     * Initializes a new instance of the {@link CategoryCollectionEditor `CategoryCollectionEditor`} class.
      *
      * @param generator
      * The generator of the collection.
@@ -20,7 +20,7 @@ export class CategoryOptionCollection extends PropertyResolverCollection<ICompon
     public constructor(generator: IGenerator<any, any>, items: Array<ComponentCategory<any, any>>);
 
     /**
-     * Initializes a new instance of the {@link CategoryOptionCollection `CategoryOptionCollection`} class.
+     * Initializes a new instance of the {@link CategoryCollectionEditor `CategoryCollectionEditor`} class.
      *
      * @param generator
      * The generator of the collection.
@@ -31,7 +31,7 @@ export class CategoryOptionCollection extends PropertyResolverCollection<ICompon
     public constructor(generator: IGenerator<any, any>, itemProvider: () => Array<ComponentCategory<any, any>>);
 
     /**
-     * Initializes a new instance of the {@link FileMappingOptionCollection `FileMappingOptionCollection`} class.
+     * Initializes a new instance of the {@link CategoryCollectionEditor `CategoryCollectionEditor`} class.
      *
      * @param args
      * The arguments for initializing the new collection.
