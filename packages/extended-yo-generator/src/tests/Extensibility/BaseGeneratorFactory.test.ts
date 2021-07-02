@@ -2,6 +2,7 @@ import { notStrictEqual, ok, strictEqual } from "assert";
 import { TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import Environment = require("yeoman-environment");
 import { FileMappingOptionCollection } from "../../Collections/FileMappingOptionCollection";
+import { ComponentCategory } from "../../Components/ComponentCategory";
 import { ComponentCollection } from "../../Components/ComponentCollection";
 import { FileMapping } from "../../Components/FileManagement/FileMapping";
 import { IFileMapping } from "../../Components/FileManagement/IFileMapping";
@@ -21,17 +22,6 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
         nameof(BaseGeneratorFactory),
         () =>
         {
-            let superTemplateDir: string;
-            let subTemplateDir: string;
-            let superSourceFile: string;
-            let subSourceFile: string;
-            let injectedSourceFile: string;
-            let destinationFile: string;
-            let categoryName: string;
-            let superComponentID: string;
-            let subComponentID: string;
-            let injectedComponentID: string;
-
             /**
              * A class for testing.
              */
@@ -166,9 +156,12 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                 {
                     let result = super.BaseComponents;
 
-                    for (let category of result.Categories)
-                    {
-                        if (category.DisplayName === categoryName)
+                    result.CategoryCollection.Replace(
+                        (category: ComponentCategory<any, any>) =>
+                        {
+                            return category.DisplayName === categoryName;
+                        },
+                        (category) =>
                         {
                             category.ComponentCollection.Add(
                                 {
@@ -181,8 +174,9 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                                         }
                                     ]
                                 });
-                        }
-                    }
+
+                            return category;
+                        });
 
                     return result;
                 }
@@ -259,6 +253,17 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                 return new generatorConstructor([], { env: Environment.createEnv() });
             }
 
+            let superTemplateDir: string;
+            let subTemplateDir: string;
+            let superSourceFile: string;
+            let subSourceFile: string;
+            let injectedSourceFile: string;
+            let destinationFile: string;
+            let categoryName: string;
+            let superComponentID: string;
+            let subComponentID: string;
+            let injectedComponentID: string;
+
             suiteSetup(
                 async function()
                 {
@@ -270,19 +275,56 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                     subSourceFile = context.RandomString + "2";
                     injectedSourceFile = context.RandomString + "3";
                     destinationFile = context.RandomString + "4";
+                    categoryName = context.RandomString;
+                    superComponentID = context.RandomString + "1";
+                    subComponentID = context.RandomString + "2";
+                    injectedComponentID = context.RandomString + "3";
                 });
 
             suite(
-                "Testing Basic Usage",
+                nameof<BaseGeneratorFactory<any>>((factory) => factory.Create),
                 () =>
                 {
                     let generator: SubGenerator;
+                    let externalGenerator: SubGenerator;
 
                     suiteSetup(
                         async function()
                         {
                             generator = CreateGenerator(SubGenerator);
                             generator.Base.moduleRoot(generator.Base.moduleRoot(context.RandomString));
+
+                            /**
+                             * A generator for testing.
+                             */
+                            class MyGenerator extends Generator.ComposeWith(TestGenerator, TestGenerator.Path)
+                            { }
+
+                            externalGenerator = CreateGenerator(MyGenerator);
+                        });
+
+                    test(
+                        `Checking whether the generated \`${Generator.constructor}\` inherits the desired class…`,
+                        () =>
+                        {
+                            ok(CreateGenerator(BaseGeneratorFactory.Create(TestGenerator)) instanceof TestGenerator);
+                        });
+
+                    test(
+                        `Checking whether the value of \`${nameof<Generator>()}.${nameof<Generator>((g) => g.resolved)}\` while creating a base-generator…`,
+                        () =>
+                        {
+                            /**
+                             * Provides a generator-class for testing.
+                             */
+                            class Test extends Generator<any> { }
+
+                            let testValue = context.RandomString;
+                            BaseGeneratorFactory.Create(Test, `${testValue}${context.RandomString}`);
+                            ok(!(nameof<Generator>((generator) => generator.resolved) in Test));
+                            (Test as any)[nameof<Generator>((generator) => generator.resolved)] = testValue;
+                            BaseGeneratorFactory.Create(Test, `${testValue}${context.RandomString}`);
+                            strictEqual((Test as any)[nameof<Generator>((generator) => generator.resolved)], testValue);
                         });
 
                     test(
@@ -296,7 +338,7 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                         });
 
                     test(
-                        "Checking whether a base generator is created…",
+                        "Checking whether a base generator is created as expected…",
                         () =>
                         {
                             ok(generator.Base instanceof SuperGenerator);
@@ -404,40 +446,19 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                                     generator.ComponentCollection,
                                     (fileMapping) => fileMapping.Source === generator.Base.templatePath(injectedSourceFile)));
                         });
-                });
-
-            suite(
-                "Testing Usage With External Base-Generators",
-                () =>
-                {
-                    let generator: SubGenerator;
-
-                    suiteSetup(
-                        async function()
-                        {
-                            this.timeout(0);
-
-                            /**
-                             * A generator for testing.
-                             */
-                            class MyGenerator extends Generator.ComposeWith(TestGenerator, TestGenerator.Path)
-                            { }
-
-                            generator = CreateGenerator(MyGenerator);
-                        });
 
                     test(
                         "Checking whether the module-path of the base resolves to its package…",
                         async () =>
                         {
-                            strictEqual(generator.Base.modulePath(), (await context.Generator).modulePath());
+                            strictEqual(externalGenerator.Base.modulePath(), (await context.Generator).modulePath());
                         });
 
                     test(
-                        "Checking whether the module-path of the generator is not affected by the module-path of the package…",
+                        "Checking whether the module-path of the generator is not affected by the module-path of the base…",
                         () =>
                         {
-                            notStrictEqual(generator.modulePath(), generator.Base.modulePath());
+                            notStrictEqual(externalGenerator.modulePath(), externalGenerator.Base.modulePath());
                         });
 
                     test(
