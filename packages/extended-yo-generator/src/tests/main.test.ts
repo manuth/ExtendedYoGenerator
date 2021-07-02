@@ -1,6 +1,7 @@
 import { TestContext } from "@manuth/extended-yo-generator-test";
 import { CollectionTests } from "./Collections";
 import { ComponentsTests } from "./Components";
+import { ExtensibilityTests } from "./Extensibility";
 import { ExtendedGeneratorTests } from "./Generator.test";
 
 suite(
@@ -10,5 +11,6 @@ suite(
         let context = TestContext.Default;
         CollectionTests(context);
         ComponentsTests(context);
+        ExtensibilityTests(context);
         ExtendedGeneratorTests(context);
     });
