@@ -57,11 +57,14 @@ export class ComponentCollection<TSettings extends IGeneratorSettings, TOptions>
     {
         return new CategoryOptionCollection(
             this.Generator,
-            this.Object.Categories.map(
-                (category) =>
-                {
-                    return new ComponentCategory(this.Generator, category);
-                }));
+            () =>
+            {
+                return this.Object.Categories.map(
+                    (category) =>
+                    {
+                        return new ComponentCategory(this.Generator, category);
+                    });
+            });
     }
 
     /**

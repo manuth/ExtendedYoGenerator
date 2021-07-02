@@ -22,6 +22,17 @@ export class CategoryOptionCollection extends PropertyResolverCollection<ICompon
     /**
      * Initializes a new instance of the {@link CategoryOptionCollection `CategoryOptionCollection`} class.
      *
+     * @param generator
+     * The generator of the collection.
+     *
+     * @param itemProvider
+     * A function for providing the items to edit.
+     */
+    public constructor(generator: IGenerator<any, any>, itemProvider: () => Array<ComponentCategory<any, any>>);
+
+    /**
+     * Initializes a new instance of the {@link FileMappingOptionCollection `FileMappingOptionCollection`} class.
+     *
      * @param args
      * The arguments for initializing the new collection.
      */

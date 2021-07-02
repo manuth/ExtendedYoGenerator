@@ -68,11 +68,14 @@ export class ComponentCategory<TSettings, TOptions> extends PropertyResolver<ICo
     {
         return new ComponentOptionCollection(
             this.Generator,
-            this.Object.Components.map(
-                (component) =>
-                {
-                    return new Component(this.Generator, component);
-                }));
+            () =>
+            {
+                return this.Object.Components.map(
+                    (component) =>
+                    {
+                        return new Component(this.Generator, component);
+                    });
+            });
     }
 
     /**

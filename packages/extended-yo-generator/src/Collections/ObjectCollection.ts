@@ -15,9 +15,9 @@ import { ISubstitutionAction } from "./ISubstitutionAction";
 export class ObjectCollection<T extends any>
 {
     /**
-     * The items of the collection.
+     * A function for providing the items.
      */
-    private items: readonly T[];
+    private itemProvider: () => readonly T[];
 
     /**
      * The actions to apply to the inner collection.
@@ -30,9 +30,32 @@ export class ObjectCollection<T extends any>
      * @param items
      * The items of the collection.
      */
-    public constructor(items: T[])
+    public constructor(items: T[]);
+
+    /**
+     * Initializes a new instance of the {@link ObjectCollection `ObjectCollection<T>`} class.
+     *
+     * @param itemProvider
+     * A function for providing the items to edit.
+     */
+    public constructor(itemProvider: () => T[]);
+
+    /**
+     * Initializes a new instance of the {@link ObjectCollection `ObjectCollection<T>`} class.
+     *
+     * @param items
+     * The items for initializing the new collection.
+     */
+    public constructor(items: T[] | (() => T[]))
     {
-        this.items = items;
+        if (Array.isArray(items))
+        {
+            this.itemProvider = () => items;
+        }
+        else
+        {
+            this.itemProvider = items;
+        }
     }
 
     /**
@@ -41,7 +64,7 @@ export class ObjectCollection<T extends any>
     protected get Source(): T[]
     {
         return [
-            ...this.items
+            ...this.itemProvider()
         ];
     }
 

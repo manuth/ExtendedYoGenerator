@@ -22,6 +22,17 @@ export class FileMappingOptionCollection extends PropertyResolverCollection<IFil
     /**
      * Initializes a new instance of the {@link FileMappingOptionCollection `FileMappingOptionCollection`} class.
      *
+     * @param generator
+     * The generator of the collection.
+     *
+     * @param itemProvider
+     * A function for providing the items.
+     */
+    public constructor(generator: IGenerator<any, any>, itemProvider: () => Array<FileMapping<any, any>>);
+
+    /**
+     * Initializes a new instance of the {@link FileMappingOptionCollection `FileMappingOptionCollection`} class.
+     *
      * @param args
      * The arguments for initializing the new collection.
      */

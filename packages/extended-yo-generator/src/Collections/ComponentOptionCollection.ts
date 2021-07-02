@@ -22,6 +22,17 @@ export class ComponentOptionCollection extends PropertyResolverCollection<ICompo
     /**
      * Initializes a new instance of the {@link ComponentOptionCollection `ComponentOptionCollection`} class.
      *
+     * @param generator
+     * The generator of the collection.
+     *
+     * @param itemProvider
+     * A function for providing the items.
+     */
+    public constructor(generator: IGenerator<any, any>, itemProvider: () => Array<Component<any, any>>);
+
+    /**
+     * Initializes a new instance of the {@link ComponentOptionCollection `ComponentOptionCollection`} class.
+     *
      * @param args
      * The arguments for initializing the new collection.
      */

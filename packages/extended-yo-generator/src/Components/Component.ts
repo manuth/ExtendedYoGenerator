@@ -102,11 +102,14 @@ export class Component<TSettings, TOptions> extends PropertyResolver<IComponent<
     {
         return new FileMappingOptionCollection(
             this.Generator,
-            this.ResolveProperty(this, this.Object.FileMappings).map(
-                (fileMapping) =>
-                {
-                    return new FileMapping(this.Generator, fileMapping);
-                }));
+            () =>
+            {
+                return this.ResolveProperty(this, this.Object.FileMappings).map(
+                    (fileMapping) =>
+                    {
+                        return new FileMapping(this.Generator, fileMapping);
+                    });
+            });
     }
 
     /**

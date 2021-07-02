@@ -31,7 +31,29 @@ export abstract class PropertyResolverCollection<TObject extends IUniqueObject, 
      * @param items
      * The items to edit.
      */
-    public constructor(generator: IGenerator<any, any>, items: TTarget[])
+    public constructor(generator: IGenerator<any, any>, items: TTarget[]);
+
+    /**
+     * Initializes a new instance of the {@link PropertyResolverCollection `PropertyResolverCollection<TObject, TTarget>`} class.
+     *
+     * @param generator
+     * The generator of the collection.
+     *
+     * @param itemProvider
+     * A function for providing the items.
+     */
+    public constructor(generator: IGenerator<any, any>, itemProvider: () => TTarget[]);
+
+    /**
+     * Initializes a new instance of the {@link PropertyResolverCollection `PropertyResolverCollection<TObject, TTarget>`} class.
+     *
+     * @param generator
+     * The generator of the collection.
+     *
+     * @param items
+     * The items for initializing the new collection.
+     */
+    public constructor(generator: IGenerator<any, any>, items: any)
     {
         super(items);
         this.generator = generator;
@@ -280,16 +302,50 @@ export abstract class PropertyResolverCollection<TObject extends IUniqueObject, 
      * @param item
      * The item to add.
      */
-    public override Add(item: TObject | TTarget): void
+    public override Add(item: any): void
     {
-        if (item instanceof PropertyResolver)
+        super.Add(item);
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @param items
+     * The items to add.
+     */
+    public override AddRange(items: TTarget[]): void;
+
+    /**
+     * @inheritdoc
+     *
+     * @param items
+     * The items to add.
+     */
+    public override AddRange(items: TObject[]): void;
+
+    /**
+     * @inheritdoc
+     *
+     * @param items
+     * The items to add.
+     */
+    public override AddRange(items: Array<TObject | TTarget>): void
+    {
+        let internalItems: TTarget[] = [];
+
+        for (let item of items)
         {
-            super.Add(item);
+            if (item instanceof PropertyResolver)
+            {
+                internalItems.push(item);
+            }
+            else
+            {
+                internalItems.push(this.CreateItem(item));
+            }
         }
-        else
-        {
-            super.Add(this.CreateItem(item));
-        }
+
+        super.AddRange(internalItems);
     }
 
     /**

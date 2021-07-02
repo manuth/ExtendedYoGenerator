@@ -18,7 +18,23 @@ export class UniqueObjectCollection<T extends IUniqueObject> extends ObjectColle
      * @param items
      * The items of the collection.
      */
-    public constructor(items: T[])
+    public constructor(items: T[]);
+
+    /**
+     * Initializes a new instance of the {@link UniqueObjectCollection `UniqueObjectCollection<T>`} class.
+     *
+     * @param itemProvider
+     * A function for providing the items.
+     */
+    public constructor(itemProvider: () => T[]);
+
+    /**
+     * Initializes a new instance of the {@link UniqueObjectCollection `UniqueObjectCollection<T>`} class.
+     *
+     * @param items
+     * The items for initializing the new collection.
+     */
+    public constructor(items: any)
     {
         super(items);
     }
