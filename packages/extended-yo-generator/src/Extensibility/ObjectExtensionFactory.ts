@@ -1,6 +1,6 @@
 import { Constructor } from "../Constructor";
 import { ExtensionConstructor } from "./ExtensionConstructor";
-import { IObjectExtension } from "./IObjectExtension";
+import { ObjectExtension as ObjectExtensionBase } from "./ObjectExtension";
 
 /**
  * Provides the functionality to create an object-extension.
@@ -43,7 +43,7 @@ export class ObjectExtensionFactory<T extends Constructor<any>>
      * @returns
      * The extension-constructor for the specified {@link baseConstructor `baseConstructor`}.
      */
-    public static Create<T extends Constructor<any>>(baseConstructor: T): ExtensionConstructor<T, IObjectExtension<InstanceType<T>>>
+    public static Create<T extends Constructor<any>>(baseConstructor: T): ExtensionConstructor<T, ObjectExtensionBase<InstanceType<T>>>
     {
         return this.Default.Create(baseConstructor);
     }
@@ -57,14 +57,12 @@ export class ObjectExtensionFactory<T extends Constructor<any>>
      * @returns
      * The extension-constructor for the specified {@link baseConstructor `baseConstructor`}.
      */
-    public Create(baseConstructor: T): ExtensionConstructor<T, IObjectExtension<T>>
+    public Create(baseConstructor: T): ExtensionConstructor<T, ObjectExtensionBase<T>>
     {
-        let self = this;
-
         return (
-            (base: T): ExtensionConstructor<T, IObjectExtension<T>> =>
+            (base: Constructor<ObjectExtensionBase<T>>): ExtensionConstructor<T, ObjectExtensionBase<T>> =>
             {
-                return class ObjectExtension extends base implements IObjectExtension<T>
+                return class ObjectExtension extends base
                 {
                     /**
                      * The base object of this extension.
@@ -77,68 +75,45 @@ export class ObjectExtensionFactory<T extends Constructor<any>>
                      * @param args
                      * The arguments for initializing the object.
                      */
-                    public constructor(...args: any[])
+                    public constructor(...args: ConstructorParameters<T>)
                     {
                         super(...args);
-
-                        self.Initialize(
-                            base,
-                            this as InstanceType<ExtensionConstructor<T, IObjectExtension<T>>>,
-                            ...args);
-
-                        this.base = self.InitializeBase(
-                            base,
-                            this as InstanceType<ExtensionConstructor<T, IObjectExtension<T>>>,
-                            ...args);
+                        this.Initialize(...args);
+                        this.base = this.InitializeBase(...args);
                     }
 
                     /**
-                     * Gets the base object of this extension.
+                     * @inheritdoc
                      */
-                    public get Base(): InstanceType<T>
+                    protected override get Base(): InstanceType<T>
                     {
                         return this.base;
                     }
-                } as ExtensionConstructor<T, IObjectExtension<T>>;
+
+                    /**
+                     * @inheritdoc
+                     *
+                     * @param args
+                     * The arguments for creating the base.
+                     */
+                    protected override Initialize(...args: ConstructorParameters<T>): void
+                    { }
+
+                    /**
+                     * @inheritdoc
+                     *
+                     * @param args
+                     * The arguments for creating the base.
+                     *
+                     * @returns
+                     * The newly created base.
+                     */
+                    protected override InitializeBase(...args: ConstructorParameters<T>): InstanceType<T>
+                    {
+                        return new baseConstructor(...args);
+                    }
+                } as ExtensionConstructor<T, ObjectExtensionBase<T>>;
             })(baseConstructor);
-    }
-
-    /**
-     * Initializes the extension.
-     *
-     * @param base
-     * The constructor of the base type.
-     *
-     * @param instance
-     * The instance of the extension type.
-     *
-     * @param args
-     * The arguments for initializing the base.
-     *
-     * @returns
-     * The newly created base object.
-     */
-    protected Initialize(base: T, instance: InstanceType<ExtensionConstructor<T, IObjectExtension<T>>>, ...args: any[]): void
-    { }
-
-    /**
-     * Initializes a base object for the extension.
-     *
-     * @param base
-     * The constructor of the base type.
-     *
-     * @param instance
-     * The instance of the extension type.
-     *
-     * @param args
-     * The arguments for initializing the base.
-     *
-     * @returns
-     * The newly created base object.
-     */
-    protected InitializeBase(base: T, instance: InstanceType<ExtensionConstructor<T, IObjectExtension<T>>>, ...args: any[]): InstanceType<T>
-    {
-        return new base(...args);
     }
 
     /**

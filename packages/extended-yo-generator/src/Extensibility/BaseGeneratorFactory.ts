@@ -17,11 +17,6 @@ import { ObjectExtensionFactory } from "./ObjectExtensionFactory";
 export class BaseGeneratorFactory<T extends GeneratorConstructor> extends ObjectExtensionFactory<T>
 {
     /**
-     * The namespace or the path of the generator to extend.
-     */
-    private namespaceOrPath: string = null;
-
-    /**
      * A component for preprocessing the base-class.
      *
      * @param base
@@ -90,7 +85,6 @@ export class BaseGeneratorFactory<T extends GeneratorConstructor> extends Object
     public override Create(base: T, namespaceOrPath?: string): GeneratorExtensionConstructor<T>
     {
         let self = this;
-        this.namespaceOrPath = namespaceOrPath;
 
         return class BaseGenerator extends super.Create(base) implements IGeneratorExtension<T>
         {
@@ -136,131 +130,120 @@ export class BaseGeneratorFactory<T extends GeneratorConstructor> extends Object
             {
                 return this.Base.ResolvedFileMappings.Items;
             }
+
+            /**
+             * @inheritdoc
+             *
+             * @param args
+             * The arguments for initializing the base.
+             *
+             * @returns
+             * The newly created base object.
+             */
+            protected override Initialize(...args: ConstructorParameters<T>): void
+            {
+                let resolvedKey = nameof<Generator>((generator) => generator.resolved);
+                self.classProcessor = () => { };
+
+                if (namespaceOrPath)
+                {
+                    if (resolvedKey in base)
+                    {
+                        let resolvedPath: string = (base as any)[resolvedKey];
+                        self.classProcessor = (base) => (base as any)[resolvedKey] = resolvedPath;
+                    }
+                    else
+                    {
+                        self.classProcessor = (base) => delete (base as any)[resolvedKey];
+                    }
+
+                    try
+                    {
+                        (base as any)[resolvedKey] = (this.env.get(namespaceOrPath) as any)?.[resolvedKey] ?? namespaceOrPath;
+                    }
+                    catch
+                    {
+                        (base as any)[resolvedKey] = namespaceOrPath;
+                    }
+                }
+            }
+
+            /**
+             * @inheritdoc
+             *
+             * @param args
+             * The arguments for initializing the base.
+             *
+             * @returns
+             * The newly created base object.
+             */
+            protected override InitializeBase(...args: ConstructorParameters<T>): InstanceType<T>
+            {
+                let generator = this;
+                let instanceOptions = { options: this.options };
+                let result = this.env.instantiate(base, instanceOptions) as InstanceType<T>;
+                self.classProcessor(base);
+
+                let settingsPropertyName = nameof<Generator>((generator) => generator.Settings);
+                let fileMappingPropertyName = nameof<Generator>((generator) => generator.ResolvedFileMappings);
+                let componentPropertyName = nameof<Generator>((generator) => generator.ComponentCollection);
+                let destinationPathName = nameof<Generator>((generator) => generator.destinationPath);
+                let destinationRootName = nameof<Generator>((generator) => generator.destinationRoot);
+                let propertyDescriptors = self.GetAllProperties(base);
+                let settingsProperty = propertyDescriptors[settingsPropertyName];
+                let fileMappingProperty = propertyDescriptors[fileMappingPropertyName];
+                let componentProperty = propertyDescriptors[componentPropertyName];
+                let destinationPath = propertyDescriptors[destinationPathName];
+                let destinationRoot = propertyDescriptors[destinationRootName];
+                self.baseComponentResolver = componentProperty.get.bind(result);
+                self.baseFileMappingResolver = fileMappingProperty.get.bind(result);
+
+                settingsProperty = {
+                    ...settingsProperty,
+                    get()
+                    {
+                        return generator.Settings;
+                    }
+                };
+
+                fileMappingProperty = {
+                    ...fileMappingProperty,
+                    get()
+                    {
+                        return generator.BaseFileMappings;
+                    }
+                };
+
+                componentProperty = {
+                    ...componentProperty,
+                    get()
+                    {
+                        return generator.BaseComponents;
+                    }
+                };
+
+                destinationRoot = {
+                    ...destinationRoot,
+                    value: (...args: any[]) => this.destinationRoot(...args)
+                };
+
+                destinationPath = {
+                    ...destinationPath,
+                    value: (...args: any[]) => this.destinationPath(...args)
+                };
+
+                Object.defineProperties(
+                    result,
+                    {
+                        [settingsPropertyName]: settingsProperty,
+                        [fileMappingPropertyName]: fileMappingProperty,
+                        [componentPropertyName]: componentProperty,
+                        [destinationRootName]: destinationRoot,
+                        [destinationPathName]: destinationPath
+                    });
+
+                return result;
+            }
         } as GeneratorExtensionConstructor<T>;
-    }
-
-    /**
-     * @inheritdoc
-     *
-     * @param base
-     * The constructor of the base type.
-     *
-     * @param instance
-     * The instance of the extension type.
-     *
-     * @param args
-     * The arguments for initializing the base.
-     *
-     * @returns
-     * The newly created base object.
-     */
-    protected override Initialize(base: T, instance: InstanceType<GeneratorExtensionConstructor<T>>, ...args: any[]): void
-    {
-        let resolvedKey = nameof<Generator>((generator) => generator.resolved);
-        this.classProcessor = () => { };
-
-        if (this.namespaceOrPath)
-        {
-            if (resolvedKey in base)
-            {
-                let resolvedPath: string = (base as any)[resolvedKey];
-                this.classProcessor = (base) => (base as any)[resolvedKey] = resolvedPath;
-            }
-            else
-            {
-                this.classProcessor = (base) => delete (base as any)[resolvedKey];
-            }
-
-            try
-            {
-                (base as any)[resolvedKey] = (instance.env.get(this.namespaceOrPath) as any)?.[resolvedKey] ?? this.namespaceOrPath;
-            }
-            catch
-            {
-                (base as any)[resolvedKey] = this.namespaceOrPath;
-            }
-        }
-    }
-
-    /**
-     * @inheritdoc
-     *
-     * @param base
-     * The constructor of the base type.
-     *
-     * @param instance
-     * The instance of the extension type.
-     *
-     * @param args
-     * The arguments for initializing the base.
-     *
-     * @returns
-     * The newly created base object.
-     */
-    protected override InitializeBase(base: T, instance: InstanceType<GeneratorExtensionConstructor<T>>, ...args: any[]): InstanceType<T>
-    {
-        let instanceOptions = { options: instance.options };
-        let result = instance.env.instantiate(base, instanceOptions) as InstanceType<T>;
-        this.classProcessor(base);
-
-        let settingsPropertyName = nameof<Generator>((generator) => generator.Settings);
-        let fileMappingPropertyName = nameof<Generator>((generator) => generator.ResolvedFileMappings);
-        let componentPropertyName = nameof<Generator>((generator) => generator.ComponentCollection);
-        let destinationPathName = nameof<Generator>((generator) => generator.destinationPath);
-        let destinationRootName = nameof<Generator>((generator) => generator.destinationRoot);
-        let propertyDescriptors = this.GetAllProperties(base);
-        let settingsProperty = propertyDescriptors[settingsPropertyName];
-        let fileMappingProperty = propertyDescriptors[fileMappingPropertyName];
-        let componentProperty = propertyDescriptors[componentPropertyName];
-        let destinationPath = propertyDescriptors[destinationPathName];
-        let destinationRoot = propertyDescriptors[destinationRootName];
-        this.baseComponentResolver = componentProperty.get.bind(result);
-        this.baseFileMappingResolver = fileMappingProperty.get.bind(result);
-
-        settingsProperty = {
-            ...settingsProperty,
-            get()
-            {
-                return instance.Settings;
-            }
-        };
-
-        fileMappingProperty = {
-            ...fileMappingProperty,
-            get()
-            {
-                return instance.BaseFileMappings;
-            }
-        };
-
-        componentProperty = {
-            ...componentProperty,
-            get()
-            {
-                return instance.BaseComponents;
-            }
-        };
-
-        destinationRoot = {
-            ...destinationRoot,
-            value: (...args: any[]) => instance.destinationRoot(...args)
-        };
-
-        destinationPath = {
-            ...destinationPath,
-            value: (...args: any[]) => instance.destinationPath(...args)
-        };
-
-        Object.defineProperties(
-            result,
-            {
-                [settingsPropertyName]: settingsProperty,
-                [fileMappingPropertyName]: fileMappingProperty,
-                [componentPropertyName]: componentProperty,
-                [destinationRootName]: destinationRoot,
-                [destinationPathName]: destinationPath
-            });
-
-        return result;
     }
 }
