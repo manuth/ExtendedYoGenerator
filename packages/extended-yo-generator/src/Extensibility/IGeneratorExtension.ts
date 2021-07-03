@@ -1,5 +1,4 @@
 import { GeneratorConstructor } from "../GeneratorConstructor";
-import { IObjectExtension } from "./IObjectExtension";
 
 /**
  * Represents a generator-extension.
@@ -7,7 +6,7 @@ import { IObjectExtension } from "./IObjectExtension";
  * @template T
  * The type of the base generator.
  */
-export interface IGeneratorExtension<T extends GeneratorConstructor> extends IObjectExtension<T>
+export interface IGeneratorExtension<T extends GeneratorConstructor>
 {
     /**
      * Gets the file-mappings of the base-generator.

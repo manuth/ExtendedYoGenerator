@@ -84,6 +84,14 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                 /**
                  * @inheritdoc
                  */
+                public override get Base(): TestGenerator
+                {
+                    return super.Base;
+                }
+
+                /**
+                 * @inheritdoc
+                 */
                 public override get TemplateRoot(): string
                 {
                     return subTemplateDir;
@@ -298,7 +306,15 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                              * A generator for testing.
                              */
                             class MyGenerator extends Generator.ComposeWith(TestGenerator, TestGenerator.Path)
-                            { }
+                            {
+                                /**
+                                 * @inheritdoc
+                                 */
+                                public override get Base(): TestGenerator
+                                {
+                                    return super.Base;
+                                }
+                            }
 
                             externalGenerator = CreateGenerator(MyGenerator);
                         });
