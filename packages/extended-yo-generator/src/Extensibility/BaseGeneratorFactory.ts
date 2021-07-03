@@ -5,7 +5,6 @@ import { IComponentCollection } from "../Components/IComponentCollection";
 import { Generator } from "../Generator";
 import { GeneratorConstructor } from "../GeneratorConstructor";
 import { GeneratorExtensionConstructor } from "./GeneratorExtensionConstructor";
-import { IGeneratorExtension } from "./IGeneratorExtension";
 import { ObjectExtensionFactory } from "./ObjectExtensionFactory";
 
 /**
@@ -86,7 +85,7 @@ export class BaseGeneratorFactory<T extends GeneratorConstructor> extends Object
     {
         let self = this;
 
-        return class BaseGenerator extends super.Create(base) implements IGeneratorExtension<T>
+        return class BaseGenerator extends (super.Create(base) as GeneratorExtensionConstructor<T>)
         {
             /**
              * Initializes a new instance of the {@link BaseGenerator `BaseGenerator`} class.
@@ -102,7 +101,7 @@ export class BaseGeneratorFactory<T extends GeneratorConstructor> extends Object
             /**
              * @inheritdoc
              */
-            public get BaseComponents(): ComponentCollection<any, any>
+            protected override get BaseComponents(): ComponentCollection<any, any>
             {
                 return self.baseComponentResolver();
             }
@@ -110,7 +109,7 @@ export class BaseGeneratorFactory<T extends GeneratorConstructor> extends Object
             /**
              * @inheritdoc
              */
-            public get BaseFileMappings(): FileMappingCollectionEditor
+            protected override get BaseFileMappings(): FileMappingCollectionEditor
             {
                 return self.baseFileMappingResolver();
             }

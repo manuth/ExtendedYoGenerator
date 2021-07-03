@@ -314,6 +314,22 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                                 {
                                     return super.Base;
                                 }
+
+                                /**
+                                 * @inheritdoc
+                                 */
+                                public override get BaseFileMappings(): FileMappingCollectionEditor
+                                {
+                                    return super.BaseFileMappings;
+                                }
+
+                                /**
+                                 * @inheritdoc
+                                 */
+                                public override get BaseComponents(): ComponentCollection<any, any>
+                                {
+                                    return super.BaseComponents;
+                                }
                             }
 
                             externalGenerator = CreateGenerator(MyGenerator);

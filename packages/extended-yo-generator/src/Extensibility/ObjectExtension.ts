@@ -11,7 +11,7 @@ export abstract class ObjectExtension<T extends Constructor<any>>
     /**
      * Initializes a new instance of the {@link ObjectExtension `ObjectExtension<T>`} class.
      */
-    private constructor()
+    protected constructor()
     {
         throw new Error();
     }

@@ -1,8 +1,7 @@
 import { Generator } from "../Generator";
 import { GeneratorConstructor } from "../GeneratorConstructor";
 import { ExtensionConstructor } from "./ExtensionConstructor";
-import { IGeneratorExtension } from "./IGeneratorExtension";
-import { ObjectExtension } from "./ObjectExtension";
+import { GeneratorExtension } from "./GeneratorExtension";
 
 /**
  * Represents a constructor for a generator-extension.
@@ -13,6 +12,6 @@ import { ObjectExtension } from "./ObjectExtension";
 export type GeneratorExtensionConstructor<T extends GeneratorConstructor> =
     T extends new (...args: any[]) => infer UGenerator ?
     UGenerator extends Generator<any, any> ?
-    ExtensionConstructor<T, ObjectExtension<T> & IGeneratorExtension<T>> :
+    ExtensionConstructor<T, GeneratorExtension<T>> :
     never :
     never;
