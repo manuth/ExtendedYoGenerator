@@ -1,7 +1,7 @@
 import { Generator } from "../Generator";
 import { GeneratorConstructor } from "../GeneratorConstructor";
 import { ExtensionConstructor } from "./ExtensionConstructor";
-import { IGeneratorExtension } from "./IBaseGenerator";
+import { IGeneratorExtension } from "./IGeneratorExtension";
 
 /**
  * Represents a constructor for a generator-extension.

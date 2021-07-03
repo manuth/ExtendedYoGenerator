@@ -5,7 +5,7 @@ import { IComponentCollection } from "../Components/IComponentCollection";
 import { Generator } from "../Generator";
 import { GeneratorConstructor } from "../GeneratorConstructor";
 import { GeneratorExtensionConstructor } from "./GeneratorExtensionConstructor";
-import { IGeneratorExtension } from "./IBaseGenerator";
+import { IGeneratorExtension } from "./IGeneratorExtension";
 import { ObjectExtensionFactory } from "./ObjectExtensionFactory";
 
 /**

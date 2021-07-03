@@ -22,6 +22,6 @@ export { GeneratorExtensionConstructor } from "./Extensibility/GeneratorExtensio
 export { Generator } from "./Generator";
 export { GeneratorConstructor } from "./GeneratorConstructor";
 export { GeneratorSettingKey } from "./GeneratorSettingKey";
-export { IGeneratorExtension } from "./Extensibility/IBaseGenerator";
+export { IGeneratorExtension } from "./Extensibility/IGeneratorExtension";
 export { IGenerator } from "./IGenerator";
 export { IGeneratorSettings } from "./IGeneratorSettings";
