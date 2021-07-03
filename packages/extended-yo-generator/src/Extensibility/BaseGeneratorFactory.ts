@@ -92,55 +92,51 @@ export class BaseGeneratorFactory<T extends GeneratorConstructor> extends Object
         let self = this;
         this.namespaceOrPath = namespaceOrPath;
 
-        return (
-            <TConstructor extends new (...args: any[]) => Generator>(baseClass: TConstructor): GeneratorExtensionConstructor<TConstructor> =>
+        return class BaseGenerator extends super.Create(base) implements IGeneratorExtension<T>
+        {
+            /**
+             * Initializes a new instance of the {@link BaseGenerator `BaseGenerator`} class.
+             *
+             * @param params
+             * The arguments of the constructor.
+             */
+            public constructor(...params: any[])
             {
-                return class BaseGenerator extends super.Create(base) implements IGeneratorExtension<T>
-                {
-                    /**
-                     * Initializes a new instance of the {@link BaseGenerator `BaseGenerator`} class.
-                     *
-                     * @param params
-                     * The arguments of the constructor.
-                     */
-                    public constructor(...params: any[])
-                    {
-                        super(...params);
-                    }
+                super(...params);
+            }
 
-                    /**
-                     * @inheritdoc
-                     */
-                    public get BaseComponents(): ComponentCollection<any, any>
-                    {
-                        return self.baseComponentResolver();
-                    }
+            /**
+             * @inheritdoc
+             */
+            public get BaseComponents(): ComponentCollection<any, any>
+            {
+                return self.baseComponentResolver();
+            }
 
-                    /**
-                     * @inheritdoc
-                     */
-                    public get BaseFileMappings(): FileMappingCollectionEditor
-                    {
-                        return self.baseFileMappingResolver();
-                    }
+            /**
+             * @inheritdoc
+             */
+            public get BaseFileMappings(): FileMappingCollectionEditor
+            {
+                return self.baseFileMappingResolver();
+            }
 
-                    /**
-                     * @inheritdoc
-                     */
-                    public override get Components(): IComponentCollection<any, any>
-                    {
-                        return this.Base.ComponentCollection.Result;
-                    }
+            /**
+             * @inheritdoc
+             */
+            public override get Components(): IComponentCollection<any, any>
+            {
+                return this.Base.ComponentCollection.Result;
+            }
 
-                    /**
-                     * @inheritdoc
-                     */
-                    public override get FileMappings(): Array<IFileMapping<any, any>>
-                    {
-                        return this.Base.ResolvedFileMappings.Items;
-                    }
-                } as GeneratorExtensionConstructor<TConstructor>;
-            })(base);
+            /**
+             * @inheritdoc
+             */
+            public override get FileMappings(): Array<IFileMapping<any, any>>
+            {
+                return this.Base.ResolvedFileMappings.Items;
+            }
+        } as GeneratorExtensionConstructor<T>;
     }
 
     /**
