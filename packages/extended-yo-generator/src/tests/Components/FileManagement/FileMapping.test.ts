@@ -371,25 +371,27 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                         "Checking whether the destination- and source-path are resolved using the proper generator…",
                         () =>
                         {
-                            let customGenerator = new class extends TestGenerator<any, any>
-                            {
-                                /**
-                                 * @inheritdoc
-                                 *
-                                 * @param path The path parts.
-                                 *
-                                 * @returns
-                                 * The joined path.
-                                 */
-                                public override templatePath(...path: string[]): string
+                            let customGenerator = context.CreateGenerator(
+                                class extends TestGenerator<any, any>
                                 {
-                                    return tempDir.MakePath(...path);
-                                }
-                            }([], {} as any);
+                                    /**
+                                     * @inheritdoc
+                                     *
+                                     * @param path The path parts.
+                                     *
+                                     * @returns
+                                     * The joined path.
+                                     */
+                                    public override templatePath(...path: string[]): string
+                                    {
+                                        return tempDir.MakePath(...path);
+                                    }
+                                });
 
                             fileMappingOptions.Source = context.RandomString;
-                            strictEqual(new FileMapping(customGenerator, fileMappingOptions).Source, tempDir.MakePath(fileMappingOptions.Source));
-                            notStrictEqual(new FileMapping(customGenerator, fileMapping.Result).Source, tempDir.MakePath(fileMappingOptions.Source));
+                            strictEqual(new FileMapping(customGenerator, fileMappingOptions).Source, customGenerator.templatePath(fileMappingOptions.Source));
+                            strictEqual(new FileMapping(customGenerator, fileMapping.Result).Source, generator.templatePath(fileMappingOptions.Source));
+                            notStrictEqual(new FileMapping(customGenerator, fileMapping.Result).Source, customGenerator.templatePath(fileMappingOptions.Source));
                         });
                 });
         });
