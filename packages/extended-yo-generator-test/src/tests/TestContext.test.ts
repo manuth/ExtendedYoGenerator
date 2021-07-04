@@ -67,6 +67,18 @@ export function TestContextTests(): void
                 });
 
             suite(
+                nameof<TestContext>((context) => context.CreateGenerator),
+                () =>
+                {
+                    test(
+                        "Checking whether generators can be created without an error…",
+                        () =>
+                        {
+                            ok(testContext.CreateGenerator(TestGenerator) instanceof TestGenerator);
+                        });
+                });
+
+            suite(
                 nameof<TestContext>((context) => context.CreatePromise),
                 () =>
                 {

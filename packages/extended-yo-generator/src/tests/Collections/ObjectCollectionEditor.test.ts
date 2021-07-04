@@ -104,6 +104,44 @@ export function ObjectCollectionEditorTests(): void
                 });
 
             suite(
+                nameof<ObjectCollectionEditor<any>>((collection) => collection.Add),
+                () =>
+                {
+                    test(
+                        "Checking whether a new element can be added…",
+                        () =>
+                        {
+                            collection.Clear();
+                            ok(!collection.Items.includes(tempDir));
+                            collection.Add(tempDir);
+                            ok(collection.Items.includes(tempDir));
+                        });
+                });
+
+            suite(
+                nameof<ObjectCollectionEditor<any>>((collection) => collection.AddRange),
+                () =>
+                {
+                    test(
+                        "Checking whether multiple elements can be added at once…",
+                        () =>
+                        {
+                            collection.Clear();
+                            ok(!collection.Items.includes(tempDir));
+                            ok(!collection.Items.includes(tempFile));
+
+                            collection.AddRange(
+                                [
+                                    tempDir,
+                                    tempFile
+                                ]);
+
+                            ok(collection.Items.includes(tempDir));
+                            ok(collection.Items.includes(tempFile));
+                        });
+                });
+
+            suite(
                 nameof<ObjectCollectionEditor<any>>((collection) => collection.Replace),
                 () =>
                 {

@@ -55,6 +55,20 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                 });
 
             suite(
+                nameof<FileMapping<any, any>>((fileMapping) => fileMapping.ID),
+                () =>
+                {
+                    test(
+                        "Checking whether the value can be set…",
+                        () =>
+                        {
+                            let value = context.RandomString;
+                            fileMapping.ID = value;
+                            strictEqual(fileMappingOptions.ID, value);
+                        });
+                });
+
+            suite(
                 nameof<FileMapping<any, any>>((fileMapping) => fileMapping.Source),
                 () =>
                 {
@@ -80,6 +94,15 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                         {
                             fileMappingOptions.Source = null;
                             strictEqual(fileMapping.Source, null);
+                        });
+
+                    test(
+                        "Checking whether the value can be set…",
+                        () =>
+                        {
+                            let value = context.RandomString;
+                            fileMapping.Source = value;
+                            strictEqual(fileMappingOptions.Source, value);
                         });
                 });
 
@@ -110,12 +133,49 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                             fileMappingOptions.Destination = null;
                             strictEqual(fileMapping.Destination, null);
                         });
+
+                    test(
+                        "Checking whether the value can be set…",
+                        () =>
+                        {
+                            let value = context.RandomString;
+                            fileMapping.Destination = value;
+                            strictEqual(fileMappingOptions.Destination, value);
+                        });
+                });
+
+            suite(
+                nameof<FileMapping<any, any>>((fileMapping) => fileMapping.Context),
+                () =>
+                {
+                    test(
+                        "Checking whether the value can be set…",
+                        () =>
+                        {
+                            let value = (): any => context.RandomObject;
+                            fileMapping.Context = value;
+                            strictEqual(fileMappingOptions.Context, value);
+                        });
                 });
 
             suite(
                 nameof<FileMapping<any, any>>((fileMapping) => fileMapping.Processor),
                 async () =>
                 {
+                    suite(
+                        "General",
+                        () =>
+                        {
+                            test(
+                                "Checking whether the value can be set…",
+                                () =>
+                                {
+                                    let value = (): void => { };
+                                    fileMapping.Processor = value;
+                                    strictEqual(fileMappingOptions.Processor, value);
+                                });
+                        });
+
                     suite(
                         `Testing cases when \`${nameof<FileMapping<any, any>>((f) => f.Processor)}\` is defined…`,
                         () =>
@@ -286,6 +346,50 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                                             await fileMapping.Processor();
                                         })());
                                 });
+                        });
+                });
+
+            suite(
+                nameof<FileMapping<any, any>>((fileMapping) => fileMapping.Result),
+                () =>
+                {
+                    let tempDir: TempDirectory;
+
+                    suiteSetup(
+                        () =>
+                        {
+                            tempDir = new TempDirectory();
+                        });
+
+                    suiteSetup(
+                        () =>
+                        {
+                            tempDir.Dispose();
+                        });
+
+                    test(
+                        "Checking whether the destination- and source-path are resolved using the proper generator…",
+                        () =>
+                        {
+                            let customGenerator = new class extends TestGenerator<any, any>
+                            {
+                                /**
+                                 * @inheritdoc
+                                 *
+                                 * @param path The path parts.
+                                 *
+                                 * @returns
+                                 * The joined path.
+                                 */
+                                public override templatePath(...path: string[]): string
+                                {
+                                    return tempDir.MakePath(...path);
+                                }
+                            }([], {} as any);
+
+                            fileMappingOptions.Source = context.RandomString;
+                            strictEqual(new FileMapping(customGenerator, fileMappingOptions).Source, tempDir.MakePath(fileMappingOptions.Source));
+                            notStrictEqual(new FileMapping(customGenerator, fileMapping.Result).Source, tempDir.MakePath(fileMappingOptions.Source));
                         });
                 });
         });

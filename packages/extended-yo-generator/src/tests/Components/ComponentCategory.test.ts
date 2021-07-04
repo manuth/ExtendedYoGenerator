@@ -39,6 +39,34 @@ export function ComponentCategoryTests(context: TestContext<TestGenerator, ITest
                 });
 
             suite(
+                nameof<ComponentCategory<any, any>>((category) => category.ID),
+                () =>
+                {
+                    test(
+                        "Checking whether the value can be set…",
+                        () =>
+                        {
+                            let value = context.RandomString;
+                            category.ID = value;
+                            strictEqual(categoryOptions.ID, value);
+                        });
+                });
+
+            suite(
+                nameof<ComponentCategory<any, any>>((category) => category.DisplayName),
+                () =>
+                {
+                    test(
+                        "Checking whether the value can be set…",
+                        () =>
+                        {
+                            let value = context.RandomString;
+                            category.DisplayName = value;
+                            strictEqual(categoryOptions.DisplayName, value);
+                        });
+                });
+
+            suite(
                 nameof<ComponentCategory<any, any>>((category) => category.Components),
                 () =>
                 {

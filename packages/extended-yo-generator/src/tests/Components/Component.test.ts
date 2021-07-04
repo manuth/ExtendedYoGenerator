@@ -44,6 +44,48 @@ export function ComponentTests(context: TestContext<TestGenerator, ITestGenerato
                 });
 
             suite(
+                nameof<Component<any, any>>((component) => component.ID),
+                () =>
+                {
+                    test(
+                        "Checking whether the value can be set…",
+                        () =>
+                        {
+                            let value = context.RandomString;
+                            component.ID = value;
+                            strictEqual(componentOptions.ID, value);
+                        });
+                });
+
+            suite(
+                nameof<Component<any, any>>((component) => component.DisplayName),
+                () =>
+                {
+                    test(
+                        "Checking whether the value can be set…",
+                        () =>
+                        {
+                            let value = context.RandomString;
+                            component.DisplayName = value;
+                            strictEqual(componentOptions.DisplayName, value);
+                        });
+                });
+
+            suite(
+                nameof<Component<any, any>>((component) => component.DefaultEnabled),
+                () =>
+                {
+                    test(
+                        "Checking whether the value can be set…",
+                        () =>
+                        {
+                            let value = context.Random.bool();
+                            component.DefaultEnabled = value;
+                            strictEqual(componentOptions.DefaultEnabled, value);
+                        });
+                });
+
+            suite(
                 nameof<Component<any, any>>((component) => component.FileMappings),
                 () =>
                 {

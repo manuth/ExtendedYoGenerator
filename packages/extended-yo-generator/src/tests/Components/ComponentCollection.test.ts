@@ -112,6 +112,20 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                 });
 
             suite(
+                nameof<ComponentCollection<any, any>>((collection) => collection.Question),
+                () =>
+                {
+                    test(
+                        "Checking whether the value can be set…",
+                        () =>
+                        {
+                            let value = context.RandomString;
+                            collection.Question = value;
+                            strictEqual(collection.Question, value);
+                        });
+                });
+
+            suite(
                 nameof<ComponentCollection<any, any>>((collection) => collection.Categories),
                 () =>
                 {
