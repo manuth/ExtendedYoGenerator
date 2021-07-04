@@ -132,7 +132,7 @@ export class FileMapping<TSettings, TOptions> extends PropertyResolver<IFileMapp
     /**
      * @inheritdoc
      */
-    protected set Processor(value: FileProcessor<TSettings, TOptions>)
+    public set Processor(value: FileProcessor<TSettings, TOptions>)
     {
         this.Object.Processor = value;
     }
