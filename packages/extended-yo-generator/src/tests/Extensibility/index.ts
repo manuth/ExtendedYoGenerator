@@ -1,5 +1,6 @@
 import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { BaseGeneratorFactoryTests } from "./BaseGeneratorFactory.test";
+import { ObjectExtensionFactoryTests } from "./ObjectExtensionFactory.test";
 
 /**
  * Registers tests for extensibility-components.
@@ -14,5 +15,6 @@ export function ExtensibilityTests(context: TestContext<TestGenerator, ITestGene
         () =>
         {
             BaseGeneratorFactoryTests(context);
+            ObjectExtensionFactoryTests(context);
         });
 }
