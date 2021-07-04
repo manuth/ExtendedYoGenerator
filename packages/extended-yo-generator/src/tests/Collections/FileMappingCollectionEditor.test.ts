@@ -1,6 +1,5 @@
 import { doesNotThrow } from "assert";
 import { TestContext } from "@manuth/extended-yo-generator-test";
-import { Random } from "random-js";
 import { FileMappingCollectionEditor } from "../../Collections/FileMappingCollectionEditor";
 import { FileMapping } from "../../Components/FileManagement/FileMapping";
 import { IFileMapping } from "../../Components/FileManagement/IFileMapping";
@@ -18,7 +17,6 @@ export function FileMappingCollectionEditorTests(context: TestContext): void
         nameof(FileMappingCollectionEditor),
         () =>
         {
-            let random: Random;
             let generator: Generator;
             let collection: FileMappingCollectionEditor;
 
@@ -26,7 +24,6 @@ export function FileMappingCollectionEditorTests(context: TestContext): void
                 async function()
                 {
                     this.timeout(30 * 1000);
-                    random = new Random();
                     generator = await context.Generator;
                 });
 
@@ -45,7 +42,7 @@ export function FileMappingCollectionEditorTests(context: TestContext): void
                         () =>
                         {
                             let fileMapping: IFileMapping<any, any> = {
-                                ID: random.string(10),
+                                ID: context.RandomString,
                                 Destination: ""
                             };
 

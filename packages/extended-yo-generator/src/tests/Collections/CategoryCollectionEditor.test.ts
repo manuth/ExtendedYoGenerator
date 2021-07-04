@@ -1,6 +1,5 @@
 import { doesNotThrow } from "assert";
 import { TestContext } from "@manuth/extended-yo-generator-test";
-import { Random } from "random-js";
 import { CategoryCollectionEditor } from "../../Collections/CategoryCollectionEditor";
 import { ComponentCategory } from "../../Components/ComponentCategory";
 import { IComponentCategory } from "../../Components/IComponentCategory";
@@ -18,7 +17,6 @@ export function CategoryCollectionEditorTests(context: TestContext): void
         nameof(CategoryCollectionEditor),
         () =>
         {
-            let random: Random;
             let generator: Generator;
             let collection: CategoryCollectionEditor;
 
@@ -26,7 +24,6 @@ export function CategoryCollectionEditorTests(context: TestContext): void
                 async function()
                 {
                     this.timeout(30 * 1000);
-                    random = new Random();
                     generator = await context.Generator;
                 });
 
@@ -45,7 +42,7 @@ export function CategoryCollectionEditorTests(context: TestContext): void
                         () =>
                         {
                             let category: IComponentCategory<any, any> = {
-                                ID: random.string(10),
+                                ID: context.RandomString,
                                 DisplayName: "",
                                 Components: []
                             };

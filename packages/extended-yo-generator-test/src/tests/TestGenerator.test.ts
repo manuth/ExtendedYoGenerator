@@ -1,5 +1,4 @@
 import { deepStrictEqual, doesNotReject, notStrictEqual, ok, strictEqual } from "assert";
-import { Random } from "random-js";
 import { IRunContext } from "../IRunContext";
 import { ITestGeneratorOptions } from "../ITestGeneratorOptions";
 import { ITestOptions } from "../ITestOptions";
@@ -8,14 +7,16 @@ import { TestGenerator } from "../TestGenerator";
 
 /**
  * Registers tests for the {@link TestGenerator `TestGenerator<TSettings, TOptions>`} class.
+ *
+ * @param context
+ * The test-context.
  */
-export function TestGeneratorTests(): void
+export function TestGeneratorTests(context: TestContext): void
 {
     suite(
         nameof(TestGenerator),
         () =>
         {
-            let random: Random;
             let context: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>>;
             let options: ITestOptions;
             let generator: TestGenerator;
@@ -25,7 +26,6 @@ export function TestGeneratorTests(): void
                 async () =>
                 {
                     let runContext: IRunContext<TestGenerator>;
-                    random = new Random();
                     context = TestContext.Default;
                     options = {};
 
@@ -36,14 +36,6 @@ export function TestGeneratorTests(): void
 
                     await runContext.toPromise();
                     generator = runContext.generator;
-
-                    randomValue = (function*()
-                    {
-                        while (true)
-                        {
-                            yield random.string(20);
-                        }
-                    })();
                 });
 
             setup(
@@ -53,6 +45,16 @@ export function TestGeneratorTests(): void
                     options.Questions = [];
                     options.Components = null;
                     options.FileMappings = [];
+
+                    randomValue = (function*()
+                    {
+                        let i = 1;
+
+                        while (true)
+                        {
+                            yield context.Random.string(i++);
+                        }
+                    })();
                 });
 
             suite(

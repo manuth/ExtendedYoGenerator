@@ -2,7 +2,6 @@ import { ok, strictEqual } from "assert";
 import { ITestGeneratorOptions, ITestGeneratorSettings, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import rescape = require("@stdlib/utils-escape-regexp-string");
 import { CheckboxChoiceOptions, CheckboxQuestion, Separator } from "inquirer";
-import { Random } from "random-js";
 import { replace, replaceGetter, restore } from "sinon";
 import { Logger, Question } from "yeoman-environment";
 import { Component } from "../../Components/Component";
@@ -47,7 +46,6 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                 }
             }
 
-            let random: Random;
             let generator: TestGenerator;
             let collection: MyComponentCollection;
             let randomString: Generator<string>;
@@ -61,7 +59,6 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                 async function()
                 {
                     this.timeout(30 * 1000);
-                    random = new Random();
                     generator = await context.Generator;
                     collection = new MyComponentCollection(generator, collectionOptions);
                 });
@@ -75,14 +72,14 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
 
                         while (true)
                         {
-                            yield random.string(i++);
+                            yield context.Random.string(i++);
                         }
                     }();
 
                     collectionOptions.Question = randomString.next().value;
                     collectionOptions.Categories = [];
 
-                    for (let i = random.integer(2, 5); i > 0; i--)
+                    for (let i = context.Random.integer(2, 5); i > 0; i--)
                     {
                         let category: IComponentCategory<any, any> = {
                             ID: randomString.next().value,
@@ -90,7 +87,7 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                             Components: []
                         };
 
-                        for (let i = random.integer(2, 5); i > 0; i--)
+                        for (let i = context.Random.integer(2, 5); i > 0; i--)
                         {
                             let component: IComponent<any, any> = {
                                 ID: randomString.next().value,
@@ -99,7 +96,7 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                                 Questions: []
                             };
 
-                            for (let i = random.integer(2, 5); i > 0; i--)
+                            for (let i = context.Random.integer(2, 5); i > 0; i--)
                             {
                                 component.Questions.push(
                                     {
@@ -148,7 +145,7 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                                 for (let component of category.Components)
                                 {
                                     component.DisplayName = randomString.next().value;
-                                    component.DefaultEnabled = random.bool();
+                                    component.DefaultEnabled = context.Random.bool();
                                 }
                             }
                         });
@@ -229,8 +226,8 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                     setup(
                         () =>
                         {
-                            component = random.pick(random.pick(collection.Categories.Items).Components.Items);
-                            question = random.pick(component.Questions.Items);
+                            component = context.Random.pick(context.Random.pick(collection.Categories.Items).Components.Items);
+                            question = context.Random.pick(component.Questions.Items);
                             componentQuestion = collection.ComponentQuestions.find((item) => item.name === question.name);
                         });
 
@@ -259,7 +256,7 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                         "Checking whether headings for the selected components are displayed to the user…",
                         async () =>
                         {
-                            let componentSample = random.sample(collection.Categories.Items.flatMap((category) => category.Components.Items), 2);
+                            let componentSample = context.Random.sample(collection.Categories.Items.flatMap((category) => category.Components.Items), 2);
                             let enabledComponent = componentSample[0];
                             let disabledComponent = componentSample[1];
                             let logMessages: string[] = [];
@@ -365,9 +362,9 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                             let value: boolean;
                             question.when = () => value;
 
-                            for (let i = random.integer(1, 5); i > 0; i--)
+                            for (let i = context.Random.integer(1, 5); i > 0; i--)
                             {
-                                value = random.bool();
+                                value = context.Random.bool();
 
                                 ok(
                                     typeof componentQuestion.when === "function" &&

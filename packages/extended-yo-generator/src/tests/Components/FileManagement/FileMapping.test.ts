@@ -3,7 +3,6 @@ import { ITestGeneratorOptions, ITestGeneratorSettings, ITestOptions, TestContex
 import { TempDirectory, TempFile } from "@manuth/temp-files";
 import { render } from "ejs";
 import { readFile, writeFile } from "fs-extra";
-import { Random } from "random-js";
 import { FileMapping } from "../../../Components/FileManagement/FileMapping";
 import { IFileMapping } from "../../../Components/FileManagement/IFileMapping";
 
@@ -19,7 +18,6 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
         nameof(FileMapping),
         () =>
         {
-            let random: Random;
             let generator: TestGenerator;
             let fileMapping: FileMapping<ITestGeneratorSettings, ITestGeneratorOptions<ITestOptions>>;
             let testPath = "test.txt";
@@ -36,7 +34,6 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                 async function()
                 {
                     this.timeout(30 * 1000);
-                    random = new Random();
                     generator = await context.Generator;
                     fileMapping = new FileMapping(generator, fileMappingOptions);
                     testDirectory = new TempDirectory();
@@ -128,7 +125,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                                 async () =>
                                 {
                                     let testValue: string;
-                                    let randomValue = random.string(10);
+                                    let randomValue = context.RandomString;
 
                                     /**
                                      * Processes a file-mapping.
@@ -160,17 +157,17 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                                             /**
                                              * @inheritdoc
                                              */
-                                            public Source = random.string(10);
+                                            public Source = context.RandomString;
 
                                             /**
                                              * Gets a custom property-value.
                                              */
-                                            public MyCustomProperty = random.string(20);
+                                            public MyCustomProperty = context.RandomString;
 
                                             /**
                                              * @inheritdoc
                                              */
-                                            public Destination = random.string(10);
+                                            public Destination = context.RandomString;
 
                                             /**
                                              * @inheritdoc

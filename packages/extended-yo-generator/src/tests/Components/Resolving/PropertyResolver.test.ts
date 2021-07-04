@@ -1,6 +1,5 @@
 import { doesNotReject, strictEqual } from "assert";
 import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
-import { Random } from "random-js";
 import { PropertyResolver } from "../../../Components/Resolving/PropertyResolver";
 import { IResolverTestOptions } from "./IResolverTestOptions";
 import { ResolverTest } from "./ResolverTest";
@@ -17,7 +16,6 @@ export function PropertyResolverTests(context: TestContext<TestGenerator, ITestG
         nameof<PropertyResolver<any, any, any, any>>(),
         () =>
         {
-            let random: Random;
             let propertyResolver: ResolverTest;
             let testValue = "this is a test";
             let testPromise = context.CreatePromise(testValue);
@@ -33,7 +31,6 @@ export function PropertyResolverTests(context: TestContext<TestGenerator, ITestG
                 async function()
                 {
                     this.timeout(30 * 1000);
-                    random = new Random();
 
                     propertyResolver = new ResolverTest(
                         await context.Generator,
@@ -86,7 +83,7 @@ export function PropertyResolverTests(context: TestContext<TestGenerator, ITestG
                                     /**
                                      * @inheritdoc
                                      */
-                                    public TestValue = random.string(10);
+                                    public TestValue = context.RandomString;
 
                                     /**
                                      * @inheritdoc

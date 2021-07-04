@@ -1,6 +1,5 @@
 import { doesNotThrow, ok, strictEqual, throws } from "assert";
 import { TestContext } from "@manuth/extended-yo-generator-test";
-import { Random } from "random-js";
 import { PropertyResolverCollectionEditor } from "../../Collections/PropertyResolverCollectionEditor";
 import { FileMapping } from "../../Components/FileManagement/FileMapping";
 import { FileMappingOptions } from "../../Components/FileManagement/FileMappingOptions";
@@ -69,7 +68,6 @@ export function PropertyResolverCollectionEditorTests(context: TestContext): voi
             }
 
             let generator: Generator;
-            let random: Random;
             let collection: MyCollection;
             let fileMappingGenerator: globalThis.Generator<IFileMapping<any, any>>;
 
@@ -78,7 +76,6 @@ export function PropertyResolverCollectionEditorTests(context: TestContext): voi
                 {
                     this.timeout(30 * 1000);
                     generator = await context.Generator;
-                    random = new Random();
                 });
 
             setup(
@@ -91,8 +88,8 @@ export function PropertyResolverCollectionEditorTests(context: TestContext): voi
                         while (true)
                         {
                             yield {
-                                ID: random.string(i),
-                                Destination: random.string(i)
+                                ID: context.Random.string(i),
+                                Destination: context.Random.string(i)
                             } as IFileMapping<any, any>;
                         }
                     }();

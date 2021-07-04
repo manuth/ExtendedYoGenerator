@@ -1,18 +1,20 @@
 import { doesNotThrow, ok, strictEqual, throws } from "assert";
-import { Random } from "random-js";
+import { TestContext } from "@manuth/extended-yo-generator-test";
 import { UniqueObjectCollectionEditor } from "../../Collections/UniqueObjectCollectionEditor";
 import { IUniqueObject } from "../../IUniqueObject";
 
 /**
  * Registers tests for the {@link UniqueObjectCollection `UniqueObjectCollection<T>`} class.
+ *
+ * @param context
+ * The test-context.
  */
-export function UniqueObjectCollectionEditorTests(): void
+export function UniqueObjectCollectionEditorTests(context: TestContext): void
 {
     suite(
         nameof(UniqueObjectCollectionEditor),
         () =>
         {
-            let random: Random;
             let collection: UniqueObjectCollectionEditor<IUniqueObject>;
             let randomItemGenerator: Generator<IUniqueObject>;
             let randomItem: IUniqueObject;
@@ -20,8 +22,6 @@ export function UniqueObjectCollectionEditorTests(): void
             suiteSetup(
                 () =>
                 {
-                    random = new Random();
-
                     randomItemGenerator = function*()
                     {
                         let i = 0;
@@ -29,7 +29,7 @@ export function UniqueObjectCollectionEditorTests(): void
                         while (true)
                         {
                             yield {
-                                ID: random.string(i++)
+                                ID: context.Random.string(i++)
                             } as IUniqueObject;
                         }
                     }();
