@@ -411,7 +411,7 @@ This release brings a handy new feature for making extending generators easier. 
 
 ## ExtendedYoGenerator v1.0.3
 ### Updated
-  - The generator-code to process all component filemappings sequentially
+  - The generator-code to process all component file-mappings sequentially
   - The UI for making component-questions more distinguishable
 
 [Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v1.0.2...v1.0.3)
