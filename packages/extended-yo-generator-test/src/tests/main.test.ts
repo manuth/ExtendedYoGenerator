@@ -8,6 +8,6 @@ suite(
     () =>
     {
         TestContextTests();
-        TestGeneratorTests();
+        TestGeneratorTests(TestContext.Default);
         ComponentTests(TestContext.Default);
     });

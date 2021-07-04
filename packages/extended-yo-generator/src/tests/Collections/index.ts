@@ -19,7 +19,7 @@ export function CollectionTests(context: TestContext<TestGenerator, ITestGenerat
         () =>
         {
             ObjectCollectionEditorTests();
-            UniqueObjectCollectionEditorTests();
+            UniqueObjectCollectionEditorTests(context);
             PropertyResolverCollectionEditorTests(context);
             FileMappingCollectionEditorTests(context);
             ComponentCollectionEditorTests(context);
