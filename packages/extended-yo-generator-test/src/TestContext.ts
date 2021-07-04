@@ -2,6 +2,7 @@ import { join } from "path";
 import { Generator, GeneratorOptions, IGeneratorSettings } from "@manuth/extended-yo-generator";
 import cloneDeep = require("lodash.clonedeep");
 import { Random } from "random-js";
+import Environment = require("yeoman-environment");
 import { run, RunContextSettings } from "yeoman-test";
 import { IRunContext } from "./IRunContext";
 import { ITestGeneratorOptions } from "./ITestGeneratorOptions";
@@ -118,6 +119,23 @@ export class TestContext<TGenerator extends Generator<any, TOptions> = Generator
         }
 
         return this.defaultInstance;
+    }
+
+    /**
+     * Initializes a new instance of the specified generator-constructor.
+     *
+     * @template T
+     * The type of the generator to create.
+     *
+     * @param generatorConstructor
+     * The constructor of the generator to instantiate.
+     *
+     * @returns
+     * The newly initialized generator.
+     */
+    public CreateGenerator<T extends Generator>(generatorConstructor: new (...args: any[]) => T): T
+    {
+        return new generatorConstructor([], { env: Environment.createEnv() });
     }
 
     /**
