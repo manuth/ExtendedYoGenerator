@@ -1,6 +1,5 @@
 import { notStrictEqual, ok, strictEqual } from "assert";
 import { TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
-import Environment = require("yeoman-environment");
 import { FileMappingCollectionEditor } from "../../Collections/FileMappingCollectionEditor";
 import { ComponentCategory } from "../../Components/ComponentCategory";
 import { ComponentCollection } from "../../Components/ComponentCollection";
@@ -244,23 +243,6 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                 return all ? values.every((value) => value) : values.some((value) => value);
             }
 
-            /**
-             * Initializes a new instance of the specified generator-constructor.
-             *
-             * @template T
-             * The type of the generator to create.
-             *
-             * @param generatorConstructor
-             * The constructor of the generator to instantiate.
-             *
-             * @returns
-             * The newly initialized generator.
-             */
-            function CreateGenerator<T extends Generator>(generatorConstructor: new (...args: any[]) => T): T
-            {
-                return new generatorConstructor([], { env: Environment.createEnv() });
-            }
-
             let superTemplateDir: string;
             let subTemplateDir: string;
             let superSourceFile: string;
@@ -299,7 +281,7 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                     suiteSetup(
                         async function()
                         {
-                            generator = CreateGenerator(SubGenerator);
+                            generator = context.CreateGenerator(SubGenerator);
                             generator.Base.moduleRoot(generator.Base.moduleRoot(context.RandomString));
 
                             /**
@@ -332,14 +314,14 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                                 }
                             }
 
-                            externalGenerator = CreateGenerator(MyGenerator);
+                            externalGenerator = context.CreateGenerator(MyGenerator);
                         });
 
                     test(
                         `Checking whether the generated \`${Generator.constructor}\` inherits the desired class…`,
                         () =>
                         {
-                            ok(CreateGenerator(BaseGeneratorFactory.Create(TestGenerator)) instanceof TestGenerator);
+                            ok(context.CreateGenerator(BaseGeneratorFactory.Create(TestGenerator)) instanceof TestGenerator);
                         });
 
                     test(
@@ -497,7 +479,7 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                         "Checking whether the base-generator is created using the constructor rather than the namespace (or path)…",
                         () =>
                         {
-                            let testGenerator = CreateGenerator(class extends Generator.ComposeWith(class extends Generator { }, TestGenerator.Path) { });
+                            let testGenerator = context.CreateGenerator(class extends Generator.ComposeWith(class extends Generator { }, TestGenerator.Path) { });
                             ok(!(testGenerator instanceof TestGenerator));
                             ok(testGenerator instanceof Generator);
                         });
