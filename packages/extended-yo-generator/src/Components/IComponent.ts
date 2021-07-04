@@ -1,6 +1,7 @@
 import { Question } from "yeoman-generator";
+import { IUniqueObject } from "../IUniqueObject";
 import { Component } from "./Component";
-import { IFileMapping } from "./IFileMapping";
+import { IFileMapping } from "./FileManagement/IFileMapping";
 import { Resolvable } from "./Resolving/Resolvable";
 
 /**
@@ -12,7 +13,7 @@ import { Resolvable } from "./Resolving/Resolvable";
  * @template TOptions
  * The type of the options of the generator.
  */
-export interface IComponent<TSettings, TOptions>
+export interface IComponent<TSettings, TOptions> extends IUniqueObject
 {
     /**
      * Gets or sets the id of the component.
@@ -30,7 +31,7 @@ export interface IComponent<TSettings, TOptions>
     DefaultEnabled?: boolean;
 
     /**
-     * Gets or sets additional quetions related to the component.
+     * Gets or sets additional questions related to the component.
      */
     Questions?: Array<Question<TSettings>>;
 

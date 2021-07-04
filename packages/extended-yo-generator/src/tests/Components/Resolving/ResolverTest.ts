@@ -6,10 +6,10 @@ import { IResolverTestOptions } from "./IResolverTestOptions";
 /**
  * A resolver-object for testing.
  */
-export class ResolverTest extends PropertyResolver<IResolverTestOptions, ResolverTest, ITestGeneratorSettings, ITestGeneratorOptions<ITestOptions>>
+export class ResolverTest extends PropertyResolver<IResolverTestOptions, ResolverTest, ITestGeneratorSettings, ITestGeneratorOptions<ITestOptions>> implements IResolverTestOptions
 {
     /**
-     * Initializes a new instance of the `ResolverTest` class.
+     * Initializes a new instance of the {@link ResolverTest `ResolverTest`} class.
      *
      * @param generator
      * The generator for the test-object.
@@ -44,5 +44,13 @@ export class ResolverTest extends PropertyResolver<IResolverTestOptions, Resolve
     public get TestFunction(): Promise<() => string>
     {
         return this.ResolveProperty(this, this.Object.TestFunction) as Promise<() => string>;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public get Result(): IResolverTestOptions
+    {
+        return this;
     }
 }

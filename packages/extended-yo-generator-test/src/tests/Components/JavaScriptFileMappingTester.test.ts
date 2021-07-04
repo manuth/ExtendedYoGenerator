@@ -6,7 +6,7 @@ import TestGenerator = require("../../generators/app");
 import { TestContext } from "../../TestContext";
 
 /**
- * Registers tests for the `JavaScriptFileMappingTester` class.
+ * Registers tests for the {@link JavaScriptFileMappingTester `JavaScriptFileMappingTester<TGenerator, TSettings, TOptions, TFileMapping>`} class.
  *
  * @param context
  * The test-context.
@@ -14,7 +14,7 @@ import { TestContext } from "../../TestContext";
 export function JavaScriptFileMappingTesterTests(context: TestContext<TestGenerator>): void
 {
     suite(
-        "JavaScriptFileMappingTester",
+        nameof(JavaScriptFileMappingTester),
         () =>
         {
             let sourceFile: TempFile;
@@ -27,7 +27,7 @@ export function JavaScriptFileMappingTesterTests(context: TestContext<TestGenera
             suiteSetup(
                 async function()
                 {
-                    this.timeout(0);
+                    this.timeout(30 * 1000);
                     sourceFile = new TempFile();
                     destinationFile = new TempFile();
 
@@ -49,7 +49,7 @@ export function JavaScriptFileMappingTesterTests(context: TestContext<TestGenera
                 });
 
             suite(
-                "Require",
+                nameof<JavaScriptFileMappingTester<any, any, any, any>>((tester) => tester.Require),
                 () =>
                 {
                     test(

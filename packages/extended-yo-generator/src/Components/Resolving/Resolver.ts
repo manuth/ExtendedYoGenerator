@@ -8,12 +8,18 @@ import { Resolvable } from "./Resolvable";
  * The target of the resolve.
  *
  * @template TSettings
- * The type of the settings of the object.
+ * The type of the settings of the target's generator.
+ *
+ * @template TOptions
+ * The type of the options of the target's generator.
  */
 export class Resolver<TTarget, TSettings, TOptions>
 {
     /**
      * Resolves a value.
+     *
+     * @template T
+     * The type of the value to resolve.
      *
      * @param target
      * The component.

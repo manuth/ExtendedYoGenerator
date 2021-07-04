@@ -1,5 +1,4 @@
 import { deepStrictEqual, doesNotReject, notStrictEqual, ok, strictEqual } from "assert";
-import { Random } from "random-js";
 import { IRunContext } from "../IRunContext";
 import { ITestGeneratorOptions } from "../ITestGeneratorOptions";
 import { ITestOptions } from "../ITestOptions";
@@ -7,15 +6,17 @@ import { TestContext } from "../TestContext";
 import { TestGenerator } from "../TestGenerator";
 
 /**
- * Registers tests for the `TestGenerator` class.
+ * Registers tests for the {@link TestGenerator `TestGenerator<TSettings, TOptions>`} class.
+ *
+ * @param context
+ * The test-context.
  */
-export function TestGeneratorTests(): void
+export function TestGeneratorTests(context: TestContext): void
 {
     suite(
-        "TestGenerator",
+        nameof(TestGenerator),
         () =>
         {
-            let random: Random;
             let context: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>>;
             let options: ITestOptions;
             let generator: TestGenerator;
@@ -25,7 +26,6 @@ export function TestGeneratorTests(): void
                 async () =>
                 {
                     let runContext: IRunContext<TestGenerator>;
-                    random = new Random();
                     context = TestContext.Default;
                     options = {};
 
@@ -36,14 +36,6 @@ export function TestGeneratorTests(): void
 
                     await runContext.toPromise();
                     generator = runContext.generator;
-
-                    randomValue = (function*()
-                    {
-                        while (true)
-                        {
-                            yield random.string(20);
-                        }
-                    })();
                 });
 
             setup(
@@ -53,16 +45,28 @@ export function TestGeneratorTests(): void
                     options.Questions = [];
                     options.Components = null;
                     options.FileMappings = [];
+
+                    randomValue = (function*()
+                    {
+                        let i = 1;
+
+                        while (true)
+                        {
+                            yield context.Random.string(i++);
+                        }
+                    })();
                 });
 
             suite(
-                "Path",
+                nameof(TestGenerator.Path),
                 () =>
                 {
                     test(
                         "Checking whether a generator can be instantiated from the specified path…",
-                        async () =>
+                        async function()
                         {
+                            this.timeout(50 * 1000);
+                            this.slow(25 * 1000);
                             let generator: TestGenerator;
 
                             await doesNotReject(
@@ -76,7 +80,7 @@ export function TestGeneratorTests(): void
                 });
 
             suite(
-                "GeneratorOptions",
+                nameof<TestGenerator>((generator) => generator.options),
                 () =>
                 {
                     test(
@@ -111,7 +115,7 @@ export function TestGeneratorTests(): void
                 });
 
             suite(
-                "moduleRoot",
+                nameof<TestGenerator>((generator) => generator.moduleRoot),
                 () =>
                 {
                     let moduleRoot: string;

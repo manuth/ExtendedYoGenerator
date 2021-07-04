@@ -1,9 +1,11 @@
 import { isAbsolute } from "path";
-import { IGenerator } from "../IGenerator";
+import { IGenerator } from "../../IGenerator";
+import { AsyncResolveFunction } from "../Resolving/AsyncResolveFunction";
+import { PathResolver } from "../Resolving/PathResolver";
+import { PropertyResolver } from "../Resolving/PropertyResolver";
+import { Resolvable } from "../Resolving/Resolvable";
+import { FileProcessor } from "./FileProcessor";
 import { IFileMapping } from "./IFileMapping";
-import { PathResolver } from "./Resolving/PathResolver";
-import { PropertyResolver } from "./Resolving/PropertyResolver";
-import { Resolvable } from "./Resolving/Resolvable";
 
 /**
  * Represents a file-mapping.
@@ -17,7 +19,7 @@ import { Resolvable } from "./Resolving/Resolvable";
 export class FileMapping<TSettings, TOptions> extends PropertyResolver<IFileMapping<TSettings, TOptions>, FileMapping<TSettings, TOptions>, TSettings, TOptions> implements IFileMapping<TSettings, TOptions>
 {
     /**
-     * Initializes a new instance of the `FileMapping` class.
+     * Initializes a new instance of the {@link FileMapping `FileMapping<TSettings, TOptions>`} class.
      *
      * @param generator
      * The generator of the file-mapping.
@@ -31,7 +33,31 @@ export class FileMapping<TSettings, TOptions> extends PropertyResolver<IFileMapp
     }
 
     /**
-     * Gets the path to the template of the component.
+     * @inheritdoc
+     */
+    public get Result(): IFileMapping<TSettings, TOptions>
+    {
+        return this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public get ID(): string
+    {
+        return this.Object.ID;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public set ID(value: string)
+    {
+        this.Object.ID = value;
+    }
+
+    /**
+     * Gets or sets the path to the template of the component.
      */
     public get Source(): string
     {
@@ -39,7 +65,15 @@ export class FileMapping<TSettings, TOptions> extends PropertyResolver<IFileMapp
     }
 
     /**
-     * Gets the destination to save the component to.
+     * @inheritdoc
+     */
+    public set Source(value: Resolvable<FileMapping<TSettings, TOptions>, TSettings, TOptions, string>)
+    {
+        this.Object.Source = value;
+    }
+
+    /**
+     * Gets or sets the destination to save the component to.
      */
     public get Destination(): string
     {
@@ -47,7 +81,15 @@ export class FileMapping<TSettings, TOptions> extends PropertyResolver<IFileMapp
     }
 
     /**
-     * Gets the context to use for copying the file-entry.
+     * @inheritdoc
+     */
+    public set Destination(value: Resolvable<FileMapping<TSettings, TOptions>, TSettings, TOptions, string>)
+    {
+        this.Object.Destination = value;
+    }
+
+    /**
+     * Gets or sets the context to use for copying the file-entry.
      */
     public get Context(): () => Promise<any>
     {
@@ -55,7 +97,15 @@ export class FileMapping<TSettings, TOptions> extends PropertyResolver<IFileMapp
     }
 
     /**
-     * Gets the method to execute for processing the file-mapping.
+     * @inheritdoc
+     */
+    public set Context(value: AsyncResolveFunction<FileMapping<TSettings, TOptions>, TSettings, TOptions, any>)
+    {
+        this.Object.Context = value;
+    }
+
+    /**
+     * Gets or sets the method to execute for processing the file-mapping.
      */
     public get Processor(): () => void | Promise<void>
     {
@@ -80,13 +130,21 @@ export class FileMapping<TSettings, TOptions> extends PropertyResolver<IFileMapp
     }
 
     /**
-     * Resolves the path from the options with the specified `resolver`.
+     * @inheritdoc
+     */
+    public set Processor(value: FileProcessor<TSettings, TOptions>)
+    {
+        this.Object.Processor = value;
+    }
+
+    /**
+     * Resolves the path from the options with the specified {@link resolver `resolver`}.
      *
      * @param path
      * The path to resolve.
      *
      * @param resolver
-     * The path-resolver to use.
+     * The {@link PathResolver `PathResolver`} to use.
      *
      * @returns
      * The resolved path.

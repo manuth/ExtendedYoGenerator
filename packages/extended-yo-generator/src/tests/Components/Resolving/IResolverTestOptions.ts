@@ -2,7 +2,7 @@ import { ResolvableAsync } from "../../../Components/Resolving/ResolvableAsync";
 import { ResolverTest } from "./ResolverTest";
 
 /**
- * Options for the resolver.
+ * Options for the {@link ResolverTest `ResolverTest`} class.
  */
 export interface IResolverTestOptions
 {

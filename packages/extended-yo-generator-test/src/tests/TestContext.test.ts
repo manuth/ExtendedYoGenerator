@@ -8,12 +8,12 @@ import { TestGenerator } from "../TestGenerator";
 import { IExampleOptions } from "./IExampleOptions";
 
 /**
- * Registers tests for the `TestContext` class.
+ * Registers tests for the {@link TestContext `TestContext<TGenerator, TOptions>`} class.
  */
 export function TestContextTests(): void
 {
     suite(
-        "TestContext",
+        nameof(TestContext),
         () =>
         {
             let random: Random;
@@ -39,7 +39,7 @@ export function TestContextTests(): void
                 });
 
             suite(
-                "Generator",
+                nameof<TestContext>((context) => context.Generator),
                 () =>
                 {
                     let generator: TestGenerator<ITestGeneratorSettings, IExampleOptions>;
@@ -67,7 +67,19 @@ export function TestContextTests(): void
                 });
 
             suite(
-                "CreatePromise",
+                nameof<TestContext>((context) => context.CreateGenerator),
+                () =>
+                {
+                    test(
+                        "Checking whether generators can be created without an error…",
+                        () =>
+                        {
+                            ok(testContext.CreateGenerator(TestGenerator) instanceof TestGenerator);
+                        });
+                });
+
+            suite(
+                nameof<TestContext>((context) => context.CreatePromise),
                 () =>
                 {
                     test(
@@ -79,7 +91,7 @@ export function TestContextTests(): void
                 });
 
             suite(
-                "CreateFunction",
+                nameof<TestContext>((context) => context.CreateFunction),
                 () =>
                 {
                     test(
@@ -91,7 +103,7 @@ export function TestContextTests(): void
                 });
 
             suite(
-                "CreatePromiseFunction",
+                nameof<TestContext>((context) => context.CreatePromiseFunction),
                 () =>
                 {
                     test(
@@ -103,7 +115,7 @@ export function TestContextTests(): void
                 });
 
             suite(
-                "ExecuteGenerator",
+                nameof<TestContext>((context) => context.ExecuteGenerator),
                 () =>
                 {
                     let runContext: IRunContext<TestGenerator<ITestGeneratorSettings, IExampleOptions>>;

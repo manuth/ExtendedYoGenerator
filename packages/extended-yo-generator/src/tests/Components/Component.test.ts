@@ -5,7 +5,7 @@ import { Component } from "../../Components/Component";
 import { IComponent } from "../../Components/IComponent";
 
 /**
- * Provides tests for the `Component` class.
+ * Provides tests for the {@link Component `Component<TSettings, TOptions>`} class.
  *
  * @param context
  * The context to use.
@@ -13,7 +13,7 @@ import { IComponent } from "../../Components/IComponent";
 export function ComponentTests(context: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>>): void
 {
     suite(
-        "Component",
+        nameof(Component),
         () =>
         {
             let generator: TestGenerator;
@@ -26,8 +26,9 @@ export function ComponentTests(context: TestContext<TestGenerator, ITestGenerato
             };
 
             suiteSetup(
-                async () =>
+                async function()
                 {
+                    this.timeout(30 * 1000);
                     generator = await context.Generator;
                     component = new Component(generator, componentOptions);
                 });
@@ -43,7 +44,49 @@ export function ComponentTests(context: TestContext<TestGenerator, ITestGenerato
                 });
 
             suite(
-                "FileMappings",
+                nameof<Component<any, any>>((component) => component.ID),
+                () =>
+                {
+                    test(
+                        "Checking whether the value can be set…",
+                        () =>
+                        {
+                            let value = context.RandomString;
+                            component.ID = value;
+                            strictEqual(componentOptions.ID, value);
+                        });
+                });
+
+            suite(
+                nameof<Component<any, any>>((component) => component.DisplayName),
+                () =>
+                {
+                    test(
+                        "Checking whether the value can be set…",
+                        () =>
+                        {
+                            let value = context.RandomString;
+                            component.DisplayName = value;
+                            strictEqual(componentOptions.DisplayName, value);
+                        });
+                });
+
+            suite(
+                nameof<Component<any, any>>((component) => component.DefaultEnabled),
+                () =>
+                {
+                    test(
+                        "Checking whether the value can be set…",
+                        () =>
+                        {
+                            let value = context.Random.bool();
+                            component.DefaultEnabled = value;
+                            strictEqual(componentOptions.DefaultEnabled, value);
+                        });
+                });
+
+            suite(
+                nameof<Component<any, any>>((component) => component.FileMappings),
                 () =>
                 {
                     let testFile: TempFile;
@@ -61,7 +104,7 @@ export function ComponentTests(context: TestContext<TestGenerator, ITestGenerato
                         });
 
                     test(
-                        "Checking whether changes to the `FileMappings` option immediately take affect…",
+                        `Checking whether changes made to the \`${nameof<Component<any, any>>((c) => c.FileMappings)}\` option immediately take effect until the property has been queried the first time…`,
                         async () =>
                         {
                             componentOptions.FileMappings = [
@@ -70,7 +113,7 @@ export function ComponentTests(context: TestContext<TestGenerator, ITestGenerato
                                 }
                             ];
 
-                            strictEqual(component.FileMappings[0].Destination, testFile.FullName);
+                            strictEqual(component.FileMappings.Items[0].Destination, testFile.FullName);
                         });
                 });
         });

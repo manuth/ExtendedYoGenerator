@@ -4,7 +4,7 @@ import { Resolvable } from "../../../Components/Resolving/Resolvable";
 import { Resolver } from "../../../Components/Resolving/Resolver";
 
 /**
- * Registers tests for the `Resolver` class.
+ * Registers tests for the {@link Resolver `Resolver<TTarget, TSettings, TOptions>`} class.
  *
  * @param context
  * The context of the test-execution.
@@ -12,16 +12,19 @@ import { Resolver } from "../../../Components/Resolving/Resolver";
 export function ResolverTests(context: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>>): void
 {
     suite(
-        "Resolver",
+        nameof(Resolver),
         () =>
         {
             /**
-             * Represents a test-implementation of the `Resolver` class.
+             * Represents a test-implementation of the {@link Resolver `Resolver<TTarget, TSettings, TOptions>`} class.
              */
             class TestResolver extends Resolver<null, null, null>
             {
                 /**
                  * @inheritdoc
+                 *
+                 * @template T
+                 * The type of the value to resolve.
                  *
                  * @param target
                  * The component.
@@ -42,7 +45,7 @@ export function ResolverTests(context: TestContext<TestGenerator, ITestGenerator
             }
 
             suite(
-                "Resolve",
+                nameof<TestResolver>((resolver) => resolver.Resolve),
                 async () =>
                 {
                     let resolver: TestResolver;
@@ -61,39 +64,39 @@ export function ResolverTests(context: TestContext<TestGenerator, ITestGenerator
                         });
 
                     test(
-                        "Checking whether values can be resolved no mather whether they are functions, promises or plain values…",
+                        `Checking whether values can be resolved no mather whether they are \`${nameof(Function)}\`s, \`${nameof(Promise)}\`s or plain values…`,
                         async () =>
                         {
-                            strictEqual(testValue, resolver.Resolve(null, null, testValue));
-                            strictEqual(testValue, await resolver.Resolve<Promise<string>>(null, null, context.CreatePromise(testValue)));
-                            strictEqual(testValue, resolver.Resolve(null, null, context.CreateFunction(testValue)));
-                            strictEqual(testValue, await resolver.Resolve<Promise<string>>(null, null, context.CreatePromiseFunction(testValue)));
+                            strictEqual(resolver.Resolve(null, null, testValue), testValue);
+                            strictEqual(await resolver.Resolve<Promise<string>>(null, null, context.CreatePromise(testValue)), testValue);
+                            strictEqual(resolver.Resolve(null, null, context.CreateFunction(testValue)), testValue);
+                            strictEqual(await resolver.Resolve<Promise<string>>(null, null, context.CreatePromiseFunction(testValue)), testValue);
                         });
 
                     test(
-                        "Checking whether nested promises act as expected…",
+                        `Checking whether nested \`${nameof(Promise)}\`s act as expected…`,
                         async () =>
                         {
-                            strictEqual(await testPromise, await resolver.Resolve<Promise<string>>(null, null, testPromise));
-                            strictEqual(await testPromise, await resolver.Resolve(null, null, context.CreatePromise(testPromise)));
-                            strictEqual(await testPromise, await resolver.Resolve<Promise<string>>(null, null, context.CreateFunction(testPromise)));
-                            strictEqual(await testPromise, await resolver.Resolve<Promise<Promise<string>>>(null, null, context.CreatePromiseFunction(testPromise)));
+                            strictEqual(await resolver.Resolve<Promise<string>>(null, null, testPromise), await testPromise);
+                            strictEqual(await resolver.Resolve(null, null, context.CreatePromise(testPromise)), await testPromise);
+                            strictEqual(await resolver.Resolve<Promise<string>>(null, null, context.CreateFunction(testPromise)), await testPromise);
+                            strictEqual(await resolver.Resolve<Promise<Promise<string>>>(null, null, context.CreatePromiseFunction(testPromise)), await testPromise);
                         });
 
                     test(
-                        "Checking whether plain functions cannot be resolved…",
+                        `Checking whether plain \`${nameof(Function)}\`s cannot be resolved…`,
                         () =>
                         {
-                            notStrictEqual(testFunction, resolver.Resolve<any>(null, null, testFunction));
+                            notStrictEqual(resolver.Resolve<any>(null, null, testFunction), testFunction);
                         });
 
                     test(
-                        "Checking whether functions can be resolved otherwise…",
+                        `Checking whether \`${nameof(Function)}\` can be resolved otherwise…`,
                         async () =>
                         {
-                            strictEqual(testFunction, await resolver.Resolve<Promise<() => void>>(null, null, context.CreatePromise(testFunction)));
-                            strictEqual(testFunction, resolver.Resolve<() => void>(null, null, context.CreateFunction(testFunction)));
-                            strictEqual(testFunction, await resolver.Resolve<Promise<() => void>>(null, null, context.CreatePromiseFunction(testFunction)));
+                            strictEqual(await resolver.Resolve<Promise<() => void>>(null, null, context.CreatePromise(testFunction)), testFunction);
+                            strictEqual(resolver.Resolve<() => void>(null, null, context.CreateFunction(testFunction)), testFunction);
+                            strictEqual(await resolver.Resolve<Promise<() => void>>(null, null, context.CreatePromiseFunction(testFunction)), testFunction);
                         });
 
                     test(

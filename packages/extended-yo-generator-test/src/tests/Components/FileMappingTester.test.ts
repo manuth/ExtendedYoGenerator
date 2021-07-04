@@ -7,7 +7,7 @@ import { TestContext } from "../../TestContext";
 import { TestGenerator } from "../../TestGenerator";
 
 /**
- * Registers tests for the `FileMappingTester` class.
+ * Registers tests for the {@link FileMappingTester `FileMappingTester<TGenerator, TSettings, TOptions, TFileMapping>`} class.
  *
  * @param context
  * The test-context.
@@ -15,7 +15,7 @@ import { TestGenerator } from "../../TestGenerator";
 export function FileMappingTesterTests(context: TestContext<TestGenerator>): void
 {
     suite(
-        "FileMappingTester",
+        nameof(FileMappingTester),
         () =>
         {
             let sourceFile: TempFile;
@@ -28,7 +28,7 @@ export function FileMappingTesterTests(context: TestContext<TestGenerator>): voi
             suiteSetup(
                 async function()
                 {
-                    this.timeout(0);
+                    this.timeout(30 * 1000);
                     sourceFile = new TempFile();
                     destinationFile = new TempFile();
 
@@ -56,11 +56,11 @@ export function FileMappingTesterTests(context: TestContext<TestGenerator>): voi
                 });
 
             suite(
-                "Exists",
+                nameof<FileMappingTester<any, any, any, any>>((tester) => tester.Exists),
                 () =>
                 {
                     test(
-                        "Checking whether `Exists` equals to the existence of the destination-file…",
+                        `Checking whether \`${nameof<FileMappingTester<any, any, any, any>>((t) => t.Exists)}\` equals to the existence of the destination-file…`,
                         async () =>
                         {
                             ok(!await tester.Exists);
@@ -70,7 +70,7 @@ export function FileMappingTesterTests(context: TestContext<TestGenerator>): voi
                 });
 
             suite(
-                "Content",
+                nameof<FileMappingTester<any, any, any, any>>((tester) => tester.Content),
                 () =>
                 {
                     test(
@@ -83,7 +83,7 @@ export function FileMappingTesterTests(context: TestContext<TestGenerator>): voi
                 });
 
             suite(
-                "Run",
+                nameof<FileMappingTester<any, any, any, any>>((tester) => tester.Run),
                 () =>
                 {
                     test(
@@ -95,7 +95,7 @@ export function FileMappingTesterTests(context: TestContext<TestGenerator>): voi
                 });
 
             suite(
-                "WriteFile",
+                nameof<FileMappingTester<any, any, any, any>>((tester) => tester.WriteFile),
                 () =>
                 {
                     test(
@@ -110,7 +110,7 @@ export function FileMappingTesterTests(context: TestContext<TestGenerator>): voi
                 });
 
             suite(
-                "WriteSource",
+                nameof<FileMappingTester<any, any, any, any>>((tester) => tester.WriteSource),
                 () =>
                 {
                     test(
@@ -123,7 +123,7 @@ export function FileMappingTesterTests(context: TestContext<TestGenerator>): voi
                 });
 
             suite(
-                "WriteDestination",
+                nameof<FileMappingTester<any, any, any, any>>((tester) => tester.WriteDestination),
                 () =>
                 {
                     test(
@@ -136,7 +136,7 @@ export function FileMappingTesterTests(context: TestContext<TestGenerator>): voi
                 });
 
             suite(
-                "Commit",
+                nameof<FileMappingTester<any, any, any, any>>((tester) => tester.Commit),
                 () =>
                 {
                     test(
@@ -152,7 +152,7 @@ export function FileMappingTesterTests(context: TestContext<TestGenerator>): voi
                 });
 
             suite(
-                "AssertContent",
+                nameof<FileMappingTester<any, any, any, any>>((tester) => tester.AssertContent),
                 () =>
                 {
                     test(
@@ -166,7 +166,7 @@ export function FileMappingTesterTests(context: TestContext<TestGenerator>): voi
                 });
 
             suite(
-                "Clean",
+                nameof<FileMappingTester<any, any, any, any>>((tester) => tester.Clean),
                 () =>
                 {
                     test(

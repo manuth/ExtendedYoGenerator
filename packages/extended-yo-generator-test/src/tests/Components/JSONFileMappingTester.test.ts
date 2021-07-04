@@ -6,7 +6,7 @@ import TestGenerator = require("../../generators/app");
 import { TestContext } from "../../TestContext";
 
 /**
- * Registers tests for the `JSONFileMappingTester` class.
+ * Registers tests for the {@link JSONFileMappingTester `JSONFileMappingTester<TGenerator, TSettings, TOptions, TFileMapping>`} class.
  *
  * @param context
  * The test-context.
@@ -14,7 +14,7 @@ import { TestContext } from "../../TestContext";
 export function JSONFileMappingTesterTests(context: TestContext<TestGenerator>): void
 {
     suite(
-        "JSONFileMappingTester",
+        nameof(JSONFileMappingTester),
         () =>
         {
             let sourceFile: TempFile;
@@ -26,7 +26,7 @@ export function JSONFileMappingTesterTests(context: TestContext<TestGenerator>):
             suiteSetup(
                 async function()
                 {
-                    this.timeout(0);
+                    this.timeout(30 * 1000);
                     sourceFile = new TempFile();
                     destinationFile = new TempFile();
 
@@ -42,7 +42,7 @@ export function JSONFileMappingTesterTests(context: TestContext<TestGenerator>):
                 });
 
             suite(
-                "Metadata",
+                nameof<JSONFileMappingTester<any, any, any, any>>((tester) => tester.Metadata),
                 () =>
                 {
                     test(

@@ -1,16 +1,16 @@
 import { dirname, join, resolve } from "path";
-import chalk = require("chalk");
 import { ensureDirSync } from "fs-extra";
-import { ChoiceCollection, Separator } from "inquirer";
 import pkgUp = require("pkg-up");
 import YeomanGenerator = require("yeoman-generator");
 import { Question } from "yeoman-generator";
-import { BaseConstructorCreator } from "./BaseConstructorCreator";
+import { FileMappingCollectionEditor } from "./Collections/FileMappingCollectionEditor";
+import { ObjectCollectionEditor } from "./Collections/ObjectCollectionEditor";
 import { ComponentCollection } from "./Components/ComponentCollection";
-import { FileMapping } from "./Components/FileMapping";
+import { FileMapping } from "./Components/FileManagement/FileMapping";
+import { IFileMapping } from "./Components/FileManagement/IFileMapping";
 import { IComponentCollection } from "./Components/IComponentCollection";
-import { IFileMapping } from "./Components/IFileMapping";
-import { CompositeConstructor } from "./CompositeConstructor";
+import { BaseGeneratorFactory } from "./Extensibility/BaseGeneratorFactory";
+import { GeneratorExtensionConstructor } from "./Extensibility/GeneratorExtensionConstructor";
 import { GeneratorConstructor } from "./GeneratorConstructor";
 import { GeneratorSettingKey } from "./GeneratorSettingKey";
 import { IGenerator } from "./IGenerator";
@@ -19,8 +19,11 @@ import { IGeneratorSettings } from "./IGeneratorSettings";
 /**
  * Represents a yeoman-generator.
  *
- * @template T
+ * @template TSettings
  * The type of the settings of the generator.
+ *
+ * @template TOptions
+ * The type of the options of the generator.
  */
 export abstract class Generator<TSettings extends IGeneratorSettings = IGeneratorSettings, TOptions extends YeomanGenerator.GeneratorOptions = YeomanGenerator.GeneratorOptions> extends YeomanGenerator<TOptions> implements IGenerator<TSettings, TOptions>
 {
@@ -35,7 +38,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     private settings: TSettings = {} as TSettings;
 
     /**
-     * Initializes a new instance of the `Generator` class.
+     * Initializes a new instance of the {@link Generator `Generator<TSettings, TOptions>`} class.
      *
      * @param args
      * A set of arguments for the generator.
@@ -107,88 +110,13 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     /**
      * Gets all questions including questions for the components.
      */
-    public get QuestionCollection(): Array<Question<TSettings>>
+    public get QuestionCollection(): ObjectCollectionEditor<Question<TSettings>>
     {
-        let result: Array<Question<TSettings>> = [];
-        let components: ChoiceCollection<TSettings> = [];
-        let defaults: string[] = [];
-
-        if (this.ComponentCollection)
-        {
-            for (let category of this.ComponentCollection.Categories ?? [])
-            {
-                components.push(new Separator(category.DisplayName));
-
-                for (let component of category.Components)
-                {
-                    let isDefault = component.DefaultEnabled ?? false;
-
-                    components.push(
-                        {
-                            value: component.ID,
-                            name: component.DisplayName,
-                            checked: isDefault
-                        });
-
-                    if (isDefault)
-                    {
-                        defaults.push(component.ID);
-                    }
-
-                    for (let i = 0; i < component.Questions?.length ?? 0; i++)
-                    {
-                        let question = component.Questions[i];
-                        let when = question.when;
-
-                        question.when = async (settings: TSettings) =>
-                        {
-                            if ((settings[GeneratorSettingKey.Components] ?? []).includes(component.ID))
-                            {
-                                if (i === 0)
-                                {
-                                    this.log();
-                                    this.log(`${chalk.red(">>")} ${chalk.bold(component.DisplayName)} ${chalk.red("<<")}`);
-                                }
-
-                                if (when)
-                                {
-                                    if (typeof when === "function")
-                                    {
-                                        return when(settings);
-                                    }
-                                    else
-                                    {
-                                        return when;
-                                    }
-                                }
-                                else
-                                {
-                                    return true;
-                                }
-                            }
-                            else
-                            {
-                                return false;
-                            }
-                        };
-
-                        result.push(question);
-                    }
-                }
-            }
-
-            result.unshift(
-                {
-                    type: "checkbox",
-                    name: GeneratorSettingKey.Components,
-                    message: this.Components.Question,
-                    choices: components,
-                    default: defaults
-                });
-        }
-
-        result.unshift(...(this.Questions ?? []));
-        return result;
+        return new ObjectCollectionEditor(
+            [
+                ...this.Questions ?? [],
+                ...this.ComponentCollection?.Questions ?? []
+            ]);
     }
 
     /**
@@ -202,25 +130,27 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     /**
      * Gets the file-mappings of the generator.
      */
-    public get ResolvedFileMappings(): Array<FileMapping<TSettings, TOptions>>
+    public get ResolvedFileMappings(): FileMappingCollectionEditor
     {
-        return (this.FileMappings ?? []).map((fileMapping) => new FileMapping(this, fileMapping));
+        return new FileMappingCollectionEditor(
+            this,
+            (this.FileMappings ?? []).map((fileMapping) => new FileMapping(this, fileMapping)));
     }
 
     /**
      * Gets the file-mappings to process.
      */
-    public get FileMappingCollection(): Array<FileMapping<TSettings, TOptions>>
+    public get FileMappingCollection(): FileMappingCollectionEditor
     {
         let result = this.ResolvedFileMappings;
 
-        for (let category of this.ComponentCollection?.Categories ?? [])
+        for (let category of this.ComponentCollection?.Categories?.Items ?? [])
         {
-            for (let component of category.Components)
+            for (let component of category.Components.Items)
             {
                 if ((this.Settings[GeneratorSettingKey.Components] ?? []).includes(component.ID))
                 {
-                    result.push(...component.FileMappings);
+                    result.AddRange(component.FileMappings.Items);
                 }
             }
         }
@@ -239,24 +169,33 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     /**
      * Creates a base-generator class to extend.
      *
+     * @template T
+     * The type of the constructor of the base-generator.
+     *
      * @param base
-     * The class to extend and to instanciate a base-generator.
+     * The class to extend and to instantiate a base-generator.
      */
-    public static ComposeWith<T extends GeneratorConstructor>(base: T): CompositeConstructor<T>;
+    public static ComposeWith<T extends GeneratorConstructor>(base: T): GeneratorExtensionConstructor<T>;
 
     /**
      * Creates a base-generator class to extend from.
      *
+     * @template T
+     * The type of the constructor of the base-generator.
+     *
      * @param base
-     * The class to extend and to instanciate a base-generator.
+     * The class to extend and to instantiate a base-generator.
      *
      * @param namespaceOrPath
      * Either a plain path or the namespace or path of a generator for resolving the module-root of the base-generator.
      */
-    public static ComposeWith<T extends GeneratorConstructor>(base: T, namespaceOrPath: string): CompositeConstructor<T>;
+    public static ComposeWith<T extends GeneratorConstructor>(base: T, namespaceOrPath: string): GeneratorExtensionConstructor<T>;
 
     /**
      * Creates a constructor for extending a generator.
+     *
+     * @template T
+     * The type of the constructor of the base-generator.
      *
      * @param base
      * The constructor of the base-generator.
@@ -265,11 +204,11 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
      * The namespace or the path of the generator.
      *
      * @returns
-     * A constructor for extending the specified `base`-generator.
+     * A constructor for extending the specified {@link base `base`}-generator.
      */
-    public static ComposeWith<T extends GeneratorConstructor>(base: T, namespaceOrPath?: string): CompositeConstructor<T>
+    public static ComposeWith<T extends GeneratorConstructor>(base: T, namespaceOrPath?: string): GeneratorExtensionConstructor<T>
     {
-        return BaseConstructorCreator.Create(base, namespaceOrPath);
+        return BaseGeneratorFactory.Create(base, namespaceOrPath);
     }
 
     /**
@@ -279,7 +218,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
      * The new destination root path.
      *
      * @returns
-     * The `destinationRoot` of the generator.
+     * The {@link Generator.destinationRoot `destinationRoot`} of the generator.
      */
     public override destinationRoot(rootPath?: string): string
     {
@@ -343,11 +282,11 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     { }
 
     /**
-     * Gathers all information for executing the generator and saves them to the `Settings`.
+     * Gathers all information for executing the generator and saves them to the {@link Generator.Settings `Settings`}.
      */
     public async prompting(): Promise<void>
     {
-        Object.assign(this.Settings, await this.prompt(this.QuestionCollection));
+        Object.assign(this.Settings, await this.prompt(this.QuestionCollection.Items));
         this.log();
     }
 
@@ -356,7 +295,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
      */
     public async writing(): Promise<void>
     {
-        for (let fileMapping of this.FileMappingCollection)
+        for (let fileMapping of this.FileMappingCollection.Items)
         {
             await this.ProcessFile(fileMapping);
         }
@@ -375,13 +314,16 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     { }
 
     /**
-     * Converts the specified `value` to a promise.
+     * Wraps the specified {@link value `value`} in a promise.
+     *
+     * @template T
+     * The type of the {@link value `value`} to wrap.
      *
      * @param value
-     * THe value to convert.
+     * The value to convert.
      *
      * @returns
-     * A promise which resolves to the specified `value`.
+     * A promise which resolves to the specified {@link value `value`}.
      */
     protected CreatePromise<T>(value: T): Promise<T>
     {

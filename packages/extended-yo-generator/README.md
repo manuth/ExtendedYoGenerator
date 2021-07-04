@@ -56,7 +56,7 @@ export = class MyGenerator extends Generator<IMySettings, GeneratorOptions>
         return [
             {
                 name: "name",
-                message: "What's the name of your poject?",
+                message: "What's the name of your project?",
                 default: "example"
             }
         ];

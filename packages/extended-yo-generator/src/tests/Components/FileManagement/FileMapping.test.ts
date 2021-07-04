@@ -3,12 +3,11 @@ import { ITestGeneratorOptions, ITestGeneratorSettings, ITestOptions, TestContex
 import { TempDirectory, TempFile } from "@manuth/temp-files";
 import { render } from "ejs";
 import { readFile, writeFile } from "fs-extra";
-import { Random } from "random-js";
-import { FileMapping } from "../../Components/FileMapping";
-import { IFileMapping } from "../../Components/IFileMapping";
+import { FileMapping } from "../../../Components/FileManagement/FileMapping";
+import { IFileMapping } from "../../../Components/FileManagement/IFileMapping";
 
 /**
- * Provides tests for the `FileMapping` class.
+ * Provides tests for the {@link FileMapping `FileMapping<TSettings, TOptions>`} class.
  *
  * @param context
  * The test-context.
@@ -16,10 +15,9 @@ import { IFileMapping } from "../../Components/IFileMapping";
 export function FileMappingTests(context: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>>): void
 {
     suite(
-        "FileMapping",
+        nameof(FileMapping),
         () =>
         {
-            let random: Random;
             let generator: TestGenerator;
             let fileMapping: FileMapping<ITestGeneratorSettings, ITestGeneratorOptions<ITestOptions>>;
             let testPath = "test.txt";
@@ -33,9 +31,9 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
             };
 
             suiteSetup(
-                async () =>
+                async function()
                 {
-                    random = new Random();
+                    this.timeout(30 * 1000);
                     generator = await context.Generator;
                     fileMapping = new FileMapping(generator, fileMappingOptions);
                     testDirectory = new TempDirectory();
@@ -57,7 +55,21 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                 });
 
             suite(
-                "Source",
+                nameof<FileMapping<any, any>>((fileMapping) => fileMapping.ID),
+                () =>
+                {
+                    test(
+                        "Checking whether the value can be set…",
+                        () =>
+                        {
+                            let value = context.RandomString;
+                            fileMapping.ID = value;
+                            strictEqual(fileMappingOptions.ID, value);
+                        });
+                });
+
+            suite(
+                nameof<FileMapping<any, any>>((fileMapping) => fileMapping.Source),
                 () =>
                 {
                     test(
@@ -77,16 +89,25 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                         });
 
                     test(
-                        "Checking whether `null`-values are preserved…",
+                        `Checking whether \`${null}\`-values are preserved…`,
                         async () =>
                         {
                             fileMappingOptions.Source = null;
                             strictEqual(fileMapping.Source, null);
                         });
+
+                    test(
+                        "Checking whether the value can be set…",
+                        () =>
+                        {
+                            let value = context.RandomString;
+                            fileMapping.Source = value;
+                            strictEqual(fileMappingOptions.Source, value);
+                        });
                 });
 
             suite(
-                "Destination",
+                nameof<IFileMapping<any, any>>((fileMapping) => fileMapping.Destination),
                 async () =>
                 {
                     test(
@@ -106,20 +127,57 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                         });
 
                     test(
-                        "Checking whether `null`-values are preserved…",
+                        `Checking whether \`${null}\`-values are preserved…`,
                         async () =>
                         {
                             fileMappingOptions.Destination = null;
                             strictEqual(fileMapping.Destination, null);
                         });
+
+                    test(
+                        "Checking whether the value can be set…",
+                        () =>
+                        {
+                            let value = context.RandomString;
+                            fileMapping.Destination = value;
+                            strictEqual(fileMappingOptions.Destination, value);
+                        });
                 });
 
             suite(
-                "Processor",
+                nameof<FileMapping<any, any>>((fileMapping) => fileMapping.Context),
+                () =>
+                {
+                    test(
+                        "Checking whether the value can be set…",
+                        () =>
+                        {
+                            let value = (): any => context.RandomObject;
+                            fileMapping.Context = value;
+                            strictEqual(fileMappingOptions.Context, value);
+                        });
+                });
+
+            suite(
+                nameof<FileMapping<any, any>>((fileMapping) => fileMapping.Processor),
                 async () =>
                 {
                     suite(
-                        "Testing cases when `Processor` is defined…",
+                        "General",
+                        () =>
+                        {
+                            test(
+                                "Checking whether the value can be set…",
+                                () =>
+                                {
+                                    let value = (): void => { };
+                                    fileMapping.Processor = value;
+                                    strictEqual(fileMappingOptions.Processor, value);
+                                });
+                        });
+
+                    suite(
+                        `Testing cases when \`${nameof<FileMapping<any, any>>((f) => f.Processor)}\` is defined…`,
                         () =>
                         {
                             test(
@@ -127,7 +185,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                                 async () =>
                                 {
                                     let testValue: string;
-                                    let randomValue = random.string(10);
+                                    let randomValue = context.RandomString;
 
                                     /**
                                      * Processes a file-mapping.
@@ -152,24 +210,24 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
 
                                     let fileMappingOptions = new
                                         /**
-                                         * Provides a test-implementation of the `IFileMapping<T>` interface.
+                                         * Provides a test-implementation of the {@link IFileMapping `IFileMapping<TSettings, TOptions>`} interface.
                                          */
                                         class FileMappingOptions implements IFileMapping<ITestGeneratorSettings, ITestGeneratorOptions<ITestOptions>>
                                         {
                                             /**
                                              * @inheritdoc
                                              */
-                                            public Source = random.string(10);
+                                            public Source = context.RandomString;
 
                                             /**
                                              * Gets a custom property-value.
                                              */
-                                            public MyCustomProperty = random.string(20);
+                                            public MyCustomProperty = context.RandomString;
 
                                             /**
                                              * @inheritdoc
                                              */
-                                            public Destination = random.string(10);
+                                            public Destination = context.RandomString;
 
                                             /**
                                              * @inheritdoc
@@ -187,7 +245,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                         });
 
                     suite(
-                        "Testing cases when `Processor` is undefined…",
+                        `Testing cases when \`${nameof<FileMapping<any, any>>((f) => f.Processor)}\` is undefined…`,
                         () =>
                         {
                             let testContent = "This is a <%= test %>.";
@@ -245,7 +303,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                             }
 
                             test(
-                                "Checking whether files are copied by default if `Context` is not defined…",
+                                `Checking whether files are copied by default if \`${nameof<FileMapping<any, any>>((f) => f.Context)}\` is not defined…`,
                                 async function()
                                 {
                                     this.timeout(0);
@@ -254,7 +312,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                                 });
 
                             test(
-                                "Checking whether files are copied using `ejs` if `Context` is defined…",
+                                `Checking whether files are copied using \`ejs\` if \`${nameof<FileMapping<any, any>>((f) => f.Context)}\` is defined…`,
                                 async function()
                                 {
                                     this.timeout(0);
@@ -264,7 +322,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                                 });
 
                             test(
-                                "Checking whether leaving `Source` undefined causes an error…",
+                                `Checking whether leaving \`${nameof<FileMapping<any, any>>((f) => f.Source)}\` undefined causes an error…`,
                                 async () =>
                                 {
                                     fileMappingOptions.Source = null;
@@ -277,7 +335,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                                 });
 
                             test(
-                                "Checking whether leaving `Destination` undefined causes an error…",
+                                `Checking whether leaving \`${nameof<FileMapping<any, any>>((f) => f.Destination)}\` undefined causes an error…`,
                                 async () =>
                                 {
                                     fileMappingOptions.Destination = null;
@@ -288,6 +346,52 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                                             await fileMapping.Processor();
                                         })());
                                 });
+                        });
+                });
+
+            suite(
+                nameof<FileMapping<any, any>>((fileMapping) => fileMapping.Result),
+                () =>
+                {
+                    let tempDir: TempDirectory;
+
+                    suiteSetup(
+                        () =>
+                        {
+                            tempDir = new TempDirectory();
+                        });
+
+                    suiteSetup(
+                        () =>
+                        {
+                            tempDir.Dispose();
+                        });
+
+                    test(
+                        "Checking whether the destination- and source-path are resolved using the proper generator…",
+                        () =>
+                        {
+                            let customGenerator = context.CreateGenerator(
+                                class extends TestGenerator<any, any>
+                                {
+                                    /**
+                                     * @inheritdoc
+                                     *
+                                     * @param path The path parts.
+                                     *
+                                     * @returns
+                                     * The joined path.
+                                     */
+                                    public override templatePath(...path: string[]): string
+                                    {
+                                        return tempDir.MakePath(...path);
+                                    }
+                                });
+
+                            fileMappingOptions.Source = context.RandomString;
+                            strictEqual(new FileMapping(customGenerator, fileMappingOptions).Source, customGenerator.templatePath(fileMappingOptions.Source));
+                            strictEqual(new FileMapping(customGenerator, fileMapping.Result).Source, generator.templatePath(fileMappingOptions.Source));
+                            notStrictEqual(new FileMapping(customGenerator, fileMapping.Result).Source, customGenerator.templatePath(fileMappingOptions.Source));
                         });
                 });
         });

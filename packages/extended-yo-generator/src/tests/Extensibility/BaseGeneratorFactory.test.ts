@@ -1,35 +1,26 @@
 import { notStrictEqual, ok, strictEqual } from "assert";
 import { TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
-import Environment = require("yeoman-environment");
+import { FileMappingCollectionEditor } from "../../Collections/FileMappingCollectionEditor";
+import { ComponentCategory } from "../../Components/ComponentCategory";
 import { ComponentCollection } from "../../Components/ComponentCollection";
-import { FileMapping } from "../../Components/FileMapping";
+import { FileMapping } from "../../Components/FileManagement/FileMapping";
+import { IFileMapping } from "../../Components/FileManagement/IFileMapping";
 import { IComponentCollection } from "../../Components/IComponentCollection";
-import { IFileMapping } from "../../Components/IFileMapping";
+import { BaseGeneratorFactory } from "../../Extensibility/BaseGeneratorFactory";
 import { Generator } from "../../Generator";
 
 /**
- * Registers tests for the `BaseConstructorCreator` class.
+ * Registers tests for the {@link BaseGeneratorFactory `BaseGeneratorFactory`} class.
  *
  * @param context
  * The test-context.
  */
-export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>): void
+export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): void
 {
     suite(
-        "BaseConstructorCreator",
+        nameof(BaseGeneratorFactory),
         () =>
         {
-            let superTemplateDir: string;
-            let subTemplateDir: string;
-            let superSourceFile: string;
-            let subSourceFile: string;
-            let injectedSourceFile: string;
-            let destinationFile: string;
-            let categoryName: string;
-            let superComponentID: string;
-            let subComponentID: string;
-            let injectedComponentID: string;
-
             /**
              * A class for testing.
              */
@@ -87,8 +78,16 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
             /**
              * A class for testing.
              */
-            class SubGenerator extends Generator.ComposeWith(SuperGenerator)
+            class SubGenerator extends BaseGeneratorFactory.Create(SuperGenerator)
             {
+                /**
+                 * @inheritdoc
+                 */
+                public override get Base(): TestGenerator
+                {
+                    return super.Base;
+                }
+
                 /**
                  * @inheritdoc
                  */
@@ -144,11 +143,11 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                 /**
                  * @inheritdoc
                  */
-                public override get BaseFileMappings(): Array<IFileMapping<any, any>>
+                public override get BaseFileMappings(): FileMappingCollectionEditor
                 {
                     let result = super.BaseFileMappings;
 
-                    result.push(
+                    result.Add(
                         {
                             Source: injectedSourceFile,
                             Destination: destinationFile
@@ -160,15 +159,18 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                 /**
                  * @inheritdoc
                  */
-                public override get BaseComponents(): IComponentCollection<any, any>
+                public override get BaseComponents(): ComponentCollection<any, any>
                 {
                     let result = super.BaseComponents;
 
-                    for (let category of result.Categories)
-                    {
-                        if (category.DisplayName === categoryName)
+                    result.Categories.Replace(
+                        (category: ComponentCategory<any, any>) =>
                         {
-                            category.Components.push(
+                            return category.DisplayName === categoryName;
+                        },
+                        (category) =>
+                        {
+                            category.Components.Add(
                                 {
                                     ID: injectedComponentID,
                                     DisplayName: "",
@@ -179,8 +181,9 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                                         }
                                     ]
                                 });
-                        }
-                    }
+
+                            return category;
+                        });
 
                     return result;
                 }
@@ -192,7 +195,7 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
             type FileMappingCondition = (fileMapping: FileMapping<any, any>) => boolean;
 
             /**
-             * Asserts the truthyness of the specified `condition`.
+             * Asserts the truthiness of the specified {@link condition `condition`}.
              *
              * @param fileMappings
              * The file-mappings to check.
@@ -201,7 +204,7 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
              * The condition to check.
              *
              * @param all
-             * A value indicating whether all or only one file-mapping is expected to match the `condition`.
+             * A value indicating whether all or only one file-mapping is expected to match the {@link condition `condition`}.
              *
              * @returns
              * A value indicating whether the assertion is true.
@@ -215,7 +218,7 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
             }
 
             /**
-             * Asserts the truthyness of the specified `condition`.
+             * Asserts the truthiness of the specified {@link condition `condition`}.
              *
              * @param collection
              * The collection to check.
@@ -224,58 +227,118 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
              * The condition to check.
              *
              * @param all
-             * A value indicating whether all or only one file-mapping is expected to match the `condition`.
+             * A value indicating whether all or only one file-mapping is expected to match the {@link condition `condition`}.
              *
              * @returns
              * A value indicating whether the assertion is true.
              */
             function AssertComponentFileMappings(collection: ComponentCollection<any, any>, condition: FileMappingCondition, all = false): boolean
             {
-                let values = collection.Categories.flatMap(
+                let values = collection.Categories.Items.flatMap(
                     (category) =>
                     {
-                        return category.Components.map((component) => AssertFileMappings(component.FileMappings, condition, all));
+                        return category.Components.Items.map((component) => AssertFileMappings(component.FileMappings.Items, condition, all));
                     });
 
                 return all ? values.every((value) => value) : values.some((value) => value);
             }
 
-            /**
-             * Initializes a new instance of the specified generator-constructor.
-             *
-             * @param generatorConstructor
-             * The constructor of the generator to instanciate.
-             *
-             * @returns
-             * The newly initialized generator.
-             */
-            function CreateGenerator<T extends Generator>(generatorConstructor: new(...args: any[]) => T): T
-            {
-                return new generatorConstructor([], { env: Environment.createEnv() });
-            }
+            let superTemplateDir: string;
+            let subTemplateDir: string;
+            let superSourceFile: string;
+            let subSourceFile: string;
+            let injectedSourceFile: string;
+            let destinationFile: string;
+            let categoryName: string;
+            let superComponentID: string;
+            let subComponentID: string;
+            let injectedComponentID: string;
 
             suiteSetup(
-                () =>
+                async function()
                 {
+                    this.timeout(30 * 1000);
+                    await context.Generator;
                     superTemplateDir = context.RandomString + "1";
                     subTemplateDir = context.RandomString + "2";
                     superSourceFile = context.RandomString + "1";
                     subSourceFile = context.RandomString + "2";
                     injectedSourceFile = context.RandomString + "3";
                     destinationFile = context.RandomString + "4";
+                    categoryName = context.RandomString;
+                    superComponentID = context.RandomString + "1";
+                    subComponentID = context.RandomString + "2";
+                    injectedComponentID = context.RandomString + "3";
                 });
 
             suite(
-                "Testing Basic Usage",
+                nameof<BaseGeneratorFactory<any>>((factory) => factory.Create),
                 () =>
                 {
                     let generator: SubGenerator;
+                    let externalGenerator: SubGenerator;
 
                     suiteSetup(
                         async function()
                         {
-                            generator = CreateGenerator(SubGenerator);
+                            generator = context.CreateGenerator(SubGenerator);
                             generator.Base.moduleRoot(generator.Base.moduleRoot(context.RandomString));
+
+                            /**
+                             * A generator for testing.
+                             */
+                            class MyGenerator extends Generator.ComposeWith(TestGenerator, TestGenerator.Path)
+                            {
+                                /**
+                                 * @inheritdoc
+                                 */
+                                public override get Base(): TestGenerator
+                                {
+                                    return super.Base;
+                                }
+
+                                /**
+                                 * @inheritdoc
+                                 */
+                                public override get BaseFileMappings(): FileMappingCollectionEditor
+                                {
+                                    return super.BaseFileMappings;
+                                }
+
+                                /**
+                                 * @inheritdoc
+                                 */
+                                public override get BaseComponents(): ComponentCollection<any, any>
+                                {
+                                    return super.BaseComponents;
+                                }
+                            }
+
+                            externalGenerator = context.CreateGenerator(MyGenerator);
+                        });
+
+                    test(
+                        `Checking whether the generated \`${Generator.constructor}\` inherits the desired class…`,
+                        () =>
+                        {
+                            ok(context.CreateGenerator(BaseGeneratorFactory.Create(TestGenerator)) instanceof TestGenerator);
+                        });
+
+                    test(
+                        `Checking whether the value of \`${nameof<Generator>()}.${nameof<Generator>((g) => g.resolved)}\` while creating a base-generator…`,
+                        () =>
+                        {
+                            /**
+                             * Provides a generator-class for testing.
+                             */
+                            class Test extends Generator<any> { }
+
+                            let testValue = context.RandomString;
+                            BaseGeneratorFactory.Create(Test, `${testValue}${context.RandomString}`);
+                            ok(!(nameof<Generator>((generator) => generator.resolved) in Test));
+                            (Test as any)[nameof<Generator>((generator) => generator.resolved)] = testValue;
+                            BaseGeneratorFactory.Create(Test, `${testValue}${context.RandomString}`);
+                            strictEqual((Test as any)[nameof<Generator>((generator) => generator.resolved)], testValue);
                         });
 
                     test(
@@ -289,7 +352,7 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                         });
 
                     test(
-                        "Checking whether a base generator is created…",
+                        "Checking whether a base generator is created as expected…",
                         () =>
                         {
                             ok(generator.Base instanceof SuperGenerator);
@@ -311,27 +374,27 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                             let condition: FileMappingCondition = (fileMapping) =>
                                 fileMapping.Destination === generator.destinationPath(destinationFile);
 
-                            ok(AssertFileMappings(generator.FileMappingCollection, condition, true));
+                            ok(AssertFileMappings(generator.FileMappingCollection.Items, condition, true));
                             ok(AssertComponentFileMappings(generator.ComponentCollection, condition, true));
                         });
 
                     test(
-                        "Checking whether file-mappings of the base-generator presist in the inheriting generator…",
+                        "Checking whether file-mappings of the base-generator persist in the inheriting generator…",
                         async () =>
                         {
                             ok(
                                 AssertFileMappings(
-                                    generator.FileMappingCollection,
+                                    generator.FileMappingCollection.Items,
                                     (fileMapping) => fileMapping.Source === generator.Base.templatePath(superSourceFile)));
                         });
 
                     test(
-                        "Checking whether components of the base-generator presist in the inheriting generator…",
+                        "Checking whether components of the base-generator persist in the inheriting generator…",
                         async () =>
                         {
                             ok(
-                                generator.ComponentCollection.Categories.some(
-                                    (category) => category.Components.some(
+                                generator.ComponentCollection.Categories.Items.some(
+                                    (category) => category.Components.Items.some(
                                         (component) => component.ID === superComponentID)));
 
                             ok(
@@ -348,8 +411,9 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                         async () =>
                         {
                             strictEqual(
-                                generator.ComponentCollection.Categories.filter(
-                                    (category) => category.DisplayName === categoryName).length, 1);
+                                generator.ComponentCollection.Categories.Items.filter(
+                                    (category) => category.DisplayName === categoryName).length,
+                                1);
                         });
 
                     test(
@@ -358,7 +422,7 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                         {
                             ok(
                                 AssertFileMappings(
-                                    generator.FileMappingCollection,
+                                    generator.FileMappingCollection.Items,
                                     (fileMapping) => fileMapping.Source === generator.Base.templatePath(superSourceFile)));
                         });
 
@@ -367,8 +431,8 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                         async () =>
                         {
                             ok(
-                                generator.ComponentCollection.Categories.some(
-                                    (category) => category.Components.some(
+                                generator.ComponentCollection.Categories.Items.some(
+                                    (category) => category.Components.Items.some(
                                         (component) => component.ID === subComponentID)));
 
                             ok(
@@ -383,7 +447,7 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                         {
                             ok(
                                 AssertFileMappings(
-                                    generator.FileMappingCollection,
+                                    generator.FileMappingCollection.Items,
                                     (fileMapping) => fileMapping.Source === generator.Base.templatePath(injectedSourceFile)));
                         });
 
@@ -396,47 +460,26 @@ export function BaseConstructorCreatorTests(context: TestContext<TestGenerator>)
                                     generator.ComponentCollection,
                                     (fileMapping) => fileMapping.Source === generator.Base.templatePath(injectedSourceFile)));
                         });
-                });
-
-            suite(
-                "Testing Usage With External Base-Generators",
-                () =>
-                {
-                    let generator: SubGenerator;
-
-                    suiteSetup(
-                        async function()
-                        {
-                            this.timeout(0);
-
-                            /**
-                             * A generator for testing.
-                             */
-                            class MyGenerator extends Generator.ComposeWith(TestGenerator, TestGenerator.Path)
-                            { }
-
-                            generator = CreateGenerator(MyGenerator);
-                        });
 
                     test(
                         "Checking whether the module-path of the base resolves to its package…",
                         async () =>
                         {
-                            strictEqual(generator.Base.modulePath(), (await context.Generator).modulePath());
+                            strictEqual(externalGenerator.Base.modulePath(), (await context.Generator).modulePath());
                         });
 
                     test(
-                        "Checking whether the module-path of the generator is not affected by the module-path of the package…",
+                        "Checking whether the module-path of the generator is not affected by the module-path of the base…",
                         () =>
                         {
-                            notStrictEqual(generator.modulePath(), generator.Base.modulePath());
+                            notStrictEqual(externalGenerator.modulePath(), externalGenerator.Base.modulePath());
                         });
 
                     test(
                         "Checking whether the base-generator is created using the constructor rather than the namespace (or path)…",
                         () =>
                         {
-                            let testGenerator = CreateGenerator(class extends Generator.ComposeWith(class extends Generator { }, TestGenerator.Path) { });
+                            let testGenerator = context.CreateGenerator(class extends Generator.ComposeWith(class extends Generator { }, TestGenerator.Path) { });
                             ok(!(testGenerator instanceof TestGenerator));
                             ok(testGenerator instanceof Generator);
                         });

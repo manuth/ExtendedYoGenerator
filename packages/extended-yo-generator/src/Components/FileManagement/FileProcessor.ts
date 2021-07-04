@@ -1,4 +1,4 @@
-import { IGenerator } from "../IGenerator";
+import { IGenerator } from "../../IGenerator";
 import { FileMapping } from "./FileMapping";
 
 /**

@@ -2,6 +2,12 @@ import YeomanGenerator = require("yeoman-generator");
 
 /**
  * Represents a yeoman-generator.
+ *
+ * @template TSettings
+ * The settings of the generator.
+ *
+ * @template TOptions
+ * The options of the generator.
  */
 export interface IGenerator<TSettings, TOptions extends YeomanGenerator.GeneratorOptions> extends YeomanGenerator<TOptions>
 {

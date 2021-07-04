@@ -1,23 +1,22 @@
 import { doesNotReject, strictEqual } from "assert";
 import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
-import { Random } from "random-js";
+import { PropertyResolver } from "../../../Components/Resolving/PropertyResolver";
 import { IResolverTestOptions } from "./IResolverTestOptions";
 import { ResolverTest } from "./ResolverTest";
 
 /**
- * Registers tests for the `PropertyResolver` class.
+ * Registers tests for the {@link PropertyResolver `PropertyResolver<TObject, TTarget, TSettings, TOptions>`} class.
  *
  * @param context
- * The test-context to use.
+ * The test-context.
  */
 export function PropertyResolverTests(context: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>>): void
 {
     suite(
-        "PropertyResolver",
+        nameof<PropertyResolver<any, any, any, any>>(),
         () =>
         {
-            let random: Random;
-            let propertResolver: ResolverTest;
+            let propertyResolver: ResolverTest;
             let testValue = "this is a test";
             let testPromise = context.CreatePromise(testValue);
             let testFunction = context.CreateFunction(testValue);
@@ -31,10 +30,9 @@ export function PropertyResolverTests(context: TestContext<TestGenerator, ITestG
             suiteSetup(
                 async function()
                 {
-                    this.timeout(0);
-                    random = new Random();
+                    this.timeout(30 * 1000);
 
-                    propertResolver = new ResolverTest(
+                    propertyResolver = new ResolverTest(
                         await context.Generator,
                         resolverOptions);
                 });
@@ -48,16 +46,16 @@ export function PropertyResolverTests(context: TestContext<TestGenerator, ITestG
                 });
 
             suite(
-                "ResolveProperty",
+                nameof<PropertyResolver<any, any, any, any>>(),
                 () =>
                 {
                     test(
                         "Checking whether properties are resolved correctly…",
                         async () =>
                         {
-                            strictEqual(await propertResolver.TestValue, testValue);
-                            strictEqual(await propertResolver.TestPromise, await testPromise);
-                            strictEqual(await propertResolver.TestFunction, testFunction);
+                            strictEqual(await propertyResolver.TestValue, testValue);
+                            strictEqual(await propertyResolver.TestPromise, await testPromise);
+                            strictEqual(await propertyResolver.TestFunction, testFunction);
                         });
 
                     test(
@@ -69,7 +67,7 @@ export function PropertyResolverTests(context: TestContext<TestGenerator, ITestG
                                 return `${await target.TestPromise}${await target.TestFunction}`;
                             };
 
-                            strictEqual(await propertResolver.TestValue, `${await propertResolver.TestPromise}${await propertResolver.TestFunction}`);
+                            strictEqual(await propertyResolver.TestValue, `${await propertyResolver.TestPromise}${await propertyResolver.TestFunction}`);
                         });
 
                     test(
@@ -85,7 +83,7 @@ export function PropertyResolverTests(context: TestContext<TestGenerator, ITestG
                                     /**
                                      * @inheritdoc
                                      */
-                                    public TestValue = random.string(10);
+                                    public TestValue = context.RandomString;
 
                                     /**
                                      * @inheritdoc

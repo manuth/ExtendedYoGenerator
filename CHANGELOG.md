@@ -6,7 +6,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v8.0.4...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v9.0.0...dev)
+
+## ExtendedYoGenerator v9.0.0
+### Breaking
+  - Renamed `CompositeGeneratorConstructor` to `GeneratorExtensionConstructor`
+  - Renamed `IBaseGenerator` (interface) to `GeneratorExtension` (abstract class)
+
+### Fixed
+  - Vulnerabilities in dependencies
+  - TypeScript-settings
+
+### Updated
+  - All dependencies
+  - Settings for improving the debug-experience
+  - Settings for opening the terminal inside the correct directory
+  - `ComponentCollection.Categories`, `ComponentCategory.Components`, `Component.Questions` and `Component.FileMappings` to allow users to post-edit the collections
+
+### Added
+  - Support for the Test Explorer UI
+  - Support for the `ts-nameof` plugin
+  - Support for adding an ID to component-categories and file-mappings
+  - Missing extensions
+  - Support for instantiating generators using the `TestContext`
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v8.0.4...v9.0.0)
 
 ## ExtendedYoGenerator v8.0.4
 ### Fixed
@@ -133,7 +157,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 This release brings back support for resolvable properties, though all properties (except for `IFileMapping.Context`) must be synchronous.
 
 ### Added
-  - Support for synchonous resolvable values in `IFileMapping`s
+  - Support for synchronous resolvable values in `IFileMapping`s
 
 [Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v7.2.0...v7.3.0)
 
@@ -189,7 +213,7 @@ This release brings a handy new feature for making extending generators easier. 
   - Reverted the `destinationRoot` behavior
 
 ### Fixed
-  - Malworking TypeScript intellisense
+  - Nonfunctioning TypeScript intellisense
 
 ### Added
   - Support for setting the `moduleRoot` of `TestGenerator`s
@@ -411,7 +435,7 @@ This release brings a handy new feature for making extending generators easier. 
 
 ## ExtendedYoGenerator v1.0.3
 ### Updated
-  - The generator-code to process all component filemappings sequentially
+  - The generator-code to process all component file-mappings sequentially
   - The UI for making component-questions more distinguishable
 
 [Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v1.0.2...v1.0.3)
