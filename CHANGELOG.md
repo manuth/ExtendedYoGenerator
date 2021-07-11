@@ -6,7 +6,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v9.0.0...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v9.0.1...dev)
+
+## ExtendedYoGenerator v9.0.1
+### Fixed
+  - `ObjectExtensionFactory` for the use with generic base-classes
+
+### Added
+  - Support for parallel step-execution in drone pipelines
+
+### Updated
+  - All dependencies
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v9.0.0...v9.0.1)
 
 ## ExtendedYoGenerator v9.0.0
 ### Breaking
