@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
   - `ObjectExtensionFactory` for the use with generic base-classes
 
+### Added
+  - Support for parallel step-execution in drone pipelines
+
 ### Updated
   - All dependencies
 
