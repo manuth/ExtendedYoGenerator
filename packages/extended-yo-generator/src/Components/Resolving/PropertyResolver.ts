@@ -66,7 +66,7 @@ export abstract class PropertyResolver<TObject, TTarget, TSettings, TOptions> ex
      */
     public set Object(value: TObject)
     {
-        this.Object = value;
+        this.object = value;
     }
 
     /**
