@@ -131,5 +131,7 @@ test/
 # Drone configuration
 .drone.yml
 
-# Temporary files
-tmp/
+# Temporary release-assets
+.tagName.txt
+.releaseNotes.md
+.releaseTitle.md
