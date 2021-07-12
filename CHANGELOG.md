@@ -6,7 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v9.1.0...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v9.1.1...dev)
+
+## ExtendedYoGenerator v9.1.1
+### Added
+  - Support for replacing objects of `PropertyResolver`s
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v9.1.0...v9.1.1)
 
 ## ExtendedYoGenerator v9.1.0
 ### Fixed

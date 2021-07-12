@@ -1,6 +1,6 @@
 {
   "name": "@manuth/extended-yo-generator-test",
-  "version": "9.1.0",
+  "version": "9.1.1",
   "description": "Provides tools for testing generators created using `@manuth/extended-yo-generator`",
   "author": "Manuel Thalmann <m@nuth.ch>",
   "license": "MIT",
@@ -42,7 +42,7 @@
     "patchTypeScript": "ts-patch install && ts-patch --persist"
   },
   "dependencies": {
-    "@manuth/extended-yo-generator": "^9.1.0",
+    "@manuth/extended-yo-generator": "^9.1.1",
     "@types/yeoman-test": "^4.0.2",
     "comment-json": "^4.1.0",
     "fs-extra": "^10.0.0",

@@ -281,6 +281,126 @@ export abstract class PropertyResolverCollectionEditor<TObject extends IUniqueOb
     }
 
     /**
+     * Replaces the object of the item with the specified {@link id `id`} with the specified {@link item `item`}.
+     *
+     * @param id
+     * The id of the item to replace.
+     *
+     * @param item
+     * The replacement of the item.
+     */
+    public ReplaceObject(id: string, item: TObject): void;
+
+    /**
+     * Replaces the object of the item with the specified {@link id `id`} with a replacement created by the specified {@link filter `filter`}.
+     *
+     * @param id
+     * The id of the item to replace.
+     *
+     * @param filter
+     * A method for creating the replacement for the item.
+     */
+    public ReplaceObject(id: string, filter: Filter<TTarget, TObject>): void;
+
+    /**
+     * Replaces the object of the item with the specified {@link type `type`} with the specified {@link item `item`}.
+     *
+     * @param type
+     * The type of the item to replace.
+     *
+     * @param item
+     * The replacement of the item.
+     */
+    public ReplaceObject(type: AbstractConstructor<TTarget>, item: TObject): void;
+
+    /**
+     * Replaces the object of the item with the specified {@link type `type`} with the specified {@link item `item`}.
+     *
+     * @param type
+     * The type of the item to replace.
+     *
+     * @param item
+     * The replacement of the item.
+     */
+    public ReplaceObject(type: AbstractConstructor<TTarget>, item: TObject): void;
+
+    /**
+     * Replaces the object of the item with an {@link PropertyResolver.Object `Object`} of the specified {@link type `type`} with the specified {@link item `item`}.
+     *
+     * @param type
+     * The type of the item to replace.
+     *
+     * @param item
+     * The replacement of the item.
+     */
+    public ReplaceObject(type: AbstractConstructor<TObject>, item: TObject): void;
+
+    /**
+     * Replaces the object of the item with the specified {@link type `type`} with a replacement created by the {@link filter `filter`}.
+     *
+     * @param type
+     * The type of the item to replace.
+     *
+     * @param filter
+     * A method for creating the replacement for the item.
+     */
+    public ReplaceObject(type: AbstractConstructor<TTarget>, filter: Filter<TTarget, TObject>): void;
+
+    /**
+     * Replaces the object of the item with an {@link PropertyResolver.Object `Object`} of the specified {@link type `type`} with a replacement created by the {@link filter `filter`}.
+     *
+     * @param type
+     * The type of the item to replace.
+     *
+     * @param filter
+     * A method for creating the replacement for the item.
+     */
+    public ReplaceObject(type: AbstractConstructor<TObject>, filter: Filter<TTarget, TObject>): void;
+
+    /**
+     * Replaces the object of the item which matches the {@link predicate `predicate`} with the specified {@link item `item`}.
+     *
+     * @param predicate
+     * The predicate for finding the item to replace.
+     *
+     * @param item
+     * The replacement of the item.
+     */
+    public ReplaceObject(predicate: Predicate<TTarget>, item: TObject): void;
+
+    /**
+     * Replaces the object of the item which matches the {@link predicate `predicate`} with a replacement created by the {@link filter `filter`}.
+     *
+     * @param predicate
+     * The item to replace.
+     *
+     * @param filter
+     * A method for creating the replacement for the item.
+     */
+    public ReplaceObject(predicate: Predicate<TTarget>, filter: Filter<TTarget, TObject>): void;
+
+    /**
+     * Replaces the item which matches the {@link filter `filter`} with the specified {@link replacement `replacement`}.
+     *
+     * @param filter
+     * A filter for determining the item to replace.
+     *
+     * @param replacement
+     * The replacement for the item.
+     */
+    public ReplaceObject(filter: string | AbstractConstructor<TObject | TTarget> | Predicate<TTarget>, replacement: TObject | Filter<TTarget, TObject>): void
+    {
+        if (typeof replacement === "function")
+        {
+            this.Replace(filter as any, (item) => this.CreateItem(replacement(item)));
+        }
+        else
+        {
+            this.Replace(filter as any, replacement);
+        }
+    }
+
+    /**
      * Adds the specified {@link item `item`} to the collection.
      *
      * @param item
