@@ -1,3 +1,6 @@
+// eslint-disable-next-line node/no-unpublished-import
+import type { InstantiateOptions } from "yeoman-environment";
+import { GeneratorOptions } from "yeoman-generator";
 import { FileMappingCollectionEditor } from "../Collections/FileMappingCollectionEditor";
 import { ComponentCollection } from "../Components/ComponentCollection";
 import { IFileMapping } from "../Components/FileManagement/IFileMapping";
@@ -179,8 +182,7 @@ export class BaseGeneratorFactory<T extends GeneratorConstructor> extends Object
             protected override InitializeBase(...args: ConstructorParameters<T>): InstanceType<T>
             {
                 let generator = this;
-                let instanceOptions = { options: this.options };
-                let result = this.env.instantiate(base, instanceOptions) as InstanceType<T>;
+                let result = this.InstantiateBaseGenerator(...args);
                 self.classProcessor(base);
 
                 let settingsPropertyName = nameof<Generator>((generator) => generator.Settings);
@@ -242,6 +244,37 @@ export class BaseGeneratorFactory<T extends GeneratorConstructor> extends Object
                     });
 
                 return result;
+            }
+
+            /**
+             * @inheritdoc
+             *
+             * @param args
+             * The arguments for creating the base generator.
+             *
+             * @returns
+             * The newly created base generator.
+             */
+            protected override InstantiateBaseGenerator(...args: ConstructorParameters<T>): InstanceType<T>
+            {
+                let instanceOptions = this.GetBaseGeneratorOptions();
+                return this.env.instantiate(base, instanceOptions) as InstanceType<T>;
+            }
+
+            /**
+             * @inheritdoc
+             *
+             * @returns
+             * The options for instantiating the base generator.
+             */
+            protected override GetBaseGeneratorOptions(): InstantiateOptions<GeneratorOptions>
+            {
+                return {
+                    options: {
+                        ...this.options,
+                        customPriorities: []
+                    }
+                };
             }
         } as GeneratorExtensionConstructor<T>;
     }
