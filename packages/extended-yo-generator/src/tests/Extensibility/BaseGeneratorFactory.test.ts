@@ -319,7 +319,7 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                         });
 
                     test(
-                        `Checking whether the generated \`${Generator.constructor}\` inherits the desired class…`,
+                        `Checking whether the generated \`${nameof(Generator.constructor)}\` inherits the desired class…`,
                         () =>
                         {
                             ok(context.CreateGenerator(BaseGeneratorFactory.Create(TestGenerator)) instanceof TestGenerator);
