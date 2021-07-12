@@ -322,7 +322,7 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                             {
                                 if (typeof question.when === "function")
                                 {
-                                    question.when(generator.Settings);
+                                    await question.when(generator.Settings);
                                 }
                             }
 
