@@ -121,8 +121,9 @@ export function TestContextTests(): void
                     let runContext: IRunContext<TestGenerator<ITestGeneratorSettings, IExampleOptions>>;
 
                     setup(
-                        () =>
+                        async function()
                         {
+                            this.timeout(2 * 1000);
                             runContext = testContext.ExecuteGenerator();
                         });
 
@@ -137,8 +138,11 @@ export function TestContextTests(): void
 
                     test(
                         "Checking whether options can be passed…",
-                        async () =>
+                        async function()
                         {
+                            this.slow(1 * 1000);
+                            this.timeout(2 * 1000);
+
                             runContext = testContext.ExecuteGenerator(
                                 {
                                     TestGeneratorOptions: options

@@ -54,8 +54,9 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
             }
 
             suiteSetup(
-                async () =>
+                async function()
                 {
+                    this.timeout(2 * 1000);
                     moduleRoot = dirname(pkgUp.sync({ cwd: context.GeneratorDirectory }));
 
                     runContext = context.ExecuteGenerator(
@@ -278,8 +279,9 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                     let fileMappingExecuted: boolean;
 
                     suiteSetup(
-                        async () =>
+                        async function()
                         {
+                            this.timeout(2 * 1000);
                             defaultID = "default-component";
                             hiddenID = "non-default-component";
                             defaultQuestionID = "this-question-has-a-default-value";
@@ -395,8 +397,9 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                     let defaultValue: string[];
 
                     suiteSetup(
-                        async () =>
+                        async function()
                         {
+                            this.timeout(2 * 1000);
                             defaultID = "this-is-a-default-question";
                             hiddenID = "this-is-a-hidden-question";
                             defaultValue = ["a"];
@@ -481,7 +484,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                         async function()
                         {
                             this.slow(1 * 1000);
-                            this.timeout(1 * 1000);
+                            this.timeout(2 * 1000);
                             let runContext = context.ExecuteGenerator({ TestGeneratorOptions: options });
                             await runContext.toPromise();
                             strictEqual((await readFile(runContext.generator.destinationPath(testFileName))).toString(), testContent);

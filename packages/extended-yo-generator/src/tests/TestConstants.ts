@@ -29,4 +29,12 @@ export abstract class TestConstants
 
         return this.package;
     }
+
+    /**
+     * Gets the path to the test-directory.
+     */
+    public static get TestDirectory(): string
+    {
+        return join(__dirname, "..", "..", "test");
+    }
 }

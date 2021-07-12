@@ -1,3 +1,6 @@
+// eslint-disable-next-line node/no-unpublished-import
+import type { InstantiateOptions } from "yeoman-environment";
+import { GeneratorOptions } from "yeoman-generator";
 import { GeneratorConstructor } from "../GeneratorConstructor";
 import { ObjectExtension } from "./ObjectExtension";
 
@@ -29,6 +32,31 @@ export abstract class GeneratorExtension<T extends GeneratorConstructor> extends
      * Gets the components of the base-generator.
      */
     protected get BaseComponents(): InstanceType<T>["ComponentCollection"]
+    {
+        return null;
+    }
+
+    /**
+     * Instantiates the base generator.
+     *
+     * @param args
+     * The arguments for creating the base generator.
+     *
+     * @returns
+     * The newly created base generator.
+     */
+    protected InstantiateBaseGenerator(...args: ConstructorParameters<T>): InstanceType<T>
+    {
+        return null;
+    }
+
+    /**
+     * Gets the options for instantiating the base generator.
+     *
+     * @returns
+     * The options for instantiating the base generator.
+     */
+    protected GetBaseGeneratorOptions(): InstantiateOptions<GeneratorOptions>
     {
         return null;
     }

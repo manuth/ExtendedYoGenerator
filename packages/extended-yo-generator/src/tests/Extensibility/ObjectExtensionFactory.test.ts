@@ -126,7 +126,10 @@ export function ObjectExtensionFactoryTests(context: TestContext<TestGenerator>)
                              */
                             function CreateSourceFile(genericType: boolean, typeParam: boolean): SourceFile
                             {
-                                let tempFile = new TempFile();
+                                let tempFile = new TempFile(
+                                    {
+                                        Directory: TestConstants.TestDirectory
+                                    });
 
                                 let file = project.createSourceFile(
                                     tempFile.FullName,

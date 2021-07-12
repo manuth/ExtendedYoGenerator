@@ -1,5 +1,6 @@
-import { notStrictEqual, ok, strictEqual } from "assert";
+import { doesNotThrow, notStrictEqual, ok, strictEqual } from "assert";
 import { TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
+import { GeneratorOptions } from "yeoman-generator";
 import { FileMappingCollectionEditor } from "../../Collections/FileMappingCollectionEditor";
 import { ComponentCategory } from "../../Components/ComponentCategory";
 import { ComponentCollection } from "../../Components/ComponentCollection";
@@ -318,7 +319,7 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                         });
 
                     test(
-                        `Checking whether the generated \`${Generator.constructor}\` inherits the desired class…`,
+                        `Checking whether the generated \`${nameof(Generator.constructor)}\` inherits the desired class…`,
                         () =>
                         {
                             ok(context.CreateGenerator(BaseGeneratorFactory.Create(TestGenerator)) instanceof TestGenerator);
@@ -482,6 +483,47 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                             let testGenerator = context.CreateGenerator(class extends Generator.ComposeWith(class extends Generator { }, TestGenerator.Path) { });
                             ok(!(testGenerator instanceof TestGenerator));
                             ok(testGenerator instanceof Generator);
+                        });
+
+                    test(
+                        `Checking whether generators with \`${nameof<GeneratorOptions>((o) => o.customPriorities)}\` can be used correctly…`,
+                        () =>
+                        {
+                            doesNotThrow(
+                                () =>
+                                {
+                                    context.CreateGenerator(
+                                        class extends Generator.ComposeWith(
+                                            class extends Generator
+                                            {
+                                                /**
+                                                 * Initializes a new instance of the class.
+                                                 *
+                                                 * @param args
+                                                 * A set of arguments for the generator.
+                                                 *
+                                                 * @param options
+                                                 * A set of options for the generator.
+                                                 */
+                                                public constructor(args: string | string[], options: GeneratorOptions)
+                                                {
+                                                    super(
+                                                        args,
+                                                        {
+                                                            ...options,
+                                                            customPriorities: [
+                                                                ...(options.customPriorities ?? []),
+                                                                {
+                                                                    before: "end",
+                                                                    priorityName: "test"
+                                                                }
+                                                            ]
+                                                        });
+                                                }
+                                            },
+                                            TestGenerator.Path)
+                                        { });
+                                });
                         });
                 });
         });
