@@ -34,7 +34,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@manuth/eslint-plugin-typescript": "^3.2.2",
+    "@manuth/eslint-plugin-typescript": "^3.2.3",
     "@manuth/tsconfig": "^2.0.2",
     "@manuth/typescript-eslint-plugin": "^1.4.1",
     "@types/git-branch": "^2.0.1",
