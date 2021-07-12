@@ -25,11 +25,22 @@ steps:
       - build
     commands:
       - npx lerna run test
-  - name: publish package to npm
+  - name: create package
     image: node
     depends_on:
       - lint
       - test
+    commands:
+      - npx lerna exec --no-private npm pack
+    when:
+      event:
+        - tag
+      ref:
+        - refs/tags/v[0-9]*.[0-9]*.[0-9]*
+  - name: publish package to npm
+    image: node
+    depends_on:
+      - create package
     environment:
       NPM_TOKEN:
         from_secret: npm_token
@@ -44,8 +55,7 @@ steps:
   - name: publish package to github
     image: node
     depends_on:
-      - lint
-      - test
+      - publish package to npm
     environment:
       GITHUB_TOKEN:
         from_secret: github_packages_token
@@ -61,8 +71,7 @@ steps:
   - name: prepare release
     image: node
     depends_on:
-      - lint
-      - test
+      - create package
     commands:
       - npx lerna exec --no-private npm pack
       - npm install escape-string-regexp --no-save
