@@ -520,7 +520,8 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                                                             ]
                                                         });
                                                 }
-                                            })
+                                            },
+                                            TestGenerator.Path)
                                         { });
                                 });
                         });
