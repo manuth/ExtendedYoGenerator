@@ -130,3 +130,6 @@ test/
 
 # Drone configuration
 .drone.yml
+
+# Temporary files
+tmp/
