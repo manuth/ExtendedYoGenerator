@@ -24,7 +24,7 @@ steps:
     depends_on:
       - build
     commands:
-      - npx lerna run test
+      - npm run test
   - name: create package
     image: node
     depends_on:
