@@ -93,12 +93,15 @@ export class BaseGeneratorFactory<T extends GeneratorConstructor> extends Object
             /**
              * Initializes a new instance of the {@link BaseGenerator `BaseGenerator`} class.
              *
-             * @param params
-             * The arguments of the constructor.
+             * @param args
+             * A set of arguments for the generator.
+             *
+             * @param options
+             * A set of options for the generator.
              */
-            public constructor(...params: any[])
+            public constructor(args: string | string[], options: GeneratorOptions)
             {
-                super(...params);
+                super(args, options);
             }
 
             /**
@@ -257,22 +260,25 @@ export class BaseGeneratorFactory<T extends GeneratorConstructor> extends Object
              */
             protected override InstantiateBaseGenerator(...args: ConstructorParameters<T>): InstanceType<T>
             {
-                let instanceOptions = this.GetBaseGeneratorOptions();
+                let instanceOptions = this.GetBaseGeneratorOptions(...args);
                 return this.env.instantiate(base, instanceOptions) as InstanceType<T>;
             }
 
             /**
              * @inheritdoc
              *
+             * @param args
+             * The arguments for creating the base generator.
+             *
              * @returns
              * The options for instantiating the base generator.
              */
-            protected override GetBaseGeneratorOptions(): InstantiateOptions<GeneratorOptions>
+            protected override GetBaseGeneratorOptions(...args: ConstructorParameters<T>): InstantiateOptions<GeneratorOptions>
             {
                 return {
+                    arguments: args[0],
                     options: {
-                        ...this.options,
-                        customPriorities: []
+                        ...args[1]
                     }
                 };
             }
