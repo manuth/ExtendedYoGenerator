@@ -23,8 +23,9 @@ export function TestGeneratorTests(context: TestContext): void
             let randomValue: Generator<string, string>;
 
             suiteSetup(
-                async () =>
+                async function()
                 {
+                    this.timeout(2 * 1000);
                     let runContext: IRunContext<TestGenerator>;
                     context = TestContext.Default;
                     options = {};
