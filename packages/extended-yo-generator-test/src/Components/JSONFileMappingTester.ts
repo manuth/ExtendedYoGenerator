@@ -34,7 +34,7 @@ export class JSONFileMappingTester<TGenerator extends IGenerator<TSettings, TOpt
     }
 
     /**
-     * Gets the metadata of inside the file-mapping output.
+     * Gets the metadata of the file-mapping output.
      */
     public get Metadata(): Promise<any>
     {
