@@ -4,6 +4,7 @@ import { IGenerator } from "../../IGenerator";
 import { IGeneratorSettings } from "../../IGeneratorSettings";
 import { GeneratorComponent } from "../GeneratorComponent";
 import { FileMapping } from "./FileMapping";
+import { IFileMapping } from "./IFileMapping";
 
 /**
  * Provides data for creating a {@link FileMapping `FileMapping<TSettings, TOptions>`}.
@@ -14,7 +15,7 @@ import { FileMapping } from "./FileMapping";
  * @template TOptions
  * The type of the options of the generator.
  */
-export abstract class FileMappingOptions<TSettings extends IGeneratorSettings, TOptions extends GeneratorOptions> extends GeneratorComponent<TSettings, TOptions, FileMapping<TSettings, TOptions>>
+export abstract class FileMappingOptions<TSettings extends IGeneratorSettings, TOptions extends GeneratorOptions> extends GeneratorComponent<TSettings, TOptions, FileMapping<TSettings, TOptions>> implements IFileMapping<TSettings, TOptions>
 {
     /**
      * Initializes a new instance of the {@link FileMappingOptions `FileMappingOptions<TSettings, TOptions>`} class.

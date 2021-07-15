@@ -4,6 +4,7 @@ import { IGeneratorSettings } from "../IGeneratorSettings";
 import { ComponentCategory } from "./ComponentCategory";
 import { GeneratorComponent } from "./GeneratorComponent";
 import { IComponent } from "./IComponent";
+import { IComponentCategory } from "./IComponentCategory";
 
 /**
  * Provides data for creating a {@link ComponentCategory `ComponentCategory<TSettings, TOptions>`}.
@@ -14,7 +15,7 @@ import { IComponent } from "./IComponent";
  * @template TOptions
  * The type of the options of the generator.
  */
-export abstract class ComponentCategoryOptions<TSettings extends IGeneratorSettings, TOptions extends GeneratorOptions> extends GeneratorComponent<TSettings, TOptions, ComponentCategory<TSettings, TOptions>>
+export abstract class ComponentCategoryOptions<TSettings extends IGeneratorSettings, TOptions extends GeneratorOptions> extends GeneratorComponent<TSettings, TOptions, ComponentCategory<TSettings, TOptions>> implements IComponentCategory<TSettings, TOptions>
 {
     /**
      * Initializes a new instance of the {@link ComponentCategoryOptions `ComponentCategoryOptions<TSettings, TOptions>`} class.
