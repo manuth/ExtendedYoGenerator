@@ -34,14 +34,24 @@ export class JSONFileMappingTester<TGenerator extends IGenerator<TSettings, TOpt
     }
 
     /**
-     * Gets the metadata of the file-mapping output.
+     * Gets the parsed content of the source-file.
+     *
+     * @returns
+     * The parsed content of the source-file.
      */
-    public get Metadata(): Promise<any>
+    public async ParseSource(): Promise<any>
     {
-        return (
-            async () =>
-            {
-                return parse(await this.Content);
-            })();
+        return parse(await this.ReadSource());
+    }
+
+    /**
+     * Gets the parsed content of the output-file.
+     *
+     * @returns
+     * The parsed content of the output-file.
+     */
+    public async ParseOutput(): Promise<any>
+    {
+        return parse(await this.ReadOutput());
     }
 }

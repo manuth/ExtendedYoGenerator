@@ -81,18 +81,6 @@ export class FileMappingTester<TGenerator extends IGenerator<TSettings, TOptions
     }
 
     /**
-     * Gets the content of the file-mapping output.
-     */
-    public get Content(): Promise<string>
-    {
-        return (
-            async () =>
-            {
-                return (await readFile(this.FileMapping.Destination)).toString();
-            })();
-    }
-
-    /**
      * Processes the file-mapping.
      */
     public async Run(): Promise<void>
@@ -163,6 +151,28 @@ export class FileMappingTester<TGenerator extends IGenerator<TSettings, TOptions
     }
 
     /**
+     * Reads the contents of the source-file.
+     *
+     * @returns
+     * The contents of the source-file.
+     */
+    public async ReadSource(): Promise<string>
+    {
+        return this.ReadFile(this.FileMapping.Source);
+    }
+
+    /**
+     * Reads the contents of the output-file.
+     *
+     * @returns
+     * The contents of the output-file.
+     */
+    public async ReadOutput(): Promise<string>
+    {
+        return this.ReadFile(this.FileMapping.Destination);
+    }
+
+    /**
      * Asserts the content of the file-mapping output.
      *
      * @param expected
@@ -170,7 +180,7 @@ export class FileMappingTester<TGenerator extends IGenerator<TSettings, TOptions
      */
     public async AssertContent(expected: string): Promise<void>
     {
-        strictEqual(await this.Content, expected);
+        strictEqual(await this.ReadOutput(), expected);
     }
 
     /**
@@ -184,9 +194,23 @@ export class FileMappingTester<TGenerator extends IGenerator<TSettings, TOptions
             await this.Commit();
         }
 
-        if (await pathExists(this.FileMapping.Destination))
+        if (await this.Exists)
         {
             return remove(this.FileMapping.Destination);
         }
+    }
+
+    /**
+     * Reads the contents of the file with the specified {@link fileName `fileName`}.
+     *
+     * @param fileName
+     * The name of the file to read.
+     *
+     * @returns
+     * The contents of the file with the specified {@link fileName `fileName`}.
+     */
+    protected async ReadFile(fileName: string): Promise<string>
+    {
+        return (await readFile(fileName)).toString();
     }
 }
