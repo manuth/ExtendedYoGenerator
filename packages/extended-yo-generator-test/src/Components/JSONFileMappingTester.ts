@@ -64,7 +64,7 @@ export class JSONFileMappingTester<TGenerator extends IGenerator<TSettings, TOpt
      * @returns
      * The parsed representation of the specified {@link text `text`}.
      */
-    protected Parse(text: string): any
+    public Parse(text: string): any
     {
         return parse(text);
     }
