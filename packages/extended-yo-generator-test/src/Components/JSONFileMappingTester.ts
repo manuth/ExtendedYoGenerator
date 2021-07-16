@@ -41,7 +41,7 @@ export class JSONFileMappingTester<TGenerator extends IGenerator<TSettings, TOpt
      */
     public async ParseSource(): Promise<any>
     {
-        return parse(await this.ReadSource());
+        return this.Parse(await this.ReadSource());
     }
 
     /**
@@ -52,6 +52,20 @@ export class JSONFileMappingTester<TGenerator extends IGenerator<TSettings, TOpt
      */
     public async ParseOutput(): Promise<any>
     {
-        return parse(await this.ReadOutput());
+        return this.Parse(await this.ReadOutput());
+    }
+
+    /**
+     * Parses the specified {@link text `text`}.
+     *
+     * @param text
+     * The text to parse.
+     *
+     * @returns
+     * The parsed representation of the specified {@link text `text`}.
+     */
+    protected Parse(text: string): any
+    {
+        return parse(text);
     }
 }
