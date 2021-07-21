@@ -42,7 +42,7 @@ export function JSONFileMappingTesterTests(context: TestContext<TestGenerator>):
                 });
 
             suite(
-                nameof<JSONFileMappingTester<any, any, any, any>>((tester) => tester.Metadata),
+                nameof<JSONFileMappingTester<any, any, any, any>>((tester) => tester.ParseSource),
                 () =>
                 {
                     test(
@@ -50,7 +50,7 @@ export function JSONFileMappingTesterTests(context: TestContext<TestGenerator>):
                         async () =>
                         {
                             await tester.Run();
-                            deepStrictEqual(await tester.Metadata, randomObject);
+                            deepStrictEqual(await tester.ParseSource(), randomObject);
                         });
                 });
         });

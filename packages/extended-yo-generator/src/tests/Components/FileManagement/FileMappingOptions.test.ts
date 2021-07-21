@@ -51,7 +51,7 @@ export function FileMappingOptionsTests(context: TestContext<TestGenerator, ITes
                  */
                 public override async Processor(): Promise<void>
                 {
-                    return this.WriteDestination(await this.Content);
+                    return this.WriteDestination(await this.ReadSource());
                 }
 
                 /**
@@ -110,7 +110,7 @@ export function FileMappingOptionsTests(context: TestContext<TestGenerator, ITes
                 });
 
             suite(
-                nameof<FileMappingOptions<any, any>>((options) => options.Content),
+                nameof<FileMappingOptions<any, any>>((options) => options.ReadSource),
                 () =>
                 {
                     test(
@@ -118,7 +118,7 @@ export function FileMappingOptionsTests(context: TestContext<TestGenerator, ITes
                         async () =>
                         {
                             await writeFile(tempSourceFile.FullName, randomValue);
-                            strictEqual(await fileMappingOptions.Content, randomValue);
+                            strictEqual(await fileMappingOptions.ReadSource(), randomValue);
                         });
                 });
 

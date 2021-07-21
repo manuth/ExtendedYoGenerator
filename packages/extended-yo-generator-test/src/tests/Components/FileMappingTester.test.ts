@@ -70,7 +70,7 @@ export function FileMappingTesterTests(context: TestContext<TestGenerator>): voi
                 });
 
             suite(
-                nameof<FileMappingTester<any, any, any, any>>((tester) => tester.Content),
+                nameof<FileMappingTester<any, any, any, any>>((tester) => tester.ReadSource),
                 () =>
                 {
                     test(
@@ -78,7 +78,7 @@ export function FileMappingTesterTests(context: TestContext<TestGenerator>): voi
                         async () =>
                         {
                             await tester.Run();
-                            strictEqual(await tester.Content, content);
+                            strictEqual(await tester.ReadSource(), content);
                         });
                 });
 
