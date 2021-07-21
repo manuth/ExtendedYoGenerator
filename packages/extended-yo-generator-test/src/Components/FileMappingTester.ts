@@ -91,6 +91,20 @@ export class FileMappingTester<TGenerator extends IGenerator<TSettings, TOptions
     }
 
     /**
+     * Reads the contents of the file with the specified {@link fileName `fileName`}.
+     *
+     * @param fileName
+     * The name of the file to read.
+     *
+     * @returns
+     * The contents of the file with the specified {@link fileName `fileName`}.
+     */
+    public async ReadFile(fileName: string): Promise<string>
+    {
+        return (await readFile(fileName)).toString();
+    }
+
+    /**
      * Writes content into the specified file.
      *
      * @param fileName
@@ -198,19 +212,5 @@ export class FileMappingTester<TGenerator extends IGenerator<TSettings, TOptions
         {
             return remove(this.FileMapping.Destination);
         }
-    }
-
-    /**
-     * Reads the contents of the file with the specified {@link fileName `fileName`}.
-     *
-     * @param fileName
-     * The name of the file to read.
-     *
-     * @returns
-     * The contents of the file with the specified {@link fileName `fileName`}.
-     */
-    protected async ReadFile(fileName: string): Promise<string>
-    {
-        return (await readFile(fileName)).toString();
     }
 }
