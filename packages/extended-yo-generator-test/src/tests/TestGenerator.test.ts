@@ -86,8 +86,10 @@ export function TestGeneratorTests(context: TestContext): void
                 {
                     test(
                         "Checking whether generator-options are applied correctly…",
-                        () =>
+                        function()
                         {
+                            this.timeout(4 * 1000);
+                            this.slow(2 * 1000);
                             options.TemplateRoot = randomValue.next().value;
 
                             options.Questions = [

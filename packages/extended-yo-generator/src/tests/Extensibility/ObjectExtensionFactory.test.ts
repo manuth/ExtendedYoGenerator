@@ -214,8 +214,8 @@ export function ObjectExtensionFactoryTests(context: TestContext<TestGenerator>)
                         "Checking whether type-parameters can be passed to object-extensions…",
                         async function()
                         {
-                            this.timeout(2 * 60 * 1000);
-                            this.slow(1 * 60 * 1000);
+                            this.timeout(4 * 60 * 1000);
+                            this.slow(2 * 60 * 1000);
                             strictEqual((await GetTypeParamErrors(fileWithTypeParams)).length, 0);
                             strictEqual((await GetTypeParamErrors(fileWithoutTypeParams)).length, 0);
                             ok((await GetTypeParamErrors(fileWIthIncorrectTypeParams)).length > 0);
