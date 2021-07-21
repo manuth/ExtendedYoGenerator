@@ -97,8 +97,10 @@ export function FileMappingTesterTests(context: TestContext<TestGenerator>): voi
                 {
                     test(
                         "Checking whether the source-file is read correctly…",
-                        async () =>
+                        async function()
                         {
+                            this.timeout(4 * 1000);
+                            this.slow(2 * 1000);
                             await writeFile(sourceFile.FullName, randomValue);
                             strictEqual(await tester.ReadSource(), randomValue);
                         });

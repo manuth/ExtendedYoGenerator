@@ -115,8 +115,10 @@ export function FileMappingOptionsTests(context: TestContext<TestGenerator, ITes
                 {
                     test(
                         "Checking whether the content is read from the source-file…",
-                        async () =>
+                        async function()
                         {
+                            this.timeout(4 * 1000);
+                            this.slow(2 * 1000);
                             await writeFile(tempSourceFile.FullName, randomValue);
                             strictEqual(await fileMappingOptions.ReadSource(), randomValue);
                         });
@@ -128,8 +130,10 @@ export function FileMappingOptionsTests(context: TestContext<TestGenerator, ITes
                 {
                     test(
                         "Checking whether the content is written to the `mem-fs` correctly…",
-                        async () =>
+                        async function()
                         {
+                            this.timeout(4 * 1000);
+                            this.slow(2 * 1000);
                             await writeFile(tempSourceFile.FullName, randomValue);
                             await fileMappingOptions.Processor();
                             strictEqual(generator.fs.read(tempDestinationFile.FullName), randomValue);
