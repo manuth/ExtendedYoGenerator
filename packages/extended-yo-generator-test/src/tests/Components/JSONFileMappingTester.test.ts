@@ -21,6 +21,7 @@ export function JSONFileMappingTesterTests(context: TestContext<TestGenerator>):
             let destinationFile: TempFile;
             let fileMapping: IFileMapping<any, any>;
             let tester: JSONFileMappingTester<TestGenerator, any, any, IFileMapping<any, any>>;
+            let metadata: any;
             let randomObject: any;
 
             suiteSetup(
@@ -37,12 +38,18 @@ export function JSONFileMappingTesterTests(context: TestContext<TestGenerator>):
 
                     destinationFile.Dispose();
                     tester = new JSONFileMappingTester(await context.Generator, fileMapping);
+                    metadata = context.RandomObject;
+                    await tester.WriteSource(JSON.stringify(metadata));
+                });
+
+            setup(
+                () =>
+                {
                     randomObject = context.RandomObject;
-                    await tester.WriteSource(JSON.stringify(randomObject));
                 });
 
             suite(
-                nameof<JSONFileMappingTester<any, any, any, any>>((tester) => tester.ParseSource),
+                nameof<JSONFileMappingTester<any, any, any, any>>((tester) => tester.Parse),
                 () =>
                 {
                     test(
@@ -50,7 +57,34 @@ export function JSONFileMappingTesterTests(context: TestContext<TestGenerator>):
                         async () =>
                         {
                             await tester.Run();
+                            deepStrictEqual(await tester.Parse(await tester.ReadSource()), metadata);
+                            deepStrictEqual(await tester.Parse(await tester.ReadOutput()), metadata);
+                        });
+                });
+
+            suite(
+                nameof<JSONFileMappingTester<any, any, any, any>>((tester) => tester.ParseSource),
+                () =>
+                {
+                    test(
+                        "Checking whether the source-file is parsed correctly…",
+                        async () =>
+                        {
+                            await tester.WriteSource(JSON.stringify(randomObject));
                             deepStrictEqual(await tester.ParseSource(), randomObject);
+                        });
+                });
+
+            suite(
+                nameof<JSONFileMappingTester<any, any, any, any>>((tester) => tester.ParseOutput),
+                () =>
+                {
+                    test(
+                        "Checking whether the output-file is parsed correctly…",
+                        async () =>
+                        {
+                            await tester.WriteOutput(JSON.stringify(randomObject));
+                            deepStrictEqual(await tester.ParseOutput(), randomObject);
                         });
                 });
         });

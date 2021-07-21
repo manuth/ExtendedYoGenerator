@@ -1,7 +1,7 @@
 import { doesNotReject, ok, rejects, strictEqual } from "assert";
 import { IFileMapping } from "@manuth/extended-yo-generator";
-import { TempFile } from "@manuth/temp-files";
-import { pathExists, readFile } from "fs-extra";
+import { TempFile, TempFileSystem } from "@manuth/temp-files";
+import { pathExists, readFile, writeFile } from "fs-extra";
 import { FileMappingTester } from "../../Components/FileMappingTester";
 import { TestContext } from "../../TestContext";
 import { TestGenerator } from "../../TestGenerator";
@@ -18,8 +18,9 @@ export function FileMappingTesterTests(context: TestContext<TestGenerator>): voi
         nameof(FileMappingTester),
         () =>
         {
+            let tempFile: TempFile;
             let sourceFile: TempFile;
-            let destinationFile: TempFile;
+            let destinationFile: string;
             let fileMapping: IFileMapping<any, any>;
             let tester: FileMappingTester<TestGenerator, any, any, IFileMapping<any, any>>;
             let content: string;
@@ -29,17 +30,25 @@ export function FileMappingTesterTests(context: TestContext<TestGenerator>): voi
                 async function()
                 {
                     this.timeout(30 * 1000);
+                    tempFile = new TempFile();
                     sourceFile = new TempFile();
-                    destinationFile = new TempFile();
+                    destinationFile = TempFileSystem.TempName();
 
                     fileMapping = {
                         Source: sourceFile.FullName,
-                        Destination: destinationFile.FullName
+                        Destination: destinationFile
                     };
 
-                    destinationFile.Dispose();
                     content = "this is a test";
                     tester = new FileMappingTester(await context.Generator, fileMapping);
+                });
+
+            suiteTeardown(
+                async () =>
+                {
+                    tempFile.Dispose();
+                    sourceFile.Dispose();
+                    await tester.Clean();
                 });
 
             setup(
@@ -70,15 +79,41 @@ export function FileMappingTesterTests(context: TestContext<TestGenerator>): voi
                 });
 
             suite(
+                nameof<FileMappingTester<any, any, any, any>>((tester) => tester.ReadFile),
+                () =>
+                {
+                    test(
+                        "Checking whether files are read correctly…",
+                        async () =>
+                        {
+                            await writeFile(tempFile.FullName, randomValue);
+                            strictEqual(await tester.ReadFile(tempFile.FullName), randomValue);
+                        });
+                });
+
+            suite(
                 nameof<FileMappingTester<any, any, any, any>>((tester) => tester.ReadSource),
                 () =>
                 {
                     test(
-                        "Checking whether the content is read from the destination-file…",
+                        "Checking whether the source-file is read correctly…",
+                        async () =>
+                        {
+                            await writeFile(sourceFile.FullName, randomValue);
+                            strictEqual(await tester.ReadSource(), randomValue);
+                        });
+                });
+
+            suite(
+                nameof<FileMappingTester<any, any, any, any>>((tester) => tester.ReadOutput),
+                () =>
+                {
+                    test(
+                        "Checking whether the output-file is read correctly…",
                         async () =>
                         {
                             await tester.Run();
-                            strictEqual(await tester.ReadSource(), content);
+                            strictEqual(await tester.ReadOutput(), content);
                         });
                 });
 
@@ -123,14 +158,14 @@ export function FileMappingTesterTests(context: TestContext<TestGenerator>): voi
                 });
 
             suite(
-                nameof<FileMappingTester<any, any, any, any>>((tester) => tester.WriteDestination),
+                nameof<FileMappingTester<any, any, any, any>>((tester) => tester.WriteOutput),
                 () =>
                 {
                     test(
                         "Checking whether contents can be written to the destination-file…",
                         async () =>
                         {
-                            await tester.WriteDestination(randomValue);
+                            await tester.WriteOutput(randomValue);
                             strictEqual((await readFile(tester.FileMapping.Destination)).toString(), randomValue);
                         });
                 });
