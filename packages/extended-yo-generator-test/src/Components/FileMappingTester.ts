@@ -73,11 +73,7 @@ export class FileMappingTester<TGenerator extends IGenerator<TSettings, TOptions
      */
     public get Exists(): Promise<boolean>
     {
-        return (
-            async () =>
-            {
-                return pathExists(this.FileMapping.Destination);
-            })();
+        return pathExists(this.FileMapping.Destination);
     }
 
     /**
