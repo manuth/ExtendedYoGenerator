@@ -72,8 +72,10 @@ export function TestContextTests(): void
                 {
                     test(
                         "Checking whether generators can be created without an error…",
-                        () =>
+                        async function()
                         {
+                            this.timeout(10 * 1000);
+                            this.slow(5 * 1000);
                             ok(testContext.CreateGenerator(TestGenerator) instanceof TestGenerator);
                         });
                 });
@@ -129,8 +131,10 @@ export function TestContextTests(): void
 
                     test(
                         "Checking whether generators can be executed…",
-                        async () =>
+                        async function()
                         {
+                            this.timeout(4 * 1000);
+                            this.slow(2 * 1000);
                             await doesNotReject(async () => runContext.toPromise());
                             ok(runContext.ran);
                             ok(runContext.generator instanceof TestGenerator);

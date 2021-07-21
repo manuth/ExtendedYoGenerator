@@ -315,7 +315,8 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                                 `Checking whether files are copied using \`ejs\` if \`${nameof<FileMapping<any, any>>((f) => f.Context)}\` is defined…`,
                                 async function()
                                 {
-                                    this.timeout(0);
+                                    this.timeout(4 * 1000);
+                                    this.slow(2 * 1000);
                                     fileMappingOptions.Context = () => testContext;
                                     await fileMapping.Processor();
                                     return AssertDestinationContent(render(testContent, testContext));
