@@ -5,6 +5,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## ExtendedYoGenerator [Unreleased]
+### Breaking
+  - Replaced `FileMappingTester.Content` with `FileMappingTester.ReadSource()`
+  - Replaced `JSONFileMappingTester.Metadata` with `JSONFileMappingTester.ParseSource()`
+  - Renamed `FileMappingTester.WriteDestination()` with `FileMappingTester.WriteOutput()`
+
+### Added
+  - Added method `FileMappingTester.ReadOutput()` for reading the output-file and `FileMappingTester.ReadFile()` for reading any file
+  - Added method `JSONFileMappingTester.ParseOutput()` for parsing the output-file and `JSONFileMappingTester.Parse()` for parsing text
+
+### Updated
+  - All dependencies
 
 [Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v9.1.1...dev)
 
