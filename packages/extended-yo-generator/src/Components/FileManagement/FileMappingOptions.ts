@@ -50,14 +50,6 @@ export abstract class FileMappingOptions<TSettings extends IGeneratorSettings, T
     }
 
     /**
-     * Gets the content of the source-file.
-     */
-    public get Content(): Promise<string>
-    {
-        return this.ReadSource();
-    }
-
-    /**
      * @inheritdoc
      *
      * @returns
@@ -74,6 +66,17 @@ export abstract class FileMappingOptions<TSettings extends IGeneratorSettings, T
     public async Processor?(): Promise<void>;
 
     /**
+     * Reads the contents of the source-file.
+     *
+     * @returns
+     * The contents of the source-file.
+     */
+    public async ReadSource(): Promise<string>
+    {
+        return this.ReadFile(this.Resolved.Source);
+    }
+
+    /**
      * Reads the contents of the file located at the specified {@link path `path`}.
      *
      * @param path
@@ -85,17 +88,6 @@ export abstract class FileMappingOptions<TSettings extends IGeneratorSettings, T
     protected async ReadFile(path: string): Promise<string>
     {
         return (await readFile(path)).toString();
-    }
-
-    /**
-     * Reads the contents of the source-file.
-     *
-     * @returns
-     * The contents of the source-file.
-     */
-    protected async ReadSource(): Promise<string>
-    {
-        return this.ReadFile(this.Resolved.Source);
     }
 
     /**
