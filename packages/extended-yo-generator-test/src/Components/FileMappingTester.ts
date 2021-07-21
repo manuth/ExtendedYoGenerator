@@ -136,7 +136,7 @@ export class FileMappingTester<TGenerator extends IGenerator<TSettings, TOptions
      * @param content
      * The content to write.
      */
-    public async WriteDestination(content: string): Promise<void>
+    public async WriteOutput(content: string): Promise<void>
     {
         return this.WriteFile(this.FileMapping.Destination, content);
     }
