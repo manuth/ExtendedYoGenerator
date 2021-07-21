@@ -73,23 +73,7 @@ export class FileMappingTester<TGenerator extends IGenerator<TSettings, TOptions
      */
     public get Exists(): Promise<boolean>
     {
-        return (
-            async () =>
-            {
-                return pathExists(this.FileMapping.Destination);
-            })();
-    }
-
-    /**
-     * Gets the content of the file-mapping output.
-     */
-    public get Content(): Promise<string>
-    {
-        return (
-            async () =>
-            {
-                return (await readFile(this.FileMapping.Destination)).toString();
-            })();
+        return pathExists(this.FileMapping.Destination);
     }
 
     /**
@@ -100,6 +84,20 @@ export class FileMappingTester<TGenerator extends IGenerator<TSettings, TOptions
         let fileMapping = this.FileMapping;
         await fileMapping.Processor();
         await this.Commit();
+    }
+
+    /**
+     * Reads the contents of the file with the specified {@link fileName `fileName`}.
+     *
+     * @param fileName
+     * The name of the file to read.
+     *
+     * @returns
+     * The contents of the file with the specified {@link fileName `fileName`}.
+     */
+    public async ReadFile(fileName: string): Promise<string>
+    {
+        return (await readFile(fileName)).toString();
     }
 
     /**
@@ -134,7 +132,7 @@ export class FileMappingTester<TGenerator extends IGenerator<TSettings, TOptions
      * @param content
      * The content to write.
      */
-    public async WriteDestination(content: string): Promise<void>
+    public async WriteOutput(content: string): Promise<void>
     {
         return this.WriteFile(this.FileMapping.Destination, content);
     }
@@ -163,6 +161,28 @@ export class FileMappingTester<TGenerator extends IGenerator<TSettings, TOptions
     }
 
     /**
+     * Reads the contents of the source-file.
+     *
+     * @returns
+     * The contents of the source-file.
+     */
+    public async ReadSource(): Promise<string>
+    {
+        return this.ReadFile(this.FileMapping.Source);
+    }
+
+    /**
+     * Reads the contents of the output-file.
+     *
+     * @returns
+     * The contents of the output-file.
+     */
+    public async ReadOutput(): Promise<string>
+    {
+        return this.ReadFile(this.FileMapping.Destination);
+    }
+
+    /**
      * Asserts the content of the file-mapping output.
      *
      * @param expected
@@ -170,7 +190,7 @@ export class FileMappingTester<TGenerator extends IGenerator<TSettings, TOptions
      */
     public async AssertContent(expected: string): Promise<void>
     {
-        strictEqual(await this.Content, expected);
+        strictEqual(await this.ReadOutput(), expected);
     }
 
     /**
@@ -184,7 +204,7 @@ export class FileMappingTester<TGenerator extends IGenerator<TSettings, TOptions
             await this.Commit();
         }
 
-        if (await pathExists(this.FileMapping.Destination))
+        if (await this.Exists)
         {
             return remove(this.FileMapping.Destination);
         }
