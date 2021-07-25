@@ -113,8 +113,8 @@ import { TestContext, JavaScriptFileMappingTester } from "@manuth/extended-yo-ge
 
 let tester = new JavaScriptFileMappingTester(await TestContext.Default.Generator, new MyCustomFileMapping());
 
-await tester.WriteDestination("module.exports = 1;");
+await tester.WriteOutput("module.exports = 1;");
 console.log(await tester.Require()); // logs `1`
-await tester.WriteDestination("module.exports = 2;");
+await tester.WriteOutput("module.exports = 2;");
 console.log(await tester.Require()); // logs `2` as the content of the destination-file has been hot-reloaded
 ```
