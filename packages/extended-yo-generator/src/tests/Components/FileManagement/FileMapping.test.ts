@@ -281,7 +281,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                              * @param content
                              * The asserted content of the destination-file.
                              */
-                            async function AssertDestinationContent(content: string): Promise<void>
+                            async function AssertOutputContent(content: string): Promise<void>
                             {
                                 return new Promise(
                                     (resolve, reject) =>
@@ -308,7 +308,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                                 {
                                     this.timeout(0);
                                     await fileMapping.Processor();
-                                    return AssertDestinationContent(testContent);
+                                    return AssertOutputContent(testContent);
                                 });
 
                             test(
@@ -319,7 +319,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                                     this.slow(2 * 1000);
                                     fileMappingOptions.Context = () => testContext;
                                     await fileMapping.Processor();
-                                    return AssertDestinationContent(render(testContent, testContext));
+                                    return AssertOutputContent(render(testContent, testContext));
                                 });
 
                             test(
