@@ -6,7 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v10.0.0...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v11.0.0...dev)
+
+## ExtendedYoGenerator v11.0.0
+### Breaking
+  - Rename the `FileMappingOptions.WriteDestination`-method to `WriteOutput`
+
+### Updated
+  - All dependencies
+  - The `README`-file according to the new API
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v10.0.0...v11.0.0)
 
 ## ExtendedYoGenerator v10.0.0
 ### Breaking

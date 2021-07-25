@@ -110,7 +110,7 @@ export abstract class FileMappingOptions<TSettings extends IGeneratorSettings, T
      * @param content
      * The content to write.
      */
-    protected async WriteDestination(content: string): Promise<void>
+    protected async WriteOutput(content: string): Promise<void>
     {
         return this.WriteFile(this.Resolved.Destination, content);
     }
