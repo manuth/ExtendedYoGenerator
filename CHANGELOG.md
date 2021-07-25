@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## ExtendedYoGenerator [Unreleased]
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v11.0.0...dev)
+
+## ExtendedYoGenerator v11.0.0
 ### Breaking
   - Rename the `FileMappingOptions.WriteDestination`-method to `WriteOutput`
 
@@ -12,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - All dependencies
   - The `README`-file according to the new API
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v10.0.0...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v10.0.0...v11.0.0)
 
 ## ExtendedYoGenerator v10.0.0
 ### Breaking
