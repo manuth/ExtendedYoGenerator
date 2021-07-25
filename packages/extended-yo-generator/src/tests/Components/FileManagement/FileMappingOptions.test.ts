@@ -51,7 +51,7 @@ export function FileMappingOptionsTests(context: TestContext<TestGenerator, ITes
                  */
                 public override async Processor(): Promise<void>
                 {
-                    return this.WriteDestination(await this.ReadSource());
+                    return this.WriteOutput(await this.ReadSource());
                 }
 
                 /**
