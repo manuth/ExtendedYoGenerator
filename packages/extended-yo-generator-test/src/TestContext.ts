@@ -130,12 +130,18 @@ export class TestContext<TGenerator extends Generator<any, TOptions> = Generator
      * @param generatorConstructor
      * The constructor of the generator to instantiate.
      *
+     * @param args
+     * The arguments to pass to the generator.
+     *
+     * @param options
+     * The options to pass to the generator.
+     *
      * @returns
      * The newly initialized generator.
      */
-    public CreateGenerator<T extends Generator>(generatorConstructor: new (...args: any[]) => T): T
+    public CreateGenerator<T extends Generator>(generatorConstructor: new (...args: any[]) => T, args?: string[], options?: GeneratorOptions): T
     {
-        return new generatorConstructor([], { env: Environment.createEnv() });
+        return new generatorConstructor([...(args ?? [])], { env: Environment.createEnv(), ...options });
     }
 
     /**
