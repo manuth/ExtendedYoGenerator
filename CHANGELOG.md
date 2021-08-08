@@ -6,7 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v11.0.0...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v11.0.1...dev)
+
+## ExtendedYoGenerator v11.0.1
+### Added
+  - Support for passing custom arguments and options to `@manuth/extended-yo-generator-test`'s `TestContext.CreateGenerator`-method
+  - Missing dependencies
+
+### Updated
+  - All dependencies
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v11.0.0...v11.0.1)
 
 ## ExtendedYoGenerator v11.0.0
 ### Breaking

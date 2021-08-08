@@ -81,6 +81,7 @@
         "typescript.format.placeOpenBraceOnNewLineForControlBlocks": true,
         "typescript.format.placeOpenBraceOnNewLineForFunctions": true,
         "mochaExplorer.require": "source-map-support/register",
+        "mochaExplorer.timeout": 0,
         "terminal.integrated.cwd": "${workspaceFolder:Solution Items}",
         "search.exclude": {
             "**/node_modules": true,

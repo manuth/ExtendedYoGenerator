@@ -78,6 +78,26 @@ export function TestContextTests(): void
                             this.slow(5 * 1000);
                             ok(testContext.CreateGenerator(TestGenerator) instanceof TestGenerator);
                         });
+
+                    test(
+                        "Checking whether custom options and arguments can be passed to the generator…",
+                        () =>
+                        {
+                            let testOption = testContext.RandomString;
+                            let optionValue = testContext.RandomObject;
+                            let testArg = testContext.RandomString;
+
+                            let generator = testContext.CreateGenerator(
+                                TestGenerator,
+                                [testArg],
+                                {
+                                    [testOption]: optionValue
+                                });
+
+                            ok((generator.args as string[]).includes(testArg));
+                            ok(testOption in generator.options);
+                            strictEqual(generator.options[testOption], optionValue);
+                        });
                 });
 
             suite(
