@@ -1,3 +1,4 @@
+import { basename } from "path";
 import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { ComponentTests } from "./Component.test";
 import { ComponentCategoryTests } from "./ComponentCategory.test";
@@ -14,7 +15,7 @@ import { ResolvingTests } from "./Resolving";
 export function ComponentsTests(context: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>>): void
 {
     suite(
-        "Components",
+        basename(__dirname),
         () =>
         {
             ResolvingTests(context);

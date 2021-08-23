@@ -6,7 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v11.0.1...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v11.0.2...dev)
+
+## ExtendedYoGenerator v11.0.2
+### Fixed
+  - Broken release-scripts
+  - Drone-pipeline to prevent package-creation from being skipped
+
+### Updated
+  - All dependencies
+  - Settings to disable timeouts for mocha unit-tests
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v11.0.1...v11.0.2)
 
 ## ExtendedYoGenerator v11.0.1
 ### Added
