@@ -1,3 +1,4 @@
+import { basename } from "path";
 import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { CategoryCollectionEditorTests } from "./CategoryCollectionEditor.test";
 import { ComponentCollectionEditorTests } from "./ComponentCollectionEditor.test";
@@ -15,7 +16,7 @@ import { UniqueObjectCollectionEditorTests } from "./UniqueObjectCollectionEdito
 export function CollectionTests(context: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>>): void
 {
     suite(
-        "Collections",
+        basename(__dirname),
         () =>
         {
             ObjectCollectionEditorTests();

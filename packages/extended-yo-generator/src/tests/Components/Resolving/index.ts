@@ -1,3 +1,4 @@
+import { basename } from "path";
 import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { PropertyResolverTests } from "./PropertyResolver.test";
 import { ResolverTests } from "./Resolver.test";
@@ -11,7 +12,7 @@ import { ResolverTests } from "./Resolver.test";
 export function ResolvingTests(context: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>>): void
 {
     suite(
-        "Resolving",
+        basename(__dirname),
         () =>
         {
             ResolverTests(context);

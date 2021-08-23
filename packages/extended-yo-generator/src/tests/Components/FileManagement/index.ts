@@ -1,3 +1,4 @@
+import { basename } from "path";
 import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { FileMappingTests } from "./FileMapping.test";
 import { FileMappingOptionsTests } from "./FileMappingOptions.test";
@@ -11,7 +12,7 @@ import { FileMappingOptionsTests } from "./FileMappingOptions.test";
 export function FileManagementTests(context: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>>): void
 {
     suite(
-        "FileManagement",
+        basename(__dirname),
         () =>
         {
             FileMappingOptionsTests(context);

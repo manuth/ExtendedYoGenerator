@@ -1,3 +1,4 @@
+import { basename } from "path";
 import TestGenerator = require("../../generators/app");
 import { TestContext } from "../../TestContext";
 import { FileMappingTesterTests } from "./FileMappingTester.test";
@@ -13,7 +14,7 @@ import { JSONFileMappingTesterTests } from "./JSONFileMappingTester.test";
 export function ComponentTests(context: TestContext<TestGenerator>): void
 {
     suite(
-        "Components",
+        basename(__dirname),
         () =>
         {
             FileMappingTesterTests(context);
