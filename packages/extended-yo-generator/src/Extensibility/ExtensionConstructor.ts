@@ -12,5 +12,5 @@ import { ObjectExtension } from "./ObjectExtension";
  */
 export type ExtensionConstructor<TConstructor extends Constructor<any>, TExtension extends ObjectExtension<TConstructor>> =
     TConstructor extends new (...args: any[]) => any ?
-    TConstructor & (new (...args: any[]) => (InstanceType<TConstructor> & TExtension)) :
+    TConstructor & (new (...args: any[]) => (TExtension)) :
     never;
