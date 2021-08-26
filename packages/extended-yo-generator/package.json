@@ -37,7 +37,7 @@
     "lint-base": "eslint --max-warnings 0 --ignore-pattern \"!.eslintrc.js\"",
     "lint": "npm run lint-base -- --ext .js,.jsx,.ts,.tsx ./src .eslintrc.js",
     "lint-ide": "npm run lint || exit 0",
-    "test": "mocha",
+    "test": "mocha && tsd",
     "prepare": "npm run patchTypeScript && npm run rebuild",
     "patchTypeScript": "ts-patch install && ts-patch --persist"
   },
@@ -71,6 +71,7 @@
     "rimraf": "^3.0.2",
     "shusher": "^0.1.1",
     "sinon": "^11.1.2",
+    "tsd": "^0.17.0",
     "ts-morph": "^11.0.3",
     "ts-nameof": "^5.0.0",
     "ts-patch": "^1.4.3",
@@ -78,5 +79,11 @@
     "upath": "^2.0.1",
     "yeoman-environment": "^3.6.0",
     "yeoman-test": "^6.2.0"
+  },
+  "tsd": {
+    "directory": "./type-tests",
+    "compilerOptions": {
+      "strict": false
+    }
   }
 }
