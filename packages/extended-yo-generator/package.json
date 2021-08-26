@@ -1,6 +1,6 @@
 {
   "name": "@manuth/extended-yo-generator",
-  "version": "11.0.2",
+  "version": "11.0.3",
   "description": "An extended version of the Yeoman-Generator",
   "author": "Manuel Thalmann <m@nuth.ch>",
   "license": "MIT",
@@ -37,7 +37,7 @@
     "lint-base": "eslint --max-warnings 0 --ignore-pattern \"!.eslintrc.js\"",
     "lint": "npm run lint-base -- --ext .js,.jsx,.ts,.tsx ./src .eslintrc.js",
     "lint-ide": "npm run lint || exit 0",
-    "test": "mocha",
+    "test": "mocha && tsd",
     "prepare": "npm run patchTypeScript && npm run rebuild",
     "patchTypeScript": "ts-patch install && ts-patch --persist"
   },
@@ -51,7 +51,7 @@
     "yeoman-generator": "^5.4.2"
   },
   "devDependencies": {
-    "@manuth/extended-yo-generator-test": "^11.0.2",
+    "@manuth/extended-yo-generator-test": "^11.0.3",
     "@manuth/package-json-editor": "^2.2.3",
     "@manuth/temp-files": "^2.0.7",
     "@manuth/typescript-languageservice-tester": "^4.0.3",
@@ -59,7 +59,7 @@
     "@types/ejs": "^3.1.0",
     "@types/fs-extra": "^9.0.12",
     "@types/mocha": "^9.0.0",
-    "@types/node": "^16.7.1",
+    "@types/node": "^16.7.2",
     "@types/sinon": "^10.0.2",
     "@types/ts-nameof": "^4.2.1",
     "@types/yeoman-environment": "^2.10.4",
@@ -74,9 +74,16 @@
     "ts-morph": "^11.0.3",
     "ts-nameof": "^5.0.0",
     "ts-patch": "^1.4.3",
+    "tsd": "^0.17.0",
     "typescript": "^4.3.5",
     "upath": "^2.0.1",
     "yeoman-environment": "^3.6.0",
     "yeoman-test": "^6.2.0"
+  },
+  "tsd": {
+    "directory": "./type-tests",
+    "compilerOptions": {
+      "strict": false
+    }
   }
 }
