@@ -306,7 +306,8 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                                 `Checking whether files are copied by default if \`${nameof<FileMapping<any, any>>((f) => f.Context)}\` is not defined…`,
                                 async function()
                                 {
-                                    this.timeout(0);
+                                    this.timeout(4 * 1000);
+                                    this.slow(2 * 1000);
                                     await fileMapping.Processor();
                                     return AssertOutputContent(testContent);
                                 });

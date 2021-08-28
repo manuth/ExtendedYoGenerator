@@ -6,7 +6,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v11.0.3...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v11.0.4...dev)
+
+## ExtendedYoGenerator v11.0.4
+### Fixed
+  - Broken `ObjectExtensionFactory` by fixing type-declarations
+
+### Added
+  - Tests for the `ObjectExtensionFactory` type-declaration
+
+### Updated
+  - All dependencies
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v11.0.3...v11.0.4)
 
 ## ExtendedYoGenerator v11.0.3
 ### Fixed

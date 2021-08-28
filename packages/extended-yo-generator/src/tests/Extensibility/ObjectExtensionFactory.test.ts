@@ -47,9 +47,9 @@ export function ObjectExtensionFactoryTests(context: TestContext<TestGenerator>)
                  * @returns
                  * The newly initialized base of the extension.
                  */
-                protected override InitializeBase(options: ITempFileSystemOptions): TempDirectory
+                protected override InitializeBase(options: ITempFileSystemOptions): TempDirectoryExtension
                 {
-                    return new TempDirectory(
+                    return new TempDirectoryExtension(
                         {
                             Suffix: suffix
                         });

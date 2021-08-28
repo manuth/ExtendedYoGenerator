@@ -43,9 +43,9 @@ export class ObjectExtensionFactory<T extends Constructor<any>>
      * @returns
      * The extension-constructor for the specified {@link baseConstructor `baseConstructor`}.
      */
-    public static Create<T extends Constructor<any>>(baseConstructor: T): ExtensionConstructor<T, ObjectExtensionBase<InstanceType<T>>>
+    public static Create<T extends Constructor<any>>(baseConstructor: T): ExtensionConstructor<T, ObjectExtensionBase<T>>
     {
-        return this.Default.Create(baseConstructor) as ExtensionConstructor<T, ObjectExtensionBase<InstanceType<T>>>;
+        return this.Default.Create(baseConstructor) as ExtensionConstructor<T, ObjectExtensionBase<T>>;
     }
 
     /**
