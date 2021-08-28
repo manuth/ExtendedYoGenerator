@@ -3,7 +3,7 @@ import { Generator, GeneratorOptions, IGeneratorSettings } from "@manuth/extende
 import cloneDeep = require("lodash.clonedeep");
 import { Random } from "random-js";
 import Environment = require("yeoman-environment");
-import { run, RunContextSettings } from "yeoman-test";
+import helpers = require("yeoman-test");
 import { IRunContext } from "./IRunContext";
 import { ITestGeneratorOptions } from "./ITestGeneratorOptions";
 import { ITestOptions } from "./ITestOptions";
@@ -232,9 +232,9 @@ export class TestContext<TGenerator extends Generator<any, TOptions> = Generator
      * @returns
      * The execution-context of the generator.
      */
-    public ExecuteGenerator(options?: TOptions, runSettings?: RunContextSettings): IRunContext<TGenerator>
+    public ExecuteGenerator(options?: TOptions, runSettings?: helpers.RunContextSettings): IRunContext<TGenerator>
     {
-        let result = run(this.GeneratorDirectory, runSettings) as IRunContext<TGenerator>;
+        let result = helpers.run(this.GeneratorDirectory, runSettings) as IRunContext<TGenerator>;
 
         if (options)
         {
