@@ -47,7 +47,7 @@ export function TestContextTests(): void
                     setup(
                         async function()
                         {
-                            this.timeout(0);
+                            this.timeout(30 * 1000);
                             generator = await testContext.Generator;
                         });
 
