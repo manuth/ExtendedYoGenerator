@@ -1,4 +1,4 @@
-import { doesNotThrow, notStrictEqual, ok, strictEqual } from "assert";
+import { deepStrictEqual, doesNotThrow, notStrictEqual, ok, strictEqual } from "assert";
 import { TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { GeneratorOptions } from "yeoman-generator";
 import { FileMappingCollectionEditor } from "../../Collections/FileMappingCollectionEditor";
@@ -524,6 +524,21 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                                             TestGenerator.Path)
                                         { });
                                 });
+                        });
+
+                    test(
+                        "Checking whether the file-mappings and the components of the base-generator are resolved correctly when creating multiple instances…",
+                        () =>
+                        {
+                            generator = context.CreateGenerator(SubGenerator);
+                            context.CreateGenerator(SubGenerator);
+                            strictEqual(generator.BaseComponents.Generator, generator.Base);
+                            deepStrictEqual(generator.BaseComponents.Object, generator.Base.ComponentCollection.Object);
+                            strictEqual(generator.BaseFileMappings.Generator, generator.Base);
+
+                            deepStrictEqual(
+                                generator.BaseFileMappings.Items.map((item) => item.Object),
+                                generator.Base.ResolvedFileMappings.Items.map((item) => item.Object));
                         });
                 });
         });

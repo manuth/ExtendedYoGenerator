@@ -8,6 +8,7 @@ import { IComponentCollection } from "../Components/IComponentCollection";
 import { Generator } from "../Generator";
 import { GeneratorConstructor } from "../GeneratorConstructor";
 import { GeneratorExtensionConstructor } from "./GeneratorExtensionConstructor";
+import { IBaseGeneratorContext } from "./IBaseGeneratorContext";
 import { ObjectExtensionFactory } from "./ObjectExtensionFactory";
 
 /**
@@ -25,16 +26,6 @@ export class BaseGeneratorFactory<T extends GeneratorConstructor> extends Object
      * The base-class to process.
      */
     private classProcessor: (base: T) => void;
-
-    /**
-     * A component for resolving the components of the base.
-     */
-    private baseComponentResolver: () => ComponentCollection<any, any>;
-
-    /**
-     * A component for resolving the file-mappings of the base.
-     */
-    private baseFileMappingResolver: () => FileMappingCollectionEditor;
 
     /**
      * Initializes a new instance of the {@link BaseGeneratorFactory `BaseGeneratorFactory`} class.
@@ -91,6 +82,11 @@ export class BaseGeneratorFactory<T extends GeneratorConstructor> extends Object
         return class BaseGenerator extends (super.Create(base) as GeneratorExtensionConstructor<T>)
         {
             /**
+             * A context which provides data for the base-generator.
+             */
+            private baseGeneratorContext: IBaseGeneratorContext;
+
+            /**
              * Initializes a new instance of the {@link BaseGenerator `BaseGenerator`} class.
              *
              * @param args
@@ -109,7 +105,7 @@ export class BaseGeneratorFactory<T extends GeneratorConstructor> extends Object
              */
             protected override get BaseComponents(): ComponentCollection<any, any>
             {
-                return self.baseComponentResolver();
+                return this.baseGeneratorContext.ComponentResolver();
             }
 
             /**
@@ -117,7 +113,7 @@ export class BaseGeneratorFactory<T extends GeneratorConstructor> extends Object
              */
             protected override get BaseFileMappings(): FileMappingCollectionEditor
             {
-                return self.baseFileMappingResolver();
+                return this.baseGeneratorContext.FileMappingResolver();
             }
 
             /**
@@ -199,8 +195,11 @@ export class BaseGeneratorFactory<T extends GeneratorConstructor> extends Object
                 let componentProperty = propertyDescriptors[componentPropertyName];
                 let destinationPath = propertyDescriptors[destinationPathName];
                 let destinationRoot = propertyDescriptors[destinationRootName];
-                self.baseComponentResolver = componentProperty.get.bind(result);
-                self.baseFileMappingResolver = fileMappingProperty.get.bind(result);
+
+                this.baseGeneratorContext = {
+                    ComponentResolver: componentProperty.get.bind(result),
+                    FileMappingResolver: fileMappingProperty.get.bind(result)
+                };
 
                 settingsProperty = {
                     ...settingsProperty,

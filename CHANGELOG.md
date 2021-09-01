@@ -6,7 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v11.0.4...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v11.0.5...dev)
+
+## ExtendedYoGenerator v11.0.5
+### Fixed
+  - An error in the `BaseGeneratorFactory` which caused caused multiple instances of the same `BaseGeneratorFactory`-class to overwrite each other
+
+### Updated
+  - All dependencies
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v11.0.4...v11.0.5)
 
 ## ExtendedYoGenerator v11.0.4
 ### Fixed
