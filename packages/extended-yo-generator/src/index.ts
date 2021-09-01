@@ -42,6 +42,7 @@ export { BaseGeneratorFactory } from "./Extensibility/BaseGeneratorFactory";
 export { ExtensionConstructor } from "./Extensibility/ExtensionConstructor";
 export { GeneratorExtension } from "./Extensibility/GeneratorExtension";
 export { GeneratorExtensionConstructor } from "./Extensibility/GeneratorExtensionConstructor";
+export { IBaseGeneratorContext } from "./Extensibility/IBaseGeneratorContext";
 export { ObjectExtension } from "./Extensibility/ObjectExtension";
 export { ObjectExtensionFactory } from "./Extensibility/ObjectExtensionFactory";
 export { Filter } from "./Filter";
