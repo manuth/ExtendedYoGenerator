@@ -62,7 +62,7 @@ export abstract class PropertyResolverCollectionEditor<TObject extends IUniqueOb
     /**
      * Gets the generator of the collection.
      */
-    protected get Generator(): IGenerator<any, any>
+    public get Generator(): IGenerator<any, any>
     {
         return this.generator;
     }
