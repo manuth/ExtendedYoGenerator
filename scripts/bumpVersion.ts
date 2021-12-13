@@ -16,7 +16,6 @@ import npmWhich = require("npm-which");
                     "--no-git-tag-version",
                     "version",
                     "--workspaces",
-                    "--include-workspace-root",
                     releaseName,
                     "--allow-same-version"
                 ]);
