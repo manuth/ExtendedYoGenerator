@@ -11,21 +11,12 @@ import npmWhich = require("npm-which");
         if (releaseName.length > 0)
         {
             spawnSync(
-                npmWhich(__dirname).sync("lerna"),
+                npmWhich(__dirname).sync("npm"),
                 [
-                    "version",
-                    releaseName,
-                    "-y"
-                ]);
-
-            spawnSync(
-                npmWhich(__dirname).sync("lerna"),
-                [
-                    "exec",
-                    "--",
-                    "npm",
                     "--no-git-tag-version",
                     "version",
+                    "--workspaces",
+                    "--include-workspace-root",
                     releaseName,
                     "--allow-same-version"
                 ]);
