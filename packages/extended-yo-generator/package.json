@@ -38,7 +38,7 @@
     "lint": "npm run lint-base -- --ext .js,.jsx,.ts,.tsx ./src .eslintrc.js",
     "lint-ide": "npm run lint || exit 0",
     "test": "mocha && tsd",
-    "patchTypeScript": "ts-patch install && ts-patch --persist"
+    "patch-ts": "ts-patch install && ts-patch --persist"
   },
   "dependencies": {
     "@types/inquirer": "7.3.3",
