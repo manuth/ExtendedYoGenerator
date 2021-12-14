@@ -4,7 +4,7 @@ import rescape = require("@stdlib/utils-escape-regexp-string");
 import { CheckboxChoiceOptions, CheckboxQuestion, Separator } from "inquirer";
 import { replace, replaceGetter, restore } from "sinon";
 import stripAnsi = require("strip-ansi");
-import { Logger, Question } from "yeoman-environment";
+import type { Logger, Question } from "yeoman-environment";
 import { Component } from "../../Components/Component";
 import { ComponentCollection } from "../../Components/ComponentCollection";
 import { IComponent } from "../../Components/IComponent";
