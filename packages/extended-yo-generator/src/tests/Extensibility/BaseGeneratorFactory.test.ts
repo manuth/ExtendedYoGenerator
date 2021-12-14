@@ -529,8 +529,10 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
 
                     test(
                         "Checking whether the file-mappings and the components of the base-generator are resolved correctly when creating multiple instances…",
-                        () =>
+                        function()
                         {
+                            this.slow(1 * 1000);
+                            this.timeout(2 * 1000);
                             generator = context.CreateGenerator(SubGenerator);
                             context.CreateGenerator(SubGenerator);
                             strictEqual(generator.BaseComponents.Generator, generator.Base);
