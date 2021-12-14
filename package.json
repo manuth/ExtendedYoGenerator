@@ -38,7 +38,6 @@
   "devDependencies": {
     "@manuth/eslint-plugin-typescript": "^3.2.6",
     "@manuth/tsconfig": "^3.0.0",
-    "@manuth/typescript-eslint-plugin": "^1.4.2",
     "@tsd/typescript": "npm:nop@^1.0.0",
     "@types/git-branch": "^2.0.1",
     "@types/mocha": "^9.0.0",
