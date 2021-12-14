@@ -1,9 +1,10 @@
-import { GeneratorOptions, IComponentCollection, IFileMapping, IGeneratorSettings, Question } from "@manuth/extended-yo-generator";
+import { IComponentCollection, IFileMapping, IGeneratorSettings, Question } from "@manuth/extended-yo-generator";
+import { ITestGeneratorOptions } from ".";
 
 /**
  * Provides options for the test-generator.
  */
-export interface ITestOptions
+export interface ITestOptions<TSettings extends IGeneratorSettings = IGeneratorSettings>
 {
     /**
      * The name of the root of the template-folder.
@@ -18,10 +19,10 @@ export interface ITestOptions
     /**
      * The components of the generator.
      */
-    Components?: IComponentCollection<IGeneratorSettings, GeneratorOptions>;
+    Components?: IComponentCollection<TSettings, ITestGeneratorOptions<ITestOptions<TSettings>>>;
 
     /**
      * The file-mappings of the generator.
      */
-    FileMappings?: Array<IFileMapping<IGeneratorSettings, GeneratorOptions>>;
+    FileMappings?: Array<IFileMapping<TSettings, ITestGeneratorOptions<ITestOptions<TSettings>>>>;
 }

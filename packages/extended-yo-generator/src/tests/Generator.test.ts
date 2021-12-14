@@ -1,5 +1,5 @@
 import { doesNotThrow, notStrictEqual, ok, strictEqual } from "assert";
-import { IRunContext, ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
+import { IRunContext, ITestGeneratorOptions, ITestGeneratorSettings, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { TempDirectory, TempFile } from "@manuth/temp-files";
 import { readFile, writeFile } from "fs-extra";
 import pkgUp = require("pkg-up");
@@ -13,17 +13,17 @@ import { GeneratorSettingKey } from "../GeneratorSettingKey";
  * @param context
  * The context to use.
  */
-export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>>): void
+export function ExtendedGeneratorTests(context: TestContext<TestGenerator<ITestGeneratorSettings>, ITestGeneratorOptions<ITestOptions<ITestGeneratorSettings>>>): void
 {
     suite(
         nameof(Generator),
         () =>
         {
             let moduleRoot: string;
-            let generator: TestGenerator;
-            let options: ITestOptions = {};
+            let generator: TestGenerator<ITestGeneratorSettings>;
+            let options: ITestOptions<ITestGeneratorSettings> = {};
             let testPath = "this-is-a-test.txt";
-            let runContext: IRunContext<TestGenerator>;
+            let runContext: IRunContext<TestGenerator<ITestGeneratorSettings>>;
 
             /**
              * Asserts a file-path.
@@ -80,7 +80,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                 "General",
                 () =>
                 {
-                    let options: ITestOptions;
+                    let options: ITestOptions<ITestGeneratorSettings>;
 
                     setup(
                         () =>
@@ -269,8 +269,8 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                 nameof<TestGenerator>((generator) => generator.Components),
                 () =>
                 {
-                    let generator: TestGenerator;
-                    let options: ITestOptions = {};
+                    let generator: TestGenerator<ITestGeneratorSettings>;
+                    let options: ITestOptions<ITestGeneratorSettings> = {};
                     let defaultID: string;
                     let hiddenID: string;
                     let defaultQuestionID: string;
@@ -390,8 +390,8 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator, ITest
                 nameof<TestGenerator>((generator) => generator.Questions),
                 () =>
                 {
-                    let generator: TestGenerator;
-                    let options: ITestOptions = {};
+                    let generator: TestGenerator<ITestGeneratorSettings>;
+                    let options: ITestOptions<ITestGeneratorSettings> = {};
                     let defaultID: string;
                     let hiddenID: string;
                     let defaultValue: string[];

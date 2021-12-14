@@ -1,8 +1,8 @@
 import { doesNotReject, ok, strictEqual } from "assert";
+import { IGeneratorSettings } from "@manuth/extended-yo-generator";
 import { Random } from "random-js";
 import { IRunContext } from "../IRunContext";
 import { ITestGeneratorOptions } from "../ITestGeneratorOptions";
-import { ITestGeneratorSettings } from "../ITestGeneratorSettings";
 import { TestContext } from "../TestContext";
 import { TestGenerator } from "../TestGenerator";
 import { IExampleOptions } from "./IExampleOptions";
@@ -17,7 +17,7 @@ export function TestContextTests(): void
         () =>
         {
             let random: Random;
-            let testContext: TestContext<TestGenerator<ITestGeneratorSettings, IExampleOptions>, ITestGeneratorOptions<IExampleOptions>>;
+            let testContext: TestContext<TestGenerator<IGeneratorSettings, IExampleOptions>, ITestGeneratorOptions<IExampleOptions>>;
             let options: IExampleOptions;
             let randomValue: string;
 
@@ -42,7 +42,7 @@ export function TestContextTests(): void
                 nameof<TestContext>((context) => context.Generator),
                 () =>
                 {
-                    let generator: TestGenerator<ITestGeneratorSettings, IExampleOptions>;
+                    let generator: TestGenerator<IGeneratorSettings, IExampleOptions>;
 
                     setup(
                         async function()
@@ -140,7 +140,7 @@ export function TestContextTests(): void
                 nameof<TestContext>((context) => context.ExecuteGenerator),
                 () =>
                 {
-                    let runContext: IRunContext<TestGenerator<ITestGeneratorSettings, IExampleOptions>>;
+                    let runContext: IRunContext<TestGenerator<IGeneratorSettings, IExampleOptions>>;
 
                     setup(
                         async function()

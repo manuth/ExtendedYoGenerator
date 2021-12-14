@@ -1,5 +1,5 @@
 import { ok, strictEqual } from "assert";
-import { ITestGeneratorOptions, ITestGeneratorSettings, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
+import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import rescape = require("@stdlib/utils-escape-regexp-string");
 import { CheckboxChoiceOptions, CheckboxQuestion, Separator } from "inquirer";
 import { replace, replaceGetter, restore } from "sinon";
@@ -51,7 +51,7 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
             let collection: MyComponentCollection;
             let randomString: Generator<string>;
 
-            let collectionOptions: IComponentCollection<ITestGeneratorSettings, ITestGeneratorOptions<ITestOptions>> = {
+            let collectionOptions: IComponentCollection<IGeneratorSettings, ITestGeneratorOptions<ITestOptions>> = {
                 Question: null,
                 Categories: []
             };
@@ -307,7 +307,7 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                                         [GeneratorSettingKey.Components]: [
                                             enabledComponent.ID
                                         ]
-                                    } as ITestGeneratorSettings;
+                                    } as IGeneratorSettings;
                                 });
 
                             replace(

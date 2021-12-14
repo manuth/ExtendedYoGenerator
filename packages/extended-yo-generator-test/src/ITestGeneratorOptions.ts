@@ -11,5 +11,5 @@ export interface ITestGeneratorOptions<T> extends GeneratorOptions
     /**
      * Options for the test-generator.
      */
-    TestGeneratorOptions: T;
+    TestGeneratorOptions?: T;
 }

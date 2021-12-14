@@ -1,4 +1,4 @@
-import { TestContext } from "@manuth/extended-yo-generator-test";
+import { TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { CollectionTests } from "./Collections";
 import { ComponentsTests } from "./Components";
 import { ExtensibilityTests } from "./Extensibility";
@@ -12,5 +12,5 @@ suite(
         CollectionTests(context);
         ComponentsTests(context);
         ExtensibilityTests(context);
-        ExtendedGeneratorTests(context);
+        ExtendedGeneratorTests(new TestContext(TestGenerator.Path));
     });

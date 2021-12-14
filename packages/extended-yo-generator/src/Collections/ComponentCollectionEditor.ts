@@ -36,7 +36,7 @@ export class ComponentCollectionEditor extends PropertyResolverCollectionEditor<
      * @param args
      * The arguments for initializing the new collection.
      */
-    public constructor(...args: any[])
+    public constructor(...args: unknown[])
     {
         super(...(args as [any, any]));
     }
@@ -50,7 +50,7 @@ export class ComponentCollectionEditor extends PropertyResolverCollectionEditor<
      * @returns
      * A newly created {@link Component `Component<TSettings, TOptions>`}.
      */
-    protected CreateItem(options: IComponent<any, any>): Component<any, any>
+    protected CreateItem(options: IComponent<unknown, unknown>): Component<unknown, unknown>
     {
         return new Component(this.Generator, options);
     }

@@ -485,7 +485,7 @@ export abstract class PropertyResolverCollectionEditor<TObject extends IUniqueOb
      * @returns
      * A predicate which represents the specified {@link filter `filter`}.
      */
-    protected override GetPredicate(filter: string | AbstractConstructor<TObject | TTarget> | Predicate<TObject | TTarget>): Predicate<TTarget>
+    protected override GetPredicate(filter: string | AbstractConstructor<TObject | TTarget> | Predicate<TTarget> | Predicate<TObject>): Predicate<TTarget>
     {
         if (
             typeof filter !== "string" &&
@@ -495,7 +495,7 @@ export abstract class PropertyResolverCollectionEditor<TObject extends IUniqueOb
         }
         else
         {
-            return super.GetPredicate(filter);
+            return super.GetPredicate(filter as Predicate<TTarget>);
         }
     }
 }

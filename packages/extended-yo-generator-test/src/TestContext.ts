@@ -18,7 +18,7 @@ import { TestGenerator } from "./TestGenerator";
  * @template TOptions
  * The type of the options of the generator to test.
  */
-export class TestContext<TGenerator extends Generator<any, TOptions> = Generator<IGeneratorSettings, GeneratorOptions & any>, TOptions extends GeneratorOptions = GeneratorOptions>
+export class TestContext<TGenerator extends Generator<any, TOptions> = Generator<IGeneratorSettings, any>, TOptions extends GeneratorOptions = GeneratorOptions>
 {
     /**
      * The default {@link TestContext `TestContext<TGenerator, TOptions>`} instance.
@@ -139,7 +139,7 @@ export class TestContext<TGenerator extends Generator<any, TOptions> = Generator
      * @returns
      * The newly initialized generator.
      */
-    public CreateGenerator<T extends Generator>(generatorConstructor: new (...args: any[]) => T, args?: string[], options?: GeneratorOptions): T
+    public CreateGenerator<T extends Generator<any, any>>(generatorConstructor: new (...args: any[]) => T, args?: string[], options?: GeneratorOptions): T
     {
         return new generatorConstructor([...(args ?? [])], { env: Environment.createEnv(), ...options });
     }
