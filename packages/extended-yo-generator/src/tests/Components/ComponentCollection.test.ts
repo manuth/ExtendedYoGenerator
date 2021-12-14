@@ -3,6 +3,7 @@ import { ITestGeneratorOptions, ITestGeneratorSettings, ITestOptions, TestContex
 import rescape = require("@stdlib/utils-escape-regexp-string");
 import { CheckboxChoiceOptions, CheckboxQuestion, Separator } from "inquirer";
 import { replace, replaceGetter, restore } from "sinon";
+import stripAnsi = require("strip-ansi");
 import { Logger, Question } from "yeoman-environment";
 import { Component } from "../../Components/Component";
 import { ComponentCollection } from "../../Components/ComponentCollection";
@@ -183,7 +184,7 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                                         (choice) =>
                                         {
                                             return choice instanceof Separator &&
-                                                choice.line === category.DisplayName;
+                                                stripAnsi(choice.line) === stripAnsi(category.DisplayName);
                                         }));
                             }
                         });
@@ -293,7 +294,7 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                             {
                                 strictEqual(
                                     logMessages.some(
-                                        (logMessage) => new RegExp(`\\b${rescape(component.DisplayName)}\\b`).test(logMessage)),
+                                        (logMessage) => new RegExp(`\\b${rescape(stripAnsi(component.DisplayName))}\\b`).test(stripAnsi(logMessage))),
                                     present);
                             }
 
