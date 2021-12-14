@@ -94,7 +94,7 @@ export function TestContextTests(): void
                                     [testOption]: optionValue
                                 });
 
-                            ok((generator.args as string[]).includes(testArg));
+                            ok(generator.args.includes(testArg));
                             ok(testOption in generator.options);
                             strictEqual(generator.options[testOption], optionValue);
                         });
