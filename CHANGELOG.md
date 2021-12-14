@@ -6,7 +6,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v11.0.5...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v11.0.6...dev)
+
+## ExtendedYoGenerator v11.0.6
+### Fixed
+  - Vulnerabilities in dependencies
+  - Broken vscode settings
+  - Broken unit tests
+
+### Updated
+  - All dependencies
+  - Workspace to work with `npm` instead of `lerna`
+  - Type declarations thoroughly
+  - Test timeouts
+  - Linting environment
+
+### Removed
+  - Unnecessary scripts
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v11.0.5...v11.0.6)
 
 ## ExtendedYoGenerator v11.0.5
 ### Fixed

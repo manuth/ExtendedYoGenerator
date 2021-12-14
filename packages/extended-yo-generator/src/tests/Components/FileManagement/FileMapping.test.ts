@@ -1,10 +1,11 @@
 import { doesNotReject, notStrictEqual, rejects, strictEqual } from "assert";
-import { ITestGeneratorOptions, ITestGeneratorSettings, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
+import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { TempDirectory, TempFile } from "@manuth/temp-files";
 import { render } from "ejs";
 import { readFile, writeFile } from "fs-extra";
 import { FileMapping } from "../../../Components/FileManagement/FileMapping";
 import { IFileMapping } from "../../../Components/FileManagement/IFileMapping";
+import { IGeneratorSettings } from "../../../IGeneratorSettings";
 
 /**
  * Provides tests for the {@link FileMapping `FileMapping<TSettings, TOptions>`} class.
@@ -19,11 +20,11 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
         () =>
         {
             let generator: TestGenerator;
-            let fileMapping: FileMapping<ITestGeneratorSettings, ITestGeneratorOptions<ITestOptions>>;
+            let fileMapping: FileMapping<IGeneratorSettings, ITestGeneratorOptions<ITestOptions>>;
             let testPath = "test.txt";
             let testDirectory: TempDirectory;
 
-            let fileMappingOptions: IFileMapping<ITestGeneratorSettings, ITestGeneratorOptions<ITestOptions>> = {
+            let fileMappingOptions: IFileMapping<IGeneratorSettings, ITestGeneratorOptions<ITestOptions>> = {
                 Source: null,
                 Destination: null,
                 Context: null,
@@ -212,7 +213,7 @@ export function FileMappingTests(context: TestContext<TestGenerator, ITestGenera
                                         /**
                                          * Provides a test-implementation of the {@link IFileMapping `IFileMapping<TSettings, TOptions>`} interface.
                                          */
-                                        class FileMappingOptions implements IFileMapping<ITestGeneratorSettings, ITestGeneratorOptions<ITestOptions>>
+                                        class FileMappingOptions implements IFileMapping<IGeneratorSettings, ITestGeneratorOptions<ITestOptions>>
                                         {
                                             /**
                                              * @inheritdoc

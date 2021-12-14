@@ -15,9 +15,9 @@
     ],
     "extensions": {
         "recommendations": [
+            "dbaeumer.vscode-eslint",
             "hbenl.vscode-mocha-test-adapter",
-            "hbenl.vscode-test-explorer",
-            "manuth.eslint-language-service"
+            "hbenl.vscode-test-explorer"
         ]
     },
     "launch": {
@@ -27,7 +27,7 @@
                 "request": "launch",
                 "name": "Launch ExtendedYoGenerator Tests",
                 "cwd": "${workspaceFolder:ExtendedYoGenerator}",
-                "program": "${workspaceFolder:ExtendedYoGenerator}/node_modules/mocha/bin/mocha",
+                "program": "${workspaceFolder:Solution Items}/node_modules/mocha/bin/mocha",
                 "args": [
                     "--timeout",
                     "0"
@@ -49,7 +49,7 @@
                 "request": "launch",
                 "name": "Launch ExtendedYoGeneratorTest Tests",
                 "cwd": "${workspaceFolder:ExtendedYoGeneratorTest}",
-                "program": "${workspaceFolder:ExtendedYoGeneratorTest}/node_modules/mocha/bin/mocha",
+                "program": "${workspaceFolder:Solution Items}/node_modules/mocha/bin/mocha",
                 "args": [
                     "--timeout",
                     "0"

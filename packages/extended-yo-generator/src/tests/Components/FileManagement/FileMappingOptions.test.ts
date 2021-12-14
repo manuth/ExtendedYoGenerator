@@ -1,9 +1,10 @@
 import { strictEqual } from "assert";
-import { FileMappingTester, ITestGeneratorOptions, ITestGeneratorSettings, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
+import { FileMappingTester, ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { TempFile } from "@manuth/temp-files";
 import { writeFile } from "fs-extra";
 import { GeneratorOptions } from "yeoman-generator";
 import { FileMappingOptions } from "../../../Components/FileManagement/FileMappingOptions";
+import { IGeneratorSettings } from "../../../IGeneratorSettings";
 
 /**
  * Registers tests for the {@link FileMappingOptions `FileMappingOptions<TSettings, TOptions>`} class.
@@ -20,7 +21,7 @@ export function FileMappingOptionsTests(context: TestContext<TestGenerator, ITes
             /**
              * Provides an implementation of the {@link FileMappingOptions `FileMappingOptions<TSettings, TOptions>`} class for testing.
              */
-            class MyFileMapping extends FileMappingOptions<ITestGeneratorSettings, GeneratorOptions>
+            class MyFileMapping extends FileMappingOptions<IGeneratorSettings, GeneratorOptions>
             {
                 /**
                  * @inheritdoc
@@ -74,7 +75,7 @@ export function FileMappingOptionsTests(context: TestContext<TestGenerator, ITes
             let tempSourceFile: TempFile;
             let tempDestinationFile: TempFile;
             let fileMappingOptions: MyFileMapping;
-            let tester: FileMappingTester<TestGenerator, ITestGeneratorSettings, GeneratorOptions, FileMappingOptions<ITestGeneratorSettings, GeneratorOptions>>;
+            let tester: FileMappingTester<TestGenerator, IGeneratorSettings, GeneratorOptions, FileMappingOptions<IGeneratorSettings, GeneratorOptions>>;
             let randomValue: string;
 
             suiteSetup(

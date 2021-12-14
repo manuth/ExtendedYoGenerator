@@ -9,15 +9,15 @@ export interface IResolverTestOptions
     /**
      * A test-value.
      */
-    TestValue: ResolvableAsync<ResolverTest, null, null, string>;
+    TestValue: ResolvableAsync<ResolverTest, unknown, unknown, string>;
 
     /**
      * A test-promise.
      */
-    TestPromise: ResolvableAsync<ResolverTest, null, null, Promise<string>>;
+    TestPromise: ResolvableAsync<ResolverTest, unknown, unknown, Promise<string>>;
 
     /**
      * A test-method.
      */
-    TestFunction: ResolvableAsync<ResolverTest, null, null, () => string>;
+    TestFunction: ResolvableAsync<ResolverTest, unknown, unknown, () => string>;
 }

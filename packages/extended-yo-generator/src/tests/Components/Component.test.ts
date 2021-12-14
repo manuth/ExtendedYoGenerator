@@ -1,8 +1,9 @@
 import { strictEqual } from "assert";
-import { ITestGeneratorOptions, ITestGeneratorSettings, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
+import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { TempFile } from "@manuth/temp-files";
 import { Component } from "../../Components/Component";
 import { IComponent } from "../../Components/IComponent";
+import { IGeneratorSettings } from "../../IGeneratorSettings";
 
 /**
  * Provides tests for the {@link Component `Component<TSettings, TOptions>`} class.
@@ -17,9 +18,9 @@ export function ComponentTests(context: TestContext<TestGenerator, ITestGenerato
         () =>
         {
             let generator: TestGenerator;
-            let component: Component<ITestGeneratorSettings, ITestGeneratorOptions<ITestOptions>>;
+            let component: Component<IGeneratorSettings, ITestGeneratorOptions<ITestOptions>>;
 
-            let componentOptions: IComponent<ITestGeneratorSettings, ITestGeneratorOptions<ITestOptions>> = {
+            let componentOptions: IComponent<IGeneratorSettings, ITestGeneratorOptions<ITestOptions>> = {
                 ID: null,
                 DisplayName: null,
                 FileMappings: []

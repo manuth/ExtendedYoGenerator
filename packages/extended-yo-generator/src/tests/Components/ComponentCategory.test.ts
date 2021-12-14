@@ -1,7 +1,8 @@
 import { strictEqual } from "assert";
-import { ITestGeneratorOptions, ITestGeneratorSettings, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
+import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { ComponentCategory } from "../../Components/ComponentCategory";
 import { IComponentCategory } from "../../Components/IComponentCategory";
+import { IGeneratorSettings } from "../../IGeneratorSettings";
 
 /**
  * Provides tests for the {@link ComponentCategory `ComponentCategory<TSettings, TOptions>`} class.
@@ -16,9 +17,9 @@ export function ComponentCategoryTests(context: TestContext<TestGenerator, ITest
         () =>
         {
             let generator: TestGenerator;
-            let category: ComponentCategory<ITestGeneratorSettings, ITestGeneratorOptions<ITestOptions>>;
+            let category: ComponentCategory<IGeneratorSettings, ITestGeneratorOptions<ITestOptions>>;
 
-            let categoryOptions: IComponentCategory<ITestGeneratorSettings, ITestGeneratorOptions<ITestOptions>> = {
+            let categoryOptions: IComponentCategory<IGeneratorSettings, ITestGeneratorOptions<ITestOptions>> = {
                 DisplayName: null,
                 Components: []
             };

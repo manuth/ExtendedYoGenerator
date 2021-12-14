@@ -1,9 +1,10 @@
 import { ok, strictEqual } from "assert";
-import { ITestGeneratorOptions, ITestGeneratorSettings, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
+import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import rescape = require("@stdlib/utils-escape-regexp-string");
 import { CheckboxChoiceOptions, CheckboxQuestion, Separator } from "inquirer";
 import { replace, replaceGetter, restore } from "sinon";
-import { Logger, Question } from "yeoman-environment";
+import stripAnsi = require("strip-ansi");
+import type { Logger, Question } from "yeoman-environment";
 import { Component } from "../../Components/Component";
 import { ComponentCollection } from "../../Components/ComponentCollection";
 import { IComponent } from "../../Components/IComponent";
@@ -50,7 +51,7 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
             let collection: MyComponentCollection;
             let randomString: Generator<string>;
 
-            let collectionOptions: IComponentCollection<ITestGeneratorSettings, ITestGeneratorOptions<ITestOptions>> = {
+            let collectionOptions: IComponentCollection<IGeneratorSettings, ITestGeneratorOptions<ITestOptions>> = {
                 Question: null,
                 Categories: []
             };
@@ -183,7 +184,7 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                                         (choice) =>
                                         {
                                             return choice instanceof Separator &&
-                                                choice.line === category.DisplayName;
+                                                stripAnsi(choice.line) === stripAnsi(category.DisplayName);
                                         }));
                             }
                         });
@@ -293,7 +294,7 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                             {
                                 strictEqual(
                                     logMessages.some(
-                                        (logMessage) => new RegExp(`\\b${rescape(component.DisplayName)}\\b`).test(logMessage)),
+                                        (logMessage) => new RegExp(`\\b${rescape(stripAnsi(component.DisplayName))}\\b`).test(stripAnsi(logMessage))),
                                     present);
                             }
 
@@ -306,7 +307,7 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                                         [GeneratorSettingKey.Components]: [
                                             enabledComponent.ID
                                         ]
-                                    } as ITestGeneratorSettings;
+                                    } as IGeneratorSettings;
                                 });
 
                             replace(

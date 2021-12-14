@@ -1,5 +1,5 @@
 import { deepStrictEqual, doesNotThrow, notStrictEqual, ok, strictEqual } from "assert";
-import { TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
+import { ITestGeneratorSettings, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { GeneratorOptions } from "yeoman-generator";
 import { FileMappingCollectionEditor } from "../../Collections/FileMappingCollectionEditor";
 import { ComponentCategory } from "../../Components/ComponentCategory";
@@ -9,6 +9,7 @@ import { IFileMapping } from "../../Components/FileManagement/IFileMapping";
 import { IComponentCollection } from "../../Components/IComponentCollection";
 import { BaseGeneratorFactory } from "../../Extensibility/BaseGeneratorFactory";
 import { Generator } from "../../Generator";
+import { GeneratorConstructor } from "../../GeneratorConstructor";
 
 /**
  * Registers tests for the {@link BaseGeneratorFactory `BaseGeneratorFactory`} class.
@@ -25,7 +26,7 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
             /**
              * A class for testing.
              */
-            class SuperGenerator extends TestGenerator
+            class SuperGenerator extends TestGenerator<ITestGeneratorSettings>
             {
                 /**
                  * @inheritdoc
@@ -84,7 +85,7 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                 /**
                  * @inheritdoc
                  */
-                public override get Base(): TestGenerator
+                public override get Base(): TestGenerator<ITestGeneratorSettings>
                 {
                     return super.Base;
                 }
@@ -288,12 +289,12 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                             /**
                              * A generator for testing.
                              */
-                            class MyGenerator extends Generator.ComposeWith(TestGenerator, TestGenerator.Path)
+                            class MyGenerator extends Generator.ComposeWith<GeneratorConstructor<TestGenerator<ITestGeneratorSettings>>>(TestGenerator, TestGenerator.Path)
                             {
                                 /**
                                  * @inheritdoc
                                  */
-                                public override get Base(): TestGenerator
+                                public override get Base(): TestGenerator<ITestGeneratorSettings>
                                 {
                                     return super.Base;
                                 }
@@ -528,8 +529,10 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
 
                     test(
                         "Checking whether the file-mappings and the components of the base-generator are resolved correctly when creating multiple instances…",
-                        () =>
+                        function()
                         {
+                            this.slow(1 * 1000);
+                            this.timeout(2 * 1000);
                             generator = context.CreateGenerator(SubGenerator);
                             context.CreateGenerator(SubGenerator);
                             strictEqual(generator.BaseComponents.Generator, generator.Base);

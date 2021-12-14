@@ -11,13 +11,12 @@ import { TestGenerator } from "../TestGenerator";
  * @param context
  * The test-context.
  */
-export function TestGeneratorTests(context: TestContext): void
+export function TestGeneratorTests(context: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>>): void
 {
     suite(
         nameof(TestGenerator),
         () =>
         {
-            let context: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>>;
             let options: ITestOptions;
             let generator: TestGenerator;
             let randomValue: Generator<string, string>;

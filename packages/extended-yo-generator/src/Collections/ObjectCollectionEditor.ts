@@ -12,7 +12,7 @@ import { ISubstitutionAction } from "./ISubstitutionAction";
  * @template T
  * The type of the items in this collection.
  */
-export class ObjectCollectionEditor<T extends any>
+export class ObjectCollectionEditor<T>
 {
     /**
      * A function for providing the items.
@@ -315,7 +315,7 @@ export class ObjectCollectionEditor<T extends any>
      * @returns
      * A value indicating whether the specified {@link func `func`} is a constructor.
      */
-    protected IsConstructor<T extends any>(func: ((...args: any[]) => any) | AbstractConstructor<T>): func is AbstractConstructor<T>
+    protected IsConstructor<T>(func: ((...args: any[]) => any) | AbstractConstructor<T>): func is AbstractConstructor<T>
     {
         try
         {

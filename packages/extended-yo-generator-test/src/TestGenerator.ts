@@ -1,7 +1,6 @@
-import { Generator, IComponentCollection, IFileMapping, Question } from "@manuth/extended-yo-generator";
+import { Generator, IComponentCollection, IFileMapping, IGeneratorSettings, Question } from "@manuth/extended-yo-generator";
 import { join } from "upath";
 import { ITestGeneratorOptions } from "./ITestGeneratorOptions";
-import { ITestGeneratorSettings } from "./ITestGeneratorSettings";
 import { ITestOptions } from "./ITestOptions";
 
 /**
@@ -13,7 +12,7 @@ import { ITestOptions } from "./ITestOptions";
  * @template TOptions
  * The type of the options of the generator.
  */
-export class TestGenerator<TSettings extends ITestGeneratorSettings = ITestGeneratorSettings, TOptions extends ITestOptions = ITestOptions> extends Generator<TSettings, ITestGeneratorOptions<TOptions>>
+export class TestGenerator<TSettings extends IGeneratorSettings = IGeneratorSettings, TOptions extends ITestOptions<TSettings> = ITestOptions<TSettings>> extends Generator<TSettings, ITestGeneratorOptions<TOptions>>
 {
     /**
      * The options of the generator.
@@ -84,7 +83,7 @@ export class TestGenerator<TSettings extends ITestGeneratorSettings = ITestGener
      */
     public override set Components(value: IComponentCollection<TSettings, ITestGeneratorOptions<TOptions>>)
     {
-        this.generatorOptions.Components = value;
+        this.generatorOptions.Components = value as IComponentCollection<TSettings, ITestGeneratorOptions<ITestOptions<TSettings>>>;
     }
 
     /**
@@ -116,7 +115,7 @@ export class TestGenerator<TSettings extends ITestGeneratorSettings = ITestGener
      */
     public override set FileMappings(value: Array<IFileMapping<TSettings, ITestGeneratorOptions<TOptions>>>)
     {
-        this.generatorOptions.FileMappings = value;
+        this.generatorOptions.FileMappings = value as Array<IFileMapping<TSettings, ITestGeneratorOptions<ITestOptions<TSettings>>>>;
     }
 
     /**

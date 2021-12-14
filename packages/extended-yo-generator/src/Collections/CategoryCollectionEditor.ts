@@ -36,7 +36,7 @@ export class CategoryCollectionEditor extends PropertyResolverCollectionEditor<I
      * @param args
      * The arguments for initializing the new collection.
      */
-    public constructor(...args: any[])
+    public constructor(...args: unknown[])
     {
         super(...(args as [any, any]));
     }
@@ -50,7 +50,7 @@ export class CategoryCollectionEditor extends PropertyResolverCollectionEditor<I
      * @returns
      * A newly created {@link ComponentCategory `ComponentCategory<TSettings, TOptions>`}.
      */
-    protected CreateItem(options: IComponentCategory<any, any>): ComponentCategory<any, any>
+    protected CreateItem(options: IComponentCategory<unknown, unknown>): ComponentCategory<unknown, unknown>
     {
         return new ComponentCategory(this.Generator, options);
     }
