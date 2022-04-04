@@ -44,7 +44,7 @@
     "@types/node": "^16.11.13",
     "@types/npm-which": "^3.0.1",
     "@types/ts-nameof": "^4.2.1",
-    "concurrently": "^6.4.0",
+    "concurrently": "^7.1.0",
     "copy-and-watch": "^0.1.6",
     "eslint": "^8.4.1",
     "git-branch": "^2.0.1",
