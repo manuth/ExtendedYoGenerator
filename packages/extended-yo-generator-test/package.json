@@ -45,6 +45,7 @@
   },
   "devDependencies": {
     "@manuth/temp-files": "^2.0.9",
+    "@types/comment-json": "npm:comment-json@4.1.1",
     "@types/fs-extra": "^9.0.13",
     "@types/lodash.clonedeep": "^4.5.7",
     "@types/mocha": "^9.1.1",

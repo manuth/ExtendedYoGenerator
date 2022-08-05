@@ -72,7 +72,7 @@ export function TestGeneratorTests(context: TestContext<TestGenerator, ITestGene
                             await doesNotReject(
                                 async () =>
                                 {
-                                    generator = (await context.Generator).env.create(TestGenerator.Path) as any;
+                                    generator = (await context.Generator).env.create(TestGenerator.Path, []) as any;
                                 });
 
                             ok(generator instanceof TestGenerator);
