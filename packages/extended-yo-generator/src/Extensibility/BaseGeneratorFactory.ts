@@ -260,7 +260,7 @@ export class BaseGeneratorFactory<T extends GeneratorConstructor> extends Object
             protected override InstantiateBaseGenerator(...args: ConstructorParameters<T>): InstanceType<T>
             {
                 let instanceOptions = this.GetBaseGeneratorOptions(...args);
-                return this.env.instantiate(base, instanceOptions) as InstanceType<T>;
+                return this.env.instantiate(base, [], instanceOptions) as InstanceType<T>;
             }
 
             /**
