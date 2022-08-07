@@ -1,4 +1,4 @@
-import { ResolveFunction } from "./ResolveFunction";
+import { ResolveFunction } from "./ResolveFunction.js";
 
 /**
  * Represents a resolvable value.

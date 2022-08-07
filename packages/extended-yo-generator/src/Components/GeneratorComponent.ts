@@ -1,6 +1,6 @@
 import { GeneratorOptions } from "yeoman-generator";
-import { IGenerator } from "../IGenerator";
-import { IGeneratorSettings } from "../IGeneratorSettings";
+import { IGenerator } from "../IGenerator.js";
+import { IGeneratorSettings } from "../IGeneratorSettings.js";
 
 /**
  * Represents a component which belongs to a generator.

@@ -1,7 +1,7 @@
 // eslint-disable-next-line node/no-unpublished-import
 import type { InstantiateOptions } from "yeoman-environment";
-import { GeneratorConstructor } from "../GeneratorConstructor";
-import { ObjectExtension } from "./ObjectExtension";
+import { GeneratorConstructor } from "../GeneratorConstructor.js";
+import { ObjectExtension } from "./ObjectExtension.js";
 
 /**
  * Represents a generator-extension.

@@ -1,11 +1,11 @@
 import { isAbsolute } from "path";
-import { IGenerator } from "../../IGenerator";
-import { AsyncResolveFunction } from "../Resolving/AsyncResolveFunction";
-import { PathResolver } from "../Resolving/PathResolver";
-import { PropertyResolver } from "../Resolving/PropertyResolver";
-import { Resolvable } from "../Resolving/Resolvable";
-import { FileProcessor } from "./FileProcessor";
-import { IFileMapping } from "./IFileMapping";
+import { IGenerator } from "../../IGenerator.js";
+import { AsyncResolveFunction } from "../Resolving/AsyncResolveFunction.js";
+import { PathResolver } from "../Resolving/PathResolver.js";
+import { PropertyResolver } from "../Resolving/PropertyResolver.js";
+import { Resolvable } from "../Resolving/Resolvable.js";
+import { FileProcessor } from "./FileProcessor.js";
+import { IFileMapping } from "./IFileMapping.js";
 
 /**
  * Represents a file-mapping.

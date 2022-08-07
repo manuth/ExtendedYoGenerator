@@ -1,6 +1,7 @@
 {
   "name": "@manuth/extended-yo-generator-test",
   "version": "11.0.7",
+  "type": "module",
   "description": "Provides tools for testing generators created using `@manuth/extended-yo-generator`",
   "author": "Manuel Thalmann <m@nuth.ch>",
   "license": "MIT",
@@ -28,7 +29,7 @@
   },
   "scripts": {
     "clean": "tsc -b tsconfig.build.json --clean && rimraf ./lib",
-    "lint": "eslint --max-warnings 0 ./src .eslintrc.js",
+    "lint": "eslint --max-warnings 0 ./src .eslintrc.cjs",
     "lint-ide": "npm run lint || exit 0",
     "test": "mocha"
   },

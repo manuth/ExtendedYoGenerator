@@ -4,8 +4,8 @@ import { TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { ITempFileSystemOptions, TempDirectory, TempFile, TempFileSystem } from "@manuth/temp-files";
 import { Diagnostic, LanguageServiceTester } from "@manuth/typescript-languageservice-tester";
 import { printNode, Project, SourceFile, SyntaxKind, ts } from "ts-morph";
-import { ObjectExtensionFactory } from "../../Extensibility/ObjectExtensionFactory";
-import { TestConstants } from "../TestConstants";
+import { ObjectExtensionFactory } from "../../Extensibility/ObjectExtensionFactory.js";
+import { TestConstants } from "../TestConstants.js";
 
 /**
  * Registers tests for the {@link ObjectExtensionFactory `ObjectExtensionFactory<T>`} class.

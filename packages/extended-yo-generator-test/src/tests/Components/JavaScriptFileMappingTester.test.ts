@@ -1,9 +1,9 @@
 import { deepStrictEqual, notDeepStrictEqual, notStrictEqual, strictEqual } from "assert";
 import { IFileMapping } from "@manuth/extended-yo-generator";
 import { TempFile } from "@manuth/temp-files";
-import { JavaScriptFileMappingTester } from "../../Components/JavaScriptFileMappingTester";
-import TestGenerator = require("../../generators/app");
-import { TestContext } from "../../TestContext";
+import { JavaScriptFileMappingTester } from "../../Components/JavaScriptFileMappingTester.js";
+import { TestContext } from "../../TestContext.js";
+import { TestGenerator } from "../../TestGenerator.js";
 
 /**
  * Registers tests for the {@link JavaScriptFileMappingTester `JavaScriptFileMappingTester<TGenerator, TSettings, TOptions, TFileMapping>`} class.

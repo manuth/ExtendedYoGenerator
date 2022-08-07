@@ -1,11 +1,11 @@
 import { doesNotReject, ok, strictEqual } from "assert";
 import { IGeneratorSettings } from "@manuth/extended-yo-generator";
 import { Random } from "random-js";
-import { IRunContext } from "../IRunContext";
-import { ITestGeneratorOptions } from "../ITestGeneratorOptions";
-import { TestContext } from "../TestContext";
-import { TestGenerator } from "../TestGenerator";
-import { IExampleOptions } from "./IExampleOptions";
+import { IRunContext } from "../IRunContext.js";
+import { ITestGeneratorOptions } from "../ITestGeneratorOptions.js";
+import { TestContext } from "../TestContext.js";
+import { TestGenerator } from "../TestGenerator.js";
+import { IExampleOptions } from "./IExampleOptions.js";
 
 /**
  * Registers tests for the {@link TestContext `TestContext<TGenerator, TOptions>`} class.

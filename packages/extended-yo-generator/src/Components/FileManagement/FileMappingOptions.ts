@@ -1,10 +1,12 @@
-import { readFile } from "fs-extra";
+import fs from "fs-extra";
 import { GeneratorOptions } from "yeoman-generator";
-import { IGenerator } from "../../IGenerator";
-import { IGeneratorSettings } from "../../IGeneratorSettings";
-import { GeneratorComponent } from "../GeneratorComponent";
-import { FileMapping } from "./FileMapping";
-import { IFileMapping } from "./IFileMapping";
+import { IGenerator } from "../../IGenerator.js";
+import { IGeneratorSettings } from "../../IGeneratorSettings.js";
+import { GeneratorComponent } from "../GeneratorComponent.js";
+import { FileMapping } from "./FileMapping.js";
+import { IFileMapping } from "./IFileMapping.js";
+
+const { readFile } = fs;
 
 /**
  * Provides data for creating a {@link FileMapping `FileMapping<TSettings, TOptions>`}.

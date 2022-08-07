@@ -2,10 +2,12 @@ import { doesNotReject, notStrictEqual, rejects, strictEqual } from "assert";
 import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { TempDirectory, TempFile } from "@manuth/temp-files";
 import { render } from "ejs";
-import { readFile, writeFile } from "fs-extra";
-import { FileMapping } from "../../../Components/FileManagement/FileMapping";
-import { IFileMapping } from "../../../Components/FileManagement/IFileMapping";
-import { IGeneratorSettings } from "../../../IGeneratorSettings";
+import fs from "fs-extra";
+import { FileMapping } from "../../../Components/FileManagement/FileMapping.js";
+import { IFileMapping } from "../../../Components/FileManagement/IFileMapping.js";
+import { IGeneratorSettings } from "../../../IGeneratorSettings.js";
+
+const { readFile, writeFile } = fs;
 
 /**
  * Provides tests for the {@link FileMapping `FileMapping<TSettings, TOptions>`} class.

@@ -1,8 +1,8 @@
 import { TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
-import { CollectionTests } from "./Collections";
-import { ComponentsTests } from "./Components";
-import { ExtensibilityTests } from "./Extensibility";
-import { ExtendedGeneratorTests } from "./Generator.test";
+import { CollectionTests } from "./Collections/index.js";
+import { ComponentsTests } from "./Components/index.js";
+import { ExtensibilityTests } from "./Extensibility/index.js";
+import { ExtendedGeneratorTests } from "./Generator.test.js";
 
 suite(
     "ExtendedYoGenerator",

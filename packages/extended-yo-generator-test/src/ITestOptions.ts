@@ -1,5 +1,5 @@
 import { IComponentCollection, IFileMapping, IGeneratorSettings, Question } from "@manuth/extended-yo-generator";
-import { ITestGeneratorOptions } from ".";
+import { ITestGeneratorOptions } from "./ITestGeneratorOptions.js";
 
 /**
  * Provides options for the test-generator.

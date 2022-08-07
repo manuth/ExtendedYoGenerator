@@ -1,4 +1,4 @@
-import { ResolveValue } from "./ResolveValue";
+import { ResolveValue } from "./ResolveValue.js";
 
 /**
  * Represents a resolve-value.

@@ -1,7 +1,7 @@
 import { notStrictEqual, strictEqual } from "assert";
 import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
-import { Resolvable } from "../../../Components/Resolving/Resolvable";
-import { Resolver } from "../../../Components/Resolving/Resolver";
+import { Resolvable } from "../../../Components/Resolving/Resolvable.js";
+import { Resolver } from "../../../Components/Resolving/Resolver.js";
 
 /**
  * Registers tests for the {@link Resolver `Resolver<TTarget, TSettings, TOptions>`} class.

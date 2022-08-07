@@ -1,9 +1,9 @@
 import { doesNotThrow } from "assert";
 import { TestContext } from "@manuth/extended-yo-generator-test";
-import { ComponentCollectionEditor } from "../../Collections/ComponentCollectionEditor";
-import { Component } from "../../Components/Component";
-import { IComponent } from "../../Components/IComponent";
-import { Generator } from "../../Generator";
+import { ComponentCollectionEditor } from "../../Collections/ComponentCollectionEditor.js";
+import { Component } from "../../Components/Component.js";
+import { IComponent } from "../../Components/IComponent.js";
+import { Generator } from "../../Generator.js";
 
 /**
  * Registers tests for the {@link ComponentOptionCollection `ComponentOptionCollection`} class.

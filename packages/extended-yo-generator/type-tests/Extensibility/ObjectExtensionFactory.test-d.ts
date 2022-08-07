@@ -1,5 +1,5 @@
 import { expectType, expectAssignable } from "tsd";
-import { Constructor, ObjectExtensionFactory } from "../..";
+import { Constructor, ObjectExtensionFactory } from "@manuth/extended-yo-generator";
 
 export class ArrayExtension extends ObjectExtensionFactory.Create(Array)<string>
 {

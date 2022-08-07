@@ -1,4 +1,4 @@
-import { ObjectExtension, ExtensionConstructor } from "../..";
+import { ObjectExtension, ExtensionConstructor } from "@manuth/extended-yo-generator";
 import { expectType } from "tsd";
 
 let baseConstructor: any;

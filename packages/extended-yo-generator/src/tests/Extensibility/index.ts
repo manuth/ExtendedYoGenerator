@@ -1,7 +1,7 @@
 import { basename } from "path";
 import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
-import { BaseGeneratorFactoryTests } from "./BaseGeneratorFactory.test";
-import { ObjectExtensionFactoryTests } from "./ObjectExtensionFactory.test";
+import { BaseGeneratorFactoryTests } from "./BaseGeneratorFactory.test.js";
+import { ObjectExtensionFactoryTests } from "./ObjectExtensionFactory.test.js";
 
 /**
  * Registers tests for extensibility-components.
@@ -12,7 +12,7 @@ import { ObjectExtensionFactoryTests } from "./ObjectExtensionFactory.test";
 export function ExtensibilityTests(context: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>>): void
 {
     suite(
-        basename(__dirname),
+        basename(new URL(".", import.meta.url).pathname),
         () =>
         {
             BaseGeneratorFactoryTests(context);

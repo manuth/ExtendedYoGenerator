@@ -1,9 +1,9 @@
 import { strictEqual } from "assert";
 import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { TempFile } from "@manuth/temp-files";
-import { Component } from "../../Components/Component";
-import { IComponent } from "../../Components/IComponent";
-import { IGeneratorSettings } from "../../IGeneratorSettings";
+import { Component } from "../../Components/Component.js";
+import { IComponent } from "../../Components/IComponent.js";
+import { IGeneratorSettings } from "../../IGeneratorSettings.js";
 
 /**
  * Provides tests for the {@link Component `Component<TSettings, TOptions>`} class.

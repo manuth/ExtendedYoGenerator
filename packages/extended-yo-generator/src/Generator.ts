@@ -1,20 +1,22 @@
 import { dirname, join, resolve } from "path";
-import { ensureDirSync } from "fs-extra";
-import pkgUp = require("pkg-up");
-import YeomanGenerator = require("yeoman-generator");
-import { Question } from "yeoman-generator";
-import { FileMappingCollectionEditor } from "./Collections/FileMappingCollectionEditor";
-import { ObjectCollectionEditor } from "./Collections/ObjectCollectionEditor";
-import { ComponentCollection } from "./Components/ComponentCollection";
-import { FileMapping } from "./Components/FileManagement/FileMapping";
-import { IFileMapping } from "./Components/FileManagement/IFileMapping";
-import { IComponentCollection } from "./Components/IComponentCollection";
-import { BaseGeneratorFactory } from "./Extensibility/BaseGeneratorFactory";
-import { GeneratorExtensionConstructor } from "./Extensibility/GeneratorExtensionConstructor";
-import { GeneratorConstructor } from "./GeneratorConstructor";
-import { GeneratorSettingKey } from "./GeneratorSettingKey";
-import { IGenerator } from "./IGenerator";
-import { IGeneratorSettings } from "./IGeneratorSettings";
+import fs from "fs-extra";
+import pkgUp from "pkg-up";
+// eslint-disable-next-line @typescript-eslint/tslint/config
+import YeomanGenerator, { Question } from "yeoman-generator";
+import { FileMappingCollectionEditor } from "./Collections/FileMappingCollectionEditor.js";
+import { ObjectCollectionEditor } from "./Collections/ObjectCollectionEditor.js";
+import { ComponentCollection } from "./Components/ComponentCollection.js";
+import { FileMapping } from "./Components/FileManagement/FileMapping.js";
+import { IFileMapping } from "./Components/FileManagement/IFileMapping.js";
+import { IComponentCollection } from "./Components/IComponentCollection.js";
+import { BaseGeneratorFactory } from "./Extensibility/BaseGeneratorFactory.js";
+import { GeneratorExtensionConstructor } from "./Extensibility/GeneratorExtensionConstructor.js";
+import { GeneratorConstructor } from "./GeneratorConstructor.js";
+import { GeneratorSettingKey } from "./GeneratorSettingKey.js";
+import { IGenerator } from "./IGenerator.js";
+import { IGeneratorSettings } from "./IGeneratorSettings.js";
+
+const { ensureDirSync } = fs;
 
 /**
  * Represents a yeoman-generator.

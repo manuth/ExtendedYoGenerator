@@ -1,10 +1,10 @@
 import { basename } from "path";
 import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
-import { ComponentTests } from "./Component.test";
-import { ComponentCategoryTests } from "./ComponentCategory.test";
-import { ComponentCollectionTests } from "./ComponentCollection.test";
-import { FileManagementTests } from "./FileManagement";
-import { ResolvingTests } from "./Resolving";
+import { ComponentTests } from "./Component.test.js";
+import { ComponentCategoryTests } from "./ComponentCategory.test.js";
+import { ComponentCollectionTests } from "./ComponentCollection.test.js";
+import { FileManagementTests } from "./FileManagement/index.js";
+import { ResolvingTests } from "./Resolving/index.js";
 
 /**
  * Registers tests for components.
@@ -15,7 +15,7 @@ import { ResolvingTests } from "./Resolving";
 export function ComponentsTests(context: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>>): void
 {
     suite(
-        basename(__dirname),
+        basename(new URL(".", import.meta.url).pathname),
         () =>
         {
             ResolvingTests(context);

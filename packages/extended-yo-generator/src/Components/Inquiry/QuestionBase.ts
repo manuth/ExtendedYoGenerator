@@ -1,7 +1,7 @@
 import { ChoiceCollection, KeyUnion, Question } from "inquirer";
 import { GeneratorOptions } from "yeoman-generator";
-import { IGenerator } from "../../IGenerator";
-import { IGeneratorSettings } from "../../IGeneratorSettings";
+import { IGenerator } from "../../IGenerator.js";
+import { IGeneratorSettings } from "../../IGeneratorSettings.js";
 
 /**
  * Represents a question.

@@ -1,6 +1,6 @@
-import { IGenerator } from "../../IGenerator";
-import { Resolvable } from "./Resolvable";
-import { Resolver } from "./Resolver";
+import { IGenerator } from "../../IGenerator.js";
+import { Resolvable } from "./Resolvable.js";
+import { Resolver } from "./Resolver.js";
 
 /**
  * Provides the functionality to resolve properties.

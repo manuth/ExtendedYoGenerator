@@ -1,5 +1,5 @@
 import { GeneratorOptions } from "yeoman-generator";
-import { Generator } from "./Generator";
+import { Generator } from "./Generator.js";
 
 /**
  * Represents a component for constructing generators.

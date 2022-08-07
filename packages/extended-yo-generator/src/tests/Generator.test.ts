@@ -1,11 +1,14 @@
 import { doesNotThrow, notStrictEqual, ok, strictEqual } from "assert";
 import { IRunContext, ITestGeneratorOptions, ITestGeneratorSettings, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { TempDirectory, TempFile } from "@manuth/temp-files";
-import { readFile, writeFile } from "fs-extra";
-import pkgUp = require("pkg-up");
-import { dirname, isAbsolute, join, normalize, relative, resolve } from "upath";
-import { Generator } from "../Generator";
-import { GeneratorSettingKey } from "../GeneratorSettingKey";
+import fs from "fs-extra";
+import pkgUp from "pkg-up";
+import path from "upath";
+import { Generator } from "../Generator.js";
+import { GeneratorSettingKey } from "../GeneratorSettingKey.js";
+
+const { readFile, writeFile } = fs;
+const { dirname, isAbsolute, join, normalize, relative, resolve } = path;
 
 /**
  * Registers tests for the TSGenerator-generator.

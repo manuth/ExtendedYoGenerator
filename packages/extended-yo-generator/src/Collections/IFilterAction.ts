@@ -1,5 +1,5 @@
-import { Predicate } from "../Predicate";
-import { ICollectionAction } from "./ICollectionAction";
+import { Predicate } from "../Predicate.js";
+import { ICollectionAction } from "./ICollectionAction.js";
 
 /**
  * Represents a generic action which requires a filter.

@@ -1,8 +1,8 @@
 import { doesNotReject, strictEqual } from "assert";
 import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
-import { PropertyResolver } from "../../../Components/Resolving/PropertyResolver";
-import { IResolverTestOptions } from "./IResolverTestOptions";
-import { ResolverTest } from "./ResolverTest";
+import { PropertyResolver } from "../../../Components/Resolving/PropertyResolver.js";
+import { IResolverTestOptions } from "./IResolverTestOptions.js";
+import { ResolverTest } from "./ResolverTest.js";
 
 /**
  * Registers tests for the {@link PropertyResolver `PropertyResolver<TObject, TTarget, TSettings, TOptions>`} class.

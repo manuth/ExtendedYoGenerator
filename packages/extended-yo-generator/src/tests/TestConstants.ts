@@ -1,4 +1,5 @@
 import { join } from "path";
+import { fileURLToPath } from "url";
 import { Package } from "@manuth/package-json-editor";
 
 /**
@@ -24,7 +25,7 @@ export abstract class TestConstants
     {
         if (this.package === null)
         {
-            this.package = new Package(join(__dirname, "..", "..", Package.FileName));
+            this.package = new Package(join(TestConstants.DirName, "..", "..", Package.FileName));
         }
 
         return this.package;
@@ -35,6 +36,14 @@ export abstract class TestConstants
      */
     public static get TestDirectory(): string
     {
-        return join(__dirname, "..", "..", "test");
+        return join(TestConstants.DirName, "..", "..", "test");
+    }
+
+    /**
+     * Gets the name of the directory containing the file of this class.
+     */
+    protected static get DirName(): string
+    {
+        return fileURLToPath(new URL(".", import.meta.url));
     }
 }

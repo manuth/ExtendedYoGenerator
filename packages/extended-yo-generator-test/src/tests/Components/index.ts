@@ -1,9 +1,9 @@
 import { basename } from "path";
-import TestGenerator = require("../../generators/app");
-import { TestContext } from "../../TestContext";
-import { FileMappingTesterTests } from "./FileMappingTester.test";
-import { JavaScriptFileMappingTesterTests } from "./JavaScriptFileMappingTester.test";
-import { JSONFileMappingTesterTests } from "./JSONFileMappingTester.test";
+import { TestContext } from "../../TestContext.js";
+import { TestGenerator } from "../../TestGenerator.js";
+import { FileMappingTesterTests } from "./FileMappingTester.test.js";
+import { JavaScriptFileMappingTesterTests } from "./JavaScriptFileMappingTester.test.js";
+import { JSONFileMappingTesterTests } from "./JSONFileMappingTester.test.js";
 
 /**
  * Registers tests for components.
@@ -14,7 +14,7 @@ import { JSONFileMappingTesterTests } from "./JSONFileMappingTester.test";
 export function ComponentTests(context: TestContext<TestGenerator>): void
 {
     suite(
-        basename(__dirname),
+        basename(new URL(".", import.meta.url).pathname),
         () =>
         {
             FileMappingTesterTests(context);

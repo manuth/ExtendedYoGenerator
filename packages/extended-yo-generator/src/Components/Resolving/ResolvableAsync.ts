@@ -1,4 +1,4 @@
-import { Resolvable } from "./Resolvable";
+import { Resolvable } from "./Resolvable.js";
 
 /**
  * Represents a resolvable value.

@@ -1,8 +1,8 @@
 import { ITestGeneratorOptions, ITestOptions } from "@manuth/extended-yo-generator-test";
-import { PropertyResolver } from "../../../Components/Resolving/PropertyResolver";
-import { IGenerator } from "../../../IGenerator";
-import { IGeneratorSettings } from "../../../IGeneratorSettings";
-import { IResolverTestOptions } from "./IResolverTestOptions";
+import { PropertyResolver } from "../../../Components/Resolving/PropertyResolver.js";
+import { IGenerator } from "../../../IGenerator.js";
+import { IGeneratorSettings } from "../../../IGeneratorSettings.js";
+import { IResolverTestOptions } from "./IResolverTestOptions.js";
 
 /**
  * A resolver-object for testing.

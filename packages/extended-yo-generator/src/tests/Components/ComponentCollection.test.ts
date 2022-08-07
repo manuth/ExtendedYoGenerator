@@ -1,17 +1,17 @@
 import { ok, strictEqual } from "assert";
 import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
-import rescape = require("@stdlib/utils-escape-regexp-string");
-import { CheckboxChoiceOptions, CheckboxQuestion, Separator } from "inquirer";
+import rescape from "@stdlib/utils-escape-regexp-string";
+import inquirer from "inquirer";
 import { replace, replaceGetter, restore } from "sinon";
-import stripAnsi = require("strip-ansi");
+import stripAnsi from "strip-ansi";
 import type { Logger, Question } from "yeoman-environment";
-import { Component } from "../../Components/Component";
-import { ComponentCollection } from "../../Components/ComponentCollection";
-import { IComponent } from "../../Components/IComponent";
-import { IComponentCategory } from "../../Components/IComponentCategory";
-import { IComponentCollection } from "../../Components/IComponentCollection";
-import { GeneratorSettingKey } from "../../GeneratorSettingKey";
-import { IGeneratorSettings } from "../../IGeneratorSettings";
+import { Component } from "../../Components/Component.js";
+import { ComponentCollection } from "../../Components/ComponentCollection.js";
+import { IComponent } from "../../Components/IComponent.js";
+import { IComponentCategory } from "../../Components/IComponentCategory.js";
+import { IComponentCollection } from "../../Components/IComponentCollection.js";
+import { GeneratorSettingKey } from "../../GeneratorSettingKey.js";
+import { IGeneratorSettings } from "../../IGeneratorSettings.js";
 
 /**
  * Provides tests for the {@link ComponentCollection `ComponentCollection<TSettings, TOptions>`} class.
@@ -33,7 +33,7 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                 /**
                  * @inheritdoc
                  */
-                public override get ComponentChoiceQuestion(): CheckboxQuestion<any>
+                public override get ComponentChoiceQuestion(): inquirer.CheckboxQuestion<any>
                 {
                     return super.ComponentChoiceQuestion;
                 }
@@ -183,7 +183,7 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                                     collection.ComponentChoiceQuestion.choices.some(
                                         (choice) =>
                                         {
-                                            return choice instanceof Separator &&
+                                            return choice instanceof inquirer.Separator &&
                                                 stripAnsi(choice.line) === stripAnsi(category.DisplayName);
                                         }));
                             }
@@ -198,7 +198,7 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                                 ok(
                                     Array.isArray(collection.ComponentChoiceQuestion.choices) &&
                                     collection.ComponentChoiceQuestion.choices.some(
-                                        (choice: CheckboxChoiceOptions<any>) =>
+                                        (choice: inquirer.CheckboxChoiceOptions<any>) =>
                                         {
                                             return choice.name === component.DisplayName &&
                                                 choice.value === component.ID;
@@ -220,7 +220,7 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                                 ok(
                                     Array.isArray(collection.ComponentChoiceQuestion.choices) &&
                                     collection.ComponentChoiceQuestion.choices.some(
-                                        (choice: CheckboxChoiceOptions<any>) =>
+                                        (choice: inquirer.CheckboxChoiceOptions<any>) =>
                                         {
                                             return choice.name === component.DisplayName &&
                                                 choice.value === component.ID &&
