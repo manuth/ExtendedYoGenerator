@@ -45,7 +45,7 @@
     "@manuth/extended-yo-generator-test": "^11.0.6",
     "@manuth/package-json-editor": "^2.2.6",
     "@manuth/temp-files": "^2.0.9",
-    "@manuth/typescript-languageservice-tester": "^4.0.5",
+    "@manuth/typescript-languageservice-tester": "^5.0.0",
     "@stdlib/utils-escape-regexp-string": "^0.0.9",
     "@types/ejs": "^3.1.1",
     "@types/fs-extra": "^9.0.13",
