@@ -1,4 +1,4 @@
-import { isAbsolute } from "path";
+import { isAbsolute } from "node:path";
 import { IGenerator } from "../../IGenerator.js";
 import { AsyncResolveFunction } from "../Resolving/AsyncResolveFunction.js";
 import { PathResolver } from "../Resolving/PathResolver.js";

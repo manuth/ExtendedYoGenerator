@@ -1,4 +1,4 @@
-import { doesNotThrow, ok, strictEqual, throws } from "assert";
+import { doesNotThrow, ok, strictEqual, throws } from "node:assert";
 import { TempDirectory, TempFile, TempFileSystem } from "@manuth/temp-files";
 import fs from "fs-extra";
 import { ObjectCollectionEditor } from "../../Collections/ObjectCollectionEditor.js";

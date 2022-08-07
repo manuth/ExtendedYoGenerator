@@ -1,4 +1,4 @@
-import { doesNotThrow, ok, strictEqual, throws } from "assert";
+import { doesNotThrow, ok, strictEqual, throws } from "node:assert";
 import { TestContext } from "@manuth/extended-yo-generator-test";
 import { UniqueObjectCollectionEditor } from "../../Collections/UniqueObjectCollectionEditor.js";
 import { IUniqueObject } from "../../IUniqueObject.js";

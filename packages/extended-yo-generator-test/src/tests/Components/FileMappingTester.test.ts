@@ -1,4 +1,4 @@
-import { doesNotReject, ok, rejects, strictEqual } from "assert";
+import { doesNotReject, ok, rejects, strictEqual } from "node:assert";
 import { IFileMapping } from "@manuth/extended-yo-generator";
 import { TempFile, TempFileSystem } from "@manuth/temp-files";
 import fs from "fs-extra";

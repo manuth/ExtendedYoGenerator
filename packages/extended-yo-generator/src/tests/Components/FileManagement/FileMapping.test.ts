@@ -1,4 +1,4 @@
-import { doesNotReject, notStrictEqual, rejects, strictEqual } from "assert";
+import { doesNotReject, notStrictEqual, rejects, strictEqual } from "node:assert";
 import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { TempDirectory, TempFile } from "@manuth/temp-files";
 import { render } from "ejs";

@@ -1,4 +1,4 @@
-import { doesNotThrow, notStrictEqual, ok, strictEqual } from "assert";
+import { doesNotThrow, notStrictEqual, ok, strictEqual } from "node:assert";
 import { IRunContext, ITestGeneratorOptions, ITestGeneratorSettings, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { TempDirectory, TempFile } from "@manuth/temp-files";
 import fs from "fs-extra";

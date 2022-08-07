@@ -1,4 +1,4 @@
-import { dirname, join, resolve } from "path";
+import { dirname, join, resolve } from "node:path";
 import fs from "fs-extra";
 import pkgUp from "pkg-up";
 // eslint-disable-next-line @typescript-eslint/tslint/config

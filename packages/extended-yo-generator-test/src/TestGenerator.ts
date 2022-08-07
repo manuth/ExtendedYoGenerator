@@ -1,4 +1,4 @@
-import { fileURLToPath } from "url";
+import { fileURLToPath } from "node:url";
 import { Generator, IComponentCollection, IFileMapping, IGeneratorSettings, Question } from "@manuth/extended-yo-generator";
 import path from "upath";
 import { ITestGeneratorOptions } from "./ITestGeneratorOptions.js";

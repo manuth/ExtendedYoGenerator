@@ -1,4 +1,4 @@
-import { deepStrictEqual, doesNotReject, notStrictEqual, ok, strictEqual } from "assert";
+import { deepStrictEqual, doesNotReject, notStrictEqual, ok, strictEqual } from "node:assert";
 import { IRunContext } from "../IRunContext.js";
 import { ITestGeneratorOptions } from "../ITestGeneratorOptions.js";
 import { ITestOptions } from "../ITestOptions.js";

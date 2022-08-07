@@ -1,4 +1,4 @@
-import { doesNotReject, ok, strictEqual } from "assert";
+import { doesNotReject, ok, strictEqual } from "node:assert";
 import { IGeneratorSettings } from "@manuth/extended-yo-generator";
 import { Random } from "random-js";
 import { IRunContext } from "../IRunContext.js";

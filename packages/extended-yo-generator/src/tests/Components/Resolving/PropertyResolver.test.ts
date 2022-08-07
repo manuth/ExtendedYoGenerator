@@ -1,4 +1,4 @@
-import { doesNotReject, strictEqual } from "assert";
+import { doesNotReject, strictEqual } from "node:assert";
 import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { PropertyResolver } from "../../../Components/Resolving/PropertyResolver.js";
 import { IResolverTestOptions } from "./IResolverTestOptions.js";

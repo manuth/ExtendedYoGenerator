@@ -1,5 +1,5 @@
-import { join } from "path";
-import { fileURLToPath } from "url";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { Generator, GeneratorOptions, IGeneratorSettings } from "@manuth/extended-yo-generator";
 import cloneDeep from "lodash.clonedeep";
 import { Random } from "random-js";

@@ -1,4 +1,4 @@
-import { basename } from "path";
+import { basename } from "node:path";
 import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { ComponentTests } from "./Component.test.js";
 import { ComponentCategoryTests } from "./ComponentCategory.test.js";

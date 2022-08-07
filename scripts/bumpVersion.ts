@@ -1,4 +1,4 @@
-import { spawnSync } from "child_process";
+import { spawnSync } from "node:child_process";
 import GitBranch = require("git-branch");
 import npmWhich = require("npm-which");
 

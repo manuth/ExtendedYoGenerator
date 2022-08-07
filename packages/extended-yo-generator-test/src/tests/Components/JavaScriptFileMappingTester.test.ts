@@ -1,4 +1,4 @@
-import { deepStrictEqual, notDeepStrictEqual, notStrictEqual, strictEqual } from "assert";
+import { deepStrictEqual, notDeepStrictEqual, notStrictEqual, strictEqual } from "node:assert";
 import { IFileMapping } from "@manuth/extended-yo-generator";
 import { TempFile } from "@manuth/temp-files";
 import { JavaScriptFileMappingTester } from "../../Components/JavaScriptFileMappingTester.js";

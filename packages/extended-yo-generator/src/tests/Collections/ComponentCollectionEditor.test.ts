@@ -1,4 +1,4 @@
-import { doesNotThrow } from "assert";
+import { doesNotThrow } from "node:assert";
 import { TestContext } from "@manuth/extended-yo-generator-test";
 import { ComponentCollectionEditor } from "../../Collections/ComponentCollectionEditor.js";
 import { Component } from "../../Components/Component.js";

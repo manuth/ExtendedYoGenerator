@@ -1,4 +1,4 @@
-import { basename } from "path";
+import { basename } from "node:path";
 import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { FileMappingTests } from "./FileMapping.test.js";
 import { FileMappingOptionsTests } from "./FileMappingOptions.test.js";

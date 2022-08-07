@@ -1,4 +1,4 @@
-import { deepStrictEqual, doesNotThrow, notStrictEqual, ok, strictEqual } from "assert";
+import { deepStrictEqual, doesNotThrow, notStrictEqual, ok, strictEqual } from "node:assert";
 import { ITestGeneratorSettings, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { GeneratorOptions } from "yeoman-generator";
 import { FileMappingCollectionEditor } from "../../Collections/FileMappingCollectionEditor.js";

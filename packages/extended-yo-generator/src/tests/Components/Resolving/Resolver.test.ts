@@ -1,4 +1,4 @@
-import { notStrictEqual, strictEqual } from "assert";
+import { notStrictEqual, strictEqual } from "node:assert";
 import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { Resolvable } from "../../../Components/Resolving/Resolvable.js";
 import { Resolver } from "../../../Components/Resolving/Resolver.js";

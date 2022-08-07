@@ -1,4 +1,4 @@
-import { doesNotThrow, ok, strictEqual, throws } from "assert";
+import { doesNotThrow, ok, strictEqual, throws } from "node:assert";
 import { TestContext } from "@manuth/extended-yo-generator-test";
 import { PropertyResolverCollectionEditor } from "../../Collections/PropertyResolverCollectionEditor.js";
 import { FileMapping } from "../../Components/FileManagement/FileMapping.js";
