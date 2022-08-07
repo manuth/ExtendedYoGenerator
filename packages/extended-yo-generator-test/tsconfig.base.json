@@ -1,3 +1,10 @@
 {
-    "extends": "../../tsconfig.base.json"
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "paths": {
+            "comment-json": [
+              "../../node_modules/@types/comment-json"
+            ]
+          }
+    }
 }

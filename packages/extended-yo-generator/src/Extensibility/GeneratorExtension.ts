@@ -1,6 +1,5 @@
 // eslint-disable-next-line node/no-unpublished-import
 import type { InstantiateOptions } from "yeoman-environment";
-import { GeneratorOptions } from "yeoman-generator";
 import { GeneratorConstructor } from "../GeneratorConstructor";
 import { ObjectExtension } from "./ObjectExtension";
 
@@ -56,7 +55,7 @@ export abstract class GeneratorExtension<T extends GeneratorConstructor> extends
      * @returns
      * The options for instantiating the base generator.
      */
-    protected GetBaseGeneratorOptions(): InstantiateOptions<GeneratorOptions>
+    protected GetBaseGeneratorOptions(): InstantiateOptions
     {
         return null;
     }
