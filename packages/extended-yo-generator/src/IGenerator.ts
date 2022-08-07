@@ -1,4 +1,4 @@
-import YeomanGenerator = require("yeoman-generator");
+import Generator from "yeoman-generator";
 
 /**
  * Represents a yeoman-generator.
@@ -9,7 +9,7 @@ import YeomanGenerator = require("yeoman-generator");
  * @template TOptions
  * The options of the generator.
  */
-export interface IGenerator<TSettings, TOptions extends YeomanGenerator.GeneratorOptions> extends YeomanGenerator<TOptions>
+export interface IGenerator<TSettings, TOptions extends Generator.GeneratorOptions> extends Generator<TOptions>
 {
     /**
      * Gets the settings of the generator.
