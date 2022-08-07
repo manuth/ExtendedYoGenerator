@@ -3,8 +3,8 @@ import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from 
 import { ComponentTests } from "./Component.test.js";
 import { ComponentCategoryTests } from "./ComponentCategory.test.js";
 import { ComponentCollectionTests } from "./ComponentCollection.test.js";
-import { FileManagementTests } from "./FileManagement/index.js";
-import { ResolvingTests } from "./Resolving/index.js";
+import { FileManagementTests } from "./FileManagement/index.test.js";
+import { ResolvingTests } from "./Resolving/index.test.js";
 
 /**
  * Registers tests for components.
