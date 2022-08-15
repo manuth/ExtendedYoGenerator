@@ -2,7 +2,7 @@ import { doesNotThrow, notStrictEqual, ok, strictEqual } from "node:assert";
 import { IRunContext, ITestGeneratorOptions, ITestGeneratorSettings, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { TempDirectory, TempFile } from "@manuth/temp-files";
 import fs from "fs-extra";
-import pkgUp from "pkg-up";
+import { pkgUpSync } from "pkg-up";
 import path from "upath";
 import { Generator } from "../Generator.js";
 import { GeneratorSettingKey } from "../GeneratorSettingKey.js";
@@ -60,7 +60,7 @@ export function ExtendedGeneratorTests(context: TestContext<TestGenerator<ITestG
                 async function()
                 {
                     this.timeout(2 * 1000);
-                    moduleRoot = dirname(pkgUp.sync({ cwd: context.GeneratorDirectory }));
+                    moduleRoot = dirname(pkgUpSync({ cwd: context.GeneratorDirectory }));
 
                     runContext = context.ExecuteGenerator(
                         {

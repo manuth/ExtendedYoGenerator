@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import inquirer from "inquirer";
+import inquirer, { CheckboxQuestion, ChoiceCollection } from "inquirer";
 import { Question } from "yeoman-generator";
 import { CategoryCollectionEditor } from "../Collections/CategoryCollectionEditor.js";
 import { GeneratorSettingKey } from "../GeneratorSettingKey.js";
@@ -80,9 +80,9 @@ export class ComponentCollection<TSettings extends IGeneratorSettings, TOptions>
     /**
      * Gets the question to ask for the components.
      */
-    protected get ComponentChoiceQuestion(): inquirer.CheckboxQuestion<TSettings>
+    protected get ComponentChoiceQuestion(): CheckboxQuestion<TSettings>
     {
-        let components: inquirer.ChoiceCollection<TSettings> = [];
+        let components: ChoiceCollection<TSettings> = [];
         let defaults: string[] = [];
 
         for (let category of this.Categories.Items ?? [])

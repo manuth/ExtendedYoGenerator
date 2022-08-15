@@ -1,7 +1,7 @@
 import { ok, strictEqual } from "node:assert";
 import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import rescape from "@stdlib/utils-escape-regexp-string";
-import inquirer from "inquirer";
+import inquirer, { CheckboxChoiceOptions, CheckboxQuestion } from "inquirer";
 import { replace, replaceGetter, restore } from "sinon";
 import stripAnsi from "strip-ansi";
 import type { Logger, Question } from "yeoman-environment";
@@ -33,7 +33,7 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                 /**
                  * @inheritdoc
                  */
-                public override get ComponentChoiceQuestion(): inquirer.CheckboxQuestion<any>
+                public override get ComponentChoiceQuestion(): CheckboxQuestion<any>
                 {
                     return super.ComponentChoiceQuestion;
                 }
@@ -198,7 +198,7 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                                 ok(
                                     Array.isArray(collection.ComponentChoiceQuestion.choices) &&
                                     collection.ComponentChoiceQuestion.choices.some(
-                                        (choice: inquirer.CheckboxChoiceOptions<any>) =>
+                                        (choice: CheckboxChoiceOptions<any>) =>
                                         {
                                             return choice.name === component.DisplayName &&
                                                 choice.value === component.ID;
@@ -220,7 +220,7 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                                 ok(
                                     Array.isArray(collection.ComponentChoiceQuestion.choices) &&
                                     collection.ComponentChoiceQuestion.choices.some(
-                                        (choice: inquirer.CheckboxChoiceOptions<any>) =>
+                                        (choice: CheckboxChoiceOptions<any>) =>
                                         {
                                             return choice.name === component.DisplayName &&
                                                 choice.value === component.ID &&

@@ -40,12 +40,12 @@
     "@tsd/typescript": "npm:nop@^1.0.0",
     "@types/git-branch": "^2.0.2",
     "@types/mocha": "^9.1.1",
-    "@types/node": "^18.6.4",
+    "@types/node": "^18.7.5",
     "@types/npm-which": "^3.0.1",
     "@types/ts-nameof": "^4.2.1",
     "concurrently": "^7.3.0",
     "copy-and-watch": "^0.1.6",
-    "eslint": "^8.21.0",
+    "eslint": "^8.22.0",
     "git-branch": "^2.0.1",
     "glob-exec": "^0.1.1",
     "mocha": "^10.0.0",
@@ -54,7 +54,7 @@
     "source-map-support": "^0.5.21",
     "ts-nameof": "^5.0.0",
     "ts-node": "^10.9.1",
-    "ts-patch": "^2.0.1",
+    "ts-patch": "^2.0.2",
     "typescript": "^4.7.4"
   }
 }

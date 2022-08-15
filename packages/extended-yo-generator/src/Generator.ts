@@ -1,6 +1,6 @@
 import { dirname, join, resolve } from "node:path";
 import fs from "fs-extra";
-import pkgUp from "pkg-up";
+import { pkgUpSync } from "pkg-up";
 // eslint-disable-next-line @typescript-eslint/tslint/config
 import YeomanGenerator, { Question } from "yeoman-generator";
 import { FileMappingCollectionEditor } from "./Collections/FileMappingCollectionEditor.js";
@@ -51,7 +51,7 @@ export abstract class Generator<TSettings extends IGeneratorSettings = IGenerato
     public constructor(args: string | string[], options: TOptions)
     {
         super(args, options);
-        this.ModuleRoot = dirname(pkgUp.sync({ cwd: this.resolved }));
+        this.ModuleRoot = dirname(pkgUpSync({ cwd: this.resolved }));
     }
 
     /**
