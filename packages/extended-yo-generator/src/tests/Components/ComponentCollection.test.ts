@@ -294,7 +294,7 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                             {
                                 strictEqual(
                                     logMessages.some(
-                                        (logMessage) => new RegExp(`\\b${rescape(stripAnsi(component.DisplayName))}\\b`).test(stripAnsi(logMessage))),
+                                        (logMessage) => new RegExp(`\\b${rescape(stripAnsi(component.DisplayName))}\\b`).test(stripAnsi(logMessage ?? ""))),
                                     present);
                             }
 
