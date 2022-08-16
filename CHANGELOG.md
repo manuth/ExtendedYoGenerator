@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Updated
   - All dependencies
+  - `bumpVersion` scripts for updating cross-workspace dependencies properly
 
 [Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v11.0.7...dev)
 
