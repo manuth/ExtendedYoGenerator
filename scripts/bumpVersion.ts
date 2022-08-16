@@ -1,6 +1,6 @@
 import { spawnSync } from "node:child_process";
-import GitBranch = require("git-branch");
-import npmWhich = require("npm-which");
+import GitBranch from "git-branch";
+import npmWhich from "npm-which";
 
 (
     async () =>

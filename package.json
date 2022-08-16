@@ -1,9 +1,9 @@
 {
   "name": "extended-yo-generator",
+  "type": "module",
   "private": true,
   "description": "Provides packages for executing and testing extended implementations of the yeoman-generator.",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "files": [],
   "homepage": "https://github.com/manuth/ExtendedYoGenerator#readme",
   "repository": {
     "type": "git",
@@ -30,7 +30,7 @@
     "lint": "npm run lint-local && npm run --workspaces lint",
     "lint-ide": "npm run lint-local-ide && npm run --workspaces lint-ide",
     "test": "npm run --workspaces test",
-    "version": "ts-node ./scripts/bumpVersion.ts",
+    "version": "ts-node-esm ./scripts/bumpVersion.ts",
     "prepare": "npm run patch-ts && npm run rebuild",
     "patch-ts": "ts-patch install"
   },
