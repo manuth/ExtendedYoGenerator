@@ -1,5 +1,6 @@
+import { createRequire } from "node:module";
 import { GeneratorOptions, IFileMapping, IGenerator, IGeneratorSettings } from "@manuth/extended-yo-generator";
-import { FileMappingTester } from "./FileMappingTester";
+import { FileMappingTester } from "./FileMappingTester.js";
 
 /**
  * Provides the functionality to test javascript file-mappings.
@@ -19,6 +20,11 @@ import { FileMappingTester } from "./FileMappingTester";
 export class JavaScriptFileMappingTester<TGenerator extends IGenerator<TSettings, TOptions>, TSettings extends IGeneratorSettings, TOptions extends GeneratorOptions, TFileMapping extends IFileMapping<TSettings, TOptions>> extends FileMappingTester<TGenerator, TSettings, TOptions, TFileMapping>
 {
     /**
+     * A component for resolving modules.
+     */
+    private moduleResolver: NodeRequire = null;
+
+    /**
      * Initializes a new instance of the {@link JavaScriptFileMappingTester `JavaScriptFileMappingTester<TGenerator, TSettings, TOptions, TFileMapping>`} class.
      *
      * @param generator
@@ -33,6 +39,19 @@ export class JavaScriptFileMappingTester<TGenerator extends IGenerator<TSettings
     }
 
     /**
+     * Gets a component for resolving modules.
+     */
+    protected get ModuleResolver(): NodeRequire
+    {
+        if (this.moduleResolver === null)
+        {
+            this.moduleResolver = createRequire(import.meta.url);
+        }
+
+        return this.moduleResolver;
+    }
+
+    /**
      * Requires the javascript-file.
      *
      * @returns
@@ -40,6 +59,7 @@ export class JavaScriptFileMappingTester<TGenerator extends IGenerator<TSettings
      */
     public async Require(): Promise<any>
     {
+        let require = this.ModuleResolver;
         let fileName = require.resolve(this.FileMapping.Destination);
 
         if (fileName in require.cache)

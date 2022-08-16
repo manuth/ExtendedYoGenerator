@@ -1,6 +1,6 @@
 import { GeneratorOptions, IFileMapping, IGenerator, IGeneratorSettings } from "@manuth/extended-yo-generator";
 import { parse } from "comment-json";
-import { FileMappingTester } from "./FileMappingTester";
+import { FileMappingTester } from "./FileMappingTester.js";
 
 /**
  * Provides the functionality to test json files-mappings.

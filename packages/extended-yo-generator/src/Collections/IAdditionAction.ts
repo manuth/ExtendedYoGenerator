@@ -1,5 +1,5 @@
-import { CollectionActionType } from "./CollectionActionType";
-import { ICollectionAction } from "./ICollectionAction";
+import { CollectionActionType } from "./CollectionActionType.js";
+import { ICollectionAction } from "./ICollectionAction.js";
 
 /**
  * Represents an addition.

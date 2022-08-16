@@ -1,7 +1,7 @@
-import { Component } from "../Components/Component";
-import { IComponent } from "../Components/IComponent";
-import { IGenerator } from "../IGenerator";
-import { PropertyResolverCollectionEditor } from "./PropertyResolverCollectionEditor";
+import { Component } from "../Components/Component.js";
+import { IComponent } from "../Components/IComponent.js";
+import { IGenerator } from "../IGenerator.js";
+import { PropertyResolverCollectionEditor } from "./PropertyResolverCollectionEditor.js";
 
 /**
  * Represents a set of components.

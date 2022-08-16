@@ -1,9 +1,9 @@
-import { deepStrictEqual } from "assert";
+import { deepStrictEqual } from "node:assert";
 import { IFileMapping } from "@manuth/extended-yo-generator";
 import { TempFile } from "@manuth/temp-files";
-import { JSONFileMappingTester } from "../../Components/JSONFileMappingTester";
-import TestGenerator = require("../../generators/app");
-import { TestContext } from "../../TestContext";
+import { JSONFileMappingTester } from "../../Components/JSONFileMappingTester.js";
+import { TestContext } from "../../TestContext.js";
+import { TestGenerator } from "../../TestGenerator.js";
 
 /**
  * Registers tests for the {@link JSONFileMappingTester `JSONFileMappingTester<TGenerator, TSettings, TOptions, TFileMapping>`} class.

@@ -1,7 +1,7 @@
-import { basename } from "path";
+import { basename } from "node:path";
 import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
-import { PropertyResolverTests } from "./PropertyResolver.test";
-import { ResolverTests } from "./Resolver.test";
+import { PropertyResolverTests } from "./PropertyResolver.test.js";
+import { ResolverTests } from "./Resolver.test.js";
 
 /**
  * Registers tests for components related to resolving.
@@ -12,7 +12,7 @@ import { ResolverTests } from "./Resolver.test";
 export function ResolvingTests(context: TestContext<TestGenerator, ITestGeneratorOptions<ITestOptions>>): void
 {
     suite(
-        basename(__dirname),
+        basename(new URL(".", import.meta.url).pathname),
         () =>
         {
             ResolverTests(context);

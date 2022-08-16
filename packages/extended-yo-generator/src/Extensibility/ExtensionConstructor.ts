@@ -1,5 +1,5 @@
-import { Constructor } from "../Constructor";
-import { ObjectExtension } from "./ObjectExtension";
+import { Constructor } from "../Constructor.js";
+import { ObjectExtension } from "./ObjectExtension.js";
 
 /**
  * Represents a constructor for an object-extension.

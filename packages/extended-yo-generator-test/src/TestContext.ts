@@ -1,13 +1,14 @@
-import { join } from "path";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { Generator, GeneratorOptions, IGeneratorSettings } from "@manuth/extended-yo-generator";
-import cloneDeep = require("lodash.clonedeep");
+import cloneDeep from "lodash.clonedeep";
 import { Random } from "random-js";
-import Environment = require("yeoman-environment");
-import helpers = require("yeoman-test");
-import { IRunContext } from "./IRunContext";
-import { ITestGeneratorOptions } from "./ITestGeneratorOptions";
-import { ITestOptions } from "./ITestOptions";
-import { TestGenerator } from "./TestGenerator";
+import Environment from "yeoman-environment";
+import helpers from "yeoman-test";
+import { IRunContext } from "./IRunContext.js";
+import { ITestGeneratorOptions } from "./ITestGeneratorOptions.js";
+import { ITestOptions } from "./ITestOptions.js";
+import { TestGenerator } from "./TestGenerator.js";
 
 /**
  * Represents a context for testing.
@@ -115,7 +116,7 @@ export class TestContext<TGenerator extends Generator<any, TOptions> = Generator
     {
         if (this.defaultInstance === null)
         {
-            this.defaultInstance = new TestContext(join(__dirname, "generators", "app"));
+            this.defaultInstance = new TestContext(join(fileURLToPath(new URL(".", import.meta.url)), "generators", "app"));
         }
 
         return this.defaultInstance;

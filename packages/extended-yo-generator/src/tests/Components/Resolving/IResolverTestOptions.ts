@@ -1,5 +1,5 @@
-import { ResolvableAsync } from "../../../Components/Resolving/ResolvableAsync";
-import { ResolverTest } from "./ResolverTest";
+import { ResolvableAsync } from "../../../Components/Resolving/ResolvableAsync.js";
+import { ResolverTest } from "./ResolverTest.js";
 
 /**
  * Options for the {@link ResolverTest `ResolverTest`} class.

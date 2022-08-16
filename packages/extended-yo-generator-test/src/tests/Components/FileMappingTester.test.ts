@@ -1,10 +1,12 @@
-import { doesNotReject, ok, rejects, strictEqual } from "assert";
+import { doesNotReject, ok, rejects, strictEqual } from "node:assert";
 import { IFileMapping } from "@manuth/extended-yo-generator";
 import { TempFile, TempFileSystem } from "@manuth/temp-files";
-import { pathExists, readFile, writeFile } from "fs-extra";
-import { FileMappingTester } from "../../Components/FileMappingTester";
-import { TestContext } from "../../TestContext";
-import { TestGenerator } from "../../TestGenerator";
+import fs from "fs-extra";
+import { FileMappingTester } from "../../Components/FileMappingTester.js";
+import { TestContext } from "../../TestContext.js";
+import { TestGenerator } from "../../TestGenerator.js";
+
+const { pathExists, readFile, writeFile } = fs;
 
 /**
  * Registers tests for the {@link FileMappingTester `FileMappingTester<TGenerator, TSettings, TOptions, TFileMapping>`} class.

@@ -1,11 +1,11 @@
-import { doesNotThrow, ok, strictEqual, throws } from "assert";
+import { doesNotThrow, ok, strictEqual, throws } from "node:assert";
 import { TestContext } from "@manuth/extended-yo-generator-test";
-import { PropertyResolverCollectionEditor } from "../../Collections/PropertyResolverCollectionEditor";
-import { FileMapping } from "../../Components/FileManagement/FileMapping";
-import { FileMappingOptions } from "../../Components/FileManagement/FileMappingOptions";
-import { IFileMapping } from "../../Components/FileManagement/IFileMapping";
-import { Generator } from "../../Generator";
-import { IGenerator } from "../../IGenerator";
+import { PropertyResolverCollectionEditor } from "../../Collections/PropertyResolverCollectionEditor.js";
+import { FileMapping } from "../../Components/FileManagement/FileMapping.js";
+import { FileMappingOptions } from "../../Components/FileManagement/FileMappingOptions.js";
+import { IFileMapping } from "../../Components/FileManagement/IFileMapping.js";
+import { Generator } from "../../Generator.js";
+import { IGenerator } from "../../IGenerator.js";
 
 /**
  * Registers tests for the {@link PropertyResolverCollection `PropertyResolverCollection<TObject, TTarget>`} class.

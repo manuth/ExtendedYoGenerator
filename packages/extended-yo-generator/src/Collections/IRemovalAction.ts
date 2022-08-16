@@ -1,5 +1,5 @@
-import { CollectionActionType } from "./CollectionActionType";
-import { IFilterAction } from "./IFilterAction";
+import { CollectionActionType } from "./CollectionActionType.js";
+import { IFilterAction } from "./IFilterAction.js";
 
 /**
  * Represents a removal.

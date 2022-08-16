@@ -1,10 +1,10 @@
-import { AbstractConstructor } from "../AbstractConstructor";
-import { PropertyResolver } from "../Components/Resolving/PropertyResolver";
-import { Filter } from "../Filter";
-import { IGenerator } from "../IGenerator";
-import { IUniqueObject } from "../IUniqueObject";
-import { Predicate } from "../Predicate";
-import { UniqueObjectCollectionEditor } from "./UniqueObjectCollectionEditor";
+import { AbstractConstructor } from "../AbstractConstructor.js";
+import { PropertyResolver } from "../Components/Resolving/PropertyResolver.js";
+import { Filter } from "../Filter.js";
+import { IGenerator } from "../IGenerator.js";
+import { IUniqueObject } from "../IUniqueObject.js";
+import { Predicate } from "../Predicate.js";
+import { UniqueObjectCollectionEditor } from "./UniqueObjectCollectionEditor.js";
 
 /**
  * Provides the functionality to edit a collection of {@link PropertyResolver `PropertyResolver<TObject, TTarget, TSettings, TOptions>`}s.

@@ -1,15 +1,15 @@
 // eslint-disable-next-line node/no-unpublished-import
 import type { InstantiateOptions } from "yeoman-environment";
 import { GeneratorOptions } from "yeoman-generator";
-import { FileMappingCollectionEditor } from "../Collections/FileMappingCollectionEditor";
-import { ComponentCollection } from "../Components/ComponentCollection";
-import { IFileMapping } from "../Components/FileManagement/IFileMapping";
-import { IComponentCollection } from "../Components/IComponentCollection";
-import { Generator } from "../Generator";
-import { GeneratorConstructor } from "../GeneratorConstructor";
-import { GeneratorExtensionConstructor } from "./GeneratorExtensionConstructor";
-import { IBaseGeneratorContext } from "./IBaseGeneratorContext";
-import { ObjectExtensionFactory } from "./ObjectExtensionFactory";
+import { FileMappingCollectionEditor } from "../Collections/FileMappingCollectionEditor.js";
+import { ComponentCollection } from "../Components/ComponentCollection.js";
+import { IFileMapping } from "../Components/FileManagement/IFileMapping.js";
+import { IComponentCollection } from "../Components/IComponentCollection.js";
+import { Generator } from "../Generator.js";
+import { GeneratorConstructor } from "../GeneratorConstructor.js";
+import { GeneratorExtensionConstructor } from "./GeneratorExtensionConstructor.js";
+import { IBaseGeneratorContext } from "./IBaseGeneratorContext.js";
+import { ObjectExtensionFactory } from "./ObjectExtensionFactory.js";
 
 /**
  * Provides the functionality to create base-generators.

@@ -1,10 +1,10 @@
-import { AbstractConstructor } from "../AbstractConstructor";
-import { Filter } from "../Filter";
-import { Predicate } from "../Predicate";
-import { CollectionActionType } from "./CollectionActionType";
-import { IAdditionAction } from "./IAdditionAction";
-import { IRemovalAction } from "./IRemovalAction";
-import { ISubstitutionAction } from "./ISubstitutionAction";
+import { AbstractConstructor } from "../AbstractConstructor.js";
+import { Filter } from "../Filter.js";
+import { Predicate } from "../Predicate.js";
+import { CollectionActionType } from "./CollectionActionType.js";
+import { IAdditionAction } from "./IAdditionAction.js";
+import { IRemovalAction } from "./IRemovalAction.js";
+import { ISubstitutionAction } from "./ISubstitutionAction.js";
 
 /**
  * Provides the functionality to edit a collection of objects.

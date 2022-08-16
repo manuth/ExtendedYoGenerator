@@ -1,10 +1,10 @@
 import { Question } from "yeoman-generator";
-import { FileMappingCollectionEditor } from "../Collections/FileMappingCollectionEditor";
-import { ObjectCollectionEditor } from "../Collections/ObjectCollectionEditor";
-import { IGenerator } from "../IGenerator";
-import { FileMapping } from "./FileManagement/FileMapping";
-import { IComponent } from "./IComponent";
-import { PropertyResolver } from "./Resolving/PropertyResolver";
+import { FileMappingCollectionEditor } from "../Collections/FileMappingCollectionEditor.js";
+import { ObjectCollectionEditor } from "../Collections/ObjectCollectionEditor.js";
+import { IGenerator } from "../IGenerator.js";
+import { FileMapping } from "./FileManagement/FileMapping.js";
+import { IComponent } from "./IComponent.js";
+import { PropertyResolver } from "./Resolving/PropertyResolver.js";
 
 /**
  * Represents a component.

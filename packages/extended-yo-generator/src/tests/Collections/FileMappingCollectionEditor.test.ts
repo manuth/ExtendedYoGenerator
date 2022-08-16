@@ -1,9 +1,9 @@
-import { doesNotThrow } from "assert";
+import { doesNotThrow } from "node:assert";
 import { TestContext } from "@manuth/extended-yo-generator-test";
-import { FileMappingCollectionEditor } from "../../Collections/FileMappingCollectionEditor";
-import { FileMapping } from "../../Components/FileManagement/FileMapping";
-import { IFileMapping } from "../../Components/FileManagement/IFileMapping";
-import { Generator } from "../../Generator";
+import { FileMappingCollectionEditor } from "../../Collections/FileMappingCollectionEditor.js";
+import { FileMapping } from "../../Components/FileManagement/FileMapping.js";
+import { IFileMapping } from "../../Components/FileManagement/IFileMapping.js";
+import { Generator } from "../../Generator.js";
 
 /**
  * Registers tests for the {@link FileMappingOptionCollection `FileMappingOptionCollection`} class.

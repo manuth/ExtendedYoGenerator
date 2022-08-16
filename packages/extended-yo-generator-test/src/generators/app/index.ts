@@ -1,3 +1,4 @@
-import { TestGenerator } from "../../TestGenerator";
+import { TestGenerator } from "../../TestGenerator.js";
 
-export = TestGenerator;
+// eslint-disable-next-line import/no-default-export
+export default TestGenerator;

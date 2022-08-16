@@ -1,4 +1,4 @@
-import { ITestOptions } from "../ITestOptions";
+import { ITestOptions } from "../ITestOptions.js";
 
 /**
  * Provides options for testing.

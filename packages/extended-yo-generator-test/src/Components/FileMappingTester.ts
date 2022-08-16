@@ -1,6 +1,8 @@
-import { strictEqual } from "assert";
+import { strictEqual } from "node:assert";
 import { FileMapping, GeneratorOptions, IFileMapping, IGenerator, IGeneratorSettings } from "@manuth/extended-yo-generator";
-import { pathExists, readFile, remove } from "fs-extra";
+import fs from "fs-extra";
+
+const { pathExists, readFile, remove } = fs;
 
 /**
  * Provides the functionality to test a file-mapping.

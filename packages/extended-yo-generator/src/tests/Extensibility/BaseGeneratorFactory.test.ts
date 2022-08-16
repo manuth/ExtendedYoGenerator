@@ -1,15 +1,15 @@
-import { deepStrictEqual, doesNotThrow, notStrictEqual, ok, strictEqual } from "assert";
+import { deepStrictEqual, doesNotThrow, notStrictEqual, ok, strictEqual } from "node:assert";
 import { ITestGeneratorSettings, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { GeneratorOptions } from "yeoman-generator";
-import { FileMappingCollectionEditor } from "../../Collections/FileMappingCollectionEditor";
-import { ComponentCategory } from "../../Components/ComponentCategory";
-import { ComponentCollection } from "../../Components/ComponentCollection";
-import { FileMapping } from "../../Components/FileManagement/FileMapping";
-import { IFileMapping } from "../../Components/FileManagement/IFileMapping";
-import { IComponentCollection } from "../../Components/IComponentCollection";
-import { BaseGeneratorFactory } from "../../Extensibility/BaseGeneratorFactory";
-import { Generator } from "../../Generator";
-import { GeneratorConstructor } from "../../GeneratorConstructor";
+import { FileMappingCollectionEditor } from "../../Collections/FileMappingCollectionEditor.js";
+import { ComponentCategory } from "../../Components/ComponentCategory.js";
+import { ComponentCollection } from "../../Components/ComponentCollection.js";
+import { FileMapping } from "../../Components/FileManagement/FileMapping.js";
+import { IFileMapping } from "../../Components/FileManagement/IFileMapping.js";
+import { IComponentCollection } from "../../Components/IComponentCollection.js";
+import { BaseGeneratorFactory } from "../../Extensibility/BaseGeneratorFactory.js";
+import { Generator } from "../../Generator.js";
+import { GeneratorConstructor } from "../../GeneratorConstructor.js";
 
 /**
  * Registers tests for the {@link BaseGeneratorFactory `BaseGeneratorFactory`} class.

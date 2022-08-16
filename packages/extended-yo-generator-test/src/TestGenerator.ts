@@ -1,7 +1,10 @@
+import { fileURLToPath } from "node:url";
 import { Generator, IComponentCollection, IFileMapping, IGeneratorSettings, Question } from "@manuth/extended-yo-generator";
-import { join } from "upath";
-import { ITestGeneratorOptions } from "./ITestGeneratorOptions";
-import { ITestOptions } from "./ITestOptions";
+import path from "upath";
+import { ITestGeneratorOptions } from "./ITestGeneratorOptions.js";
+import { ITestOptions } from "./ITestOptions.js";
+
+const { join } = path;
 
 /**
  * Represents a test-generator.
@@ -43,7 +46,7 @@ export class TestGenerator<TSettings extends IGeneratorSettings = IGeneratorSett
      */
     public static get Path(): string
     {
-        return join(__dirname, "generators", "app");
+        return join(fileURLToPath(new URL(".", import.meta.url)), "generators", "app");
     }
 
     /**
