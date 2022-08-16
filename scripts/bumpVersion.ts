@@ -10,6 +10,22 @@ import npmWhich from "npm-which";
 const { pathExists, writeJSON } = fs;
 const { glob } = G;
 
+/**
+ * Represents a dependency candidate.
+ */
+interface ICandidateDescriptor
+{
+    /**
+     * The name of the dependency.
+     */
+    Name: string;
+
+    /**
+     * The argument to pass to `npm install` for installing the dependency.
+     */
+    ScopeArgument: string;
+}
+
 (
     async () =>
     {
@@ -17,8 +33,8 @@ const { glob } = G;
         let branchName = await GitBranch(dirName);
         let releaseName = branchName.replace(/^release\/(.*)/, "$1");
         let rootPackage = new Package(join(dirName, "..", Package.FileName));
-        let workspacePackages: Package[] = [];
         let workspacePaths: string[];
+        let updateQueue = new Dictionary<Package, ICandidateDescriptor[]>();
 
         if (releaseName.length > 0)
         {
@@ -51,14 +67,14 @@ const { glob } = G;
 
                     if (await pathExists(packageFileName))
                     {
-                        workspacePackages.push(new Package(packageFileName));
+                        updateQueue.Add(new Package(packageFileName), []);
                     }
                 }
             }
 
-            for (let workspacePackage of workspacePackages)
+            for (let workspacePackage of updateQueue.Keys)
             {
-                for (let dependencyCandidate of workspacePackages)
+                for (let dependencyCandidate of updateQueue.Keys)
                 {
                     for (let entry of [
                         [workspacePackage.Dependencies, "--save"],
@@ -78,19 +94,31 @@ const { glob } = G;
                                     spaces: 2
                                 });
 
-                            spawnSync(
-                                npmWhich(dirName).sync("npm"),
-                                [
-                                    "install",
-                                    "--ignore-scripts",
-                                    "--no-audit",
-                                    "--workspace",
-                                    workspacePackage.Name,
-                                    entry[1],
-                                    dependencyCandidate.Name
-                                ]);
+                            updateQueue.Get(workspacePackage).push(
+                                {
+                                    Name: dependencyCandidate.Name,
+                                    ScopeArgument: entry[1]
+                                });
                         }
                     }
+                }
+            }
+
+            for (let workspacePackage of updateQueue.Keys)
+            {
+                for (let dependency of updateQueue.Get(workspacePackage))
+                {
+                    spawnSync(
+                        npmWhich(dirName).sync("npm"),
+                        [
+                            "install",
+                            "--ignore-scripts",
+                            "--no-audit",
+                            "--workspace",
+                            workspacePackage.Name,
+                            dependency.ScopeArgument,
+                            dependency.Name
+                        ]);
                 }
             }
 
