@@ -1,6 +1,10 @@
 import { doesNotReject, ok, strictEqual } from "node:assert";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { IGeneratorSettings } from "@manuth/extended-yo-generator";
+import inquirer from "inquirer";
 import { Random } from "random-js";
+import helpers from "yeoman-test";
 import { IRunContext } from "../IRunContext.js";
 import { ITestGeneratorOptions } from "../ITestGeneratorOptions.js";
 import { TestContext } from "../TestContext.js";
@@ -174,6 +178,34 @@ export function TestContextTests(): void
 
                             await runContext.toPromise();
                             strictEqual(runContext.generator.GeneratorOptions.testOption, options.testOption);
+                        });
+
+                    test(
+                        "Checking whether prompts which are registered in the constructor are replaced properly…",
+                        async () =>
+                        {
+                            let prompts: inquirer.prompts.PromptCollection;
+                            let mockedPrompts: inquirer.prompts.PromptCollection;
+                            let context = new TestContext(join(fileURLToPath(new URL(".", import.meta.url)), "example"));
+                            let runContext = context.ExecuteGenerator();
+
+                            runContext.on(
+                                "ready",
+                                (generator: TestGenerator) =>
+                                {
+                                    prompts = { ...generator.env.adapter.promptModule.prompts };
+                                });
+
+                            await runContext.toPromise();
+                            let generator = runContext.generator;
+                            helpers.mockPrompt(generator, {});
+                            mockedPrompts = { ...generator.env.adapter.promptModule.prompts };
+                            helpers.restorePrompt(generator);
+
+                            for (let promptName of Object.keys(generator.env.adapter.promptModule.prompts))
+                            {
+                                strictEqual(prompts[promptName].name, mockedPrompts[promptName].name);
+                            }
                         });
                 });
         });
