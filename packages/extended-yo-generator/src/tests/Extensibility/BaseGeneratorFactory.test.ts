@@ -1,4 +1,5 @@
 import { deepStrictEqual, doesNotThrow, notStrictEqual, ok, strictEqual } from "node:assert";
+import { createRequire } from "node:module";
 import { ITestGeneratorSettings, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { GeneratorOptions } from "yeoman-generator";
 import { FileMappingCollectionEditor } from "../../Collections/FileMappingCollectionEditor.js";
@@ -327,7 +328,7 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                         });
 
                     test(
-                        `Checking whether the value of \`${nameof<Generator>()}.${nameof<Generator>((g) => g.resolved)}\` while creating a base-generator…`,
+                        `Checking whether the value of \`${nameof<Generator>()}.${nameof<Generator>((g) => g.resolved)}\` is getting updated while creating a base-generator…`,
                         () =>
                         {
                             /**
@@ -341,6 +342,52 @@ export function BaseGeneratorFactoryTests(context: TestContext<TestGenerator>): 
                             (Test as any)[nameof<Generator>((generator) => generator.resolved)] = testValue;
                             BaseGeneratorFactory.Create(Test, `${testValue}${context.RandomString}`);
                             strictEqual((Test as any)[nameof<Generator>((generator) => generator.resolved)], testValue);
+                        });
+
+                    test(
+                        `Checking whether passing a path to the \`${nameof(BaseGeneratorFactory.Create)}\` doesn't end up in unhandled \`${nameof(Promise)}\`s…`,
+                        async () =>
+                        {
+                            let rejected: Array<Promise<any>> = [];
+                            let rejectionEvent = "unhandledRejection";
+                            let handledEvent = "rejectionhandled";
+
+                            /**
+                             * Handles the rejection of a {@link Promise `Promise<T>`}.
+                             *
+                             * @param reason
+                             * The reason for the promise to be rejected.
+                             *
+                             * @param promise
+                             * The {@link Promise `Promise<T>`} which has been rejected.
+                             */
+                            function rejectionHandler(reason: any, promise: Promise<any>): void
+                            {
+                                rejected.push(promise);
+                            }
+
+                            /**
+                             * Handles the handling of a {@link Promise `Promise<T>`}.
+                             *
+                             * @param handled
+                             * The {@link Promise `Promise<T>`} which has been handled.
+                             */
+                            function handledHandler(handled: Promise<any>): void
+                            {
+                                rejected = rejected.filter((promise) => promise !== handled);
+                            }
+
+                            process.on(rejectionEvent, rejectionHandler);
+                            process.on(handledEvent, handledHandler);
+
+                            {
+                                context.CreateGenerator(BaseGeneratorFactory.Create(TestGenerator, createRequire(import.meta.url).resolve("@manuth/extended-yo-generator")));
+                                await new Promise((resolve => setTimeout(resolve, 1)));
+                                strictEqual(rejected.length, 0);
+                            }
+
+                            process.off(rejectionEvent, rejectionHandler);
+                            process.off(handledEvent, handledHandler);
                         });
 
                     test(
