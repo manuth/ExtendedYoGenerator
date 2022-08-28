@@ -160,7 +160,17 @@ export class BaseGeneratorFactory<T extends GeneratorConstructor> extends Object
 
                     try
                     {
-                        (base as any)[resolvedKey] = (this.env.get(namespaceOrPath) as any)?.[resolvedKey] ?? namespaceOrPath;
+                        let baseGenerator = this.env.get(namespaceOrPath) as any;
+
+                        if (baseGenerator instanceof Promise)
+                        {
+                            baseGenerator.catch(() => { });
+                            throw new Error();
+                        }
+                        else
+                        {
+                            (base as any)[resolvedKey] = (this.env.get(namespaceOrPath) as any)?.[resolvedKey] ?? namespaceOrPath;
+                        }
                     }
                     catch
                     {
