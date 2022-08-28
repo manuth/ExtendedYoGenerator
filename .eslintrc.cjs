@@ -1,9 +1,9 @@
-const { join } = require("node:path");
-const ESLintPresets = require("@manuth/eslint-plugin-typescript");
+const { join } = require("path");
+const { PluginName, PresetName } = require("@manuth/eslint-plugin-typescript");
 
 module.exports = {
     extends: [
-        `plugin:${ESLintPresets.PluginName}/${ESLintPresets.PresetName.RecommendedWithTypeChecking}`
+        `plugin:${PluginName}/${PresetName.RecommendedWithTypeChecking}`
     ],
     env: {
         node: true,
