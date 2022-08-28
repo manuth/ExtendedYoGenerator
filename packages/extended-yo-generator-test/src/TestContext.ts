@@ -236,6 +236,7 @@ export class TestContext<TGenerator extends Generator<any, TOptions> = Generator
     public ExecuteGenerator(options?: TOptions, runSettings?: helpers.RunContextSettings): IRunContext<TGenerator>
     {
         let result = helpers.run(this.GeneratorDirectory, runSettings) as IRunContext<TGenerator>;
+        result.on("ready", (generator: TGenerator) => helpers.mockPrompt(generator, result.answers));
 
         if (options)
         {
