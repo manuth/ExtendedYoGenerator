@@ -1,10 +1,10 @@
 import { GeneratorOptions, Question } from "yeoman-generator";
-import { IGenerator } from "../IGenerator";
-import { IGeneratorSettings } from "../IGeneratorSettings";
-import { Component } from "./Component";
-import { IFileMapping } from "./FileManagement/IFileMapping";
-import { GeneratorComponent } from "./GeneratorComponent";
-import { IComponent } from "./IComponent";
+import { IGenerator } from "../IGenerator.js";
+import { IGeneratorSettings } from "../IGeneratorSettings.js";
+import { Component } from "./Component.js";
+import { IFileMapping } from "./FileManagement/IFileMapping.js";
+import { GeneratorComponent } from "./GeneratorComponent.js";
+import { IComponent } from "./IComponent.js";
 
 /**
  * Provides data for initializing a new {@link Component `Component<TSettings, TOptions>`}.

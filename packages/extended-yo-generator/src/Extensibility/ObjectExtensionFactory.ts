@@ -1,6 +1,6 @@
-import { Constructor } from "../Constructor";
-import { ExtensionConstructor } from "./ExtensionConstructor";
-import { ObjectExtension as ObjectExtensionBase } from "./ObjectExtension";
+import { Constructor } from "../Constructor.js";
+import { ExtensionConstructor } from "./ExtensionConstructor.js";
+import { ObjectExtension as ObjectExtensionBase } from "./ObjectExtension.js";
 
 /**
  * Provides the functionality to create an object-extension.

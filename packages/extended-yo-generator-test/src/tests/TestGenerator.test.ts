@@ -1,9 +1,9 @@
-import { deepStrictEqual, doesNotReject, notStrictEqual, ok, strictEqual } from "assert";
-import { IRunContext } from "../IRunContext";
-import { ITestGeneratorOptions } from "../ITestGeneratorOptions";
-import { ITestOptions } from "../ITestOptions";
-import { TestContext } from "../TestContext";
-import { TestGenerator } from "../TestGenerator";
+import { deepStrictEqual, doesNotReject, notStrictEqual, ok, strictEqual } from "node:assert";
+import { IRunContext } from "../IRunContext.js";
+import { ITestGeneratorOptions } from "../ITestGeneratorOptions.js";
+import { ITestOptions } from "../ITestOptions.js";
+import { TestContext } from "../TestContext.js";
+import { TestGenerator } from "../TestGenerator.js";
 
 /**
  * Registers tests for the {@link TestGenerator `TestGenerator<TSettings, TOptions>`} class.
@@ -72,7 +72,7 @@ export function TestGeneratorTests(context: TestContext<TestGenerator, ITestGene
                             await doesNotReject(
                                 async () =>
                                 {
-                                    generator = (await context.Generator).env.create(TestGenerator.Path, []) as any;
+                                    generator = await ((await context.Generator).env.create(TestGenerator.Path, []) as any);
                                 });
 
                             ok(generator instanceof TestGenerator);

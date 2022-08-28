@@ -1,11 +1,11 @@
-import { basename } from "path";
+import { basename } from "node:path";
 import { TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
-import { CategoryCollectionEditorTests } from "./CategoryCollectionEditor.test";
-import { ComponentCollectionEditorTests } from "./ComponentCollectionEditor.test";
-import { FileMappingCollectionEditorTests } from "./FileMappingCollectionEditor.test";
-import { ObjectCollectionEditorTests } from "./ObjectCollectionEditor.test";
-import { PropertyResolverCollectionEditorTests } from "./PropertyResolverCollectionEditor.test";
-import { UniqueObjectCollectionEditorTests } from "./UniqueObjectCollectionEditor.test";
+import { CategoryCollectionEditorTests } from "./CategoryCollectionEditor.test.js";
+import { ComponentCollectionEditorTests } from "./ComponentCollectionEditor.test.js";
+import { FileMappingCollectionEditorTests } from "./FileMappingCollectionEditor.test.js";
+import { ObjectCollectionEditorTests } from "./ObjectCollectionEditor.test.js";
+import { PropertyResolverCollectionEditorTests } from "./PropertyResolverCollectionEditor.test.js";
+import { UniqueObjectCollectionEditorTests } from "./UniqueObjectCollectionEditor.test.js";
 
 /**
  * Registers tests for collections.
@@ -16,7 +16,7 @@ import { UniqueObjectCollectionEditorTests } from "./UniqueObjectCollectionEdito
 export function CollectionTests(context: TestContext<TestGenerator>): void
 {
     suite(
-        basename(__dirname),
+        basename(basename(new URL(".", import.meta.url).pathname)),
         () =>
         {
             let genericContext = new TestContext(TestGenerator.Path);

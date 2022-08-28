@@ -1,5 +1,5 @@
-import { IGenerator } from "../../IGenerator";
-import { Resolvable } from "./Resolvable";
+import { IGenerator } from "../../IGenerator.js";
+import { Resolvable } from "./Resolvable.js";
 
 /**
  * Provides the functionality to resolve values.

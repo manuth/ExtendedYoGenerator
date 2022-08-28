@@ -1,10 +1,10 @@
 import { GeneratorOptions } from "yeoman-generator";
-import { IGenerator } from "../IGenerator";
-import { IGeneratorSettings } from "../IGeneratorSettings";
-import { ComponentCategory } from "./ComponentCategory";
-import { GeneratorComponent } from "./GeneratorComponent";
-import { IComponent } from "./IComponent";
-import { IComponentCategory } from "./IComponentCategory";
+import { IGenerator } from "../IGenerator.js";
+import { IGeneratorSettings } from "../IGeneratorSettings.js";
+import { ComponentCategory } from "./ComponentCategory.js";
+import { GeneratorComponent } from "./GeneratorComponent.js";
+import { IComponent } from "./IComponent.js";
+import { IComponentCategory } from "./IComponentCategory.js";
 
 /**
  * Provides data for creating a {@link ComponentCategory `ComponentCategory<TSettings, TOptions>`}.

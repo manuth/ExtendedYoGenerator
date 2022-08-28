@@ -1,7 +1,7 @@
-import { Generator } from "../Generator";
-import { GeneratorConstructor } from "../GeneratorConstructor";
-import { ExtensionConstructor } from "./ExtensionConstructor";
-import { GeneratorExtension } from "./GeneratorExtension";
+import { Generator } from "../Generator.js";
+import { GeneratorConstructor } from "../GeneratorConstructor.js";
+import { ExtensionConstructor } from "./ExtensionConstructor.js";
+import { GeneratorExtension } from "./GeneratorExtension.js";
 
 /**
  * Represents a constructor for a generator-extension.

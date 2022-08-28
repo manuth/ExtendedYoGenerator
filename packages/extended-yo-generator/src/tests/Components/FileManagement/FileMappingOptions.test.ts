@@ -1,10 +1,12 @@
-import { strictEqual } from "assert";
+import { strictEqual } from "node:assert";
 import { FileMappingTester, ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
 import { TempFile } from "@manuth/temp-files";
-import { writeFile } from "fs-extra";
+import fs from "fs-extra";
 import { GeneratorOptions } from "yeoman-generator";
-import { FileMappingOptions } from "../../../Components/FileManagement/FileMappingOptions";
-import { IGeneratorSettings } from "../../../IGeneratorSettings";
+import { FileMappingOptions } from "../../../Components/FileManagement/FileMappingOptions.js";
+import { IGeneratorSettings } from "../../../IGeneratorSettings.js";
+
+const { writeFile } = fs;
 
 /**
  * Registers tests for the {@link FileMappingOptions `FileMappingOptions<TSettings, TOptions>`} class.

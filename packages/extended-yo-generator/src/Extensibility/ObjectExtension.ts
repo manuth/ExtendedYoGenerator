@@ -1,4 +1,4 @@
-import { Constructor } from "../Constructor";
+import { Constructor } from "../Constructor.js";
 
 /**
  * Represents an extension for a type.

@@ -1,8 +1,8 @@
 import { Question } from "yeoman-generator";
-import { IUniqueObject } from "../IUniqueObject";
-import { Component } from "./Component";
-import { IFileMapping } from "./FileManagement/IFileMapping";
-import { Resolvable } from "./Resolving/Resolvable";
+import { IUniqueObject } from "../IUniqueObject.js";
+import { Component } from "./Component.js";
+import { IFileMapping } from "./FileManagement/IFileMapping.js";
+import { Resolvable } from "./Resolving/Resolvable.js";
 
 /**
  * Represents a component.

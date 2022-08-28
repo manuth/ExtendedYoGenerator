@@ -1,4 +1,4 @@
-import { GeneratorSettingKey } from "./GeneratorSettingKey";
+import { GeneratorSettingKey } from "./GeneratorSettingKey.js";
 
 /**
  * Represents settings of a generator.

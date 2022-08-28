@@ -1,8 +1,8 @@
-import { AbstractConstructor } from "../AbstractConstructor";
-import { Filter } from "../Filter";
-import { IUniqueObject } from "../IUniqueObject";
-import { Predicate } from "../Predicate";
-import { ObjectCollectionEditor } from "./ObjectCollectionEditor";
+import { AbstractConstructor } from "../AbstractConstructor.js";
+import { Filter } from "../Filter.js";
+import { IUniqueObject } from "../IUniqueObject.js";
+import { Predicate } from "../Predicate.js";
+import { ObjectCollectionEditor } from "./ObjectCollectionEditor.js";
 
 /**
  * Provides the functionality to edit a collection of {@link IUniqueObject `IUniqueObject`}s.

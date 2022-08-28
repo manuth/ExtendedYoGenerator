@@ -1,5 +1,5 @@
-import { IGenerator } from "../../IGenerator";
-import { FileMapping } from "./FileMapping";
+import { IGenerator } from "../../IGenerator.js";
+import { FileMapping } from "./FileMapping.js";
 
 /**
  * Represents a component for processing files.

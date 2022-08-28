@@ -1,7 +1,7 @@
-import { ComponentCategory } from "../Components/ComponentCategory";
-import { IComponentCategory } from "../Components/IComponentCategory";
-import { IGenerator } from "../IGenerator";
-import { PropertyResolverCollectionEditor } from "./PropertyResolverCollectionEditor";
+import { ComponentCategory } from "../Components/ComponentCategory.js";
+import { IComponentCategory } from "../Components/IComponentCategory.js";
+import { IGenerator } from "../IGenerator.js";
+import { PropertyResolverCollectionEditor } from "./PropertyResolverCollectionEditor.js";
 
 /**
  * Represents a set of component-categories.

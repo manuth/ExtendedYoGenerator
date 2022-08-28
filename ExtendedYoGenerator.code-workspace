@@ -65,6 +65,17 @@
                     "${workspaceFolder:ExtendedYoGeneratorTest}/**/*.js",
                     "!**/node_modules/**"
                 ]
+            },
+            {
+                "type": "node",
+                "request": "launch",
+                "name": "Launch Bump Version Script",
+                "cwd": "${workspaceFolder:Solution Items}",
+                "runtimeArgs": [
+                    "--loader",
+                    "ts-node/esm"
+                ],
+                "program": "${workspaceFolder:Solution Items}/scripts/bumpVersion.ts"
             }
         ],
         "compounds": [

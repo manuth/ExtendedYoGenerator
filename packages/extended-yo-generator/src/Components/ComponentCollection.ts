@@ -1,13 +1,13 @@
-import chalk = require("chalk");
-import { CheckboxQuestion, ChoiceCollection, Separator } from "inquirer";
+import chalk from "chalk";
+import inquirer, { CheckboxQuestion, ChoiceCollection } from "inquirer";
 import { Question } from "yeoman-generator";
-import { CategoryCollectionEditor } from "../Collections/CategoryCollectionEditor";
-import { GeneratorSettingKey } from "../GeneratorSettingKey";
-import { IGenerator } from "../IGenerator";
-import { IGeneratorSettings } from "../IGeneratorSettings";
-import { ComponentCategory } from "./ComponentCategory";
-import { IComponentCollection } from "./IComponentCollection";
-import { PropertyResolver } from "./Resolving/PropertyResolver";
+import { CategoryCollectionEditor } from "../Collections/CategoryCollectionEditor.js";
+import { GeneratorSettingKey } from "../GeneratorSettingKey.js";
+import { IGenerator } from "../IGenerator.js";
+import { IGeneratorSettings } from "../IGeneratorSettings.js";
+import { ComponentCategory } from "./ComponentCategory.js";
+import { IComponentCollection } from "./IComponentCollection.js";
+import { PropertyResolver } from "./Resolving/PropertyResolver.js";
 
 /**
  * Represents a set of components.
@@ -87,7 +87,7 @@ export class ComponentCollection<TSettings extends IGeneratorSettings, TOptions>
 
         for (let category of this.Categories.Items ?? [])
         {
-            components.push(new Separator(category.DisplayName));
+            components.push(new inquirer.Separator(category.DisplayName));
 
             for (let component of category.Components.Items)
             {

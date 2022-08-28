@@ -1,7 +1,7 @@
-import { FileMapping } from "../Components/FileManagement/FileMapping";
-import { IFileMapping } from "../Components/FileManagement/IFileMapping";
-import { IGenerator } from "../IGenerator";
-import { PropertyResolverCollectionEditor } from "./PropertyResolverCollectionEditor";
+import { FileMapping } from "../Components/FileManagement/FileMapping.js";
+import { IFileMapping } from "../Components/FileManagement/IFileMapping.js";
+import { IGenerator } from "../IGenerator.js";
+import { PropertyResolverCollectionEditor } from "./PropertyResolverCollectionEditor.js";
 
 /**
  * Represents a set of file-mappings.

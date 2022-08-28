@@ -1,8 +1,8 @@
-import { IUniqueObject } from "../../IUniqueObject";
-import { AsyncResolveFunction } from "../Resolving/AsyncResolveFunction";
-import { Resolvable } from "../Resolving/Resolvable";
-import { FileMapping } from "./FileMapping";
-import { FileProcessor } from "./FileProcessor";
+import { IUniqueObject } from "../../IUniqueObject.js";
+import { AsyncResolveFunction } from "../Resolving/AsyncResolveFunction.js";
+import { Resolvable } from "../Resolving/Resolvable.js";
+import { FileMapping } from "./FileMapping.js";
+import { FileProcessor } from "./FileProcessor.js";
 
 /**
  * Represents a {@link FileMapping `FileMapping<TSettings, TOptions>`}.

@@ -8,5 +8,5 @@ export interface ITestGeneratorSettings extends IGeneratorSettings
     /**
      * Gets or sets additional settings.
      */
-    [key: string]: string;
+    [key: string]: any;
 }

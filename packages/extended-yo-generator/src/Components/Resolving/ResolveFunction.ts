@@ -1,4 +1,4 @@
-import { IGenerator } from "../../IGenerator";
+import { IGenerator } from "../../IGenerator.js";
 
 /**
  * Represents a resolvable value.

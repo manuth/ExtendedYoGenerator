@@ -1,17 +1,17 @@
-import { ok, strictEqual } from "assert";
+import { ok, strictEqual } from "node:assert";
 import { ITestGeneratorOptions, ITestOptions, TestContext, TestGenerator } from "@manuth/extended-yo-generator-test";
-import rescape = require("@stdlib/utils-escape-regexp-string");
-import { CheckboxChoiceOptions, CheckboxQuestion, Separator } from "inquirer";
+import rescape from "@stdlib/utils-escape-regexp-string";
+import inquirer, { CheckboxChoiceOptions, CheckboxQuestion } from "inquirer";
 import { replace, replaceGetter, restore } from "sinon";
-import stripAnsi = require("strip-ansi");
+import stripAnsi from "strip-ansi";
 import type { Logger, Question } from "yeoman-environment";
-import { Component } from "../../Components/Component";
-import { ComponentCollection } from "../../Components/ComponentCollection";
-import { IComponent } from "../../Components/IComponent";
-import { IComponentCategory } from "../../Components/IComponentCategory";
-import { IComponentCollection } from "../../Components/IComponentCollection";
-import { GeneratorSettingKey } from "../../GeneratorSettingKey";
-import { IGeneratorSettings } from "../../IGeneratorSettings";
+import { Component } from "../../Components/Component.js";
+import { ComponentCollection } from "../../Components/ComponentCollection.js";
+import { IComponent } from "../../Components/IComponent.js";
+import { IComponentCategory } from "../../Components/IComponentCategory.js";
+import { IComponentCollection } from "../../Components/IComponentCollection.js";
+import { GeneratorSettingKey } from "../../GeneratorSettingKey.js";
+import { IGeneratorSettings } from "../../IGeneratorSettings.js";
 
 /**
  * Provides tests for the {@link ComponentCollection `ComponentCollection<TSettings, TOptions>`} class.
@@ -183,7 +183,7 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                                     collection.ComponentChoiceQuestion.choices.some(
                                         (choice) =>
                                         {
-                                            return choice instanceof Separator &&
+                                            return choice instanceof inquirer.Separator &&
                                                 stripAnsi(choice.line) === stripAnsi(category.DisplayName);
                                         }));
                             }
@@ -294,7 +294,7 @@ export function ComponentCollectionTests(context: TestContext<TestGenerator, ITe
                             {
                                 strictEqual(
                                     logMessages.some(
-                                        (logMessage) => new RegExp(`\\b${rescape(stripAnsi(component.DisplayName))}\\b`).test(stripAnsi(logMessage))),
+                                        (logMessage) => new RegExp(`\\b${rescape(stripAnsi(component.DisplayName))}\\b`).test(stripAnsi(logMessage ?? ""))),
                                     present);
                             }
 

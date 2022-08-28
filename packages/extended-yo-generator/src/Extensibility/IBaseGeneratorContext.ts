@@ -1,5 +1,5 @@
-import { FileMappingCollectionEditor } from "../Collections/FileMappingCollectionEditor";
-import { ComponentCollection } from "../Components/ComponentCollection";
+import { FileMappingCollectionEditor } from "../Collections/FileMappingCollectionEditor.js";
+import { ComponentCollection } from "../Components/ComponentCollection.js";
 
 /**
  * Provides a context for a base-generator.

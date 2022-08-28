@@ -6,7 +6,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v11.0.7...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v12.0.1...dev)
+
+## ExtendedYoGenerator v12.0.1
+### Fixed
+  - Errors when creating generators based on ESModules
+
+### Updated
+  - All dependencies
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v12.0.0...v12.0.1)
+
+## ExtendedYoGenerator v12.0.0
+### Breaking
+  - Converted the package to an ESModule
+
+### Updated
+  - All dependencies
+  - `bumpVersion` scripts for updating cross-workspace dependencies properly
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v11.0.7...v12.0.0)
 
 ## ExtendedYoGenerator v11.0.7
 ### Fixed

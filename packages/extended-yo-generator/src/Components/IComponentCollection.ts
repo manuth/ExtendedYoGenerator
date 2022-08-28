@@ -1,4 +1,4 @@
-import { IComponentCategory } from "./IComponentCategory";
+import { IComponentCategory } from "./IComponentCategory.js";
 
 /**
  * Represents a set of components.
