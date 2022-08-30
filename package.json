@@ -41,7 +41,7 @@
     "@tsd/typescript": "npm:nop@^1.0.0",
     "@types/fs-extra": "^9.0.13",
     "@types/git-branch": "^2.0.2",
-    "@types/glob": "^7.2.0",
+    "@types/glob": "^8.0.0",
     "@types/mocha": "^9.1.1",
     "@types/node": "^18.7.13",
     "@types/npm-which": "^3.0.1",
