@@ -1,8 +1,9 @@
-import { doesNotReject, ok, strictEqual } from "node:assert";
+import { deepStrictEqual, doesNotReject, notDeepEqual, ok, strictEqual } from "node:assert";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { IGeneratorSettings } from "@manuth/extended-yo-generator";
+import { GeneratorSettingKey, IGeneratorSettings } from "@manuth/extended-yo-generator";
 import inquirer from "inquirer";
+import cloneDeep from "lodash.clonedeep";
 import { Random } from "random-js";
 import helpers from "yeoman-test";
 import { IRunContext } from "../IRunContext.js";
@@ -51,7 +52,7 @@ export function TestContextTests(): void
                     setup(
                         async function()
                         {
-                            this.timeout(30 * 1000);
+                            this.timeout(1 * 60 * 1000);
                             generator = await testContext.Generator;
                         });
 
@@ -101,6 +102,27 @@ export function TestContextTests(): void
                             ok(generator.args.includes(testArg));
                             ok(testOption in generator.options);
                             strictEqual(generator.options[testOption], optionValue);
+                        });
+                });
+
+            suite(
+                nameof<TestContext>((context) => context.ResetSettings),
+                () =>
+                {
+                    test(
+                        "Checking whether settings are reset properly…",
+                        async () =>
+                        {
+                            let generator = await testContext.Generator;
+                            let originalSettings: IGeneratorSettings;
+                            let customizedSettings: IGeneratorSettings;
+                            originalSettings = cloneDeep(generator.Settings);
+                            generator.Settings[GeneratorSettingKey.Components] ??= [];
+                            generator.Settings[GeneratorSettingKey.Components].push(testContext.RandomString);
+                            customizedSettings = cloneDeep(generator.Settings);
+                            await testContext.ResetSettings();
+                            notDeepEqual(generator.Settings, customizedSettings);
+                            deepStrictEqual(generator.Settings, originalSettings);
                         });
                 });
 
