@@ -42,6 +42,11 @@ export class TestContext<TGenerator extends Generator<any, TOptions> = Generator
     private finishedContext: IRunContext<TGenerator> = null;
 
     /**
+     * A backup of the destination root of the generator.
+     */
+    private destinationRootBackup: string;
+
+    /**
      * A backup of the settings of the generator.
      */
     private settingsBackup: any;
@@ -76,7 +81,9 @@ export class TestContext<TGenerator extends Generator<any, TOptions> = Generator
             {
                 this.finishedContext = this.ExecuteGenerator();
                 await this.finishedContext.toPromise();
-                this.settingsBackup = cloneDeep(this.finishedContext.generator.Settings);
+                let generator = this.finishedContext.generator;
+                this.destinationRootBackup = generator.destinationRoot();
+                this.settingsBackup = cloneDeep(generator.Settings);
             }
 
             return this.finishedContext.generator;
@@ -153,6 +160,7 @@ export class TestContext<TGenerator extends Generator<any, TOptions> = Generator
         if (this.finishedContext !== null)
         {
             let generator = await this.Generator;
+            generator.destinationRoot(this.destinationRootBackup);
 
             for (let key of Object.keys(generator.Settings))
             {
