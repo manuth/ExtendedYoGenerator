@@ -6,7 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## ExtendedYoGenerator [Unreleased]
 
-[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v12.1.1...dev)
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v12.1.2...dev)
+
+## ExtendedYoGenerator v12.1.2
+### Updated
+  - The `TestContext.ResetSettings` method to also reset the `destinationRoot` of the generator
+  - All dependencies
+
+[Show differences](https://github.com/manuth/ExtendedYoGenerator/compare/v12.1.1...v12.1.2)
 
 ## ExtendedYoGenerator v12.1.1
 ### Updated

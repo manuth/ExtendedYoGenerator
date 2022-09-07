@@ -1,7 +1,8 @@
 import { deepStrictEqual, doesNotReject, notDeepEqual, ok, strictEqual } from "node:assert";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { GeneratorSettingKey, IGeneratorSettings } from "@manuth/extended-yo-generator";
+import { Generator, GeneratorSettingKey, IGeneratorSettings } from "@manuth/extended-yo-generator";
+import { TempDirectory } from "@manuth/temp-files";
 import inquirer from "inquirer";
 import cloneDeep from "lodash.clonedeep";
 import { Random } from "random-js";
@@ -123,6 +124,19 @@ export function TestContextTests(): void
                             await testContext.ResetSettings();
                             notDeepEqual(generator.Settings, customizedSettings);
                             deepStrictEqual(generator.Settings, originalSettings);
+                        });
+
+                    test(
+                        `Checking whether the \`${nameof<Generator>(g => g.destinationRoot)}\` is reset properly…`,
+                        async () =>
+                        {
+                            let tempDir = new TempDirectory();
+                            let generator = await testContext.Generator;
+                            let destinationRoot = generator.destinationRoot();
+                            generator.destinationRoot(tempDir.FullName);
+                            strictEqual(generator.destinationRoot(), tempDir.FullName);
+                            await testContext.ResetSettings();
+                            strictEqual(generator.destinationRoot(), destinationRoot);
                         });
                 });
 

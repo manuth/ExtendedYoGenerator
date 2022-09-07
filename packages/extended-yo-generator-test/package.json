@@ -1,6 +1,6 @@
 {
   "name": "@manuth/extended-yo-generator-test",
-  "version": "12.1.1",
+  "version": "12.1.2",
   "type": "module",
   "description": "Provides tools for testing generators created using `@manuth/extended-yo-generator`",
   "author": "Manuel Thalmann <m@nuth.ch>",
@@ -41,7 +41,7 @@
     "test": "mocha"
   },
   "dependencies": {
-    "@manuth/extended-yo-generator": "^12.1.1",
+    "@manuth/extended-yo-generator": "^12.1.2",
     "@types/yeoman-test": "^4.0.3",
     "comment-json": "^4.2.3",
     "fs-extra": "^10.1.0",
@@ -57,7 +57,7 @@
     "@types/inquirer": "^9.0.1",
     "@types/lodash.clonedeep": "^4.5.7",
     "@types/mocha": "^9.1.1",
-    "@types/node": "^18.7.14",
+    "@types/node": "^18.7.15",
     "@types/ts-nameof": "^4.2.1",
     "inquirer": "^9.1.1",
     "mocha": "^10.0.0",

@@ -1,6 +1,6 @@
 {
   "name": "@manuth/extended-yo-generator",
-  "version": "12.1.1",
+  "version": "12.1.2",
   "type": "module",
   "description": "An extended version of the Yeoman-Generator",
   "author": "Manuel Thalmann <m@nuth.ch>",
@@ -50,7 +50,7 @@
     "yeoman-generator": "^5.7.0"
   },
   "devDependencies": {
-    "@manuth/extended-yo-generator-test": "^12.1.1",
+    "@manuth/extended-yo-generator-test": "^12.1.2",
     "@manuth/package-json-editor": "^3.0.2",
     "@manuth/temp-files": "^3.0.0",
     "@manuth/typescript-languageservice-tester": "^5.0.0",
@@ -58,7 +58,7 @@
     "@types/ejs": "^3.1.1",
     "@types/fs-extra": "^9.0.13",
     "@types/mocha": "^9.1.1",
-    "@types/node": "^18.7.14",
+    "@types/node": "^18.7.15",
     "@types/sinon": "^10.0.13",
     "@types/ts-nameof": "^4.2.1",
     "@types/yeoman-environment": "^2.10.8",
