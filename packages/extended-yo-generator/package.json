@@ -52,7 +52,7 @@
   "devDependencies": {
     "@manuth/extended-yo-generator-test": "^12.1.2",
     "@manuth/package-json-editor": "^3.0.2",
-    "@manuth/temp-files": "^3.0.0",
+    "@manuth/temp-files": "^3.0.2",
     "@manuth/typescript-languageservice-tester": "^5.0.0",
     "@stdlib/utils-escape-regexp-string": "^0.0.9",
     "@types/ejs": "^3.1.1",
