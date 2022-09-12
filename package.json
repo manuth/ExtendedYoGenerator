@@ -43,7 +43,7 @@
     "@types/git-branch": "^2.0.2",
     "@types/glob": "^8.0.0",
     "@types/mocha": "^9.1.1",
-    "@types/node": "^18.7.15",
+    "@types/node": "^18.7.17",
     "@types/npm-which": "^3.0.1",
     "@types/ts-nameof": "^4.2.1",
     "concurrently": "^7.4.0",
