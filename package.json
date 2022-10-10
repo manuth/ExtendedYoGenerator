@@ -48,7 +48,7 @@
     "@types/ts-nameof": "^4.2.1",
     "concurrently": "^7.4.0",
     "copy-and-watch": "^0.1.6",
-    "eslint": "^8.23.0",
+    "eslint": "^8.25.0",
     "fs-extra": "^10.1.0",
     "git-branch": "^2.0.1",
     "glob": "^8.0.3",
