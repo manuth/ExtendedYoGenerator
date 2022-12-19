@@ -57,7 +57,7 @@
     "@types/inquirer": "^9.0.1",
     "@types/lodash.clonedeep": "^4.5.7",
     "@types/mocha": "^9.1.1",
-    "@types/node": "^18.7.15",
+    "@types/node": "^18.11.17",
     "@types/ts-nameof": "^4.2.1",
     "inquirer": "^9.1.1",
     "mocha": "^10.0.0",
